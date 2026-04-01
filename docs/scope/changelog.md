@@ -6,23 +6,23 @@
 
 ---
 
-## Sem. 1 · 17–21 mar
+## Sem. 1 · 17–24 mar
 
-**Feito:** [O que foi concluído esta semana]  
-**Bloqueou:** [O que impediu progresso, ou "Nada"]  
-**Próxima semana:** [O que está planeado]
-
----
-
-## Sem. 2 · 24–28 mar
-
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** definição do tema GeoExplorer, delimitação do problema, redação da sinopse e do núcleo do MVP, criação do repositório e estrutura documental inicial.  
+**Bloqueou:** decisão final sobre a fonte dos dados geográficos e visuais; não bloqueou a redação da proposta.  
+**Próxima semana:** converter a proposta para os templates e preparar os artefactos mínimos da Entrega 1: wireframes simples, C4 e modelo de dados.
 
 ---
 
-## Sem. 3 · 31 mar–4 abr
+## Sem. 2 · 25 mar–1 abr
+
+**Feito:** consolidação da stack tecnológica, da arquitetura de alto nível, do calendário individual e preenchimento inicial dos documentos de proposta, requisitos e riscos, incluindo a clarificação do modo temporizado opcional e do multijogador como objetivo adicional não obrigatório.  
+**Bloqueou:** escolha final entre dataset totalmente curado e abordagem híbrida com APIs externas, bem como a seleção concreta do fornecedor de mapas.  
+**Próxima semana:** concluir wireframes simples, C4 contexto/contentores, modelo de dados e estrutura base de `src/frontend` e `src/backend`.
+
+---
+
+## Sem. 3 · 2–6 abr
 
 **Feito:**  
 **Bloqueou:**  
