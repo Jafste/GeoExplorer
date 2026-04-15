@@ -24,25 +24,25 @@
 
 ## Sem. 3 · 2–6 abr
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** conclusão dos wireframes em duas fases, consolidação visual dos ecrãs principais e estabilização dos artefactos de design e arquitetura para a Entrega 1.  
+**Bloqueou:** necessidade de alinhar os ficheiros finais com os nomes canónicos esperados pelo template do repositório.  
+**Próxima semana:** normalizar os artefactos canónicos, rever o README e preparar o arranque técnico do MVP.
 
 ---
 
 ## Sem. 4 · 7–11 abr
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** clarificação dos requisitos do modo temporizado opcional, reposicionamento do multijogador como objetivo adicional, definição do arranque híbrido e preparação da estrutura inicial do frontend com revisão da stack e da direção visual.  
+**Bloqueou:** necessidade de separar a base visual do frontend do fluxo jogável e da integração backend para manter o histórico incremental coerente.  
+**Próxima semana:** configurar a base técnica do frontend, alinhar o README com esse estado inicial e preparar o arranque das páginas do MVP.
 
 ---
 
 ## Sem. 5 · 14–17 abr
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** implementação da primeira fatia jogável do frontend com React, TypeScript, Vite e Tailwind, incluindo ecrãs de arranque, configuração, ronda, resultados, tutorial local, camada `mock/api` e redesign da ronda com minimapa expansível.  
+**Bloqueou:** ausência de assets visuais reais para a ronda; nesta fase a experiência usa cenas estilizadas e dataset `mock` para validar o fluxo sem backend.  
+**Próxima semana:** iniciar o backend e a persistência, rever os backgrounds/mock visuals da ronda e preparar a integração entre frontend e API.
 
 ---
 

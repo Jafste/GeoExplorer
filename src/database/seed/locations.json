@@ -1,0 +1,230 @@
+[
+  {
+    "id": "innsbruck-old-town",
+    "title": "Centro historico alpino",
+    "city": "Innsbruck",
+    "country": "Austria",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 47.2692,
+    "longitude": 11.4041,
+    "sceneLabel": "Rua alpina compacta",
+    "sceneNote": "Fachadas claras, relevo montanhoso e luz fria de vale.",
+    "prompt": "Observa a mistura de centro historico compacto, telhados inclinados e pano de fundo montanhoso antes de escolheres o teu palpite.",
+    "visualGradient": ["#d8b590", "#5e7f92", "#173340"],
+    "clues": [
+      { "label": "Arquitetura", "value": "Fachadas compactas e telhados inclinados", "confidence": "Alta" },
+      { "label": "Relevo", "value": "Vale alpino com montanha muito presente", "confidence": "Alta" },
+      { "label": "Sinaletica", "value": "Ambiente germanico mas sem texto dominante", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "porto-ribeira",
+    "title": "Ribeira historica",
+    "city": "Porto",
+    "country": "Portugal",
+    "region": "europe",
+    "category": "riverfront",
+    "latitude": 41.1402,
+    "longitude": -8.611,
+    "sceneLabel": "Frente ribeirinha colorida",
+    "sceneNote": "Declive urbano, azulejo discreto e margem de rio larga.",
+    "prompt": "Repara na topografia em socalco, na linguagem das fachadas e na relacao da cidade com o rio.",
+    "visualGradient": ["#f0b36e", "#b84f4f", "#233f58"],
+    "clues": [
+      { "label": "Topografia", "value": "Cidade com forte declive sobre rio", "confidence": "Alta" },
+      { "label": "Fachadas", "value": "Paleta quente e densa junto a frente de agua", "confidence": "Media" },
+      { "label": "Contexto", "value": "Ambiente atlantico do sul da Europa", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "bruges-canal",
+    "title": "Canal medieval",
+    "city": "Bruges",
+    "country": "Belgium",
+    "region": "europe",
+    "category": "canal-city",
+    "latitude": 51.2093,
+    "longitude": 3.2247,
+    "sceneLabel": "Canal e alvenaria gotica",
+    "sceneNote": "Agua calma, tijolo escuro e malha urbana muito ordenada.",
+    "prompt": "A combinacao entre canal, tijolo e escala medieval ajuda a limitar bastante a area geografica.",
+    "visualGradient": ["#af7e5b", "#3f5966", "#10202b"],
+    "clues": [
+      { "label": "Material", "value": "Tijolo dominante e coberturas escuras", "confidence": "Alta" },
+      { "label": "Hidrografia", "value": "Canal urbano estreito e controlado", "confidence": "Alta" },
+      { "label": "Escala", "value": "Centro antigo muito preservado", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "tallinn-old-town",
+    "title": "Cidade medieval baltica",
+    "city": "Tallinn",
+    "country": "Estonia",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 59.437,
+    "longitude": 24.7536,
+    "sceneLabel": "Pedra fria e torres estreitas",
+    "sceneNote": "Paredes espessas, luz baixa e atmosfera baltica.",
+    "prompt": "O frio visual, a densidade muralhada e o desenho das coberturas apontam para o norte da Europa.",
+    "visualGradient": ["#c9c0b0", "#647b88", "#14222b"],
+    "clues": [
+      { "label": "Clima visual", "value": "Luz fria e atmosfera austera", "confidence": "Alta" },
+      { "label": "Defesa urbana", "value": "Vestigios de muralha e torres", "confidence": "Media" },
+      { "label": "Regiao", "value": "Norte ou Baltico mais plausivel do que centro-sul", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "prague-bridge-view",
+    "title": "Vista monumental fluvial",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "region": "europe",
+    "category": "bridge-view",
+    "latitude": 50.0865,
+    "longitude": 14.4114,
+    "sceneLabel": "Rio largo e torres monumentais",
+    "sceneNote": "Eixos visuais fortes, pedra clara e horizonte monumental.",
+    "prompt": "Aqui interessa separar uma capital centro-europeia monumental de um centro historico alpino ou baltico.",
+    "visualGradient": ["#d8c3a1", "#7a5d56", "#1d3445"],
+    "clues": [
+      { "label": "Escala", "value": "Capital monumental com eixo fluvial forte", "confidence": "Alta" },
+      { "label": "Material", "value": "Pedra clara e torres marcantes", "confidence": "Media" },
+      { "label": "Tipologia", "value": "Ponte historica de forte presenca urbana", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "split-waterfront",
+    "title": "Marginal mediterranica",
+    "city": "Split",
+    "country": "Croatia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 43.5081,
+    "longitude": 16.4402,
+    "sceneLabel": "Passeio costeiro ensolarado",
+    "sceneNote": "Palmeiras discretas, pedra clara e mar muito presente.",
+    "prompt": "Tenta distinguir um porto mediterranico adriatico de cenarios ibericos ou italianos.",
+    "visualGradient": ["#f7c46b", "#6db6b5", "#15364a"],
+    "clues": [
+      { "label": "Clima", "value": "Luz quente e costa muito aberta", "confidence": "Alta" },
+      { "label": "Material", "value": "Pedra clara e frente de agua ordenada", "confidence": "Media" },
+      { "label": "Regiao", "value": "Adriatico plausivel", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "amsterdam-canals",
+    "title": "Canal linear urbano",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "region": "europe",
+    "category": "canal-city",
+    "latitude": 52.3676,
+    "longitude": 4.9041,
+    "sceneLabel": "Canal largo com frentes estreitas",
+    "sceneNote": "Bicicletas, agua domesticada e casas altas e estreitas.",
+    "prompt": "Distingue uma cidade de canais do noroeste europeu entre variantes belgas e neerlandesas.",
+    "visualGradient": ["#d3a57a", "#5f7382", "#11232e"],
+    "clues": [
+      { "label": "Malha urbana", "value": "Frentes estreitas e regulares", "confidence": "Alta" },
+      { "label": "Mobilidade", "value": "Cultura urbana de bicicleta muito evidente", "confidence": "Media" },
+      { "label": "Agua", "value": "Canal largo e altamente integrado", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "budapest-buda-view",
+    "title": "Margem monumental danubiana",
+    "city": "Budapest",
+    "country": "Hungary",
+    "region": "europe",
+    "category": "riverfront",
+    "latitude": 47.4979,
+    "longitude": 19.0402,
+    "sceneLabel": "Rio largo e colina urbana",
+    "sceneNote": "Rio dominante, relevo suave e arquitetura monumental.",
+    "prompt": "Procura distinguir um rio imperial centro-europeu de capitais mais ocidentais.",
+    "visualGradient": ["#d7b27c", "#74849c", "#192c3d"],
+    "clues": [
+      { "label": "Escala fluvial", "value": "Curso de agua muito largo", "confidence": "Alta" },
+      { "label": "Relevo", "value": "Cidade dividida entre margem plana e colina", "confidence": "Media" },
+      { "label": "Estilo", "value": "Monumentalidade de capital centro-europeia", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "bern-old-town",
+    "title": "Arcadas urbanas",
+    "city": "Bern",
+    "country": "Switzerland",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 46.948,
+    "longitude": 7.4474,
+    "sceneLabel": "Arcadas e pedra neutra",
+    "sceneNote": "Centro limpo, pedra regular e ordem urbana muito marcada.",
+    "prompt": "A limpeza formal e as arcadas ajudam a separar este desafio de outros centros alpinos.",
+    "visualGradient": ["#d8c2a7", "#728292", "#1a3141"],
+    "clues": [
+      { "label": "Espaco publico", "value": "Arcadas corridas e desenho muito regular", "confidence": "Alta" },
+      { "label": "Contexto", "value": "Centro alpino mais contido e institucional", "confidence": "Media" },
+      { "label": "Leitura", "value": "Ambiente centro-europeu rico mas discreto", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "lucca-wall",
+    "title": "Muralha e telhado toscano",
+    "city": "Lucca",
+    "country": "Italy",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 43.8429,
+    "longitude": 10.5027,
+    "sceneLabel": "Tijolo quente e perfil baixo",
+    "sceneNote": "Telhados de terracota, horizontalidade e muralha evidente.",
+    "prompt": "Aqui interessa perceber o sul europeu interior e evitar confusoes com ambientes alpinos ou ibericos.",
+    "visualGradient": ["#d28b63", "#8b6a57", "#213245"],
+    "clues": [
+      { "label": "Coberturas", "value": "Terracota dominante", "confidence": "Alta" },
+      { "label": "Estrutura", "value": "Muralha urbana de leitura clara", "confidence": "Media" },
+      { "label": "Latitude cultural", "value": "Sul da Europa interior", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "stockholm-gamla-stan",
+    "title": "Bairro antigo nordico",
+    "city": "Stockholm",
+    "country": "Sweden",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 59.3251,
+    "longitude": 18.0711,
+    "sceneLabel": "Rua estreita nordica",
+    "sceneNote": "Paleta fria, quarteirao estreito e densidade controlada.",
+    "prompt": "A leitura aqui depende de distinguir o norte escandinavo do Baltico medieval.",
+    "visualGradient": ["#d1a47b", "#5d7386", "#0f2130"],
+    "clues": [
+      { "label": "Clima visual", "value": "Atmosfera fria e limpa", "confidence": "Alta" },
+      { "label": "Forma urbana", "value": "Rua estreita mas menos muralhada", "confidence": "Media" },
+      { "label": "Regiao", "value": "Escandinavia plausivel", "confidence": "Media" }
+    ]
+  },
+  {
+    "id": "seville-plaza",
+    "title": "Praca iberica ensolarada",
+    "city": "Seville",
+    "country": "Spain",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 37.3891,
+    "longitude": -5.9845,
+    "sceneLabel": "Praca ampla e calor seco",
+    "sceneNote": "Escala generosa, luz forte e ambiencia claramente iberica.",
+    "prompt": "Distingue um centro quente iberico de outras cidades mediterranicas com frentes de agua.",
+    "visualGradient": ["#f3bf75", "#c97353", "#274055"],
+    "clues": [
+      { "label": "Clima", "value": "Luz muito forte e calor seco", "confidence": "Alta" },
+      { "label": "Espaco publico", "value": "Praca ampla mais do que rua ou canal", "confidence": "Media" },
+      { "label": "Regiao", "value": "Sudoeste europeu", "confidence": "Media" }
+    ]
+  }
+]
