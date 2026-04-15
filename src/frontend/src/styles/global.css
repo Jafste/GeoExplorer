@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Instrument Sans", sans-serif;
+  --font-display: "Chakra Petch", sans-serif;
+
+  --color-background: #10101c;
+  --color-content: #f7f7fc;
+  --color-surface: #1a1a2e;
+  --color-surface-strong: #563b9a;
+  --color-muted: #b8b6d4;
+  --color-primary: #97e851;
+  --color-primary-strong: #6cb928;
+  --color-secondary: #fecd19;
+  --color-accent: #e94560;
+  --color-brand: #7950e5;
+  --color-border: #a19bd9;
+
+  --color-geoguessr-50: #f1fbe5;
+  --color-geoguessr-100: #e2f8ca;
+  --color-geoguessr-200: #cbed9b;
+  --color-geoguessr-300: #afe168;
+  --color-geoguessr-400: #97e851;
+  --color-geoguessr-500: #82d93d;
+  --color-geoguessr-600: #6cb928;
+  --color-geoguessr-700: #57981e;
+  --color-geoguessr-800: #427317;
+  --color-geoguessr-900: #2f5212;
+  --color-geoguessr-950: #18280a;
+  --color-geoguessr-purple-50: #7950e5;
+  --color-geoguessr-purple-100: #1a1a2e;
+  --color-geoguessr-yellow-50: #fecd19;
+  --color-geoguessr-orange-50: #ffa43d;
+  --color-geoguessr-red-50: #e94560;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-content antialiased;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+}
+
+:root {
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-content);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(121, 80, 229, 0.2), transparent 24%),
+    radial-gradient(circle at 82% 14%, rgba(151, 232, 81, 0.14), transparent 18%),
+    linear-gradient(180deg, #10101c 0%, #17172a 46%, #0b0b14 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --bg-surface: rgba(26, 26, 46, 0.88);
+  --bg-card: rgba(255, 255, 255, 0.045);
+  --bg-card-strong: rgba(121, 80, 229, 0.12);
+  --line: rgba(161, 155, 217, 0.16);
+  --line-strong: rgba(217, 215, 240, 0.28);
+  --text-main: #f7f7fc;
+  --text-muted: #b8b6d4;
+  --primary: #97e851;
+  --primary-strong: #6cb928;
+  --secondary: #fecd19;
+  --brand: #7950e5;
+  --danger: #e94560;
+  --marker: #ffa43d;
+  --shadow: 0 36px 90px rgba(8, 8, 20, 0.5);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(217, 215, 240, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 215, 240, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 70%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  width: min(1480px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 24px 0 80px;
+}

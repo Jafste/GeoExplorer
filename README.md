@@ -2,141 +2,103 @@
 
 > Plataforma web de jogos de geolocalização para treino em OSINT, com desafios baseados em locais de interesse georreferenciados na Europa.
 
-
 **Estudante:** Marcos Monteiro · 1902045  
 **Orientador:** Pedro Pestana  
 **UC:** Projecto de Engenharia Informática · Universidade Aberta · 2025/26  
-**Repositório:** https://github.com/Jafste/GeoExplorer  
+**Repositório:** https://github.com/Jafste/GeoExplorer
 
 ---
 
 ## Estado actual
 
-<!-- Actualizar a cada entrega. Escolher um estado e apagar os outros. -->
-
-🟢 **Verde** — Proposta aprovada e estrutura inicial do projeto em preparação.  
-🟡 **Amarelo** — [Descrever o que está em risco ou bloqueado, numa linha.]  
-🔴 **Vermelho** — [Descrever o problema crítico, numa linha.]  
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados e base técnica do frontend preparada com React, TypeScript, Vite, Tailwind e componentes reutilizáveis. As páginas do jogo, os dados `mock` e o backend ficam para a fase seguinte.
 
 ---
 
 ## O que está implementado
 
-<!-- Lista das funcionalidades do MVP que estão funcionais. -->
-<!-- Ser específico: não "o login está feito" mas "autenticação por email/password com JWT, sessão persistente em localStorage." -->
-
-- [x] Proposta de projeto — aprovada pelo orientador
-- [x] Sinopse, MVP, stack tecnológica e esboço de arquitetura definidos
-- [x] Delimitação do MVP — modo individual com locais de interesse georreferenciados na Europa
-- [x] Definição inicial da arquitetura e das opções tecnológicas principais
+- [x] Proposta de projeto aprovada e documentação de âmbito preenchida
+- [x] Wireframes e artefactos de arquitetura normalizados para o template
+- [x] Frontend inicial com React + TypeScript + Vite
+- [x] Sistema visual base com Tailwind e paleta inicial do projeto
+- [x] Componentes UI e helpers de layout reutilizáveis para a interface
+- [x] Execução local do frontend preparada
 
 ---
 
 ## O que está pendente
 
-<!-- O que falta do MVP e porquê. Se algo foi descontinuado, explicar a decisão. -->
-
-- [ ] Implementação do frontend em React — interface inicial, navegação entre ecrãs e interação com mapa
-- [ ] Implementação da API em .NET 8 — gestão de sessões, rondas, pontuação e persistência
-- [ ] Definição final da fonte dos dados — escolha entre dataset curado, APIs externas ou abordagem híbrida
-- [ ] Preparação do dataset inicial — locais de interesse georreferenciados na Europa com metadados e conteúdo visual
-- [ ] Implementação do cálculo de pontuação — regra baseada na distância entre palpite e localização correta
-- [ ] Registo de resultados — persistência de sessões, rondas e pontuações
-- [ ] Avaliação de extensões futuras — modos adicionais e eventual multijogador, caso o tempo de desenvolvimento o permita
+- [ ] Implementar as páginas principais do MVP no frontend
+- [ ] Introduzir a camada de dados abstrata com suporte a `mock` e `api`
+- [ ] Criar o dataset inicial de desenvolvimento e os contratos de jogo
+- [ ] Preparar a execução do frontend com Docker como forma complementar de arranque
+- [ ] Introduzir o backend ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
+- [ ] Integrar persistência real em PostgreSQL no backend
+- [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
+- [ ] Adicionar testes automáticos aos fluxos principais do frontend e backend
+- [ ] Avaliar extensões futuras, incluindo modo multijogador assíncrono, apenas após estabilização do núcleo
 
 ---
 
 ## Como instalar e correr
 
-<!-- Instruções que funcionam numa máquina limpa. Se não funcionar na demo, não conta como feito. -->
-
 ### Pré-requisitos
 
-```
+```text
 Node.js 20+
-.NET 8 SDK
-PostgreSQL (ou instância Supabase)
 Docker
 ```
 
-### Instalação
+### Execução local
 
 ```bash
-a definir ainda mas será algo do tipo
-
-# 1. Clonar o repositório
-git clone (https://github.com/Jafste/GeoExplorer)
-cd GeoExplorer
-
-# 2. Instalar dependências do frontend
-cd frontend
-npm i
-
-# 3. Restaurar dependências do backend
-cd ../api
-dotnet restore
-
-# 4. Configurar variáveis de ambiente
-
-cp .env.example .env (ainda não está decidido)
-# Editar .env com os valores corretos
-
-# 5. Correr backend
-cd ../api
-dotnet run
-
-# 6. Correr frontend
-cd ../frontend
+# Frontend
+cd src/frontend
+npm install
 npm run dev
-
 ```
 
 ### Acesso
 
+```text
+Frontend local: http://localhost:5173
 ```
-a definir
-mas algo do tipo:
-Frontend: http://localhost:5173
-Backend: http://localhost:5000 ou https://localhost:5001
-```
+
+Nesta fase, o frontend corresponde apenas à base técnica e visual. O fluxo jogável, os dados `mock`, a execução via Docker e a integração com API serão introduzidos nos próximos incrementos.
 
 ---
 
 ## Decisões de arquitectura principais
 
-<!-- 2 a 4 decisões relevantes com justificação breve. Para o detalhe completo, ver docs/architecture/adr/. -->
-
 | Decisão | Alternativa considerada | Razão da escolha |
 |---------|------------------------|-----------------|
-| React | Angular | React foi escolhido por maior familiaridade prévia e por se adequar bem à construção de interfaces interativas e modulares, o que é relevante para uma aplicação com mapas, múltiplos ecrãs e atualização dinâmica do estado do jogo.|
-|.NET 8 Web API | - | .NET 8 Web API foi escolhido por maior experiência prévia no ecossistema e por permitir uma separação clara da lógica de negócio, oferecendo uma base robusta e previsível para o backend da aplicação.|
-|PostgreSQL / Supabase | MySQL / base de dados local |PostgreSQL foi escolhido por ser um modelo relacional sólido para guardar sessões, rondas, respostas e pontuações. O recurso a Supabase foi considerado interessante por facilitar o alojamento online da base de dados e permitir acompanhamento e teste do projeto sem necessidade de execução exclusivamente local.
-|Dataset europeu de locais de interesse georreferenciados| Cobertura global dinâmica desde o início | Foi escolhido um dataset mais controlado e delimitado ao contexto europeu para reduzir risco técnico, aumentar previsibilidade da demonstração e garantir um MVP mais sólido e verificável.|
-| Docker | Execução totalmente manual | Docker foi considerado útil para uniformizar o ambiente de desenvolvimento e facilitar a integração e eventual deploy dos componentes principais, especialmente na articulação entre frontend React, backend .NET e serviços auxiliares.|
+| React + TypeScript | Angular | Permite construir rapidamente a interface do jogo e manter uma base de frontend tipada e extensível. |
+| ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
+| PostgreSQL | Ficheiros locais ou MySQL | Ajusta-se bem à persistência relacional de sessões, rondas, palpites e pontuação. |
+| Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final. |
+| Docker Compose com perfis | Execução apenas manual | Fica previsto para uniformizar o arranque do projeto quando frontend, backend e base de dados estiverem ligados. |
+
+Para detalhe adicional, ver [`docs/architecture/adr`]
 
 ---
 
 ## Referências e IA utilizada
 
-<!-- Bibliotecas, APIs externas, tutoriais seguidos. -->
-<!-- Distinguir o que foi escrito de raiz do que foi adaptado ou gerado. -->
-
 ### Referências técnicas
-<!-- ainda não definido mas a ideia é esta-->
-- MapLibre
-- OpenStreetMap
-- Mapillary
-- Google Maps Platform
+
+- React
+- Vite
+- ASP.NET Core .NET 8
+- PostgreSQL
+- Docker Compose
 
 ### Ferramentas de IA utilizadas
 
-<!-- Obrigatório declarar. Não é penalizado. -->
-
 | Ferramenta | Para que foi usada |
 |-----------|-------------------|
-| ChatGPT | Apoio nos textos da proposta, clarificação da arquitetura e revisão de texto |
-| GitHub Copilot | comentários de commit no git |
+| ChatGPT / Codex | Apoio na proposta, clarificação da arquitetura, wireframes, planeamento do MVP e scaffold inicial do projeto |
+| GitHub Copilot | Apoio pontual no contexto de desenvolvimento e sugestões de código |
 
 ---
 
-*Última actualização: [25 Março 2026] · [Sem. 3]*
+*Última actualização: [15 Abril 2026] · [Sem. 5]*
