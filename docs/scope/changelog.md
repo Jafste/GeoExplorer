@@ -46,7 +46,7 @@
 
 ---
 
-## Sem. 6 · 22–25 abr
+## Sem. 6 · 20–25 abr
 
 **Feito:**  
 **Bloqueou:**  

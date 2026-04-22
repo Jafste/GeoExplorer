@@ -5,6 +5,7 @@ import { RoundBriefingPanel } from "./components/RoundBriefingPanel";
 import { RoundCornerHud } from "./components/RoundCornerHud";
 import { RoundMinimapDock } from "./components/RoundMinimapDock";
 import { RoundStatusStrip } from "./components/RoundStatusStrip";
+import { RoundTelemetryFooter } from "./components/RoundTelemetryFooter";
 
 interface RoundPageProps {
   busy: boolean;
@@ -80,7 +81,7 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
           />
 
           <div className="round-scene-callout">
-            <span className="muted-eyebrow">Scene read</span>
+            <span className="muted-eyebrow">Leitura da cena</span>
             <strong>{round.challenge.sceneLabel}</strong>
             <p>{round.challenge.sceneNote}</p>
           </div>
@@ -91,11 +92,6 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
             onSubmit={onSubmit}
             round={round}
           />
-
-          <div aria-hidden="true" className="round-navigation-hint">
-            <span className="round-navigation-arrow round-navigation-arrow-up" />
-            <span className="round-navigation-arrow round-navigation-arrow-down" />
-          </div>
 
           <RoundMinimapDock
             busy={busy}
@@ -118,7 +114,18 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
             timed={round.timed}
           />
 
-          <RoundCornerHud timed={round.timed} />
+          <RoundCornerHud
+            guess={guess}
+            mapOpen={mapHovered || mapPinnedOpen}
+            timed={round.timed}
+          />
+
+          <RoundTelemetryFooter
+            guess={guess}
+            mapOpen={mapHovered || mapPinnedOpen}
+            remainingSeconds={remainingSeconds}
+            round={round}
+          />
         </div>
       </div>
     </section>

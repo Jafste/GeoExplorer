@@ -26,7 +26,7 @@ export function RoundMinimapDock({
   timed,
 }: RoundMinimapDockProps) {
   const mapOpen = mapHovered || mapPinnedOpen;
-  const mapToggleLabel = mapPinnedOpen ? "Collapse map" : mapOpen ? "Keep map open" : "Open map";
+  const mapToggleLabel = mapPinnedOpen ? "Fechar mapa" : mapOpen ? "Fixar aberto" : "Abrir mapa";
 
   return (
     <div
@@ -61,17 +61,17 @@ export function RoundMinimapDock({
         <div className="round-minimap-copy">
           <div className="round-minimap-copy-item">
             <MapPinned size={16} strokeWidth={2.1} />
-            <span>{guess ? guess.label : "Hover or tap to place a pin"}</span>
+            <span>{guess ? guess.label : "Passa o rato ou toca para marcar"}</span>
           </div>
 
           <div className="round-minimap-copy-item">
             <LocateFixed size={16} strokeWidth={2.1} />
-            <span>{mapOpen ? "Click anywhere on Europe" : "Minimap dock"}</span>
+            <span>{mapOpen ? "Clica no mapa da Europa" : "Minimapa tático"}</span>
           </div>
 
           <div className="round-minimap-copy-item">
             <Compass size={16} strokeWidth={2.1} />
-            <span>{timed ? "Timer is live" : "Untimed session"}</span>
+            <span>{timed ? "Cronómetro ativo" : "Sessão livre"}</span>
           </div>
         </div>
       </div>

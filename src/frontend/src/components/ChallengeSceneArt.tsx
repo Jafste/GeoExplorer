@@ -12,6 +12,21 @@ export function ChallengeSceneArt({ challenge }: ChallengeSceneArtProps) {
     "--scene-color-c": challenge.visualGradient[2],
   } as CSSProperties;
 
+  if (challenge.sceneImage) {
+    return (
+      <div className={`scene-art scene-art--photo scene-art--${challenge.category}`} style={style}>
+        <img
+          alt=""
+          aria-hidden="true"
+          className="scene-photo"
+          draggable={false}
+          loading="eager"
+          src={challenge.sceneImage}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`scene-art scene-art--${challenge.category}`} style={style}>
       <div className="scene-art-sky" />

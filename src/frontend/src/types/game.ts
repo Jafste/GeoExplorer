@@ -1,6 +1,6 @@
 export type DataMode = "mock" | "api";
 
-export type Confidence = "Alta" | "Media" | "Baixa";
+export type Confidence = "Alta" | "Média" | "Baixa";
 
 export interface ChallengeClue {
   label: string;
@@ -19,6 +19,7 @@ export interface SeedLocation {
   longitude: number;
   sceneLabel: string;
   sceneNote: string;
+  sceneImage?: string;
   prompt: string;
   visualGradient: [string, string, string];
   clues: ChallengeClue[];

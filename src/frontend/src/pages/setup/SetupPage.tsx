@@ -17,22 +17,22 @@ export function SetupPage({
   onSubmit,
 }: SetupScreenProps) {
   const [config, setConfig] = useState<SessionConfig>(initialConfig);
-  const paceLabel = config.timed ? `${config.roundTimeSeconds}s / round` : "No timer";
+  const paceLabel = config.timed ? `${config.roundTimeSeconds}s / ronda` : "Sem cronómetro";
 
   return (
     <section className="screen-shell">
       <div className="section-header section-header-inline">
         <div className="setup-header-copy">
-          <div className="eyebrow">ready the match</div>
-          <h2 className="section-title">Tune the session before the first round.</h2>
+          <div className="eyebrow">pré-lançamento</div>
+          <h2 className="section-title">Afinar parâmetros antes da primeira ronda.</h2>
         </div>
 
         <div className="setup-header-actions">
           <button className="button button-ghost button-compact" onClick={onOpenTutorial} type="button">
-            Replay tutorial
+            Rever tutorial
           </button>
           <button className="button button-subtle button-compact" onClick={onBack} type="button">
-            Back
+            Regressar
           </button>
         </div>
       </div>
@@ -40,7 +40,7 @@ export function SetupPage({
       <div className="setup-stage">
         <article className="setup-panel setup-panel-main">
           <div className="setup-field">
-            <p className="field-label">Round count</p>
+            <p className="field-label">Número de rondas</p>
             <div className="toggle-row">
               {[3, 5, 7].map((value) => (
                 <button
@@ -49,14 +49,14 @@ export function SetupPage({
                   onClick={() => setConfig((current) => ({ ...current, roundCount: value }))}
                   type="button"
                 >
-                  {value} rounds
+                  {value} rondas
                 </button>
               ))}
             </div>
           </div>
 
           <div className="setup-field">
-            <p className="field-label">Timer mode</p>
+            <p className="field-label">Modo de tempo</p>
             <div className="toggle-row">
               <button
                 className={`chip ${!config.timed ? "chip-highlight" : "chip-soft"}`}
@@ -65,7 +65,7 @@ export function SetupPage({
                 }
                 type="button"
               >
-                Untimed
+                Livre
               </button>
               <button
                 className={`chip ${config.timed ? "chip-highlight" : "chip-soft"}`}
@@ -78,14 +78,14 @@ export function SetupPage({
                 }
                 type="button"
               >
-                Timed
+                Cronometrado
               </button>
             </div>
           </div>
 
           {config.timed ? (
             <div className="setup-field">
-              <p className="field-label">Time per round</p>
+              <p className="field-label">Tempo por ronda</p>
               <div className="toggle-row">
                 {[45, 60, 90].map((value) => (
                   <button
@@ -105,24 +105,24 @@ export function SetupPage({
 
           <div className="setup-meta-row">
             <div className="setup-stat">
-              <span className="muted-eyebrow">Region</span>
-              <strong>Europe</strong>
+              <span className="muted-eyebrow">Região</span>
+              <strong>Europa</strong>
             </div>
 
             <div className="setup-stat">
-              <span className="muted-eyebrow">Pace</span>
+              <span className="muted-eyebrow">Ritmo</span>
               <strong>{paceLabel}</strong>
             </div>
 
             <div className="setup-stat">
-              <span className="muted-eyebrow">Mode</span>
-              <strong>Classic solo</strong>
+              <span className="muted-eyebrow">Modo</span>
+              <strong>Solo clássico</strong>
             </div>
           </div>
 
           <div className="action-row action-row-spread">
             <button className="button button-ghost" onClick={onBack} type="button">
-              Return
+              Cancelar
             </button>
 
             <button
@@ -131,20 +131,20 @@ export function SetupPage({
               onClick={() => onSubmit(config)}
               type="button"
             >
-              {busy ? "Starting..." : "Launch match"}
+              {busy ? "A iniciar..." : "Lançar missão"}
             </button>
           </div>
         </article>
 
         <article className="setup-panel setup-panel-preview">
           <div className="setup-preview-top">
-            <span className="muted-eyebrow">Session preview</span>
-            <span className="setup-preview-badge">{config.roundCount} rounds</span>
+            <span className="muted-eyebrow">Pré-visualização</span>
+            <span className="setup-preview-badge">{config.roundCount} rondas</span>
           </div>
 
           <div className="setup-preview-window">
             <div className="setup-preview-score">
-              <span className="muted-eyebrow">Opening HUD</span>
+              <span className="muted-eyebrow">HUD inicial</span>
               <strong>0 pts</strong>
             </div>
 
@@ -155,26 +155,26 @@ export function SetupPage({
             <div className="setup-preview-point setup-preview-point-c" />
 
             <div className="setup-preview-card">
-              <span className="muted-eyebrow">Selected pace</span>
+              <span className="muted-eyebrow">Ritmo selecionado</span>
               <strong>{paceLabel}</strong>
-              <p>Short prep. Clean map. Fast rounds.</p>
+              <p>Preparação curta, leitura clara, decisão rápida.</p>
             </div>
           </div>
 
           <div className="setup-preview-grid">
             <div className="setup-preview-cell">
-              <span className="muted-eyebrow">Flow</span>
-              <strong>Setup → Guess → Score</strong>
+              <span className="muted-eyebrow">Fluxo</span>
+              <strong>Preparar → Marcar → Pontuar</strong>
             </div>
 
             <div className="setup-preview-cell">
               <span className="muted-eyebrow">Tutorial</span>
-              <strong>Replay anytime</strong>
+              <strong>Disponível a qualquer momento</strong>
             </div>
 
             <div className="setup-preview-cell setup-preview-cell-wide">
-              <span className="muted-eyebrow">Scope</span>
-              <strong>Europe, solo, timer optional.</strong>
+              <span className="muted-eyebrow">Âmbito</span>
+              <strong>Europa, solo, com cronómetro opcional.</strong>
             </div>
           </div>
         </article>

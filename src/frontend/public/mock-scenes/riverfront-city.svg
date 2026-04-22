@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="800" y1="40" x2="800" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8DBAE4" />
+      <stop offset=".48" stop-color="#D6D2C4" />
+      <stop offset="1" stop-color="#E4C090" />
+    </linearGradient>
+    <linearGradient id="water" x1="800" y1="420" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7A8EA8" />
+      <stop offset=".48" stop-color="#385169" />
+      <stop offset="1" stop-color="#141E2B" />
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" />
+    </filter>
+    <filter id="grain" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="2" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.08" />
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)" />
+  <g filter="url(#blur)" opacity=".82">
+    <ellipse cx="400" cy="140" rx="112" ry="34" fill="#F9F8F3" />
+    <ellipse cx="1080" cy="122" rx="136" ry="42" fill="#FBFBF7" />
+  </g>
+
+  <path d="M0 434L210 404L368 426L564 366L812 414L1040 334L1286 422L1600 374V540H0V434Z" fill="#58616C" opacity=".46"/>
+
+  <path d="M0 442H1600V900H0V442Z" fill="url(#water)" />
+  <path d="M0 592C134 566 242 566 364 592C496 620 604 622 744 592C896 558 1036 556 1176 588C1328 624 1448 624 1600 594V900H0V592Z" fill="#2B3C51" opacity=".72"/>
+  <path d="M0 626C148 596 252 598 376 626C504 654 636 652 772 624C910 596 1048 592 1184 624C1324 658 1450 656 1600 628" stroke="#D9E4EC" stroke-opacity=".12" stroke-width="18"/>
+
+  <path d="M152 432L422 306L480 330L512 520L132 562L152 432Z" fill="#C57D58" />
+  <path d="M396 362L638 270L680 296L704 510L458 534L396 362Z" fill="#E0AE79" />
+  <path d="M618 346L828 248L868 280L884 500L678 520L618 346Z" fill="#BA4B46" />
+  <path d="M826 346L1048 268L1086 298L1104 496L894 516L826 346Z" fill="#D5BF9A" />
+
+  <path d="M1250 368L1454 292L1490 320L1524 520L1304 552L1250 368Z" fill="#826151" />
+  <path d="M1080 368L1264 298L1304 332L1320 512L1144 532L1080 368Z" fill="#D69C6A" />
+
+  <rect x="304" y="234" width="58" height="204" rx="10" fill="#D8D3C9" />
+  <polygon points="332,118 390,234 274,234" fill="#6B4C46" />
+  <rect x="970" y="188" width="44" height="248" rx="10" fill="#E0D7CC" />
+  <polygon points="992,84 1044,188 940,188" fill="#62556A" />
+  <rect x="1214" y="222" width="34" height="166" rx="8" fill="#E5DCCB" />
+
+  <path d="M0 514H1600" stroke="#B7C7D4" stroke-opacity=".28" stroke-width="10" />
+  <path d="M0 544H1600" stroke="#0E1722" stroke-opacity=".34" stroke-width="18" />
+
+  <path d="M0 462C214 444 378 444 570 462C778 482 940 482 1138 462C1322 444 1466 442 1600 452" stroke="#2F3B48" stroke-width="14"/>
+  <path d="M580 436C714 418 874 420 1012 440C1126 456 1238 480 1360 512" stroke="#E8D7BE" stroke-opacity=".42" stroke-width="6"/>
+  <path d="M710 518L820 558L934 518" stroke="#D0D8E0" stroke-opacity=".4" stroke-width="4" stroke-linecap="round"/>
+
+  <rect x="0" y="0" width="1600" height="900" fill="#000" opacity=".08" />
+  <rect x="0" y="0" width="1600" height="900" filter="url(#grain)" opacity=".28" />
+</svg>

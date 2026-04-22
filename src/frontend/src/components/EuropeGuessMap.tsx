@@ -1,11 +1,24 @@
 import type { GuessCoordinates } from "../types/game";
 
+export interface MapHotspot {
+  label: string;
+  latitude: number;
+  longitude: number;
+  tone?: "primary" | "neutral" | "danger";
+  value?: string;
+}
+
 interface EuropeGuessMapProps {
+  actual?: GuessCoordinates | null;
+  comparisonDistanceKm?: number | null;
   guess: GuessCoordinates | null;
   compact?: boolean;
   disabled?: boolean;
-  onGuessChange: (guess: GuessCoordinates) => void;
+  hotspots?: MapHotspot[];
+  onGuessChange?: (guess: GuessCoordinates) => void;
+  showComparisonLine?: boolean;
   showFooter?: boolean;
+  showMarkerLabels?: boolean;
 }
 
 const EUROPE_BOUNDS = {
@@ -48,13 +61,20 @@ function findClosestReference(latitude: number, longitude: number) {
 }
 
 export function EuropeGuessMap({
+  actual = null,
+  comparisonDistanceKm = null,
   guess,
   compact = false,
   disabled = false,
+  hotspots = [],
   onGuessChange,
+  showComparisonLine = false,
   showFooter = true,
+  showMarkerLabels = false,
 }: EuropeGuessMapProps) {
   const marker = guess ? projectGuess(guess) : null;
+  const actualMarker = actual ? projectGuess(actual) : null;
+  const canInteract = !disabled && typeof onGuessChange === "function";
 
   return (
     <div className={`guess-map-card${compact ? " is-compact" : ""}`}>
@@ -62,7 +82,7 @@ export function EuropeGuessMap({
         className={`guess-map-surface${disabled ? " is-disabled" : ""}${compact ? " is-compact" : ""}`}
         aria-label="Mapa interativo da Europa para escolha do palpite"
         onClick={(event) => {
-          if (disabled) {
+          if (!canInteract) {
             return;
           }
 
@@ -75,7 +95,7 @@ export function EuropeGuessMap({
             EUROPE_BOUNDS.minLng + relativeX * (EUROPE_BOUNDS.maxLng - EUROPE_BOUNDS.minLng);
           const reference = findClosestReference(latitude, longitude);
 
-          onGuessChange({
+          onGuessChange?.({
             latitude: Number(latitude.toFixed(4)),
             longitude: Number(longitude.toFixed(4)),
             label: reference,
@@ -84,7 +104,7 @@ export function EuropeGuessMap({
         role="button"
         tabIndex={0}
         onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
+          if (canInteract && (event.key === "Enter" || event.key === " ")) {
             event.preventDefault();
             (event.currentTarget as HTMLDivElement).click();
           }
@@ -107,6 +127,23 @@ export function EuropeGuessMap({
         <div className="map-route map-route-b"></div>
         <div className="map-route map-route-c"></div>
 
+        {showComparisonLine && marker && actualMarker ? (
+          <svg
+            aria-hidden="true"
+            className="map-comparison-layer"
+            preserveAspectRatio="none"
+            viewBox="0 0 100 100"
+          >
+            <line
+              className="map-comparison-line"
+              x1={marker.x}
+              x2={actualMarker.x}
+              y1={marker.y}
+              y2={actualMarker.y}
+            />
+          </svg>
+        ) : null}
+
         {REFERENCE_CITIES.map((city) => {
           const point = projectGuess({
             latitude: city.latitude,
@@ -127,10 +164,46 @@ export function EuropeGuessMap({
           );
         })}
 
+        {hotspots.map((hotspot) => {
+          const point = projectGuess({
+            latitude: hotspot.latitude,
+            longitude: hotspot.longitude,
+            label: hotspot.label,
+          });
+
+          return (
+            <div
+              className={`map-hotspot map-hotspot--${hotspot.tone ?? "neutral"}`}
+              key={`${hotspot.label}-${hotspot.latitude}-${hotspot.longitude}`}
+              style={{ left: `${point.x}%`, top: `${point.y}%` }}
+            >
+              <span className="map-hotspot-core" />
+              <small>
+                {hotspot.label}
+                {hotspot.value ? ` · ${hotspot.value}` : ""}
+              </small>
+            </div>
+          );
+        })}
+
         {marker ? (
           <div className="map-marker" style={{ left: `${marker.x}%`, top: `${marker.y}%` }}>
             <div className="map-marker-pulse"></div>
             <div className="map-marker-core"></div>
+            {showMarkerLabels ? <small className="map-marker-label">Teu pino</small> : null}
+          </div>
+        ) : null}
+
+        {actualMarker ? (
+          <div className="map-actual-marker" style={{ left: `${actualMarker.x}%`, top: `${actualMarker.y}%` }}>
+            <div className="map-actual-core"></div>
+            {showMarkerLabels ? <small className="map-marker-label map-marker-label--actual">Local correto</small> : null}
+          </div>
+        ) : null}
+
+        {showComparisonLine && comparisonDistanceKm !== null && marker && actualMarker ? (
+          <div className="map-distance-callout">
+            <strong>{comparisonDistanceKm.toFixed(1)} km</strong>
           </div>
         ) : null}
       </div>
@@ -153,7 +226,7 @@ export function EuropeGuessMap({
             ) : (
               <>
                 <strong>Sem palpite ainda</strong>
-                <span>Clica no mapa para definir coordenadas aproximadas.</span>
+                <span>{canInteract ? "Clica no mapa para definir coordenadas aproximadas." : "Visualização estratégica da Europa."}</span>
               </>
             )}
           </div>

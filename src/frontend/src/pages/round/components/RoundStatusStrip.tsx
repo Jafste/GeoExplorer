@@ -16,12 +16,12 @@ export function RoundStatusStrip({
 }: RoundStatusStripProps) {
   return (
     <div className="round-floating-strip">
-      <span className="chip chip-soft">Round {roundNumber}/{totalRounds}</span>
+      <span className="chip chip-soft">Ronda {roundNumber}/{totalRounds}</span>
       <span className={`chip ${timed ? "chip-highlight" : "chip-soft"}`}>
         <Clock3 size={14} strokeWidth={2.1} />
-        {timed ? formatSeconds(remainingSeconds ?? 0) : "Untimed"}
+        {timed ? formatSeconds(remainingSeconds ?? 0) : "Livre"}
       </span>
-      <span className="chip chip-soft">Europe</span>
+      <span className="chip chip-soft">Europa</span>
     </div>
   );
 }

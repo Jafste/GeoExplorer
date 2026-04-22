@@ -6,6 +6,23 @@ export function formatSeconds(value: number) {
   return `${minutes}:${seconds}`;
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  "bridge-view": "Vista de ponte",
+  "canal-city": "Cidade de canais",
+  "historic-core": "Centro histórico",
+  plaza: "Praça urbana",
+  riverfront: "Frente ribeirinha",
+  waterfront: "Margem marítima",
+};
+
 export function formatCategoryLabel(category: string) {
-  return category.replace(/-/g, " ");
+  const mapped = CATEGORY_LABELS[category];
+  if (mapped) {
+    return mapped;
+  }
+
+  return category
+    .split("-")
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
 }

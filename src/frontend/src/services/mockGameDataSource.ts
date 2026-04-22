@@ -131,7 +131,7 @@ function getSession(sessionId: string): StoredSession {
   const session = sessions.get(sessionId);
 
   if (!session) {
-    throw new Error("Sessao nao encontrada.");
+    throw new Error("Sessão não encontrada.");
   }
 
   return session;
@@ -141,11 +141,11 @@ function getPendingRound(session: StoredSession, roundId: string): StoredRound {
   const pending = session.rounds.find((round) => round.id === roundId);
 
   if (!pending) {
-    throw new Error("Ronda nao encontrada.");
+    throw new Error("Ronda não encontrada.");
   }
 
   if (pending.result !== null) {
-    throw new Error("A ronda ja foi resolvida.");
+    throw new Error("A ronda já foi resolvida.");
   }
 
   return pending;
@@ -188,7 +188,7 @@ export function createMockGameDataSource(): GameDataSource {
       const currentRound = session.rounds[session.currentRoundIndex];
 
       if (!currentRound) {
-        throw new Error("A sessao ja terminou.");
+        throw new Error("A sessão já terminou.");
       }
 
       return buildRound(currentRound, session);

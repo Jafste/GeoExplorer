@@ -17,22 +17,22 @@ export function RoundBriefingPanel({
   return (
     <aside className="round-briefing-panel">
       <div className="round-briefing-head">
-        <span className="muted-eyebrow">Live round</span>
+        <span className="muted-eyebrow">Ronda ativa</span>
         <h2>{round.challenge.title}</h2>
         <p>{round.challenge.prompt}</p>
       </div>
 
       <div className="round-briefing-meta">
         <div className="round-briefing-meta-item">
-          <span className="muted-eyebrow">Target</span>
-          <strong>{round.challenge.country}</strong>
-          <span>{round.challenge.city}</span>
+          <span className="muted-eyebrow">Perfil</span>
+          <strong>{formatCategoryLabel(round.challenge.category)}</strong>
+          <span>Leitura visual em terreno europeu</span>
         </div>
 
         <div className="round-briefing-meta-item">
-          <span className="muted-eyebrow">Profile</span>
-          <strong>{formatCategoryLabel(round.challenge.category)}</strong>
-          <span>{round.timed ? "Timed round" : "Free round"}</span>
+          <span className="muted-eyebrow">Ritmo</span>
+          <strong>{round.timed ? "Cronómetro ativo" : "Sem cronómetro"}</strong>
+          <span>Uma única colocação no mapa</span>
         </div>
       </div>
 
@@ -50,12 +50,12 @@ export function RoundBriefingPanel({
 
       <div className="round-pin-panel">
         <div>
-          <span className="muted-eyebrow">Current pin</span>
-          <strong>{guess ? guess.label : "Not placed yet"}</strong>
+          <span className="muted-eyebrow">Pino atual</span>
+          <strong>{guess ? guess.label : "Sem marcação"}</strong>
           <p>
             {guess
               ? `${guess.latitude.toFixed(2)} / ${guess.longitude.toFixed(2)}`
-              : "Open the minimap and drop one pin on Europe."}
+              : "Abre o minimapa e marca um ponto aproximado na Europa."}
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export function RoundBriefingPanel({
           }}
           type="button"
         >
-          {busy ? "Resolving..." : "Submit guess"}
+          {busy ? "A resolver..." : "Enviar palpite"}
         </button>
       </div>
     </aside>

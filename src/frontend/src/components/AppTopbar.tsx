@@ -1,7 +1,6 @@
-import { CircleHelp, House, Play } from "lucide-react";
+import { House, Play, Radar, ScrollText } from "lucide-react";
+import type { SurfacePhase } from "../app/navigation";
 import type { SessionConfig } from "../types/game";
-
-type SurfacePhase = "landing" | "setup" | "round" | "round-result" | "session-result";
 
 interface AppTopbarProps {
   config: SessionConfig;
@@ -12,7 +11,22 @@ interface AppTopbarProps {
 }
 
 function getModeLabel(config: SessionConfig) {
-  return config.timed ? `${config.roundTimeSeconds ?? 0}s timer` : "untimed";
+  return config.timed ? `${config.roundTimeSeconds ?? 0}s` : "Livre";
+}
+
+function getPhaseLabel(phase: SurfacePhase) {
+  switch (phase) {
+    case "landing":
+      return "Centro de missão";
+    case "setup":
+      return "Configuração";
+    case "round":
+      return "Missão ativa";
+    case "round-result":
+      return "Resumo da ronda";
+    case "session-result":
+      return "Relatório final";
+  }
 }
 
 export function AppTopbar({
@@ -35,36 +49,39 @@ export function AppTopbar({
       >
         <span className="brand-mark" />
         <span className="brand-copy">
-          <span className="brand-title">GeoExplorer</span>
-          <span className="brand-subtitle">Explore Europe</span>
+          <span className="brand-title">GeoExplorer // TAC-OPS</span>
+          <span className="brand-subtitle">Treino geográfico europeu</span>
         </span>
       </button>
 
       {!isRound ? (
         <div className="topbar-center" aria-label="Modo atual">
-          <span className="hud-pill">Classic solo</span>
-          <span className="hud-pill hud-pill-quiet">Europe</span>
+          <span className="hud-pill hud-pill-active">
+            <Radar size={14} strokeWidth={2.1} />
+            {getPhaseLabel(phase)}
+          </span>
+          <span className="hud-pill hud-pill-quiet">Europa</span>
           <span className="hud-pill hud-pill-quiet">
-            {isLanding ? "Timed optional" : getModeLabel(config)}
+            {isLanding ? "Com ou sem cronómetro" : getModeLabel(config)}
           </span>
         </div>
       ) : null}
 
       <div className={`topbar-actions${isRound ? " topbar-actions--play" : ""}`}>
         <button className="button button-ghost button-compact" onClick={onOpenTutorial} type="button">
-          <CircleHelp size={16} strokeWidth={2.2} />
-          How to play
+          <ScrollText size={16} strokeWidth={2.2} />
+          Tutorial
         </button>
 
         {isLanding ? (
           <button className="button button-primary button-compact" onClick={onStart} type="button">
             <Play size={16} strokeWidth={2.2} />
-            Play now
+            Iniciar
           </button>
         ) : (
           <button className="button button-subtle button-compact" onClick={onHome} type="button">
             <House size={16} strokeWidth={2.2} />
-            Home
+            Base
           </button>
         )}
       </div>

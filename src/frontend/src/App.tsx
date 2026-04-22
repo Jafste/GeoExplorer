@@ -1,5 +1,7 @@
 import { startTransition, useEffect, useMemo, useState } from "react";
+import { getAnalysisPhase, type SurfacePhase } from "./app/navigation";
 import { appConfig, defaultSessionConfig } from "./app/config";
+import { AppSidebar } from "./components/AppSidebar";
 import { AppTopbar } from "./components/AppTopbar";
 import { TutorialOverlay } from "./components/TutorialOverlay";
 import { RoundResultPage } from "./pages/round-result/RoundResultPage";
@@ -15,7 +17,6 @@ import type {
   SessionResult,
 } from "./types/game";
 
-type Phase = "landing" | "setup" | "round" | "round-result" | "session-result";
 const TUTORIAL_STORAGE_KEY = "geoexplorer.tutorial.completed";
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
     []
   );
 
-  const [phase, setPhase] = useState<Phase>("landing");
+  const [phase, setPhase] = useState<SurfacePhase>("landing");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [config, setConfig] = useState<SessionConfig>(defaultSessionConfig);
@@ -68,7 +69,7 @@ export default function App() {
         setPhase("round");
       });
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "Nao foi possivel iniciar a sessao.");
+      setError(caughtError instanceof Error ? caughtError.message : "Não foi possível iniciar a sessão.");
     } finally {
       setBusy(false);
     }
@@ -87,7 +88,7 @@ export default function App() {
         setPhase("round-result");
       });
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "Nao foi possivel resolver a ronda.");
+      setError(caughtError instanceof Error ? caughtError.message : "Não foi possível resolver a ronda.");
     } finally {
       setBusy(false);
     }
@@ -117,7 +118,7 @@ export default function App() {
       }
     } catch (caughtError) {
       setError(
-        caughtError instanceof Error ? caughtError.message : "Nao foi possivel continuar a sessao."
+        caughtError instanceof Error ? caughtError.message : "Não foi possível continuar a sessão."
       );
     } finally {
       setBusy(false);
@@ -142,72 +143,105 @@ export default function App() {
     });
   };
 
-  const shellClassName = phase === "round" ? "app-shell app-shell--play" : "app-shell";
+  const openAnalysis = () => {
+    if (!roundResolution && !sessionResult) {
+      return;
+    }
+
+    setError(null);
+    startTransition(() => {
+      setPhase(
+        getAnalysisPhase({
+          roundResolution,
+          sessionResult,
+        })
+      );
+    });
+  };
+
+  const showSidebar = phase !== "round";
+  const shellClassName =
+    phase === "round" ? "app-shell app-shell--play" : "app-shell app-shell--hud";
+  const stageClassName = `app-main-stage${showSidebar ? " app-main-stage--hud" : ""}${phase === "round" ? " app-main-stage--play" : ""}`;
 
   return (
     <main className={shellClassName}>
-      <AppTopbar
-        config={config}
-        onHome={resetToHome}
-        onOpenTutorial={openTutorial}
-        onStart={goToSetup}
-        phase={phase}
-      />
-
-      {error ? <div className="alert-banner">{error}</div> : null}
-
-      {phase === "landing" ? (
-        <StartPage onOpenTutorial={openTutorial} onStart={goToSetup} />
-      ) : null}
-
-      {phase === "setup" ? (
-        <SetupPage
-          busy={busy}
-          initialConfig={config}
-          onBack={resetToHome}
-          onOpenTutorial={openTutorial}
-          onSubmit={(nextConfig) => {
-            void beginSession(nextConfig);
-          }}
-        />
-      ) : null}
-
-      {phase === "round" && currentRound && sessionId ? (
-        <RoundPage
-          busy={busy}
-          round={currentRound}
-          onSubmit={async (guess) => {
-            await resolveRound(() => dataSource.submitGuess(sessionId, currentRound.id, guess));
-          }}
-          onTimeout={async (guess) => {
-            await resolveRound(() => dataSource.timeoutRound(sessionId, currentRound.id, guess));
-          }}
-        />
-      ) : null}
-
-      {phase === "round-result" && roundResolution ? (
-        <RoundResultPage
-          busy={busy}
-          progress={roundResolution.progress}
-          result={roundResolution.result}
-          onContinue={() => {
-            void continueFlow();
-          }}
-          onHome={resetToHome}
-        />
-      ) : null}
-
-      {phase === "session-result" && sessionResult ? (
-        <SessionResultPage
-          busy={busy}
+      {showSidebar ? (
+        <AppSidebar
+          analysisEnabled={Boolean(roundResolution || sessionResult)}
           config={config}
-          result={sessionResult}
-          onReplay={() => {
-            void beginSession(config);
-          }}
           onHome={resetToHome}
+          onOpenAnalysis={openAnalysis}
+          onOpenTutorial={openTutorial}
+          onStart={goToSetup}
+          phase={phase}
         />
       ) : null}
+
+      <div className={stageClassName}>
+        <AppTopbar
+          config={config}
+          onHome={resetToHome}
+          onOpenTutorial={openTutorial}
+          onStart={goToSetup}
+          phase={phase}
+        />
+
+        {error ? <div className="alert-banner">{error}</div> : null}
+
+        {phase === "landing" ? (
+          <StartPage onOpenTutorial={openTutorial} onStart={goToSetup} />
+        ) : null}
+
+        {phase === "setup" ? (
+          <SetupPage
+            busy={busy}
+            initialConfig={config}
+            onBack={resetToHome}
+            onOpenTutorial={openTutorial}
+            onSubmit={(nextConfig) => {
+              void beginSession(nextConfig);
+            }}
+          />
+        ) : null}
+
+        {phase === "round" && currentRound && sessionId ? (
+          <RoundPage
+            busy={busy}
+            round={currentRound}
+            onSubmit={async (guess) => {
+              await resolveRound(() => dataSource.submitGuess(sessionId, currentRound.id, guess));
+            }}
+            onTimeout={async (guess) => {
+              await resolveRound(() => dataSource.timeoutRound(sessionId, currentRound.id, guess));
+            }}
+          />
+        ) : null}
+
+        {phase === "round-result" && roundResolution ? (
+          <RoundResultPage
+            busy={busy}
+            progress={roundResolution.progress}
+            result={roundResolution.result}
+            onContinue={() => {
+              void continueFlow();
+            }}
+            onHome={resetToHome}
+          />
+        ) : null}
+
+        {phase === "session-result" && sessionResult ? (
+          <SessionResultPage
+            busy={busy}
+            config={config}
+            result={sessionResult}
+            onReplay={() => {
+              void beginSession(config);
+            }}
+            onHome={resetToHome}
+          />
+        ) : null}
+      </div>
 
       {tutorialOpen ? <TutorialOverlay onDismiss={dismissTutorial} /> : null}
     </main>
