@@ -42,15 +42,15 @@
 
 **Feito:** implementação da primeira fatia jogável do frontend com React, TypeScript, Vite e Tailwind, incluindo ecrãs de arranque, configuração, ronda, resultados, tutorial local, camada `mock/api` e redesign da ronda com minimapa expansível.  
 **Bloqueou:** ausência de assets visuais reais para a ronda; nesta fase a experiência usa cenas estilizadas e dataset `mock` para validar o fluxo sem backend.  
-**Próxima semana:** iniciar o backend e a persistência, rever os backgrounds/mock visuals da ronda e preparar a integração entre frontend e API.
+**Próxima semana:** iniciar o backend e a persistência, rever os fundos visuais mock da ronda e preparar a integração entre frontend e API.
 
 ---
 
-## Sem. 6 · 22–25 abr
+## Sem. 6 · 20–25 abr
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** arranque do backend ASP.NET Core com endpoints de sessão, ronda atual, submissão de palpite, timeout e resultados; alinhamento do contrato API com o frontend `mock/api`; adição de Docker Compose com perfis; atualização do dataset com `sceneImage`; criação do schema SQL inicial e testes mínimos de contrato do backend.  
+**Bloqueou:** a persistência real ainda não está ligada ao backend; a escolha de alojamento hosted da base de dados será reavaliada depois de medir chamadas e padrão de leituras/escritas.  
+**Próxima semana:** estabilizar integração frontend + API, preparar demo interna, medir chamadas à camada de dados e decidir se a persistência segue diretamente para PostgreSQL/Supabase ou se Turso/libSQL merece ADR próprio.
 
 ---
 

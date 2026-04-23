@@ -1,4 +1,4 @@
-# Proposta de Projecto
+# Proposta de Projeto
 
 **Título:** GeoExplorer  
 **Estudante:** Marcos Monteiro · 1902045  
@@ -11,7 +11,7 @@
 ## Sinopse
 
 <!-- Três parágrafos máximo. -->
-<!-- §1: O problema que o projecto endereça e quem o tem. -->
+<!-- §1: O problema que o projeto endereça e quem o tem. -->
 <!-- §2: A solução proposta e o que a distingue do que já existe. -->
 <!-- §3: O resultado esperado e como se verifica que foi atingido. -->
 <!-- A sinopse deve ser legível por alguém sem formação técnica. -->
@@ -82,7 +82,7 @@ Quando a sessão termina, o sistema regista em base de dados a identificação d
 **Critério de aceitação:**  
 No MVP, a aplicação apresenta separação clara entre a lógica de seleção dos desafios, a lógica de temporizador, a lógica de pontuação e o registo de resultados, permitindo adicionar futuramente novos modos ou filtros geográficos sem reestruturar o núcleo principal.
 
-Como objetivo adicional não obrigatório para a versão final do projecto, considera-se a introdução de um modo multijogador, dependente da estabilidade do modo individual e do tempo disponível após conclusão do núcleo principal.
+Como objetivo adicional não obrigatório para a versão final do projeto, considera-se a introdução de um modo multijogador, dependente da estabilidade do modo individual e do tempo disponível após conclusão do núcleo principal.
 
 <!-- Adicionar funcionalidades conforme necessário -->
 
@@ -103,7 +103,7 @@ Como objetivo adicional não obrigatório para a versão final do projecto, cons
 
 ---
 
-## Esboço de arquitectura — C4 Nível 1
+## Esboço de arquitetura — C4 Nível 1
 
 <!-- Opcional mas recomendado se já houver clareza sobre a fronteira do sistema. -->
 <!-- Pode ser uma imagem, um diagrama em texto, ou uma descrição estruturada. -->
@@ -122,7 +122,7 @@ Como objetivo adicional não obrigatório para a versão final do projecto, cons
 
 ## Calendário individual detalhado
 
-<!-- Adaptar o template do Guia de Projecto ao projecto específico. -->
+<!-- Adaptar o template do Guia de Projeto ao projeto específico. -->
 <!-- As datas das três entregas formais são fixas. O restante é do estudante gerir. -->
 <!-- Ser realista: prever tempo para testes, revisão do relatório e preparação da defesa. -->
 

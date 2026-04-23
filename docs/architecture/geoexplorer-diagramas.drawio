@@ -1,0 +1,205 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="3">
+  <diagram id="c9498a9c-a25" name="Modelo de Dados">
+    <mxGraphModel dx="1530" dy="1090" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="GeoExplorer · Modelo de Dados" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=22;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="32" width="420" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Esquema relacional mínimo para suportar o MVP" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=16;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="60" y="74" width="520" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#335f86;strokeWidth=2;arcSize=14;align=left;verticalAlign=top;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="10" y="166" width="380" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="game_session" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="166" width="380" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="6" style="shape=line;html=1;strokeColor=#335f86;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="10" y="222" width="380" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="PK id : uuid&lt;br&gt;mode : varchar&lt;br&gt;region : varchar&lt;br&gt;round_count : int&lt;br&gt;started_at : timestamp&lt;br&gt;finished_at : timestamp?&lt;br&gt;total_score : int" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=15;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="28" y="238" width="344" height="214" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Cada sessão agrega a configuração escolhida e a pontuação total." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=13;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="10" y="482" width="380" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#335f86;strokeWidth=2;arcSize=14;align=left;verticalAlign=top;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="590" y="120" width="450" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="round" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="590" y="120" width="450" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="11" style="shape=line;html=1;strokeColor=#335f86;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="590" y="176" width="450" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="PK id : uuid&lt;br&gt;FK session_id : uuid&lt;br&gt;FK location_id : uuid&lt;br&gt;round_number : int&lt;br&gt;guess_lat : decimal?&lt;br&gt;guess_lng : decimal?&lt;br&gt;distance_km : decimal?&lt;br&gt;points : int&lt;br&gt;answered_at : timestamp?&lt;br&gt;status : varchar" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=15;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="608" y="192" width="414" height="304" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="Cada ronda referencia um local do dataset e guarda a resposta do utilizador." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=13;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="590" y="526" width="450" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#335f86;strokeWidth=2;arcSize=14;align=left;verticalAlign=top;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="150" width="360" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="location" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="150" width="360" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="16" style="shape=line;html=1;strokeColor=#335f86;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="206" width="360" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="17" value="PK id : uuid&lt;br&gt;name : varchar&lt;br&gt;country : varchar&lt;br&gt;category : varchar&lt;br&gt;latitude : decimal&lt;br&gt;longitude : decimal&lt;br&gt;image_url : varchar&lt;br&gt;source_ref : varchar" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=15;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1198" y="222" width="324" height="244" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="O dataset controlado é preparado previamente e reutilizado no MVP." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=13;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="496" width="360" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="4" target="9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="1 sessão → N rondas" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="19" vertex="1" connectable="0">
+          <mxGeometry y="-20" relative="1" as="geometry">
+            <mxPoint x="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="9" target="14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="22" value="1 local → N rondas" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="21" vertex="1" connectable="0">
+          <mxGeometry y="-20" relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="a19703ac-98a" name="C4 Contexto">
+    <mxGraphModel dx="1632" dy="1163" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="23" value="GeoExplorer · C4 Contexto" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=22;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="32" width="420" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="24" value="Entrega 1 · visão de sistema, utilizador e dependências externas" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=16;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="60" y="74" width="760" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="25" value="Jogador Individual&lt;br&gt;&lt;br&gt;Inicia sessões, observa&lt;br&gt;desafios, coloca palpites&lt;br&gt;e consulta resultados." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#efe8cf;strokeColor=#8a6a1a;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="80" y="240" width="250" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="26" value="GeoExplorer&lt;br&gt;&lt;br&gt;Plataforma web de geolocalização&lt;br&gt;para treino em OSINT.&lt;br&gt;&lt;br&gt;Gere sessões, rondas, pontuação&lt;br&gt;e registo de resultados sobre um&lt;br&gt;dataset europeu controlado." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="490" y="185" width="540" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="27" value="Serviço de Mapas Base&lt;br&gt;&lt;br&gt;Fornece cartografia e suporte&lt;br&gt;de interação com o mapa.&lt;br&gt;&lt;br&gt;Ex.: MapLibre + OpenStreetMap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1135" y="80" width="300" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="28" value="Fontes de Dados&lt;br&gt;&lt;br&gt;Apoiam a recolha inicial de&lt;br&gt;locais, metadados e imagens&lt;br&gt;para o dataset curado.&lt;br&gt;&lt;br&gt;Uso indireto para preparação de dados" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1135" y="450" width="315" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="25" target="26" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30" value="usa" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="29" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry">
+            <mxPoint y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="26" target="27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="32" value="consome mapa" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="31" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry">
+            <mxPoint y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="26" target="28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="34" value="prepara dataset" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="33" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry">
+            <mxPoint x="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="01288f43-e4f" name="C4 Contentores">
+    <mxGraphModel dx="1530" dy="1090" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="35" value="GeoExplorer · C4 Contentores" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=22;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="32" width="420" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="36" value="Separação mínima entre interface, API e persistência" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=16;fontColor=#444444;" parent="1" vertex="1">
+          <mxGeometry x="60" y="74" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="37" value="Jogador Individual&lt;br&gt;&lt;br&gt;Usa a aplicação web&lt;br&gt;no navegador." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#efe8cf;strokeColor=#8a6a1a;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="60" y="350" width="260" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="38" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#888888;strokeWidth=2;arcSize=12;align=left;verticalAlign=top;fontSize=14;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="370" y="145" width="820" height="585" as="geometry" />
+        </mxCell>
+        <mxCell id="39" value="Sistema GeoExplorer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="180" width="320" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="40" value="Limite da solução a implementar no projeto" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=14;fontColor=#555555;" parent="1" vertex="1">
+          <mxGeometry x="400" y="215" width="370" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="41" value="Web App&lt;br&gt;&lt;br&gt;React + TypeScript&lt;br&gt;&lt;br&gt;Fluxo de sessão, apresentação&lt;br&gt;das rondas, interação com mapa&lt;br&gt;e visualização de resultados." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="430" y="295" width="290" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="42" value="Web API&lt;br&gt;&lt;br&gt;ASP.NET Core .NET 8&lt;br&gt;&lt;br&gt;Criação de sessões, seleção de&lt;br&gt;desafios, cálculo de pontuação&lt;br&gt;e registo de resultados.&lt;br&gt;&lt;br&gt;Ponto de extensão para timer e modos futuros" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9e8fb;strokeColor=#335f86;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="800" y="275" width="305" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="43" value="PostgreSQL&lt;br&gt;&lt;br&gt;Sessões, rondas e locais&lt;br&gt;de interesse do dataset." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcefe2;strokeColor=#2d6a4f;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=16;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="620" y="560" width="330" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="44" value="Serviço de Mapas&lt;br&gt;&lt;br&gt;Tiles e interação cartográfica&lt;br&gt;MapLibre / OSM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1260" y="170" width="280" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="45" value="Fontes de Dados&lt;br&gt;&lt;br&gt;Recolha inicial de locais&lt;br&gt;e conteúdo visual." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1260" y="550" width="280" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="37" target="41" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="47" value="usa via navegador" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="46" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="41" target="42" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="49" value="HTTP/JSON" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="48" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry">
+            <mxPoint x="20" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="42" target="43" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="51" value="leitura/escrita" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="50" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="44" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="770" y="390" as="sourcePoint" />
+            <mxPoint x="1260" y="253" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="770" y="245" />
+              <mxPoint x="1260" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="53" value="carrega mapa" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="52" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="42" target="45" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="55" value="importação/curadoria" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="54" vertex="1" connectable="0">
+          <mxGeometry y="-18" relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

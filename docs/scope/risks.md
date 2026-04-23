@@ -1,29 +1,37 @@
 # Gestão de Riscos
 
-**Projecto:** [Título]  
-**Versão:** 1.0 · [Data]
+**Projeto:** GeoExplorer  
+**Versão:** 1.2 · 23 de abril de 2026
 
 ---
 
 ## Tabela de riscos
 
-<!-- Identificar 3 a 5 riscos reais ao projecto. -->
+<!-- Identificar 3 a 5 riscos reais ao projeto. -->
 <!-- Probabilidade: Alta / Média / Baixa -->
 <!-- Impacto: Alto / Médio / Baixo -->
 <!-- Mitigação: o que se faz para reduzir probabilidade ou impacto -->
 
 | ID | Risco | Probabilidade | Impacto | Mitigação |
 |----|-------|--------------|---------|-----------|
-| R01 | [ex: deriva de âmbito — o projecto cresce além do MVP] | Média | Alto | MVP contratualizado com critérios de aceitação explícitos. Qualquer extensão requer aprovação prévia do orientador. |
-| R02 | [ex: dependência de API externa não fiável] | Baixa | Alto | Identificar alternativa. Implementar camada de abstracção que permita substituição sem refactoring major. |
-| R03 | [ex: subestimação da complexidade de integração entre módulos] | Média | Médio | Integração contínua desde o início. Não deixar integração para a fase final. |
-| R04 | [Risco específico do projecto] | | | |
-| R05 | [Risco específico do projecto] | | | |
+| R01 | Deriva de âmbito para múltiplos modos de jogo, multijogador ou autenticação antes de o MVP estar estável | Média | Alto | Manter o MVP contratualizado em `docs/scope/requirements.md`; qualquer extensão fica classificada como `Should`, `Could` ou `Won't have`. |
+| R02 | Dependência excessiva de APIs externas para imagens, localizações ou mapas durante a demonstração | Média | Alto | Preparar um dataset curado para o MVP e usar serviços externos apenas como apoio à recolha/preparação dos dados. |
+| R03 | Dataset europeu insuficiente, inconsistente ou com dúvidas de licenciamento | Média | Alto | Validar cedo um conjunto mínimo de locais com origem documentada, coordenadas corretas e conteúdo visual reutilizável. |
+| R04 | Subestimação da complexidade de integração entre frontend com mapa, API .NET e persistência em base de dados | Média | Médio | Implementar uma vertical slice jogável desde cedo e integrar continuamente em vez de deixar a junção para a fase final. |
+| R05 | Falta de tempo para testes, diagramas, relatório e preparação da defesa | Alta | Médio | Reservar semanas específicas para estabilização e documentação e evitar concentrar trabalho apenas perto das entregas formais. |
+| R06 | Divergência entre o comportamento do frontend em `mock` e a API real | Média | Médio | Definir contratos comuns para `mock` e `api`, reutilizar o mesmo dataset inicial e manter a lógica de ecrã independente da fonte dos dados. |
+| R07 | Complexidade adicional de execução com Docker em paralelo com execução local | Média | Médio | Usar Compose com perfis simples, `.env.example` documentado e validação frequente dos comandos de arranque. |
+| R08 | O plano gratuito de um fornecedor hosted como Supabase pode não ser suficiente para testes reais em live, por limites de armazenamento, tráfego, leituras, escritas ou pausas de serviço | Média | Médio | Manter PostgreSQL local via Docker como ambiente reprodutível, medir chamadas durante testes, evitar dependência exclusiva de um fornecedor gratuito e preparar alternativa de alojamento se os limites forem atingidos. |
+| R09 | O padrão real de utilização pode revelar mais leituras à base de dados do que o previsto inicialmente | Média | Médio | Instrumentar a camada de dados para registar chamadas relevantes, cachear dados estáveis como o catálogo de localizações e reavaliar Turso/libSQL apenas com métricas concretas. |
+| R10 | Mudança tardia de PostgreSQL/Supabase para Turso/libSQL pode exigir adaptação do schema, tipos de dados e código de persistência | Baixa | Médio | Isolar a persistência atrás de interfaces de serviço, evitar SQL específico do fornecedor sempre que possível e documentar qualquer mudança futura num ADR próprio. |
+| R11 | Testes automáticos insuficientes podem deixar divergências entre frontend `mock`, backend `api` e schema da base de dados passarem até tarde | Média | Médio | Manter testes mínimos de contrato já nesta fase e expandir os testes funcionais apenas depois de estabilizar a integração frontend + API. |
 
 ---
 
-## Histórico de actualização
+## Histórico de atualização
 
 | Data | Risco | Evento | Estado |
 |------|-------|--------|--------|
-| [data] | R0X | [o que aconteceu] | Resolvido / Em curso / Escalou |
+| 25 de março de 2026 | R01–R05 | Identificação inicial dos riscos na proposta e definição das respetivas medidas de mitigação | Em curso |
+| 13 de abril de 2026 | R06–R07 | Introdução do modo `mock/api` no frontend e formalização da execução por Docker Compose com perfis | Em curso |
+| 23 de abril de 2026 | R08–R11 | Reavaliação dos riscos de alojamento hosted, volume de leituras, eventual migração futura de base de dados e cobertura mínima de testes | Em curso |

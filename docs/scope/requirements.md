@@ -1,6 +1,6 @@
 # Levantamento de Requisitos
 
-**Projecto:** GeoExplorer  
+**Projeto:** GeoExplorer  
 **Versão:** 1.1 · 26 de março de 2026  
 **Referência MoSCoW:** https://www.productplan.com/glossary/moscow-prioritization/
 
@@ -10,7 +10,7 @@
 
 | Categoria | Significado |
 |-----------|------------|
-| **Must have** | Obrigatório. Sem isto o projecto não é entregável. |
+| **Must have** | Obrigatório. Sem isto o projeto não é entregável. |
 | **Should have** | Importante mas não crítico. Incluir se o tempo permitir. |
 | **Could have** | Desejável. Só se tudo o resto estiver concluído. |
 | **Won't have** | Explicitamente fora do âmbito desta versão. |
@@ -64,7 +64,7 @@
 
 ### Should have
 
-- RNF05 — **Manutenibilidade:** arquitetura modular com separação entre frontend, API, persistência e lógica de pontuação, permitindo evolução sem refactoring major.
+- RNF05 — **Manutenibilidade:** arquitetura modular com separação entre frontend, API, persistência e lógica de pontuação, permitindo evolução sem refatorização significativa.
 - RNF06 — **Testabilidade:** existência de testes básicos aos fluxos principais do jogo, ao cálculo de distância/pontuação e ao registo de resultados.
 
 ### Could have
@@ -77,5 +77,5 @@
 
 | Versão | Data | Alteração | Razão |
 |--------|------|-----------|-------|
-| 1.0 | 25 de março de 2026 | Versão inicial | Proposta de projecto |
+| 1.0 | 25 de março de 2026 | Versão inicial | Proposta de projeto |
 | 1.1 | 26 de março de 2026 | Clarificação do modo temporizado opcional e reposicionamento do multijogador como objetivo adicional não obrigatório | Ajuste do âmbito funcional |

@@ -6,9 +6,15 @@ node_modules/
 dist/
 .vite/
 *.tsbuildinfo
+*.lscache
+
+bin/
+obj/
 
 coverage/
 output/
 
 src/frontend/node_modules/
 src/frontend/dist/
+src/backend/bin/
+src/backend/obj/
