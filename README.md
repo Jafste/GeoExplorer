@@ -4,15 +4,15 @@
 
 **Estudante:** Marcos Monteiro · 1902045  
 **Orientador:** Pedro Pestana  
-**UC:** Projecto de Engenharia Informática · Universidade Aberta · 2025/26  
+**UC:** Projeto de Engenharia Informática · Universidade Aberta · 2025/26  
 **Repositório:** https://github.com/Jafste/GeoExplorer
 
 ---
 
-## Estado actual
+## Estado atual
 
-<!-- 🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados e base técnica do frontend preparada com React, TypeScript, Vite, Tailwind e componentes reutilizáveis. As páginas do jogo, os dados `mock` e o backend ficam para a fase seguinte. -->
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados e frontend jogável em modo `mock`, com fluxo principal de sessão, interface redesenhada e dados locais de desenvolvimento. Backend real, persistência e integração ponta a ponta continuam para a fase seguinte.
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend `mock` jogável implementado e backend inicial em ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
+
 ---
 
 ## O que está implementado
@@ -21,24 +21,26 @@
 - [x] Wireframes e artefactos de arquitetura normalizados para o template
 - [x] Frontend inicial com React + TypeScript + Vite
 - [x] Sistema visual base com Tailwind e paleta inicial do projeto
+- [x] Componentes UI e auxiliares de layout reutilizáveis para a interface
 - [x] Fluxo jogável local com ecrãs de início, configuração, ronda, resultado da ronda, relatório final e tutorial
-- [x] Camada de dados com suporte ao modo `mock`
+- [x] Camada de dados abstrata com suporte a `mock` e `api`
+- [x] Dataset europeu inicial com cenas mock, caminhos `sceneImage` e contratos de jogo
 - [x] Assets visuais `mock` para cenas de jogo
-- [x] Interface em Português
+- [x] Interface em português
 - [x] Execução local do frontend preparada
-- [x] Componentes UI e helpers de layout reutilizáveis para a interface
-- [x] Implementar as páginas principais do MVP no frontend
+- [x] Backend inicial ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
+- [x] Docker Compose com perfis de execução
+- [x] Testes mínimos de contrato do backend
 
 ---
 
 ## O que está pendente
 
-- [ ] Criar o dataset inicial de desenvolvimento e os contratos de jogo
-- [ ] Preparar a execução do frontend com Docker como forma complementar de arranque
-- [ ] Introduzir o backend ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
 - [ ] Integrar persistência real em PostgreSQL no backend
+- [ ] Avaliar Supabase como hosted quando a persistência estiver estável
+- [ ] Medir chamadas à base de dados e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
-- [ ] Adicionar testes automáticos aos fluxos principais do frontend e backend
+- [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Avaliar extensões futuras, incluindo modo multijogador assíncrono, apenas após estabilização do núcleo
 
 ---
@@ -61,25 +63,38 @@ npm install
 npm run dev
 ```
 
+```bash
+# Backend
+dotnet run --project src/backend/backend.csproj
+```
+
+```bash
+# Docker
+docker compose --profile frontend-mock up
+docker compose --profile full up
+docker compose --profile database up
+```
+
 ### Acesso
 
 ```text
 Frontend local: http://localhost:5173
+Backend local: http://localhost:8080/api/health
 ```
 
-Nesta fase, o frontend corresponde apenas à base técnica e visual. O fluxo jogável, os dados `mock`,incluindo configuração da sessão, ronda resultados e tutorial. A execução via Docker e a integração com API serão introduzidos nos próximos incrementos.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL ainda está preparada como schema inicial e será ligada à API numa etapa seguinte.
 
 ---
 
-## Decisões de arquitectura principais
+## Decisões de arquitetura principais
 
 | Decisão | Alternativa considerada | Razão da escolha |
 |---------|------------------------|-----------------|
 | React + TypeScript | Angular | Permite construir rapidamente a interface do jogo e manter uma base de frontend tipada e extensível. |
 | ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
-| PostgreSQL | Ficheiros locais ou MySQL | Ajusta-se bem à persistência relacional de sessões, rondas, palpites e pontuação. |
+| PostgreSQL local, Supabase como hosted preferencial | Turso/libSQL | Mantém coerência com a proposta aprovada e com o modelo relacional; Turso fica em avaliação futura após métricas de leitura/escrita. |
 | Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final. |
-| Docker Compose com perfis | Execução apenas manual | Fica previsto para uniformizar o arranque do projeto quando frontend, backend e base de dados estiverem ligados. |
+| Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
 
 Para detalhe adicional, ver [`docs/architecture/adr`]
 
@@ -93,16 +108,17 @@ Para detalhe adicional, ver [`docs/architecture/adr`]
 - Vite
 - ASP.NET Core .NET 8
 - PostgreSQL
+- Supabase
 - Docker Compose
 
 ### Ferramentas de IA utilizadas
 
 | Ferramenta | Para que foi usada |
 |-----------|-------------------|
-| ChatGPT | GitHub Copilot Apoio na proposta, clarificação da arquitetura, wireframes, planeamento do MVP e scaffold inicial do projeto |
+| ChatGPT | Apoio na proposta, clarificação da arquitetura, wireframes, planeamento do MVP e estruturação inicial do projeto |
 | GitHub Copilot | Apoio pontual no contexto de desenvolvimento e sugestões de código |
 | Gemini | Apoio para imagens e logótipos |
 
 ---
 
-*Última actualização: [22 Abril 2026] · [Sem. 6]*
+*Última atualização: [23 Abril 2026] · [Sem. 6]*

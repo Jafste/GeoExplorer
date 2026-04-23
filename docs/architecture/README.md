@@ -1,6 +1,6 @@
-# Arquitectura
+# Arquitetura
 
-Esta pasta contém os artefactos de arquitectura do projecto.
+Esta pasta contém os artefactos de arquitetura do projeto.
 
 ## Ficheiros obrigatórios
 
@@ -9,7 +9,7 @@ Esta pasta contém os artefactos de arquitectura do projecto.
 | `c4-context.png` | C4 Nível 1 — sistema, utilizadores, sistemas externos | Até à Entrega 1 |
 | `c4-containers.png` | C4 Nível 2 — contentores principais e tecnologias | Até à Entrega 1 |
 | `data-model.png` | Modelo de dados (ER, schema, ou equivalente) | Até à Entrega 1 |
-| `adr/` | Decisões de arquitectura | Durante todo o semestre |
+| `adr/` | Decisões de arquitetura | Durante todo o semestre |
 
 ## Notas sobre o modelo de dados
 
@@ -26,4 +26,4 @@ Esta pasta contém os artefactos de arquitectura do projecto.
 ## Referência C4
 
 Documentação oficial: [c4model.com](https://c4model.com)  
-Os níveis 1 e 2 são suficientes para a maioria dos projectos de licenciatura.
+Os níveis 1 e 2 são suficientes para a maioria dos projetos de licenciatura.

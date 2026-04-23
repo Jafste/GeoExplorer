@@ -6,7 +6,7 @@ Esta pasta contém os artefactos de design de interface.
 
 | Ficheiro | Descrição | Obrigatório |
 |---------|-----------|------------|
-| `wireframes.pdf` | Wireframes ou protótipo Figma exportado | Projectos com interface |
+| `wireframes.pdf` | Wireframes ou protótipo Figma exportado | Projetos com interface |
 | `user-flows.png` | Fluxos de navegação principais (opcional) | Não |
 
 ## Nível de detalhe esperado
