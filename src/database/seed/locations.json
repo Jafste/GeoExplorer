@@ -13,6 +13,12 @@
     "sceneImage": "/mock-scenes/historic-core-street.svg",
     "prompt": "Observa a mistura de centro histórico compacto, telhados inclinados e pano de fundo montanhoso antes de escolheres o teu palpite.",
     "visualGradient": ["#d8b590", "#5e7f92", "#173340"],
+    "media": {
+      "sourceProvider": "mock",
+      "imageAttribution": "Cena SVG criada para o protótipo GeoExplorer",
+      "imageLicense": "Uso académico interno",
+      "verifiedAt": "2026-04-24"
+    },
     "clues": [
       { "label": "Arquitetura", "value": "Fachadas compactas e telhados inclinados", "confidence": "Alta" },
       { "label": "Relevo", "value": "Vale alpino com montanha muito presente", "confidence": "Alta" },

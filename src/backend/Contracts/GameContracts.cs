@@ -18,6 +18,17 @@ public sealed record ChallengeClueDto(
     string Value,
     string Confidence);
 
+public sealed record ChallengeMediaDto(
+    string SourceProvider,
+    string? ImageUrl,
+    string? ImageSourceUrl,
+    string? ImageAttribution,
+    string? ImageLicense,
+    string? ImageLicenseUrl,
+    string? StreetViewProvider,
+    string? StreetViewUrl,
+    string? VerifiedAt);
+
 public sealed record ChallengeDto(
     string Id,
     string Title,
@@ -29,6 +40,7 @@ public sealed record ChallengeDto(
     string? SceneImage,
     string Prompt,
     string[] VisualGradient,
+    ChallengeMediaDto? Media,
     IReadOnlyList<ChallengeClueDto> Clues);
 
 public sealed record ChallengeRoundDto(

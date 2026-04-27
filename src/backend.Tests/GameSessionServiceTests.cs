@@ -24,11 +24,31 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void CreateSession_ReturnsMediaMetadataForVisualSourceContract()
+    {
+        var service = CreateService();
+
+        var response = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: true,
+            RoundTimeSeconds: 60));
+
+        Assert.IsNotNull(response.CurrentRound.Challenge.Media);
+        Assert.AreEqual("mock", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.AreEqual("Uso académico interno", response.CurrentRound.Challenge.Media.ImageLicense);
+        Assert.AreEqual("2026-04-24", response.CurrentRound.Challenge.Media.VerifiedAt);
+    }
+
+    [TestMethod]
     public void DatabaseSchema_IncludesSceneImageColumn()
     {
         var sql = File.ReadAllText(Path.Combine(FindRepoRoot(), "src", "database", "sql", "001-init.sql"));
 
         StringAssert.Contains(sql, "scene_image TEXT NULL");
+        StringAssert.Contains(sql, "media_source_provider TEXT NULL");
+        StringAssert.Contains(sql, "image_attribution TEXT NULL");
+        StringAssert.Contains(sql, "street_view_url TEXT NULL");
     }
 
     private static GameSessionService CreateService()

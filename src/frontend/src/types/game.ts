@@ -8,6 +8,18 @@ export interface ChallengeClue {
   confidence: Confidence;
 }
 
+export interface ChallengeMedia {
+  sourceProvider: string;
+  imageUrl?: string;
+  imageSourceUrl?: string;
+  imageAttribution?: string;
+  imageLicense?: string;
+  imageLicenseUrl?: string;
+  streetViewProvider?: string;
+  streetViewUrl?: string;
+  verifiedAt?: string;
+}
+
 export interface SeedLocation {
   id: string;
   title: string;
@@ -22,6 +34,7 @@ export interface SeedLocation {
   sceneImage?: string;
   prompt: string;
   visualGradient: [string, string, string];
+  media?: ChallengeMedia;
   clues: ChallengeClue[];
 }
 

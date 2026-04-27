@@ -115,9 +115,13 @@ Para detalhe adicional, ver [`docs/architecture/adr`]
 
 | Ferramenta | Para que foi usada |
 |-----------|-------------------|
-| ChatGPT | Apoio na proposta, clarificação da arquitetura, wireframes, planeamento do MVP e estruturação inicial do projeto |
+| ChatGPT | Apoio na proposta, clarificação da arquitetura, wireframes, planeamento do MVP, estruturação inicial do projeto e criação dos primeiros testes automatizados |
 | GitHub Copilot | Apoio pontual no contexto de desenvolvimento e sugestões de código |
 | Gemini | Apoio para imagens e logótipos |
+
+### Nota sobre aprendizagem e testes
+
+Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à vontade: organização dos testes automatizados em .NET, validação dos contratos entre frontend e backend, verificação do schema SQL e criação de testes que me dão mais segurança quando precisar de alterar classes como `GameSessionService` e `SeedLocationCatalog`.
 
 ---
 

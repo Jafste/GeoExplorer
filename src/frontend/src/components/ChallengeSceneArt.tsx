@@ -11,8 +11,10 @@ export function ChallengeSceneArt({ challenge }: ChallengeSceneArtProps) {
     "--scene-color-b": challenge.visualGradient[1],
     "--scene-color-c": challenge.visualGradient[2],
   } as CSSProperties;
+  const photoSource = challenge.media?.imageUrl ?? challenge.sceneImage;
+  const showSourceBadge = Boolean(challenge.media?.imageUrl && challenge.media.sourceProvider);
 
-  if (challenge.sceneImage) {
+  if (photoSource) {
     return (
       <div className={`scene-art scene-art--photo scene-art--${challenge.category}`} style={style}>
         <img
@@ -21,8 +23,14 @@ export function ChallengeSceneArt({ challenge }: ChallengeSceneArtProps) {
           className="scene-photo"
           draggable={false}
           loading="eager"
-          src={challenge.sceneImage}
+          src={photoSource}
         />
+        {showSourceBadge ? (
+          <span className="scene-source-pill">
+            {challenge.media?.sourceProvider}
+            {challenge.media?.imageLicense ? ` · ${challenge.media.imageLicense}` : ""}
+          </span>
+        ) : null}
       </div>
     );
   }

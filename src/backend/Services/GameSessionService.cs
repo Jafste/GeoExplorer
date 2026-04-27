@@ -216,9 +216,26 @@ public sealed class GameSessionService
                 round.Location.SceneImage,
                 round.Location.Prompt,
                 round.Location.VisualGradient,
+                BuildMedia(round.Location.Media),
                 round.Location.Clues
                     .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                     .ToList()));
+    }
+
+    private static ChallengeMediaDto? BuildMedia(SeedMedia? media)
+    {
+        return media is null
+            ? null
+            : new ChallengeMediaDto(
+                media.SourceProvider,
+                media.ImageUrl,
+                media.ImageSourceUrl,
+                media.ImageAttribution,
+                media.ImageLicense,
+                media.ImageLicenseUrl,
+                media.StreetViewProvider,
+                media.StreetViewUrl,
+                media.VerifiedAt);
     }
 
     private static GuessCoordinatesDto ClampGuess(GuessCoordinatesDto guess)

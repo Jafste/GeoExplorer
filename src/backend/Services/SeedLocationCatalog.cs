@@ -45,7 +45,21 @@ public sealed class SeedLocation
     public string? SceneImage { get; init; }
     public required string Prompt { get; init; }
     public required string[] VisualGradient { get; init; }
+    public SeedMedia? Media { get; init; }
     public required List<SeedClue> Clues { get; init; }
+}
+
+public sealed class SeedMedia
+{
+    public required string SourceProvider { get; init; }
+    public string? ImageUrl { get; init; }
+    public string? ImageSourceUrl { get; init; }
+    public string? ImageAttribution { get; init; }
+    public string? ImageLicense { get; init; }
+    public string? ImageLicenseUrl { get; init; }
+    public string? StreetViewProvider { get; init; }
+    public string? StreetViewUrl { get; init; }
+    public string? VerifiedAt { get; init; }
 }
 
 public sealed class SeedClue
