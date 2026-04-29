@@ -78,6 +78,7 @@ export interface RoundResult {
   distanceKm: number | null;
   resolution: "manual" | "timeout";
   timed: boolean;
+  media?: ChallengeMedia;
   clues: ChallengeClue[];
 }
 

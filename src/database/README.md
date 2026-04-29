@@ -7,4 +7,4 @@ Esta pasta contém os artefactos da camada de dados do projeto.
 
 Nesta primeira fatia vertical, o backend ainda usa armazenamento em memória para simplificar o arranque do MVP, mas o contrato de dados e o esquema já ficam preparados. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca apenas frontend em modo API e backend.
 
-O campo `sceneImage` continua a suportar as cenas SVG mock. A secção opcional `media` prepara a transição para dados reais, guardando, atribuição, licença, URL da imagem e ligação futura a street-level imagery sem obrigar todos os locais a terem uma fotografia real desde já.
+O campo `sceneImage` continua a suportar as cenas SVG mock como fallback. A secção opcional `media` prepara a transição para dados reais, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a street-level imagery.

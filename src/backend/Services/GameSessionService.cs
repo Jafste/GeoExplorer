@@ -181,6 +181,7 @@ public sealed class GameSessionService
             distanceKm,
             resolution,
             session.Config.Timed,
+            BuildMedia(round.Location.Media),
             round.Location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                 .ToList());

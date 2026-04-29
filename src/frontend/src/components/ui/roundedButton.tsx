@@ -1,9 +1,19 @@
 import * as React from "react";
 
-type ButtonColor = "slate" | "emerald" | "geoguessr" | "rose";
-type ButtonTone = "soft" | "solid" | "outline" | "ghost";
+type ButtonColor = "slate" | "emerald" | "geoguessr" | "rose" | "neon";
+type ButtonTone = "soft" | "solid" | "outline" | "ghost" | "subtle";
 type Intent = "neutral" | "primary" | "success" | "danger";
-type Size = "xs" | "sm" | "md";
+type Size = "xs" | "sm" | "md" | "compact";
+type Kind = "button" | "chip";
+type Radius = "full" | "md" | "none";
+
+const NEON_BUTTON =
+  "button button-primary";
+
+const NEON_GHOST_BUTTON =
+  "button button-ghost";
+
+const NEON_SUBTLE_BUTTON = "button button-subtle";
 
 const COLOR_TONES: Record<ButtonColor, Record<ButtonTone, string>> = {
   slate: {
@@ -22,6 +32,8 @@ const COLOR_TONES: Record<ButtonColor, Record<ButtonTone, string>> = {
       "border border-transparent bg-transparent text-slate-700 " +
       "hover:bg-slate-100 dark:hover:text-slate-100 " +
       "dark:text-slate-100 dark:hover:bg-slate-800",
+    subtle:
+      "border border-[var(--line)] bg-[rgba(10,13,22,0.9)] text-[var(--text-soft)]",
   },
 
   emerald: {
@@ -37,6 +49,8 @@ const COLOR_TONES: Record<ButtonColor, Record<ButtonTone, string>> = {
       "border border-transparent bg-transparent text-slate-700 dark:text-slate-200 " +
       "hover:bg-emerald-50 hover:text-emerald-800 " +
       "dark:hover:bg-emerald-950 dark:hover:text-emerald-400",
+    subtle:
+      "border border-[var(--line)] bg-[rgba(10,13,22,0.9)] text-[var(--text-soft)]",
   },
 
   geoguessr: {
@@ -51,6 +65,8 @@ const COLOR_TONES: Record<ButtonColor, Record<ButtonTone, string>> = {
     ghost:
       "border border-transparent bg-transparent text-slate-700 " +
       "hover:bg-geoguessr-100 hover:text-geoguessr-500 dark:hover:bg-geoguessr-900 dark:hover:text-geoguessr-400",
+    subtle:
+      "border border-[var(--line)] bg-[rgba(10,13,22,0.9)] text-[var(--text-soft)]",
   },
 
   rose: {
@@ -65,12 +81,22 @@ const COLOR_TONES: Record<ButtonColor, Record<ButtonTone, string>> = {
     ghost:
       "border border-transparent bg-transparent text-slate-700 " +
       "hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950 dark:hover:text-rose-400",
+    subtle:
+      "border border-[var(--line)] bg-[rgba(10,13,22,0.9)] text-[var(--text-soft)]",
+  },
+
+  neon: {
+    soft: NEON_BUTTON,
+    solid: NEON_BUTTON,
+    outline: NEON_BUTTON,
+    ghost: NEON_GHOST_BUTTON,
+    subtle: NEON_SUBTLE_BUTTON,
   },
 };
 
 const INTENT_TO_COLOR: Record<Intent, ButtonColor> = {
   neutral: "slate",
-  primary: "geoguessr",
+  primary: "neon",
   success: "emerald",
   danger: "rose",
 };
@@ -79,16 +105,16 @@ const SIZES: Record<Size, string> = {
   xs: "px-2 py-0.5 text-[10px]",
   sm: "px-2.5 py-1 text-[11px]",
   md: "px-3 py-1.5 text-xs",
+  compact: "min-h-10 px-3.5 text-[0.92rem]",
 };
-type Kind = "button" | "chip";
 
-const CHIP_BASE =
-  "rounded-full font-semibold uppercase tracking-[0.16em]";
+const CHIP_BASE = "font-semibold uppercase tracking-[0.16em]";
 
 const CHIP_SIZES: Record<Size, string> = {
   xs: "px-2 py-[3px] text-[10px]",
   sm: "px-2.5 py-[3px] text-[10px]",
   md: "px-3 py-1 text-[11px]",
+  compact: "px-3 py-1 text-[11px]",
 };
 
 const CHIP_STATE: Record<"active" | "inactive", string> = {
@@ -97,6 +123,13 @@ const CHIP_STATE: Record<"active" | "inactive", string> = {
     "bg-slate-100 text-slate-600 hover:bg-slate-200 " +
     "dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700",
 };
+
+const RADIUS: Record<Radius, string> = {
+  full: "rounded-full",
+  md: "rounded-md",
+  none: "rounded-none",
+};
+
 export type RoundedButtonProps =
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     intent?: Intent;
@@ -104,11 +137,15 @@ export type RoundedButtonProps =
     tone?: ButtonTone;
     size?: Size;
     fullWidth?: boolean;
-    kind?: Kind;      
-    active?: boolean; 
+    kind?: Kind;
+    active?: boolean;
+    radius?: Radius;
   };
 
-export const RoundedButton = React.forwardRef<HTMLButtonElement, RoundedButtonProps>(
+export const RoundedButton = React.forwardRef<
+  HTMLButtonElement,
+  RoundedButtonProps
+>(
   (
     {
       intent = "neutral",
@@ -120,31 +157,48 @@ export const RoundedButton = React.forwardRef<HTMLButtonElement, RoundedButtonPr
       type = "button",
       kind = "button",
       active = false,
+      radius = "full",
       disabled,
       ...props
     },
     ref
   ) => {
     const base =
-      "inline-flex items-center justify-center rounded-full outline-none transition " +
-      "focus-visible:ring-2 focus-visible:ring-geoguessr-500 focus-visible:ring-offset-1 " +
+      "inline-flex items-center justify-center outline-none " +
       "disabled:pointer-events-none disabled:opacity-60";
 
     const resolvedColor: ButtonColor = color ?? INTENT_TO_COLOR[intent];
-
     const isChip = kind === "chip";
+    const isNeon = resolvedColor === "neon";
 
     const classes = [
       base,
+      RADIUS[radius],
       fullWidth ? "w-full" : "",
       isChip ? CHIP_BASE : "",
-      isChip ? CHIP_SIZES[size] : SIZES[size],
-      isChip ? CHIP_STATE[active ? "active" : "inactive"] : COLOR_TONES[resolvedColor][tone],
+      isChip
+        ? CHIP_SIZES[size]
+        : isNeon
+          ? size === "compact"
+            ? "button-compact"
+            : ""
+          : SIZES[size],
+      isChip
+        ? CHIP_STATE[active ? "active" : "inactive"]
+        : COLOR_TONES[resolvedColor][tone],
       className,
-    ].filter(Boolean).join(" ");
+    ]
+      .filter(Boolean)
+      .join(" ");
 
     return (
-      <button ref={ref} type={type} className={classes} disabled={disabled} {...props} />
+      <button
+        ref={ref}
+        type={type}
+        className={classes}
+        disabled={disabled}
+        {...props}
+      />
     );
   }
 );

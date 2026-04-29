@@ -61,12 +61,12 @@ export function RoundMinimapDock({
         <div className="round-minimap-copy">
           <div className="round-minimap-copy-item">
             <MapPinned size={16} strokeWidth={2.1} />
-            <span>{guess ? guess.label : "Passa o rato ou toca para marcar"}</span>
+            <span>{guess ? guess.label : "Abre e clica no mapa para marcar"}</span>
           </div>
 
           <div className="round-minimap-copy-item">
             <LocateFixed size={16} strokeWidth={2.1} />
-            <span>{mapOpen ? "Clica no mapa da Europa" : "Minimapa tático"}</span>
+            <span>{mapOpen ? "Mapa real da Europa" : "Mapa recolhido"}</span>
           </div>
 
           <div className="round-minimap-copy-item">

@@ -1,6 +1,7 @@
 import { House, Play, Radar, ScrollText } from "lucide-react";
 import type { SurfacePhase } from "../app/navigation";
 import type { SessionConfig } from "../types/game";
+import { RoundedButton } from "./ui/roundedButton";
 
 interface AppTopbarProps {
   config: SessionConfig;
@@ -67,22 +68,21 @@ export function AppTopbar({
         </div>
       ) : null}
 
-      <div className={`topbar-actions${isRound ? " topbar-actions--play" : ""}`}>
-        <button className="button button-ghost button-compact" onClick={onOpenTutorial} type="button">
+      <div className={`topbar-actions`}>
+        <RoundedButton color="neon" tone="ghost" radius="none" size="sm" onClick={onOpenTutorial} type="button">
           <ScrollText size={16} strokeWidth={2.2} />
           Tutorial
-        </button>
-
+        </RoundedButton>
         {isLanding ? (
-          <button className="button button-primary button-compact" onClick={onStart} type="button">
+          <RoundedButton intent="primary" tone="soft" size="md" radius="none" onClick={onStart} type="button" className="gap-2">
             <Play size={16} strokeWidth={2.2} />
             Iniciar
-          </button>
+          </RoundedButton>
         ) : (
-          <button className="button button-subtle button-compact" onClick={onHome} type="button">
+          <RoundedButton intent="primary" tone="solid" size="md" radius="none" onClick={onHome} type="button">
             <House size={16} strokeWidth={2.2} />
             Base
-          </button>
+          </RoundedButton>
         )}
       </div>
     </header>

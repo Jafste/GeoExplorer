@@ -109,6 +109,7 @@ function createResolution(
     distanceKm,
     resolution,
     timed: session.config.timed,
+    media: round.location.media,
     clues: round.location.clues,
   };
 

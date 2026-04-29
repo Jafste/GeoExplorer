@@ -28,7 +28,7 @@ export function RoundTelemetryFooter({
       <div className="round-telemetry-segment round-telemetry-segment--icon">
         <Radar size={16} strokeWidth={2.1} />
         <div>
-          <span className="muted-eyebrow">Sinal dominante</span>
+          <span className="muted-eyebrow">Pista principal</span>
           <strong>{primaryClue?.label ?? "Observação"}</strong>
         </div>
       </div>
@@ -50,7 +50,7 @@ export function RoundTelemetryFooter({
               ? `${formatSeconds(remainingSeconds)} restantes`
               : "Janela livre"}
           </strong>
-          <span>{mapOpen ? "Minimapa ativo" : "Painel de mapa recolhido"}</span>
+          <span>{mapOpen ? "Mapa aberto" : "Mapa recolhido"}</span>
         </div>
       </div>
     </div>

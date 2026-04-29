@@ -1,6 +1,9 @@
 import { MoveRight } from "lucide-react";
 import { useDeferredValue } from "react";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
+import { Card } from "../../components/layout/card/card";
+import { InfoGrid } from "../../components/ui/InfoCard";
+import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig, SessionResult } from "../../types/game";
 
 interface SessionResultPageProps {
@@ -94,7 +97,7 @@ export function SessionResultPage({
       </div>
 
       <div className="session-report-grid">
-        <article className="session-map-card">
+        <Card as="article" variant="tacticalStack">
           <div className="session-map-card-head">
             <div>
               <span className="muted-eyebrow">Mapa de dispersão</span>
@@ -131,47 +134,43 @@ export function SessionResultPage({
               <span>Tempo esgotado</span>
             </div>
           </div>
-        </article>
+        </Card>
 
-        <article className="session-metrics-card">
+        <Card as="article" variant="tacticalStack">
           <span className="muted-eyebrow">Performance consolidada</span>
 
-          <div className="session-metric-stack">
-            <div className="session-metric-stack-card">
-              <span className="muted-eyebrow">Distância média</span>
-              <strong>{averageDistance === null ? "Sem dados" : `${averageDistance.toFixed(1)} km`}</strong>
-            </div>
-
-            <div className="session-metric-stack-card">
-              <span className="muted-eyebrow">Quase perfeitas</span>
-              <strong>{perfectStrikes} / {result.totalRounds}</strong>
-            </div>
-
-            <div className="session-metric-stack-card">
-              <span className="muted-eyebrow">Melhor ronda</span>
-              <strong>
-                {bestRound ? `R${bestRound.roundNumber} · ${bestRound.city}` : "Sem dados"}
-              </strong>
-            </div>
-          </div>
+          <InfoGrid
+            layout="stack"
+            items={[
+              {
+                label: "Distância média",
+                value: averageDistance === null ? "Sem dados" : `${averageDistance.toFixed(1)} km`,
+              },
+              { label: "Quase perfeitas", value: `${perfectStrikes} / ${result.totalRounds}` },
+              {
+                label: "Melhor ronda",
+                value: bestRound ? `R${bestRound.roundNumber} · ${bestRound.city}` : "Sem dados",
+              },
+            ]}
+          />
 
           <div className="session-report-actions">
-            <button className="button button-primary" disabled={busy} onClick={onReplay} type="button">
+            <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onReplay} type="button">
               {busy ? "A reiniciar..." : (
                 <>
                   Nova missão
                   <MoveRight size={16} strokeWidth={2.2} />
                 </>
               )}
-            </button>
-            <button className="button button-ghost" onClick={onHome} type="button">
+            </RoundedButton>
+            <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
               Voltar à base
-            </button>
+            </RoundedButton>
           </div>
-        </article>
+        </Card>
       </div>
 
-      <article className="panel-card session-log-card">
+      <Card as="article" variant="setupPanelStack" className="session-log-card">
         <div className="session-log-header">
           <span className="muted-eyebrow">Registo da missão</span>
           <span className="chip chip-soft">{result.totalRounds} fases registadas</span>
@@ -190,6 +189,12 @@ export function SessionResultPage({
                   {round.guess ? round.guess.label : "Sem palpite"} ·{" "}
                   {round.distanceKm === null ? "Tempo esgotado" : `${round.distanceKm.toFixed(1)} km`}
                 </p>
+                {round.media ? (
+                  <span className="summary-row-source">
+                    {round.media.sourceProvider}
+                    {round.media.imageLicense ? ` · ${round.media.imageLicense}` : ""}
+                  </span>
+                ) : null}
                 <span className={`summary-row-badge${round.resolution === "timeout" ? " is-danger" : round.score >= 4500 ? " is-primary" : ""}`}>
                   {round.resolution === "timeout"
                     ? "Tempo esgotado"
@@ -206,7 +211,7 @@ export function SessionResultPage({
             </div>
           ))}
         </div>
-      </article>
+      </Card>
 
     </section>
   );

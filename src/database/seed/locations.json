@@ -14,10 +14,13 @@
     "prompt": "Observa a mistura de centro histórico compacto, telhados inclinados e pano de fundo montanhoso antes de escolheres o teu palpite.",
     "visualGradient": ["#d8b590", "#5e7f92", "#173340"],
     "media": {
-      "sourceProvider": "mock",
-      "imageAttribution": "Cena SVG criada para o protótipo GeoExplorer",
-      "imageLicense": "Uso académico interno",
-      "verifiedAt": "2026-04-24"
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/B%C3%BCrgerstra%C3%9Fe_26%2B24_%28BT0A2830%29.jpg/1920px-B%C3%BCrgerstra%C3%9Fe_26%2B24_%28BT0A2830%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:B%C3%BCrgerstra%C3%9Fe_26%2B24_(BT0A2830).jpg",
+      "imageAttribution": "Simon Legner (User:simon04)",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-04-27"
     },
     "clues": [
       { "label": "Arquitetura", "value": "Fachadas compactas e telhados inclinados", "confidence": "Alta" },
@@ -39,6 +42,15 @@
     "sceneImage": "/mock-scenes/riverfront-city.svg",
     "prompt": "Repara na topografia em socalco, na linguagem das fachadas e na relação da cidade com o rio.",
     "visualGradient": ["#f0b36e", "#b84f4f", "#233f58"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Porto_July_2014-34a.jpg/1920px-Porto_July_2014-34a.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Porto_July_2014-34a.jpg",
+      "imageAttribution": "Alvesgaspar",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Topografia", "value": "Cidade com forte declive sobre rio", "confidence": "Alta" },
       { "label": "Fachadas", "value": "Paleta quente e densa junto à frente de água", "confidence": "Média" },
@@ -59,6 +71,15 @@
     "sceneImage": "/mock-scenes/canal-city.svg",
     "prompt": "A combinação entre canal, tijolo e escala medieval ajuda a limitar bastante a área geográfica.",
     "visualGradient": ["#af7e5b", "#3f5966", "#10202b"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Br%C3%BCgge_Blick_vom_Belfried_4.jpg/1920px-Br%C3%BCgge_Blick_vom_Belfried_4.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Br%C3%BCgge_Blick_vom_Belfried_4.jpg",
+      "imageAttribution": "Zairon",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Material", "value": "Tijolo dominante e coberturas escuras", "confidence": "Alta" },
       { "label": "Hidrografia", "value": "Canal urbano estreito e controlado", "confidence": "Alta" },
@@ -79,6 +100,15 @@
     "sceneImage": "/mock-scenes/historic-core-street.svg",
     "prompt": "O frio visual, a densidade muralhada e o desenho das coberturas apontam para o norte da Europa.",
     "visualGradient": ["#c9c0b0", "#647b88", "#14222b"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Old_Town_of_Tallinn%2C_Tallinn%2C_Estonia_-_panoramio_%2858%29.jpg/1920px-Old_Town_of_Tallinn%2C_Tallinn%2C_Estonia_-_panoramio_%2858%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Old_Town_of_Tallinn,_Tallinn,_Estonia_-_panoramio_(58).jpg",
+      "imageAttribution": "Ben Bender",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Clima visual", "value": "Luz fria e atmosfera austera", "confidence": "Alta" },
       { "label": "Defesa urbana", "value": "Vestígios de muralha e torres", "confidence": "Média" },
@@ -99,6 +129,15 @@
     "sceneImage": "/mock-scenes/riverfront-city.svg",
     "prompt": "Aqui interessa separar uma capital centro-europeia monumental de um centro histórico alpino ou báltico.",
     "visualGradient": ["#d8c3a1", "#7a5d56", "#1d3445"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg/1920px-Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg",
+      "imageAttribution": "A.Savin",
+      "imageLicense": "FAL",
+      "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Escala", "value": "Capital monumental com eixo fluvial forte", "confidence": "Alta" },
       { "label": "Material", "value": "Pedra clara e torres marcantes", "confidence": "Média" },
@@ -119,6 +158,15 @@
     "sceneImage": "/mock-scenes/southern-plaza.svg",
     "prompt": "Tenta distinguir um porto mediterrânico adriático de cenários ibéricos ou italianos.",
     "visualGradient": ["#f7c46b", "#6db6b5", "#15364a"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Split_080620-133710-IMG_0968x.jpg/1920px-Split_080620-133710-IMG_0968x.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Split_080620-133710-IMG_0968x.jpg",
+      "imageAttribution": "Tatyana Peshkova",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Clima", "value": "Luz quente e costa muito aberta", "confidence": "Alta" },
       { "label": "Material", "value": "Pedra clara e frente de água ordenada", "confidence": "Média" },
@@ -139,6 +187,15 @@
     "sceneImage": "/mock-scenes/canal-city.svg",
     "prompt": "Distingue uma cidade de canais do noroeste europeu entre variantes belgas e neerlandesas.",
     "visualGradient": ["#d3a57a", "#5f7382", "#11232e"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png/1920px-Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png",
+      "imageAttribution": "Andrés Barrios",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Malha urbana", "value": "Frentes estreitas e regulares", "confidence": "Alta" },
       { "label": "Mobilidade", "value": "Cultura urbana de bicicleta muito evidente", "confidence": "Média" },
@@ -159,6 +216,15 @@
     "sceneImage": "/mock-scenes/riverfront-city.svg",
     "prompt": "Procura distinguir um rio imperial centro-europeu de capitais mais ocidentais.",
     "visualGradient": ["#d7b27c", "#74849c", "#192c3d"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Budav%C3%A1ri_Palota%2C_ABCDEF_%C3%A9p%C3%BClet.jpg/1920px-Budav%C3%A1ri_Palota%2C_ABCDEF_%C3%A9p%C3%BClet.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Budav%C3%A1ri_Palota,_ABCDEF_%C3%A9p%C3%BClet.jpg",
+      "imageAttribution": "Varius",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Escala fluvial", "value": "Curso de água muito largo", "confidence": "Alta" },
       { "label": "Relevo", "value": "Cidade dividida entre margem plana e colina", "confidence": "Média" },
@@ -179,6 +245,15 @@
     "sceneImage": "/mock-scenes/historic-core-street.svg",
     "prompt": "A limpeza formal e as arcadas ajudam a separar este desafio de outros centros alpinos.",
     "visualGradient": ["#d8c2a7", "#728292", "#1a3141"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/Bern_luftaufnahme.png",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bern_luftaufnahme.png",
+      "imageAttribution": "de:Benutzer:Reaast",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Espaço público", "value": "Arcadas corridas e desenho muito regular", "confidence": "Alta" },
       { "label": "Contexto", "value": "Centro alpino mais contido e institucional", "confidence": "Média" },
@@ -199,6 +274,15 @@
     "sceneImage": "/mock-scenes/historic-core-street.svg",
     "prompt": "Aqui interessa perceber o sul europeu interior e evitar confusões com ambientes alpinos ou ibéricos.",
     "visualGradient": ["#d28b63", "#8b6a57", "#213245"],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Italy_-_Lucca_-_2.jpg/1920px-Italy_-_Lucca_-_2.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Italy_-_Lucca_-_2.jpg",
+      "imageAttribution": "Arne Müseler / www.arne-mueseler.com",
+      "imageLicense": "CC BY-SA 3.0 de",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "verifiedAt": "2026-04-27"
+    },
     "clues": [
       { "label": "Coberturas", "value": "Terracota dominante", "confidence": "Alta" },
       { "label": "Estrutura", "value": "Muralha urbana de leitura clara", "confidence": "Média" },

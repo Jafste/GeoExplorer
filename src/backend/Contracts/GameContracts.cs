@@ -68,6 +68,7 @@ public sealed record RoundResultDto(
     double? DistanceKm,
     string Resolution,
     bool Timed,
+    ChallengeMediaDto? Media,
     IReadOnlyList<ChallengeClueDto> Clues);
 
 public sealed record RoundProgressDto(

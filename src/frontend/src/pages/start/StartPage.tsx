@@ -1,15 +1,25 @@
+import { RoundedButton } from "../../components/ui/roundedButton";
+import { Card } from "../../components/layout/card/card";
+import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
+
 interface StartPageProps {
   onOpenTutorial: () => void;
   onStart: () => void;
 }
 
 export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
+  const previewHotspots: MapHotspot[] = [
+    { label: "Porto", latitude: 41.1402, longitude: -8.611, tone: "primary", value: "imagem real" },
+    { label: "Innsbruck", latitude: 47.2692, longitude: 11.4041, tone: "neutral", value: "alpes" },
+    { label: "Tallinn", latitude: 59.437, longitude: 24.7536, tone: "neutral", value: "báltico" },
+  ];
+
   return (
     <section className="home-screen">
-      <article className="home-hero-card">
+      <Card as="article" variant="homeHero">
         <div className="home-copy-column">
           <div className="home-kicker-row">
-            <span className="eyebrow">Europa · treino tático</span>
+            <span className="eyebrow">Europa · treino geográfico</span>
             <span className="chip chip-highlight">Operação solo</span>
           </div>
 
@@ -19,17 +29,16 @@ export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
           </h1>
 
           <p className="home-copy">
-            Sessões curtas, pistas visuais e um mapa europeu num interface com ritmo de missão.
+            Observa imagens reais, identifica pistas visuais e marca a tua estimativa num mapa real da Europa.
           </p>
 
           <div className="action-row home-cta-row">
-            <button className="button button-ghost" onClick={onOpenTutorial} type="button">
-              Ver tutorial
-            </button>
-
-            <button className="button button-primary" onClick={onStart} type="button">
-              Iniciar missão
-            </button>
+             <RoundedButton color="neon" tone="ghost" radius="none" onClick={onOpenTutorial}>
+             Ver tutorial
+            </RoundedButton>
+            <RoundedButton color="neon" radius="none" onClick={onStart}>
+             Iniciar missão
+            </RoundedButton>
           </div>
 
           <div className="home-chip-row">
@@ -46,117 +55,128 @@ export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
             </div>
             <div className="home-step-card">
               <span className="muted-eyebrow">02</span>
-              <strong>Lê a cena</strong>
-              <p>Interpreta o ambiente.</p>
+              <strong>Observa a imagem</strong>
+              <p>Procura arquitetura, relevo e contexto.</p>
             </div>
             <div className="home-step-card">
               <span className="muted-eyebrow">03</span>
               <strong>Marca o mapa</strong>
-              <p>Fecha a pontuação.</p>
+              <p>Compara distância e pontuação.</p>
             </div>
           </div>
         </div>
 
         <div className="home-scene-column">
           <div className="scene-window">
-            <div className="scene-window-top">
-              <span className="scene-badge">Ronda 01 / 05</span>
-              <span className="scene-badge scene-badge-live">Ligação segura</span>
-            </div>
-
-            <div className="scene-sky" />
-            <div className="scene-haze" />
-            <div className="scene-road" />
-            <div className="scene-rails" />
-            <div className="scene-landmark scene-landmark-left" />
-            <div className="scene-landmark scene-landmark-center" />
-            <div className="scene-landmark scene-landmark-right" />
-
-            <div className="scene-floating-card scene-floating-card-main">
-              <span className="muted-eyebrow">Perfil da missão</span>
-              <strong>Solo clássico</strong>
-              <p>Uma leitura visual, um ponto, resposta imediata.</p>
-            </div>
-
-            <div className="scene-floating-card scene-floating-card-map">
-              <span className="muted-eyebrow">Teatro</span>
-              <div className="scene-mini-map">
-                <span className="scene-mini-map-dot scene-mini-map-dot-a" />
-                <span className="scene-mini-map-dot scene-mini-map-dot-b" />
-                <span className="scene-mini-map-dot scene-mini-map-dot-c" />
+            <div className="scene-window-map">
+              <div className="scene-window-top">
+                <span className="scene-badge">Ronda 01 / 05</span>
+                <span className="scene-badge scene-badge-live">Mapa real</span>
               </div>
+
+              <EuropeGuessMap
+                disabled
+                guess={null}
+                hotspots={previewHotspots}
+                showFooter={false}
+              />
             </div>
 
-            <div className="scene-floating-card scene-floating-card-mode">
-              <span className="muted-eyebrow">Ritmo</span>
-              <strong>45s / 60s / 90s</strong>
-              <p>Cronómetro opcional</p>
+            <div className="scene-window-info-grid">
+              <div className="scene-floating-card scene-floating-card-main">
+                <span className="muted-eyebrow">Como se joga</span>
+                <strong>Imagem real + mapa</strong>
+                <p>Analisa o cenário, marca um ponto e vê a distância ao local correto.</p>
+              </div>
+
+              <div className="scene-floating-card scene-floating-card-mode">
+                <span className="muted-eyebrow">Ritmo</span>
+                <strong>45s / 60s / 90s</strong>
+                <p>Cronómetro opcional</p>
+              </div>
+
+              <div className="scene-floating-card scene-floating-card-map">
+                <span className="muted-eyebrow">Dataset</span>
+                <strong>Wikimedia Commons</strong>
+                <p>Fontes e licenças visíveis no resultado.</p>
+              </div>
             </div>
           </div>
         </div>
-      </article>
+      </Card>
 
       <section className="home-grid-section">
         <div className="home-grid">
-          <article className="home-grid-feature">
+          <Card as="article" variant="tactical" gridColumn="span 8">
             <div className="home-grid-feature-top">
-              <span className="muted-eyebrow">HUD tático</span>
-              <span className="chip chip-highlight">SUPERFÍCIE ATIVA</span>
+              <span className="muted-eyebrow">Mapa de resposta</span>
+              <span className="chip chip-highlight">OpenStreetMap</span>
             </div>
 
             <div className="home-grid-feature-visual">
+              <EuropeGuessMap
+                disabled
+                guess={null}
+                hotspots={previewHotspots}
+                showFooter={false}
+              />
+
               <div className="home-grid-feature-overlay">
-                <strong>Geolocalização avançada</strong>
-                <p>Painel imersivo para leitura visual, pistas curtas e decisão rápida no mapa.</p>
+                <strong>Escolhe no mapa real</strong>
+                <p>Clica numa coordenada aproximada e compara depois a distância ao local correto.</p>
               </div>
             </div>
-          </article>
+          </Card>
 
-          <article className="home-grid-intel">
-            <span className="muted-eyebrow">Análise de sinais</span>
-            <h3>Leitura operacional do terreno europeu.</h3>
+          <Card as="article" variant="tacticalStack" gridColumn="span 4">
+            <span className="muted-eyebrow">Pistas visuais</span>
+            <h3>Leitura de imagem e contexto europeu.</h3>
             <p>
-              Cada ronda cruza pistas urbanas, ritmo de jogo e confirmação cartográfica no mesmo
-              interface.
+              Cada ronda junta uma imagem real, pistas visuais curtas e confirmação cartográfica no
+              mesmo interface.
             </p>
 
             <div className="home-grid-metrics">
               <div>
-                <span>Sinal</span>
-                <strong>98.2%</strong>
+                <span>Fonte</span>
+                <strong>Wikimedia</strong>
               </div>
               <div>
-                <span>Latência</span>
-                <strong>12 ms</strong>
+                <span>Mapa</span>
+                <strong>OSM</strong>
               </div>
               <div>
-                <span>Encriptação</span>
-                <strong>AES-256</strong>
+                <span>Resultado</span>
+                <strong>Distância + pontos</strong>
               </div>
             </div>
-          </article>
+          </Card>
 
-          <article className="home-grid-objective">
+          <Card as="article" variant="tactical" gridColumn="span 4">
             <span className="muted-eyebrow">01 · objetivo</span>
-            <strong>Vigilância</strong>
-            <p>Leitura de espaço urbano, sinalética e morfologia local.</p>
-          </article>
+            <strong>Observar</strong>
+            <p>Identifica arquitetura, relevo, luz e sinais visuais úteis.</p>
+          </Card>
 
-          <article className="home-grid-objective">
+          <Card as="article" variant="tactical" gridColumn="span 4">
             <span className="muted-eyebrow">02 · objetivo</span>
-            <strong>Reconhecimento</strong>
-            <p>Confirmação visual rápida com foco em pistas com maior valor geográfico.</p>
-          </article>
+            <strong>Marcar</strong>
+            <p>Escolhe uma coordenada aproximada no mapa real da Europa.</p>
+          </Card>
 
-          <article className="home-grid-objective home-grid-objective-highlight">
+          <Card
+            as="article"
+            variant="tacticalHighlight"
+            gridColumn="span 4"
+          >
             <span className="muted-eyebrow">03 · objetivo</span>
-            <strong>Dados cruzados</strong>
-            <p>Cruza contexto, distância e pontuação num único ciclo de ronda.</p>
-          </article>
+            <strong>Comparar</strong>
+            <p>Vê distância, pontuação e fonte da imagem no resultado.</p>
+          </Card>
         </div>
       </section>
 
-      <section className="home-cta-footer">
+      <Card as="section" variant="homeCta">
         <div>
           <span className="eyebrow">pronto a lançar</span>
           <h2>A próxima ronda está à espera.</h2>
@@ -164,14 +184,14 @@ export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
         </div>
 
         <div className="home-cta-footer-actions">
-          <button className="button button-ghost" onClick={onOpenTutorial} type="button">
+          <RoundedButton color="neon" tone="ghost" radius="none" onClick={onOpenTutorial} type="button">
             Rever resumo
-          </button>
-          <button className="button button-primary" onClick={onStart} type="button">
+          </RoundedButton>
+          <RoundedButton intent="primary" radius="none" onClick={onStart} type="button">
             Entrar em missão
-          </button>
+          </RoundedButton>
         </div>
-      </section>
+      </Card>
     </section>
   );
 }

@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
+import { Card } from "../../components/layout/card/card";
+import { InfoGrid } from "../../components/ui/InfoCard";
+import { OptionGroup } from "../../components/ui/OptionGroup";
+import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig } from "../../types/game";
 
 interface SetupScreenProps {
@@ -18,6 +23,11 @@ export function SetupPage({
 }: SetupScreenProps) {
   const [config, setConfig] = useState<SessionConfig>(initialConfig);
   const paceLabel = config.timed ? `${config.roundTimeSeconds}s / ronda` : "Sem cronómetro";
+  const previewHotspots: MapHotspot[] = [
+    { label: "Porto", latitude: 41.1402, longitude: -8.611, tone: "primary", value: "pino exemplo" },
+    { label: "Innsbruck", latitude: 47.2692, longitude: 11.4041, tone: "neutral", value: "alpes" },
+    { label: "Tallinn", latitude: 59.437, longitude: 24.7536, tone: "neutral", value: "báltico" },
+  ];
 
   return (
     <section className="screen-shell">
@@ -28,156 +38,115 @@ export function SetupPage({
         </div>
 
         <div className="setup-header-actions">
-          <button className="button button-ghost button-compact" onClick={onOpenTutorial} type="button">
+          <RoundedButton color="neon" tone="ghost" size="compact" radius="none" onClick={onOpenTutorial} type="button">
             Rever tutorial
-          </button>
-          <button className="button button-subtle button-compact" onClick={onBack} type="button">
-            Regressar
-          </button>
+          </RoundedButton>
+          <RoundedButton color="neon" tone="subtle" size="compact" radius="none" onClick={onBack} type="button">
+            Voltar
+          </RoundedButton>
         </div>
       </div>
 
       <div className="setup-stage">
-        <article className="setup-panel setup-panel-main">
-          <div className="setup-field">
-            <p className="field-label">Número de rondas</p>
-            <div className="toggle-row">
-              {[3, 5, 7].map((value) => (
-                <button
-                  className={`chip ${config.roundCount === value ? "chip-highlight" : "chip-soft"}`}
-                  key={value}
-                  onClick={() => setConfig((current) => ({ ...current, roundCount: value }))}
-                  type="button"
-                >
-                  {value} rondas
-                </button>
-              ))}
-            </div>
-          </div>
+        <Card as="article" variant="setupPanelStack">
+          <OptionGroup
+            label="Número de rondas"
+            options={[
+              { label: "3 rondas", value: 3 },
+              { label: "5 rondas", value: 5 },
+              { label: "7 rondas", value: 7 },
+            ]}
+            value={config.roundCount}
+            onChange={(roundCount) => setConfig((current) => ({ ...current, roundCount }))}
+          />
 
-          <div className="setup-field">
-            <p className="field-label">Modo de tempo</p>
-            <div className="toggle-row">
-              <button
-                className={`chip ${!config.timed ? "chip-highlight" : "chip-soft"}`}
-                onClick={() =>
-                  setConfig((current) => ({ ...current, timed: false, roundTimeSeconds: null }))
-                }
-                type="button"
-              >
-                Livre
-              </button>
-              <button
-                className={`chip ${config.timed ? "chip-highlight" : "chip-soft"}`}
-                onClick={() =>
-                  setConfig((current) => ({
-                    ...current,
-                    timed: true,
-                    roundTimeSeconds: current.roundTimeSeconds ?? 60,
-                  }))
-                }
-                type="button"
-              >
-                Cronometrado
-              </button>
-            </div>
-          </div>
+          <OptionGroup
+            label="Modo de tempo"
+            options={[
+              { label: "Livre", value: false },
+              { label: "Cronometrado", value: true },
+            ]}
+            value={config.timed}
+            onChange={(timed) =>
+              setConfig((current) => ({
+                ...current,
+                timed,
+                roundTimeSeconds: timed ? current.roundTimeSeconds ?? 60 : null,
+              }))
+            }
+          />
 
           {config.timed ? (
-            <div className="setup-field">
-              <p className="field-label">Tempo por ronda</p>
-              <div className="toggle-row">
-                {[45, 60, 90].map((value) => (
-                  <button
-                    className={`chip ${config.roundTimeSeconds === value ? "chip-highlight" : "chip-soft"}`}
-                    key={value}
-                    onClick={() =>
-                      setConfig((current) => ({ ...current, roundTimeSeconds: value }))
-                    }
-                    type="button"
-                  >
-                    {value}s
-                  </button>
-                ))}
-              </div>
-            </div>
+            <OptionGroup
+              label="Tempo por ronda"
+              options={[
+                { label: "45s", value: 45 },
+                { label: "60s", value: 60 },
+                { label: "90s", value: 90 },
+              ]}
+              value={config.roundTimeSeconds ?? 60}
+              onChange={(roundTimeSeconds) =>
+                setConfig((current) => ({ ...current, roundTimeSeconds }))
+              }
+            />
           ) : null}
 
-          <div className="setup-meta-row">
-            <div className="setup-stat">
-              <span className="muted-eyebrow">Região</span>
-              <strong>Europa</strong>
-            </div>
-
-            <div className="setup-stat">
-              <span className="muted-eyebrow">Ritmo</span>
-              <strong>{paceLabel}</strong>
-            </div>
-
-            <div className="setup-stat">
-              <span className="muted-eyebrow">Modo</span>
-              <strong>Solo clássico</strong>
-            </div>
-          </div>
+          <InfoGrid
+            items={[
+              { label: "Região", value: "Europa" },
+              { label: "Ritmo", value: paceLabel },
+              { label: "Modo", value: "Solo clássico" },
+            ]}
+          />
 
           <div className="action-row action-row-spread">
-            <button className="button button-ghost" onClick={onBack} type="button">
+            <RoundedButton color="neon" tone="ghost" radius="none" onClick={onBack} type="button">
               Cancelar
-            </button>
+            </RoundedButton>
 
-            <button
-              className="button button-primary setup-submit"
+            <RoundedButton
+              className="setup-submit"
               disabled={busy}
+              intent="primary"
               onClick={() => onSubmit(config)}
+              radius="none"
               type="button"
             >
               {busy ? "A iniciar..." : "Lançar missão"}
-            </button>
+            </RoundedButton>
           </div>
-        </article>
+        </Card>
 
-        <article className="setup-panel setup-panel-preview">
+        <Card as="article" variant="setupPanel">
           <div className="setup-preview-top">
             <span className="muted-eyebrow">Pré-visualização</span>
             <span className="setup-preview-badge">{config.roundCount} rondas</span>
           </div>
 
           <div className="setup-preview-window">
-            <div className="setup-preview-score">
-              <span className="muted-eyebrow">HUD inicial</span>
-              <strong>0 pts</strong>
-            </div>
+            <EuropeGuessMap
+              disabled
+              guess={null}
+              hotspots={previewHotspots}
+              showFooter={false}
+            />
 
-            <div className="setup-preview-route" />
-            <div className="setup-preview-route setup-preview-route-alt" />
-            <div className="setup-preview-point setup-preview-point-a" />
-            <div className="setup-preview-point setup-preview-point-b" />
-            <div className="setup-preview-point setup-preview-point-c" />
-
-            <div className="setup-preview-card">
-              <span className="muted-eyebrow">Ritmo selecionado</span>
+            <Card variant="previewOverlay">
+              <span className="muted-eyebrow">Como vai funcionar</span>
               <strong>{paceLabel}</strong>
-              <p>Preparação curta, leitura clara, decisão rápida.</p>
-            </div>
+              <p>Observa a imagem, marca no mapa real e compara distância e pontuação.</p>
+            </Card>
           </div>
 
-          <div className="setup-preview-grid">
-            <div className="setup-preview-cell">
-              <span className="muted-eyebrow">Fluxo</span>
-              <strong>Preparar → Marcar → Pontuar</strong>
-            </div>
-
-            <div className="setup-preview-cell">
-              <span className="muted-eyebrow">Tutorial</span>
-              <strong>Disponível a qualquer momento</strong>
-            </div>
-
-            <div className="setup-preview-cell setup-preview-cell-wide">
-              <span className="muted-eyebrow">Âmbito</span>
-              <strong>Europa, solo, com cronómetro opcional.</strong>
-            </div>
-          </div>
-        </article>
+          <InfoGrid
+            layout="preview"
+            items={[
+              { label: "Fluxo", value: "Observar → Marcar → Comparar" },
+              { label: "Mapa", value: "OpenStreetMap como base visual" },
+              { label: "Âmbito", value: "Europa, imagens reais e cronómetro opcional.", span: "full" },
+            ]}
+          />
+        </Card>
       </div>
     </section>
   );

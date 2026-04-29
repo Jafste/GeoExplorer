@@ -70,7 +70,7 @@ Depois da submissão da resposta, o sistema apresenta de forma legível a locali
 ### Funcionalidade 8 — Resultado final da sessão
 
 **Critério de aceitação:**  
-Após a última ronda, o sistema apresenta a pontuação total acumulada, o resumo das rondas jogadas e disponibiliza opções para repetir a sessão com a mesma configuração ou regressar ao ecrã principal para iniciar um novo jogo com diferente configuração.
+Após a última ronda, o sistema apresenta a pontuação total acumulada, o resumo das rondas jogadas e disponibiliza opções para repetir a sessão com a mesma configuração ou voltar ao ecrã principal para iniciar um novo jogo com diferente configuração.
 
 ### Funcionalidade 9 — Registo de resultados
 

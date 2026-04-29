@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend `mock` jogável implementado e backend inicial em ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e imagens reais iniciais, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
 
 ---
 
@@ -26,6 +26,10 @@
 - [x] Camada de dados abstrata com suporte a `mock` e `api`
 - [x] Dataset europeu inicial com cenas mock, caminhos `sceneImage` e contratos de jogo
 - [x] Assets visuais `mock` para cenas de jogo
+- [x] Mapa real no frontend com OpenStreetMap/Leaflet
+- [x] Primeiros locais reais com imagem, fonte, licença e atribuição
+- [x] Resultados de ronda com metadata visual e ligações para fonte/licença
+- [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
 - [x] Execução local do frontend preparada
 - [x] Backend inicial ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
@@ -125,4 +129,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [23 Abril 2026] · [Sem. 6]*
+*Última atualização: [29 Abril 2026] · [Sem. 7]*

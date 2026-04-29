@@ -56,9 +56,9 @@
 
 ## Sem. 7 · 28 abr–2 mai · DEMO INTERNA
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** adicionei mapa real com OpenStreetMap ao frontend, substituí o minimapa mock nos fluxos principais, integrei imagens reais com metadata de fonte/licença no dataset e mostrei a atribuição nos resultados. Também reforcei testes para validar contratos backend/frontend e metadata visual dos locais.
+**Bloqueou:** ainda não liguei a persistência real ao backend; a base de dados continua preparada, mas as sessões ainda correm em memória.
+**Próxima semana:** estabilizar o modo `api`, medir chamadas à camada de dados e decidir se mantenho PostgreSQL/Supabase nesta fase ou se vale a pena preparar uma alternativa como Turso/libSQL.
 
 ---
 

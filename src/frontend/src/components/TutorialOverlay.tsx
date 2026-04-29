@@ -1,15 +1,15 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Compass,
-  Crosshair,
+  Camera,
   Flag,
-  Radar,
-  TimerReset,
+  MapPinned,
   Trophy,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { EuropeGuessMap, type MapHotspot } from "./EuropeGuessMap";
+import { RoundedButton } from "./ui/roundedButton";
 
 interface TutorialOverlayProps {
   onDismiss: () => void;
@@ -18,44 +18,75 @@ interface TutorialOverlayProps {
 const TUTORIAL_STEPS = [
   {
     badge: "Passo 1",
-    title: "Escolhe a sessão",
-    text: "Abre uma missão rápida e mantém o âmbito simples: solo, Europa, início imediato.",
-    accent: "Solo clássico",
-    helper: "Parte do CTA inicial e fecha primeiro os parâmetros da sessão.",
+    title: "Configura a sessão",
+    text: "Escolhe quantas rondas queres jogar e se preferes jogar com ou sem cronómetro.",
+    accent: "3 / 5 / 7 rondas",
+    helper: "O modo é individual e focado na Europa, para manter a demo simples e direta.",
     telemetry: [
       { label: "Âmbito", value: "Europa" },
-      { label: "Entrada", value: "Missão imediata" },
-      { label: "Perfil", value: "Operação solo" },
+      { label: "Perfil", value: "Individual" },
+      { label: "Ritmo", value: "Opcional" },
     ],
     icon: Flag,
   },
   {
     badge: "Passo 2",
-    title: "Define rondas e tempo",
-    text: "Escolhe o número de rondas e decide entre sessão livre ou cronómetro curto.",
-    accent: "45s / 60s / 90s",
-    helper: "O cronómetro é opcional, por isso o fluxo mantém-se igual nos dois modos.",
+    title: "Observa a imagem real",
+    text: "Cada ronda mostra uma fotografia de um local europeu. Procura pistas na arquitetura, relevo, luz e contexto urbano.",
+    accent: "Imagem + pistas",
+    helper: "As pistas ajudam a orientar a leitura, mas a resposta final depende do teu palpite no mapa.",
     telemetry: [
-      { label: "Rondas", value: "3 / 5 / 7" },
-      { label: "Janela", value: "Livre ou cronometrada" },
-      { label: "Cadência", value: "Curta e tática" },
+      { label: "Fonte", value: "Wikimedia" },
+      { label: "Leitura", value: "Visual" },
+      { label: "Pistas", value: "Contextuais" },
     ],
-    icon: TimerReset,
+    icon: Camera,
   },
   {
     badge: "Passo 3",
-    title: "Marca e pontua",
-    text: "Lê a cena, marca o mapa e fecha o palpite antes de a ronda terminar.",
-    accent: "Palpite → Pontos",
-    helper: "Cada ronda gera pontos, distância e um relatório final de sessão.",
+    title: "Marca no mapa real",
+    text: "Abre o mapa, aproxima a zona que achas correta e coloca o pino no ponto mais provável.",
+    accent: "Mapa real",
+    helper: "Só existe uma submissão por ronda. Depois de enviares o palpite, o resultado fica fechado.",
     telemetry: [
-      { label: "Pino", value: "Uma marcação" },
-      { label: "Saída", value: "Pontuação imediata" },
-      { label: "Resumo", value: "Mapa e distância" },
+      { label: "Mapa", value: "OpenStreetMap" },
+      { label: "Pino", value: "Uma submissão" },
+      { label: "Tempo", value: "Opcional" },
+    ],
+    icon: MapPinned,
+  },
+  {
+    badge: "Passo 4",
+    title: "Compara o resultado",
+    text: "No fim da ronda vês a distância ao local correto, a pontuação, as pistas e a fonte/licença da imagem.",
+    accent: "Distância → pontos",
+    helper: "O relatório final junta todas as rondas para veres onde acertaste melhor e onde te desviaste.",
+    telemetry: [
+      { label: "Pontuação", value: "Imediata" },
+      { label: "Fonte", value: "Visível" },
+      { label: "Resumo", value: "Final" },
     ],
     icon: Trophy,
   },
 ] as const;
+
+const tutorialHotspots: MapHotspot[] = [
+  { label: "Porto", latitude: 41.1402, longitude: -8.611, tone: "primary", value: "exemplo" },
+  { label: "Innsbruck", latitude: 47.2692, longitude: 11.4041, tone: "neutral", value: "alpes" },
+  { label: "Tallinn", latitude: 59.437, longitude: 24.7536, tone: "neutral", value: "báltico" },
+];
+
+const tutorialGuess = {
+  latitude: 45.4642,
+  longitude: 9.19,
+  label: "Palpite exemplo",
+};
+
+const tutorialActual = {
+  latitude: 47.2692,
+  longitude: 11.4041,
+  label: "Local correto",
+};
 
 export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
   const [activeStep, setActiveStep] = useState(0);
@@ -106,10 +137,10 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
           <div className="tutorial-header-copy">
             <span className="eyebrow">primeiro acesso</span>
             <h2 id="tutorial-title" className="tutorial-title">
-              Aprende o fluxo operacional em três fases.
+              Aprende o fluxo do jogo em quatro passos.
             </h2>
             <p className="tutorial-intro">
-              O tutorial segue o mesmo ritmo do produto: sessão, leitura de cena e fecho do palpite.
+              O tutorial segue o mesmo ritmo do produto: configurar, observar, marcar no mapa e comparar o resultado.
             </p>
           </div>
 
@@ -122,7 +153,7 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
           <aside className="tutorial-rail">
             <div className="tutorial-rail-head">
               <span className="muted-eyebrow">Fluxo guiado</span>
-              <strong>03 passos ativos</strong>
+              <strong>04 passos ativos</strong>
             </div>
 
             <div className="tutorial-progress" aria-label="Progresso do tutorial">
@@ -151,10 +182,9 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
 
             <div className="tutorial-rail-card">
               <span className="muted-eyebrow">Protocolo</span>
-              <strong>Uma ronda, uma leitura, um ponto.</strong>
+              <strong>Uma imagem, um pino, uma pontuação.</strong>
               <p>
-                O jogo mantém a mesma lógica entre modo livre e cronometrado. A diferença está
-                apenas no ritmo da decisão.
+                O jogo usa imagens reais e um mapa real. O cronómetro só muda o ritmo da decisão.
               </p>
               <span className="tutorial-rail-hint">Esc fecha. Setas esquerda/direita navegam os passos.</span>
             </div>
@@ -183,20 +213,16 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
                 </div>
 
                 <div className="tutorial-visual-map">
-                  <div className="tutorial-orbit tutorial-orbit-a" />
-                  <div className="tutorial-orbit tutorial-orbit-b" />
-                  <div className="tutorial-map-dot tutorial-map-dot-a" />
-                  <div className="tutorial-map-dot tutorial-map-dot-b" />
-                  <div className="tutorial-map-dot tutorial-map-dot-c" />
-                  <div className="tutorial-visual-ribbon tutorial-visual-ribbon-left">
-                    <Radar size={14} strokeWidth={2.1} />
-                    <span>Leitura ativa</span>
-                  </div>
-                  <div className="tutorial-visual-ribbon tutorial-visual-ribbon-right">
-                    <Crosshair size={14} strokeWidth={2.1} />
-                    <span>Um ponto apenas</span>
-                  </div>
-                  <Compass className="tutorial-compass" size={20} strokeWidth={2.1} />
+                  <EuropeGuessMap
+                    actual={tutorialActual}
+                    comparisonDistanceKm={284}
+                    disabled
+                    guess={tutorialGuess}
+                    hotspots={tutorialHotspots}
+                    showComparisonLine
+                    showFooter={false}
+                    showMarkerLabels
+                  />
                 </div>
               </div>
 
@@ -219,34 +245,39 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
         </div>
 
         <div className="tutorial-actions">
-          <button
-            className="button button-subtle button-compact"
+          <RoundedButton
+            color="neon"
             disabled={activeStep === 0}
             onClick={() => setActiveStep((current) => Math.max(0, current - 1))}
+            radius="none"
+            size="compact"
+            tone="subtle"
             type="button"
           >
             <ChevronLeft size={16} strokeWidth={2.2} />
             Anterior
-          </button>
+          </RoundedButton>
 
           <div className="tutorial-actions-right">
-            <button className="button button-ghost button-compact" onClick={onDismiss} type="button">
+            <RoundedButton color="neon" tone="ghost" size="compact" radius="none" onClick={onDismiss} type="button">
               Ignorar
-            </button>
+            </RoundedButton>
 
             {isLastStep ? (
-              <button className="button button-primary button-compact" onClick={onDismiss} type="button">
+              <RoundedButton intent="primary" size="compact" radius="none" onClick={onDismiss} type="button">
                 Percebi
-              </button>
+              </RoundedButton>
             ) : (
-              <button
-                className="button button-primary button-compact"
+              <RoundedButton
+                intent="primary"
                 onClick={() => setActiveStep((current) => Math.min(TUTORIAL_STEPS.length - 1, current + 1))}
+                radius="none"
+                size="compact"
                 type="button"
               >
                 Seguinte
                 <ChevronRight size={16} strokeWidth={2.2} />
-              </button>
+              </RoundedButton>
             )}
           </div>
         </div>

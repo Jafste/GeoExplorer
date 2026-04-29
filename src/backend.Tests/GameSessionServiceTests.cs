@@ -35,9 +35,32 @@ public sealed class GameSessionServiceTests
             RoundTimeSeconds: 60));
 
         Assert.IsNotNull(response.CurrentRound.Challenge.Media);
-        Assert.AreEqual("mock", response.CurrentRound.Challenge.Media.SourceProvider);
-        Assert.AreEqual("Uso académico interno", response.CurrentRound.Challenge.Media.ImageLicense);
-        Assert.AreEqual("2026-04-24", response.CurrentRound.Challenge.Media.VerifiedAt);
+        Assert.AreEqual("Wikimedia Commons", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageUrl));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageAttribution));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageLicense));
+        Assert.AreEqual("2026-04-27", response.CurrentRound.Challenge.Media.VerifiedAt);
+    }
+
+    [TestMethod]
+    public void SubmitGuess_ReturnsMediaMetadataInRoundResult()
+    {
+        var service = CreateService();
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        var response = service.SubmitGuess(
+            session.SessionId,
+            session.CurrentRound.Id,
+            new GuessCoordinatesDto(47.2692, 11.4041, "Innsbruck"));
+
+        Assert.IsNotNull(response.Result.Media);
+        Assert.AreEqual("Wikimedia Commons", response.Result.Media.SourceProvider);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageSourceUrl));
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageLicenseUrl));
     }
 
     [TestMethod]

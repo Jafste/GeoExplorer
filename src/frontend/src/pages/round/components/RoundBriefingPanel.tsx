@@ -1,3 +1,4 @@
+import { RoundedButton } from "../../../components/ui/roundedButton";
 import type { ChallengeRound, GuessCoordinates } from "../../../types/game";
 import { formatCategoryLabel } from "../utils/roundFormat";
 
@@ -59,18 +60,20 @@ export function RoundBriefingPanel({
           </p>
         </div>
 
-        <button
-          className="button button-primary round-play-submit"
+        <RoundedButton
+          className="round-play-submit"
           disabled={!guess || busy}
+          intent="primary"
           onClick={() => {
             if (guess) {
               void onSubmit(guess);
             }
           }}
+          radius="none"
           type="button"
         >
           {busy ? "A resolver..." : "Enviar palpite"}
-        </button>
+        </RoundedButton>
       </div>
     </aside>
   );

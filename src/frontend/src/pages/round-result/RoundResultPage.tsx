@@ -1,5 +1,8 @@
 import { MapPinned, MoveRight, Radar, ScanLine, Waypoints } from "lucide-react";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
+import { Card } from "../../components/layout/card/card";
+import { InfoGrid } from "../../components/ui/InfoCard";
+import { RoundedButton } from "../../components/ui/roundedButton";
 import type { RoundProgress, RoundResult } from "../../types/game";
 
 interface RoundResultPageProps {
@@ -40,13 +43,13 @@ export function RoundResultPage({
           <div className="eyebrow">resumo da ronda</div>
           <h2 className="section-title">Resultado confirmado.</h2>
         </div>
-        <button className="button button-ghost" onClick={onHome} type="button">
+        <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
           Voltar à base
-        </button>
+        </RoundedButton>
       </div>
 
       <div className="debrief-layout">
-        <article className="debrief-map-card">
+        <Card as="article" variant="tactical">
           <div className="debrief-map-head">
             <div>
               <span className="muted-eyebrow">Comparação cartográfica</span>
@@ -107,9 +110,9 @@ export function RoundResultPage({
               </div>
             </div>
           </div>
-        </article>
+        </Card>
 
-        <article className="debrief-summary-card">
+        <Card as="article" variant="tacticalStack">
           <div className="debrief-summary-head">
             <div>
               <span className="muted-eyebrow">Resultado da missão</span>
@@ -125,16 +128,16 @@ export function RoundResultPage({
             <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
           </div>
 
-          <div className="debrief-metric-grid">
-            <div className="debrief-metric-card">
-              <span className="muted-eyebrow">Precisão</span>
-              <strong>{accuracy.toFixed(1)}%</strong>
-            </div>
-            <div className="debrief-metric-card">
-              <span className="muted-eyebrow">Desvio</span>
-              <strong>{result.distanceKm === null ? "Sem dados" : `${result.distanceKm.toFixed(1)} km`}</strong>
-            </div>
-          </div>
+          <InfoGrid
+            layout="preview"
+            items={[
+              { label: "Precisão", value: `${accuracy.toFixed(1)}%` },
+              {
+                label: "Desvio",
+                value: result.distanceKm === null ? "Sem dados" : `${result.distanceKm.toFixed(1)} km`,
+              },
+            ]}
+          />
 
           <div className="comparison-table">
             <div>
@@ -157,6 +160,38 @@ export function RoundResultPage({
             </div>
           </div>
 
+          {result.media ? (
+            <Card variant="tacticalHighlight" className="debrief-source-card">
+              <div>
+                <span className="muted-eyebrow">Fonte visual</span>
+                <strong>{result.media.sourceProvider}</strong>
+                <p>
+                  {result.media.imageAttribution
+                    ? `Imagem: ${result.media.imageAttribution}`
+                    : "Metadata da imagem disponível no dataset."}
+                </p>
+              </div>
+
+              <div className="debrief-source-meta">
+                {result.media.imageLicense ? <span className="chip chip-soft">{result.media.imageLicense}</span> : null}
+                {result.media.verifiedAt ? <span className="chip chip-soft">Verificado em {result.media.verifiedAt}</span> : null}
+              </div>
+
+              <div className="debrief-source-links">
+                {result.media.imageSourceUrl ? (
+                  <a href={result.media.imageSourceUrl} rel="noreferrer" target="_blank">
+                    Ver fonte
+                  </a>
+                ) : null}
+                {result.media.imageLicenseUrl ? (
+                  <a href={result.media.imageLicenseUrl} rel="noreferrer" target="_blank">
+                    Ver licença
+                  </a>
+                ) : null}
+              </div>
+            </Card>
+          ) : null}
+
           <div className="debrief-intel-log">
             <div className="debrief-intel-log-head">
               <span className="muted-eyebrow">Intel da ronda</span>
@@ -175,14 +210,14 @@ export function RoundResultPage({
               ))}
             </div>
           </div>
-        </article>
+        </Card>
       </div>
 
       <div className="action-row action-row-spread">
-        <button className="button button-ghost" onClick={onHome} type="button">
+        <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
           Terminar sessão
-        </button>
-        <button className="button button-primary" disabled={busy} onClick={onContinue} type="button">
+        </RoundedButton>
+        <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onContinue} type="button">
           {busy
             ? "A carregar..."
             : progress.completed
@@ -193,7 +228,7 @@ export function RoundResultPage({
                   <MoveRight size={16} strokeWidth={2.2} />
                 </>
               )}
-        </button>
+        </RoundedButton>
       </div>
     </section>
   );
