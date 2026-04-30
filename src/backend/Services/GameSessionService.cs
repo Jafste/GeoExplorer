@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using GeoExplorer.Backend.Contracts;
+using GeoExplorer.Backend.Data;
 
 namespace GeoExplorer.Backend.Services;
 
@@ -7,11 +8,29 @@ public sealed class GameSessionService
 {
     private readonly ConcurrentDictionary<string, SessionState> _sessions = new();
     private readonly IReadOnlyList<SeedLocation> _locations;
-    private int _sessionSequence;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<GameSessionService> _logger;
+    private readonly GamePersistenceStore? _persistenceStore;
 
     public GameSessionService(SeedLocationCatalog catalog)
+        : this(
+            catalog,
+            new ConfigurationBuilder().Build(),
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<GameSessionService>.Instance,
+            null)
+    {
+    }
+
+    public GameSessionService(
+        SeedLocationCatalog catalog,
+        IConfiguration configuration,
+        ILogger<GameSessionService> logger,
+        GamePersistenceStore? persistenceStore = null)
     {
         _locations = catalog.GetAll();
+        _configuration = configuration;
+        _logger = logger;
+        _persistenceStore = persistenceStore;
     }
 
     public CreateSessionResponse CreateSession(CreateSessionRequest request)
@@ -34,13 +53,12 @@ public sealed class GameSessionService
             throw new GameFlowException("O tempo por ronda deve estar entre 15 e 180 segundos.", StatusCodes.Status400BadRequest);
         }
 
-        var sessionIndex = Interlocked.Increment(ref _sessionSequence);
-        var sessionId = $"api-session-{sessionIndex}";
+        var sessionId = Guid.NewGuid().ToString();
         var selectedLocations = SelectRandomLocations(request.RoundCount);
 
         var rounds = selectedLocations.Select((location, index) => new RoundState
         {
-            Id = $"{sessionId}-round-{index + 1}",
+            Id = Guid.NewGuid().ToString(),
             RoundNumber = index + 1,
             Location = location,
         }).ToList();
@@ -60,6 +78,8 @@ public sealed class GameSessionService
         };
 
         _sessions[sessionId] = session;
+        PersistSession(session);
+
         return new CreateSessionResponse(sessionId, BuildRound(rounds[0], session));
     }
 
@@ -199,6 +219,7 @@ public sealed class GameSessionService
 
         round.Result = result;
         session.CurrentRoundIndex += 1;
+        PersistRoundResolution(session, round, result);
 
         return new RoundResolutionResponse(
             result,
@@ -281,6 +302,46 @@ public sealed class GameSessionService
     private static int ScoreFromDistance(double distanceKm)
     {
         return Math.Max(0, (int)Math.Round(5000 * Math.Exp(-distanceKm / 650)));
+    }
+
+    private bool ShouldPersist => _configuration.GetValue<bool>("GeoExplorer:UsePostgresPersistence");
+
+    private void PersistSession(SessionState session)
+    {
+        if (!ShouldPersist || _persistenceStore is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _persistenceStore.CreateSessionAsync(session).GetAwaiter().GetResult();
+        }
+        catch (Exception exception)
+        {
+            _logger.LogWarning(exception, "Could not persist game session {SessionId}.", session.Id);
+        }
+    }
+
+    private void PersistRoundResolution(SessionState session, RoundState round, RoundResultDto result)
+    {
+        if (!ShouldPersist || _persistenceStore is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _persistenceStore.ResolveRoundAsync(session, round, result).GetAwaiter().GetResult();
+        }
+        catch (Exception exception)
+        {
+            _logger.LogWarning(
+                exception,
+                "Could not persist round {RoundId} for session {SessionId}.",
+                round.Id,
+                session.Id);
+        }
     }
 }
 

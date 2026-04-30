@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL em Docker é a base de dados principal, Supabase completo fica como alternativa futura e Turso/libSQL só será reavaliado com métricas concretas de utilização.
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência em PostgreSQL com Entity Framework já guarda catálogo, sessões, rondas, palpites e resultados quando está ativa; a recuperação de sessões interrompidas fica para a fase seguinte. PostgreSQL em Docker é a base de dados principal, Supabase completo fica como alternativa futura e Turso/libSQL só será reavaliado com métricas concretas de utilização.
 
 ---
 
@@ -36,12 +36,14 @@
 - [x] Docker Compose com perfis de execução
 - [x] Testes mínimos de contrato do backend
 - [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR futuro
+- [x] Importação do catálogo de locais para PostgreSQL com Entity Framework Core
+- [x] Persistência de sessões, rondas, palpites e resultados em PostgreSQL
 
 ---
 
 ## O que está pendente
 
-- [ ] Integrar persistência real em PostgreSQL no backend
+- [ ] Recuperar sessões interrompidas a partir do PostgreSQL
 - [ ] Avaliar Supabase como hosted quando a persistência estiver estável
 - [ ] Medir chamadas à base de dados e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
@@ -94,7 +96,7 @@ Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL corre em Docker e ainda está preparada como schema inicial; a API será ligada à persistência real numa etapa seguinte.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais e persistir sessões, rondas, palpites e resultados quando as flags de PostgreSQL estão ativas.
 
 ---
 
@@ -138,4 +140,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [29 Abril 2026] · [Sem. 7]*
+*Última atualização: [30 Abril 2026] · [Sem. 7]*

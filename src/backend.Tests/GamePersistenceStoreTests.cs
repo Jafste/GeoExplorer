@@ -1,0 +1,163 @@
+using GeoExplorer.Backend.Contracts;
+using GeoExplorer.Backend.Data;
+using GeoExplorer.Backend.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging.Abstractions;
+
+namespace GeoExplorer.Backend.Tests;
+
+[TestClass]
+public sealed class GamePersistenceStoreTests
+{
+    [TestMethod]
+    public async Task GameSessionService_PersistsSessionRoundsAndResolvedGuess()
+    {
+        var databaseName = $"geoexplorer-test-{Guid.NewGuid()}";
+        var options = new DbContextOptionsBuilder<GeoExplorerDbContext>()
+            .UseInMemoryDatabase(databaseName)
+            .Options;
+        var factory = new TestDbContextFactory(options);
+        var service = CreateService(factory);
+
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 2,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        var resolution = service.SubmitGuess(
+            session.SessionId,
+            session.CurrentRound.Id,
+            new GuessCoordinatesDto(41.1496, -8.6109, "Porto"));
+
+        await using var db = await factory.CreateDbContextAsync();
+        var persistedSession = await db.GameSessions
+            .AsNoTracking()
+            .SingleAsync(gameSession => gameSession.Id == Guid.Parse(session.SessionId));
+        var persistedRounds = await db.SessionRounds
+            .AsNoTracking()
+            .Where(round => round.SessionId == persistedSession.Id)
+            .OrderBy(round => round.RoundNumber)
+            .ToListAsync();
+
+        Assert.AreEqual("europe", persistedSession.Region);
+        Assert.AreEqual(2, persistedSession.RoundCount);
+        Assert.AreEqual("active", persistedSession.Status);
+        Assert.AreEqual(resolution.Result.Score, persistedSession.TotalScore);
+        Assert.HasCount(2, persistedRounds);
+        Assert.AreEqual("resolved", persistedRounds[0].Status);
+        Assert.AreEqual("Porto", persistedRounds[0].GuessLabel);
+        Assert.AreEqual(41.1496, persistedRounds[0].GuessLatitude);
+        Assert.AreEqual(-8.6109, persistedRounds[0].GuessLongitude);
+        Assert.AreEqual("manual", persistedRounds[0].ResolutionReason);
+        Assert.AreEqual(resolution.Result.Score, persistedRounds[0].Score);
+        Assert.IsNotNull(persistedRounds[0].ResolvedAt);
+        Assert.AreEqual("pending", persistedRounds[1].Status);
+    }
+
+    [TestMethod]
+    public async Task GameSessionService_MarksPersistedSessionCompletedAfterLastRound()
+    {
+        var databaseName = $"geoexplorer-test-{Guid.NewGuid()}";
+        var options = new DbContextOptionsBuilder<GeoExplorerDbContext>()
+            .UseInMemoryDatabase(databaseName)
+            .Options;
+        var factory = new TestDbContextFactory(options);
+        var service = CreateService(factory);
+
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        service.TimeoutRound(session.SessionId, session.CurrentRound.Id, null);
+
+        await using var db = await factory.CreateDbContextAsync();
+        var persistedSession = await db.GameSessions
+            .AsNoTracking()
+            .SingleAsync(gameSession => gameSession.Id == Guid.Parse(session.SessionId));
+        var persistedRound = await db.SessionRounds
+            .AsNoTracking()
+            .SingleAsync(round => round.SessionId == persistedSession.Id);
+
+        Assert.AreEqual("completed", persistedSession.Status);
+        Assert.AreEqual(0, persistedSession.TotalScore);
+        Assert.AreEqual("resolved", persistedRound.Status);
+        Assert.AreEqual("timeout", persistedRound.ResolutionReason);
+        Assert.IsNull(persistedRound.GuessLatitude);
+        Assert.IsNull(persistedRound.GuessLongitude);
+    }
+
+    private static GameSessionService CreateService(IDbContextFactory<GeoExplorerDbContext> factory)
+    {
+        var environment = new TestWebHostEnvironment
+        {
+            ContentRootPath = Path.Combine(FindRepoRoot(), "src", "backend"),
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["GeoExplorer:UsePostgresPersistence"] = "true",
+            })
+            .Build();
+        var catalog = new SeedLocationCatalog(environment);
+        var store = new GamePersistenceStore(factory);
+
+        return new GameSessionService(
+            catalog,
+            configuration,
+            NullLogger<GameSessionService>.Instance,
+            store);
+    }
+
+    private static string FindRepoRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+
+        while (directory is not null)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "GeoExplorer.slnx")))
+            {
+                return directory.FullName;
+            }
+
+            directory = directory.Parent;
+        }
+
+        throw new DirectoryNotFoundException("Não foi possível encontrar a raiz do repositório.");
+    }
+
+    private sealed class TestDbContextFactory : IDbContextFactory<GeoExplorerDbContext>
+    {
+        private readonly DbContextOptions<GeoExplorerDbContext> _options;
+
+        public TestDbContextFactory(DbContextOptions<GeoExplorerDbContext> options)
+        {
+            _options = options;
+        }
+
+        public GeoExplorerDbContext CreateDbContext()
+        {
+            return new GeoExplorerDbContext(_options);
+        }
+
+        public Task<GeoExplorerDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(CreateDbContext());
+        }
+    }
+
+    private sealed class TestWebHostEnvironment : IWebHostEnvironment
+    {
+        public string ApplicationName { get; set; } = "GeoExplorer.Backend.Tests";
+        public IFileProvider ContentRootFileProvider { get; set; } = new NullFileProvider();
+        public string ContentRootPath { get; set; } = string.Empty;
+        public string EnvironmentName { get; set; } = "Development";
+        public string WebRootPath { get; set; } = string.Empty;
+        public IFileProvider WebRootFileProvider { get; set; } = new NullFileProvider();
+    }
+}

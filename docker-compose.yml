@@ -40,6 +40,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
       ASPNETCORE_HTTP_PORT: ${ASPNETCORE_HTTP_PORT:-8080}
+      GeoExplorer_UsePostgresCatalog: "true"
+      GeoExplorer_UsePostgresPersistence: "true"
       ConnectionStrings__GeoExplorerDb: Host=db;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:-geoexplorer_dev}
     depends_on:
       - db

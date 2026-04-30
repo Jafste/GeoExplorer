@@ -1,4 +1,6 @@
 using System.Text.Json;
+using GeoExplorer.Backend.Data;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GeoExplorer.Backend.Services;
 
@@ -7,9 +9,30 @@ public sealed class SeedLocationCatalog
     private readonly List<SeedLocation> _locations;
 
     public SeedLocationCatalog(IWebHostEnvironment environment)
+        : this(environment, new ConfigurationBuilder().Build(), NullLogger<SeedLocationCatalog>.Instance)
     {
-        var seedPath = Path.GetFullPath(
-            Path.Combine(environment.ContentRootPath, "..", "database", "seed", "locations.json"));
+    }
+
+    public SeedLocationCatalog(
+        IWebHostEnvironment environment,
+        IConfiguration configuration,
+        ILogger<SeedLocationCatalog> logger,
+        LocationCatalogStore? store = null)
+    {
+        var fileLocations = LoadFromJson(environment);
+        _locations = LoadFromPostgresIfEnabled(fileLocations, configuration, logger, store).ToList();
+    }
+
+    public IReadOnlyList<SeedLocation> GetAll() => _locations;
+
+    private static IReadOnlyList<SeedLocation> LoadFromJson(IWebHostEnvironment environment)
+    {
+        var seedPath = Path.GetFullPath(Path.Combine(
+            environment.ContentRootPath,
+            "..",
+            "database",
+            "seed",
+            "locations.json"));
 
         if (!File.Exists(seedPath))
         {
@@ -22,12 +45,45 @@ public sealed class SeedLocationCatalog
             PropertyNameCaseInsensitive = true,
         };
 
-        _locations =
-            JsonSerializer.Deserialize<List<SeedLocation>>(stream, options) ??
-            throw new InvalidOperationException("Não foi possível carregar o dataset inicial.");
+        return JsonSerializer.Deserialize<List<SeedLocation>>(stream, options) ??
+               throw new InvalidOperationException("Não foi possível carregar o dataset inicial.");
     }
 
-    public IReadOnlyList<SeedLocation> GetAll() => _locations;
+    private static IReadOnlyList<SeedLocation> LoadFromPostgresIfEnabled(
+        IReadOnlyList<SeedLocation> fileLocations,
+        IConfiguration configuration,
+        ILogger logger,
+        LocationCatalogStore? store)
+    {
+        if (!configuration.GetValue<bool>("GeoExplorer:UsePostgresCatalog"))
+        {
+            return fileLocations;
+        }
+
+        if (store is null)
+        {
+            logger.LogWarning("PostgreSQL catalog enabled, but no LocationCatalogStore was configured.");
+            return fileLocations;
+        }
+
+        try
+        {
+            var databaseLocations = store
+                .ImportAndLoadAsync(fileLocations)
+                .GetAwaiter()
+                .GetResult();
+
+            logger.LogInformation("Loaded {LocationCount} locations from PostgreSQL.", databaseLocations.Count);
+            return databaseLocations;
+        }
+        catch (Exception exception) when (exception is not InvalidOperationException)
+        {
+            logger.LogWarning(
+                exception,
+                "Could not load locations from PostgreSQL. Falling back to locations.json.");
+            return fileLocations;
+        }
+    }
 }
 
 public sealed class SeedLocation

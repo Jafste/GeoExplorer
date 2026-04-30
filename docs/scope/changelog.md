@@ -56,9 +56,9 @@
 
 ## Sem. 7 · 28 abr–2 mai · DEMO INTERNA
 
-**Feito:** adicionei mapa real com OpenStreetMap ao frontend, substituí o minimapa mock nos fluxos principais, integrei 158 locais reais com metadata de fonte/licença no dataset e mostrei a atribuição nos resultados. Também documentei a evolução futura para várias fontes visuais por local, incluindo Wikimedia Commons e Mapillary/Panoramax, e fechei a decisão de persistência com PostgreSQL em Docker e SignalR futuro.
-**Bloqueou:** ainda não liguei a persistência real ao backend; a base de dados continua preparada, mas as sessões ainda correm em memória.
-**Próxima semana:** ligar o backend à persistência PostgreSQL, medir chamadas à camada de dados e continuar a expansão controlada do dataset para 250-300 locais.
+**Feito:** adicionei mapa real com OpenStreetMap ao frontend, substituí o minimapa mock nos fluxos principais, integrei 158 locais reais com metadata de fonte/licença no dataset, mostrei a atribuição nos resultados e liguei o backend ao PostgreSQL com Entity Framework para guardar catálogo, sessões, rondas, palpites e resultados. Também documentei a evolução futura para várias fontes visuais por local, incluindo Wikimedia Commons e Mapillary/Panoramax, e fechei a decisão de persistência com PostgreSQL em Docker e SignalR futuro.
+**Bloqueou:** a recuperação de sessões interrompidas ainda não está implementada; nesta fase a persistência regista o histórico, mas o estado ativo continua orientado ao fluxo em memória.
+**Próxima semana:** medir chamadas à camada de dados, avaliar recuperação de sessões a partir do PostgreSQL e continuar a expansão controlada do dataset para 250-300 locais.
 
 ---
 

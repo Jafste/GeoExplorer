@@ -1,5 +1,7 @@
 using GeoExplorer.Backend.Contracts;
+using GeoExplorer.Backend.Data;
 using GeoExplorer.Backend.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,10 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddSingleton<SeedLocationCatalog>();
 builder.Services.AddSingleton<GameSessionService>();
+builder.Services.AddPooledDbContextFactory<GeoExplorerDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("GeoExplorerDb")));
+builder.Services.AddSingleton<LocationCatalogStore>();
+builder.Services.AddSingleton<GamePersistenceStore>();
 
 var app = builder.Build();
 
