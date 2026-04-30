@@ -18,11 +18,22 @@ async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
   });
 
   if (!response.ok) {
-    const message = await response.text();
+    const message = await readErrorMessage(response);
     throw new Error(message || "O servidor devolveu um erro.");
   }
 
   return (await response.json()) as T;
+}
+
+async function readErrorMessage(response: Response): Promise<string> {
+  const contentType = response.headers.get("Content-Type") ?? "";
+
+  if (contentType.includes("application/problem+json") || contentType.includes("application/json")) {
+    const problem = (await response.json()) as { detail?: string; title?: string };
+    return problem.detail ?? problem.title ?? "O servidor devolveu um erro.";
+  }
+
+  return response.text();
 }
 
 export function createApiGameDataSource(apiBaseUrl: string): GameDataSource {

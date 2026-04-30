@@ -99,3 +99,7 @@ api.MapGet("/sessions/{sessionId}/results", (string sessionId, GameSessionServic
 app.MapGet("/", () => Results.Redirect("/api/health"));
 
 app.Run();
+
+public partial class Program
+{
+}

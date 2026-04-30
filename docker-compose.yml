@@ -40,6 +40,9 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
       ASPNETCORE_HTTP_PORT: ${ASPNETCORE_HTTP_PORT:-8080}
+      ConnectionStrings__GeoExplorerDb: Host=db;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:-geoexplorer_dev}
+    depends_on:
+      - db
     ports:
       - "8080:8080"
     volumes:
@@ -47,7 +50,7 @@ services:
       - ./src/database:/workspace/src/database
 
   db:
-    profiles: ["database"]
+    profiles: ["database", "full"]
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-geoexplorer}

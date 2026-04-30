@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL em Docker é a base de dados principal, Supabase completo fica como alternativa futura e Turso/libSQL só será reavaliado com métricas concretas de utilização.
 
 ---
 
@@ -35,6 +35,7 @@
 - [x] Backend inicial ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
 - [x] Docker Compose com perfis de execução
 - [x] Testes mínimos de contrato do backend
+- [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR futuro
 
 ---
 
@@ -46,7 +47,7 @@
 - [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
 - [ ] Expandir o dataset curado para 250-300 locais reais
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
-- [ ] Avaliar extensões futuras, incluindo modo multijogador assíncrono, apenas após estabilização do núcleo
+- [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 
 ---
 
@@ -74,6 +75,12 @@ dotnet run --project src/backend/backend.csproj
 ```
 
 ```bash
+# Frontend ligado à API local
+cd src/frontend
+npm run dev:api
+```
+
+```bash
 # Docker
 docker compose --profile frontend-mock up
 docker compose --profile full up
@@ -87,7 +94,7 @@ Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL ainda está preparada como schema inicial e será ligada à API numa etapa seguinte.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL corre em Docker e ainda está preparada como schema inicial; a API será ligada à persistência real numa etapa seguinte.
 
 ---
 
@@ -97,7 +104,8 @@ O frontend pode correr em modo `mock` para demonstração rápida ou em modo `ap
 |---------|------------------------|-----------------|
 | React + TypeScript | Angular | Permite construir rapidamente a interface do jogo e manter uma base de frontend tipada e extensível. |
 | ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
-| PostgreSQL local, Supabase como hosted preferencial | Turso/libSQL | Mantém coerência com a proposta aprovada e com o modelo relacional; Turso fica em avaliação futura após métricas de leitura/escrita. |
+| PostgreSQL em Docker | Supabase completo, Turso/libSQL | Garante persistência relacional reproduzível para desenvolvimento e avaliação; Supabase completo fica para necessidades futuras e Turso só será reavaliado com métricas. |
+| SignalR futuro no backend | Supabase Realtime | O multiplayer terá lógica de jogo, salas, timers, palpites e reconexões; por isso faz mais sentido centralizar realtime no backend ASP.NET Core. |
 | Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final. |
 | Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
 
