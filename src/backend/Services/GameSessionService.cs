@@ -36,10 +36,7 @@ public sealed class GameSessionService
 
         var sessionIndex = Interlocked.Increment(ref _sessionSequence);
         var sessionId = $"api-session-{sessionIndex}";
-        var offset = (sessionIndex - 1) % _locations.Count;
-        var selectedLocations = Enumerable.Range(0, request.RoundCount)
-            .Select(index => _locations[(offset + index) % _locations.Count])
-            .ToList();
+        var selectedLocations = SelectRandomLocations(request.RoundCount);
 
         var rounds = selectedLocations.Select((location, index) => new RoundState
         {
@@ -64,6 +61,20 @@ public sealed class GameSessionService
 
         _sessions[sessionId] = session;
         return new CreateSessionResponse(sessionId, BuildRound(rounds[0], session));
+    }
+
+    private List<SeedLocation> SelectRandomLocations(int count)
+    {
+        var pool = _locations.ToList();
+        var selectedCount = Math.Min(count, pool.Count);
+
+        for (var index = 0; index < selectedCount; index++)
+        {
+            var swapIndex = Random.Shared.Next(index, pool.Count);
+            (pool[index], pool[swapIndex]) = (pool[swapIndex], pool[index]);
+        }
+
+        return pool.Take(selectedCount).ToList();
     }
 
     public ChallengeRoundDto GetCurrentRound(string sessionId)

@@ -1,0 +1,8 @@
+node_modules
+dist
+.vite
+src/frontend/node_modules
+src/frontend/dist
+src/frontend/.vite
+src/backend/bin
+src/backend/obj

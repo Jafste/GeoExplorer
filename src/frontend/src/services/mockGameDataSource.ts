@@ -35,6 +35,30 @@ const EUROPE_BOUNDS = {
   maxLng: 45,
 };
 
+function randomIndex(maxExclusive: number): number {
+  const cryptoObject = globalThis.crypto;
+
+  if (cryptoObject?.getRandomValues) {
+    const values = new Uint32Array(1);
+    cryptoObject.getRandomValues(values);
+    return values[0] % maxExclusive;
+  }
+
+  return Math.floor(Math.random() * maxExclusive);
+}
+
+function selectRandomLocations(count: number): SeedLocation[] {
+  const pool = [...mockLocations];
+  const selectedCount = Math.min(count, pool.length);
+
+  for (let index = 0; index < selectedCount; index += 1) {
+    const swapIndex = index + randomIndex(pool.length - index);
+    [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
+  }
+
+  return pool.slice(0, selectedCount);
+}
+
 function buildRound(round: StoredRound, session: StoredSession): ChallengeRound {
   const { latitude: _latitude, longitude: _longitude, region: _region, ...challenge } = round.location;
 
@@ -157,10 +181,7 @@ export function createMockGameDataSource(): GameDataSource {
     async createSession(config: SessionConfig): Promise<CreateSessionResponse> {
       sessionCounter += 1;
       const sessionId = `mock-session-${sessionCounter}`;
-      const offset = (sessionCounter - 1) % mockLocations.length;
-      const selectedLocations = Array.from({ length: config.roundCount }, (_, index) => {
-        return mockLocations[(offset + index) % mockLocations.length];
-      });
+      const selectedLocations = selectRandomLocations(config.roundCount);
 
       const rounds: StoredRound[] = selectedLocations.map((location, index) => ({
         id: `${sessionId}-round-${index + 1}`,

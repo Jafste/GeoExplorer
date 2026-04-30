@@ -37,7 +37,7 @@ public sealed class SeedLocationDatasetTests
             .Where(location => location.Media is not null && location.Media.SourceProvider != "mock")
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(realMediaLocations.Count, 10, "O dataset deve manter pelo menos 10 locais com media real validada.");
+        Assert.IsGreaterThanOrEqualTo(100, realMediaLocations.Count, "O dataset deve manter pelo menos 100 locais com media real validada.");
 
         foreach (var location in realMediaLocations)
         {

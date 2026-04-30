@@ -3940,24 +3940,6 @@ body::after {
   border-color: rgba(209, 255, 38, 0.28);
 }
 
-.map-distance-callout {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 8px 16px;
-  border: 1px solid rgba(209, 255, 38, 0.28);
-  background: rgba(11, 15, 17, 0.9);
-  color: #d1ff26;
-  box-shadow: 0 0 20px rgba(209, 255, 38, 0.16);
-}
-
-.map-distance-callout strong {
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-}
-
 .map-hotspot-core {
   display: block;
   width: 14px;
@@ -4007,6 +3989,25 @@ body::after {
 .screen-shell-debrief,
 .screen-shell-session-report {
   gap: 24px;
+}
+
+.debrief-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .debrief-header-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .debrief-header-actions .button {
+    flex: 1 1 180px;
+  }
 }
 
 .section-support {
@@ -4679,6 +4680,27 @@ body::after {
   filter: drop-shadow(0 0 6px rgba(209, 255, 38, 0.44));
 }
 
+.guess-map-leaflet .map-distance-tooltip {
+  padding: 8px 14px;
+  border: 1px solid rgba(209, 255, 38, 0.32);
+  background: rgba(11, 15, 17, 0.94);
+  color: #d1ff26;
+  box-shadow: 0 0 20px rgba(209, 255, 38, 0.18);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.guess-map-leaflet .map-distance-tooltip--close {
+  padding: 6px 12px;
+  box-shadow: 0 0 16px rgba(209, 255, 38, 0.16);
+  font-size: 0.78rem;
+}
+
+.guess-map-leaflet .map-distance-tooltip::before {
+  display: none;
+}
+
 .tutorial-rail-head,
 .tutorial-rail-card,
 .tutorial-stage-head {
@@ -4807,7 +4829,8 @@ body::after {
   gap: 8px;
 }
 
-.debrief-source-links a {
+.debrief-source-links a,
+.debrief-source-link-disabled {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -4821,6 +4844,11 @@ body::after {
   letter-spacing: 0.12em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.debrief-source-link-disabled {
+  color: rgba(224, 227, 230, 0.42);
+  cursor: not-allowed;
 }
 
 .debrief-source-links a:hover {
@@ -4903,6 +4931,51 @@ body::after {
 
   .session-status-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-height: 820px) and (min-width: 821px) {
+  .round-briefing-panel {
+    top: 76px;
+    bottom: 24px;
+    width: min(340px, calc(100% - 48px));
+    grid-template-rows: auto auto minmax(120px, 1fr) auto;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .round-briefing-head h2 {
+    font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  }
+
+  .round-briefing-head p,
+  .round-pin-panel p {
+    margin-top: 6px;
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+
+  .round-briefing-meta,
+  .round-briefing-clues {
+    gap: 8px;
+  }
+
+  .round-briefing-meta-item,
+  .round-briefing-clue,
+  .round-pin-panel {
+    padding: 10px;
+  }
+
+  .round-briefing-meta-item span:last-child {
+    display: none;
+  }
+
+  .round-briefing-clue {
+    gap: 10px;
+  }
+
+  .round-play-submit {
+    min-height: 44px;
   }
 }
 

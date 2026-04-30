@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e imagens reais iniciais, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
+🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência real ainda está em integração; PostgreSQL mantém-se como base de dados alvo, com Supabase como opção hosted natural e Turso/libSQL em avaliação futura após métricas de utilização.
 
 ---
 
@@ -27,7 +27,7 @@
 - [x] Dataset europeu inicial com cenas mock, caminhos `sceneImage` e contratos de jogo
 - [x] Assets visuais `mock` para cenas de jogo
 - [x] Mapa real no frontend com OpenStreetMap/Leaflet
-- [x] Primeiros locais reais com imagem, fonte, licença e atribuição
+- [x] 158 locais reais com imagem, fonte, licença e atribuição
 - [x] Resultados de ronda com metadata visual e ligações para fonte/licença
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
@@ -44,6 +44,7 @@
 - [ ] Avaliar Supabase como hosted quando a persistência estiver estável
 - [ ] Medir chamadas à base de dados e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
+- [ ] Expandir o dataset curado para 250-300 locais reais
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Avaliar extensões futuras, incluindo modo multijogador assíncrono, apenas após estabilização do núcleo
 

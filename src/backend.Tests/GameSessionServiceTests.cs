@@ -39,7 +39,33 @@ public sealed class GameSessionServiceTests
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageUrl));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageAttribution));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageLicense));
-        Assert.AreEqual("2026-04-27", response.CurrentRound.Challenge.Media.VerifiedAt);
+        Assert.IsTrue(DateOnly.TryParse(response.CurrentRound.Challenge.Media.VerifiedAt, out _));
+    }
+
+    [TestMethod]
+    public void CreateSession_SelectsUniqueLocationsWithinSession()
+    {
+        var service = CreateService();
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 10,
+            Timed: false,
+            RoundTimeSeconds: null));
+        var locationIds = new List<string>();
+        var currentRound = session.CurrentRound;
+
+        for (var index = 0; index < 10; index++)
+        {
+            locationIds.Add(currentRound.Challenge.Id);
+            var response = service.TimeoutRound(session.SessionId, currentRound.Id, null);
+
+            if (!response.Progress.Completed)
+            {
+                currentRound = service.GetCurrentRound(session.SessionId);
+            }
+        }
+
+        Assert.AreEqual(10, locationIds.Distinct().Count());
     }
 
     [TestMethod]

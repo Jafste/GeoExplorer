@@ -1,4 +1,4 @@
-import { MapPinned, MoveRight, Radar, ScanLine, Waypoints } from "lucide-react";
+import { ExternalLink, MapPinned, MoveRight, Radar, ScanLine, Waypoints } from "lucide-react";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { InfoGrid } from "../../components/ui/InfoCard";
@@ -35,6 +35,8 @@ export function RoundResultPage({
     longitude: result.correctLongitude,
     label: `${result.city}, ${result.country}`,
   };
+  const sourceUrl = result.media?.imageSourceUrl?.trim();
+  const licenseUrl = result.media?.imageLicenseUrl?.trim().replace(/^http:\/\//, "https://");
 
   return (
     <section className="screen-shell screen-shell-debrief">
@@ -43,9 +45,23 @@ export function RoundResultPage({
           <div className="eyebrow">resumo da ronda</div>
           <h2 className="section-title">Resultado confirmado.</h2>
         </div>
-        <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
-          Voltar à base
-        </RoundedButton>
+        <div className="debrief-header-actions">
+          <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
+            Terminar sessão
+          </RoundedButton>
+          <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onContinue} type="button">
+            {busy
+              ? "A carregar..."
+              : progress.completed
+                ? "Ver relatório final"
+                : (
+                  <>
+                    Ir para a ronda {progress.nextRoundNumber}
+                    <MoveRight size={16} strokeWidth={2.2} />
+                  </>
+                )}
+          </RoundedButton>
+        </div>
       </div>
 
       <div className="debrief-layout">
@@ -64,9 +80,11 @@ export function RoundResultPage({
 
           <div className="debrief-map-stage">
             <EuropeGuessMap
+              allowExploration
               actual={actualLocation}
               comparisonDistanceKm={result.distanceKm}
               disabled
+              fitToMarkers
               guess={result.guess}
               onGuessChange={() => undefined}
               showComparisonLine={Boolean(result.guess && result.distanceKm !== null)}
@@ -178,16 +196,38 @@ export function RoundResultPage({
               </div>
 
               <div className="debrief-source-links">
-                {result.media.imageSourceUrl ? (
-                  <a href={result.media.imageSourceUrl} rel="noreferrer" target="_blank">
+                {sourceUrl ? (
+                  <a
+                    aria-label="Abrir fonte visual numa nova aba"
+                    href={sourceUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="Abrir fonte visual numa nova aba"
+                  >
                     Ver fonte
+                    <ExternalLink size={13} strokeWidth={2.4} />
                   </a>
-                ) : null}
-                {result.media.imageLicenseUrl ? (
-                  <a href={result.media.imageLicenseUrl} rel="noreferrer" target="_blank">
+                ) : (
+                  <span aria-disabled="true" className="debrief-source-link-disabled">
+                    Fonte indisponível
+                  </span>
+                )}
+                {licenseUrl ? (
+                  <a
+                    aria-label="Abrir licença da imagem numa nova aba"
+                    href={licenseUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="Abrir licença da imagem numa nova aba"
+                  >
                     Ver licença
+                    <ExternalLink size={13} strokeWidth={2.4} />
                   </a>
-                ) : null}
+                ) : (
+                  <span aria-disabled="true" className="debrief-source-link-disabled">
+                    Licença indisponível
+                  </span>
+                )}
               </div>
             </Card>
           ) : null}
@@ -213,23 +253,6 @@ export function RoundResultPage({
         </Card>
       </div>
 
-      <div className="action-row action-row-spread">
-        <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
-          Terminar sessão
-        </RoundedButton>
-        <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onContinue} type="button">
-          {busy
-            ? "A carregar..."
-            : progress.completed
-              ? "Ver relatório final"
-              : (
-                <>
-                  Ir para a ronda {progress.nextRoundNumber}
-                  <MoveRight size={16} strokeWidth={2.2} />
-                </>
-              )}
-        </RoundedButton>
-      </div>
     </section>
   );
 }
