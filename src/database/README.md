@@ -5,7 +5,7 @@ Esta pasta contém os artefactos da camada de dados do projeto.
 - `seed/locations.json` é o dataset inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 158 locais reais com metadata visual validada.
 - `sql/001-init.sql` documenta o esquema base previsto em PostgreSQL.
 
-Nesta fatia vertical, o catálogo de locais já pode ser importado para PostgreSQL através de Entity Framework Core. O backend também persiste sessões, rondas, palpites e resultados quando a persistência PostgreSQL está ativa. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
+Nesta fatia vertical, o catálogo de locais já pode ser importado para PostgreSQL através de Entity Framework Core. O backend também persiste sessões, rondas, palpites e resultados quando a persistência PostgreSQL está ativa, e consegue reconstruir uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
 
 ```bash
 docker compose --profile database up
@@ -20,7 +20,7 @@ ConnectionStrings__GeoExplorerDb=Host=localhost;Port=5432;Database=geoexplorer;U
 
 Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string por variável de ambiente.
 
-Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`.
+Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta reconstruí-la a partir dessas tabelas.
 
 Decidi manter PostgreSQL como base principal e não usar Supabase completo em Docker nesta fase. Supabase fica como hipótese futura se forem necessárias funcionalidades geridas como Auth, Storage, Realtime simples ou Row Level Security. Para multiplayer/realtime do jogo, a direção prevista é SignalR no backend, porque a sincronização terá lógica própria de salas, jogadores, timers, palpites e pontuação.
 

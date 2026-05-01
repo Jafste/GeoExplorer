@@ -8,6 +8,7 @@ public sealed class GameSessionService
 {
     private readonly ConcurrentDictionary<string, SessionState> _sessions = new();
     private readonly IReadOnlyList<SeedLocation> _locations;
+    private readonly IReadOnlyDictionary<string, SeedLocation> _locationsById;
     private readonly IConfiguration _configuration;
     private readonly ILogger<GameSessionService> _logger;
     private readonly GamePersistenceStore? _persistenceStore;
@@ -28,6 +29,7 @@ public sealed class GameSessionService
         GamePersistenceStore? persistenceStore = null)
     {
         _locations = catalog.GetAll();
+        _locationsById = _locations.ToDictionary(location => location.Id, StringComparer.OrdinalIgnoreCase);
         _configuration = configuration;
         _logger = logger;
         _persistenceStore = persistenceStore;
@@ -161,6 +163,14 @@ public sealed class GameSessionService
     {
         if (_sessions.TryGetValue(sessionId, out var session))
         {
+            return session;
+        }
+
+        session = RestoreSession(sessionId);
+
+        if (session is not null)
+        {
+            _sessions.TryAdd(sessionId, session);
             return session;
         }
 
@@ -342,6 +352,99 @@ public sealed class GameSessionService
                 round.Id,
                 session.Id);
         }
+    }
+
+    private SessionState? RestoreSession(string sessionId)
+    {
+        if (!ShouldPersist || _persistenceStore is null)
+        {
+            return null;
+        }
+
+        try
+        {
+            var snapshot = _persistenceStore.LoadSessionAsync(sessionId).GetAwaiter().GetResult();
+            return snapshot is null ? null : BuildSessionState(snapshot);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogWarning(exception, "Could not restore game session {SessionId}.", sessionId);
+            return null;
+        }
+    }
+
+    private SessionState BuildSessionState(PersistedSessionSnapshot snapshot)
+    {
+        var config = new SessionConfiguration
+        {
+            Region = snapshot.Region,
+            RoundCount = snapshot.RoundCount,
+            Timed = snapshot.Timed,
+            RoundTimeSeconds = snapshot.RoundTimeSeconds,
+        };
+
+        var rounds = snapshot.Rounds.Select(round =>
+        {
+            if (!_locationsById.TryGetValue(round.LocationId, out var location))
+            {
+                throw new InvalidOperationException($"O local persistido '{round.LocationId}' não existe no catálogo carregado.");
+            }
+
+            var roundState = new RoundState
+            {
+                Id = round.Id,
+                RoundNumber = round.RoundNumber,
+                Location = location,
+            };
+
+            if (string.Equals(round.Status, "resolved", StringComparison.OrdinalIgnoreCase))
+            {
+                roundState.Result = BuildPersistedRoundResult(round, location, config);
+            }
+
+            return roundState;
+        }).ToList();
+
+        var currentRoundIndex = rounds.FindIndex(round => round.Result is null);
+
+        return new SessionState
+        {
+            Id = snapshot.Id,
+            Config = config,
+            Rounds = rounds,
+            CurrentRoundIndex = currentRoundIndex < 0 ? rounds.Count : currentRoundIndex,
+        };
+    }
+
+    private static RoundResultDto BuildPersistedRoundResult(
+        PersistedRoundSnapshot round,
+        SeedLocation location,
+        SessionConfiguration config)
+    {
+        var guess = round.GuessLatitude is not null && round.GuessLongitude is not null
+            ? new GuessCoordinatesDto(
+                round.GuessLatitude.Value,
+                round.GuessLongitude.Value,
+                round.GuessLabel ?? "Palpite")
+            : null;
+
+        return new RoundResultDto(
+            round.Id,
+            round.RoundNumber,
+            location.Title,
+            location.City,
+            location.Country,
+            location.Latitude,
+            location.Longitude,
+            guess,
+            round.Score,
+            round.DistanceKm,
+            round.ResolutionReason ?? "manual",
+            config.Timed,
+            BuildMedia(location.Media),
+            location.Clues
+                .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
+                .ToList());
     }
 }
 

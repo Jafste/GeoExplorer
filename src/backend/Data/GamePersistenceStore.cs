@@ -77,4 +77,69 @@ public sealed class GamePersistenceStore
 
         await db.SaveChangesAsync(cancellationToken);
     }
+
+    internal async Task<PersistedSessionSnapshot?> LoadSessionAsync(
+        string sessionId,
+        CancellationToken cancellationToken = default)
+    {
+        if (!Guid.TryParse(sessionId, out var parsedSessionId))
+        {
+            return null;
+        }
+
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        var sessionEntity = await db.GameSessions
+            .AsNoTracking()
+            .Include(session => session.Rounds)
+            .FirstOrDefaultAsync(candidate => candidate.Id == parsedSessionId, cancellationToken);
+
+        if (sessionEntity is null)
+        {
+            return null;
+        }
+
+        return new PersistedSessionSnapshot(
+            sessionEntity.Id.ToString(),
+            sessionEntity.Region,
+            sessionEntity.RoundCount,
+            sessionEntity.Timed,
+            sessionEntity.RoundTimeSeconds,
+            sessionEntity.Status,
+            sessionEntity.Rounds
+                .OrderBy(round => round.RoundNumber)
+                .Select(round => new PersistedRoundSnapshot(
+                    round.Id.ToString(),
+                    round.LocationId,
+                    round.RoundNumber,
+                    round.Status,
+                    round.GuessLabel,
+                    round.GuessLatitude,
+                    round.GuessLongitude,
+                    round.DistanceKm,
+                    round.Score,
+                    round.ResolutionReason))
+                .ToList());
+    }
 }
+
+internal sealed record PersistedSessionSnapshot(
+    string Id,
+    string Region,
+    int RoundCount,
+    bool Timed,
+    int? RoundTimeSeconds,
+    string Status,
+    IReadOnlyList<PersistedRoundSnapshot> Rounds);
+
+internal sealed record PersistedRoundSnapshot(
+    string Id,
+    string LocationId,
+    int RoundNumber,
+    string Status,
+    string? GuessLabel,
+    double? GuessLatitude,
+    double? GuessLongitude,
+    double? DistanceKm,
+    int Score,
+    string? ResolutionReason);

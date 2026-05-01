@@ -2,6 +2,7 @@ using GeoExplorer.Backend.Contracts;
 using GeoExplorer.Backend.Data;
 using GeoExplorer.Backend.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
@@ -90,6 +91,70 @@ public sealed class GamePersistenceStoreTests
         Assert.AreEqual("timeout", persistedRound.ResolutionReason);
         Assert.IsNull(persistedRound.GuessLatitude);
         Assert.IsNull(persistedRound.GuessLongitude);
+    }
+
+    [TestMethod]
+    public void GameSessionService_RestoresActiveSessionFromPersistence()
+    {
+        var databaseName = $"geoexplorer-test-{Guid.NewGuid()}";
+        var options = new DbContextOptionsBuilder<GeoExplorerDbContext>()
+            .UseInMemoryDatabase(databaseName)
+            .Options;
+        var factory = new TestDbContextFactory(options);
+        var originalService = CreateService(factory);
+
+        var session = originalService.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 2,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        originalService.SubmitGuess(
+            session.SessionId,
+            session.CurrentRound.Id,
+            new GuessCoordinatesDto(41.1496, -8.6109, "Porto"));
+
+        var restoredService = CreateService(factory);
+        var restoredRound = restoredService.GetCurrentRound(session.SessionId);
+
+        Assert.AreEqual(2, restoredRound.RoundNumber);
+
+        var restoredResults = restoredService.GetResults(session.SessionId);
+        Assert.AreEqual(session.SessionId, restoredResults.SessionId);
+        Assert.HasCount(1, restoredResults.Rounds);
+        Assert.AreEqual(1, restoredResults.Rounds[0].RoundNumber);
+        Assert.AreEqual("manual", restoredResults.Rounds[0].Resolution);
+    }
+
+    [TestMethod]
+    public void GameSessionService_RestoresCompletedSessionResultsFromPersistence()
+    {
+        var databaseName = $"geoexplorer-test-{Guid.NewGuid()}";
+        var options = new DbContextOptionsBuilder<GeoExplorerDbContext>()
+            .UseInMemoryDatabase(databaseName)
+            .Options;
+        var factory = new TestDbContextFactory(options);
+        var originalService = CreateService(factory);
+
+        var session = originalService.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        originalService.TimeoutRound(session.SessionId, session.CurrentRound.Id, null);
+
+        var restoredService = CreateService(factory);
+        var restoredResults = restoredService.GetResults(session.SessionId);
+
+        Assert.AreEqual(session.SessionId, restoredResults.SessionId);
+        Assert.AreEqual(1, restoredResults.TotalRounds);
+        Assert.AreEqual(0, restoredResults.TotalScore);
+        Assert.HasCount(1, restoredResults.Rounds);
+        Assert.AreEqual("timeout", restoredResults.Rounds[0].Resolution);
+
+        var exception = Assert.ThrowsExactly<GameFlowException>(() => restoredService.GetCurrentRound(session.SessionId));
+        Assert.AreEqual(StatusCodes.Status400BadRequest, exception.StatusCode);
     }
 
     private static GameSessionService CreateService(IDbContextFactory<GeoExplorerDbContext> factory)
