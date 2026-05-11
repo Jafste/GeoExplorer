@@ -11,14 +11,14 @@
 
 ## Estado atual
 
-🟢 **Verde** — Proposta aprovada, artefactos da Entrega 1 estruturados, frontend jogável com mapa real e 158 locais reais validados, e backend ASP.NET Core preparado para o fluxo principal. A persistência em PostgreSQL com Entity Framework já guarda catálogo, sessões, rondas, palpites e resultados quando está ativa, incluindo recuperação de sessões persistidas após reinício do serviço. PostgreSQL em Docker é a base de dados principal, Supabase completo fica como alternativa futura e Turso/libSQL só será reavaliado com métricas concretas de utilização.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 158 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
 ## O que está implementado
 
 - [x] Proposta de projeto aprovada e documentação de âmbito preenchida
-- [x] Wireframes e artefactos de arquitetura normalizados para o template
+- [x] Wireframes e documentos de arquitetura normalizados para o template
 - [x] Frontend inicial com React + TypeScript + Vite
 - [x] Sistema visual base com Tailwind e paleta inicial do projeto
 - [x] Componentes UI e auxiliares de layout reutilizáveis para a interface
@@ -28,7 +28,7 @@
 - [x] Assets visuais `mock` para cenas de jogo
 - [x] Mapa real no frontend com OpenStreetMap/Leaflet
 - [x] 158 locais reais com imagem, fonte, licença e atribuição
-- [x] Resultados de ronda com metadata visual e ligações para fonte/licença
+- [x] Resultados de ronda com dados de fonte/licença e respetivas ligações
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
 - [x] Execução local do frontend preparada
@@ -37,16 +37,17 @@
 - [x] Testes mínimos de contrato do backend
 - [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR futuro
 - [x] Importação do catálogo de locais para PostgreSQL com Entity Framework Core
-- [x] Persistência de sessões, rondas, palpites e resultados em PostgreSQL
-- [x] Recuperação de sessões persistidas a partir do PostgreSQL
+- [x] Gravação de sessões, rondas, palpites e resultados em PostgreSQL
+- [x] Recuperação de sessões guardadas a partir do PostgreSQL
+- [x] Contador simples de leituras/escritas feitas na base de dados
 
 ---
 
 ## O que está pendente
 
-- [ ] Avaliar Supabase como hosted quando a persistência estiver estável
-- [ ] Medir chamadas à base de dados e reavaliar Turso/libSQL apenas se o padrão real justificar
-- [ ] Ligar o frontend à API real e estabilizar o fluxo ponta a ponta
+- [ ] Avaliar Supabase como hosted quando a gravação em base de dados estiver estável
+- [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
+- [ ] Ligar o frontend à API real e fechar o fluxo ponta a ponta
 - [ ] Expandir o dataset curado para 250-300 locais reais
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
@@ -94,9 +95,10 @@ docker compose --profile database up
 ```text
 Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
+Contador da base de dados: http://localhost:8080/api/diagnostics/database
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para validar a integração com o backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, persistir sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas.
 
 ---
 
@@ -106,7 +108,7 @@ O frontend pode correr em modo `mock` para demonstração rápida ou em modo `ap
 |---------|------------------------|-----------------|
 | React + TypeScript | Angular | Permite construir rapidamente a interface do jogo e manter uma base de frontend tipada e extensível. |
 | ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
-| PostgreSQL em Docker | Supabase completo, Turso/libSQL | Garante persistência relacional reproduzível para desenvolvimento e avaliação; Supabase completo fica para necessidades futuras e Turso só será reavaliado com métricas. |
+| PostgreSQL em Docker | Supabase completo, Turso/libSQL | Permite guardar dados relacionais de forma reproduzível para desenvolvimento e avaliação; Supabase completo fica para necessidades futuras e Turso só será reavaliado com dados reais de uso. |
 | SignalR futuro no backend | Supabase Realtime | O multiplayer terá lógica de jogo, salas, timers, palpites e reconexões; por isso faz mais sentido centralizar realtime no backend ASP.NET Core. |
 | Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final. |
 | Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
@@ -140,4 +142,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [30 Abril 2026] · [Sem. 7]*
+*Última atualização: [11 Maio 2026] · [Pós-relatório intercalar]*

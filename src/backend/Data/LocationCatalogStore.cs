@@ -12,10 +12,14 @@ public sealed class LocationCatalogStore
     };
 
     private readonly IDbContextFactory<GeoExplorerDbContext> _contextFactory;
+    private readonly DatabaseUsageMetrics _metrics;
 
-    public LocationCatalogStore(IDbContextFactory<GeoExplorerDbContext> contextFactory)
+    public LocationCatalogStore(
+        IDbContextFactory<GeoExplorerDbContext> contextFactory,
+        DatabaseUsageMetrics metrics)
     {
         _contextFactory = contextFactory;
+        _metrics = metrics;
     }
 
     public async Task<IReadOnlyList<SeedLocation>> ImportAndLoadAsync(
@@ -27,6 +31,7 @@ public sealed class LocationCatalogStore
 
         var existingLocations = await db.Locations
             .ToDictionaryAsync(location => location.Id, cancellationToken);
+        _metrics.RecordRead("catalog_import_load");
 
         foreach (var seedLocation in seedLocations)
         {
@@ -43,11 +48,13 @@ public sealed class LocationCatalogStore
         }
 
         await db.SaveChangesAsync(cancellationToken);
+        _metrics.RecordWrite("catalog_import_load");
 
         var entities = await db.Locations
             .AsNoTracking()
             .OrderBy(location => location.Id)
             .ToListAsync(cancellationToken);
+        _metrics.RecordRead("catalog_import_load");
 
         return entities.Select(ToSeedLocation).ToList();
     }

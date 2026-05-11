@@ -129,7 +129,7 @@ Como objetivo adicional não obrigatório para a versão final do projeto, consi
 | Semanas | Datas | Conteúdo planeado | Marco |
 |---------|-------|------------------|-------|
 | Sem. 1–2 | 17–28 mar | Definição do tema, redação da proposta, configuração do repositório e preenchimento inicial da documentação de âmbito. | **Proposta (25 mar)** |
-| Sem. 3–4 | 31 mar–11 abr | Completar os artefactos mínimos da Entrega 1: wireframes simples da interface, C4 contexto, C4 contentores, modelo de dados e estrutura base do projeto. | |
+| Sem. 3–4 | 31 mar–11 abr | Completar os documentos mínimos da Entrega 1: wireframes simples da interface, C4 contexto, C4 contentores, modelo de dados e estrutura base do projeto. | |
 | Sem. 5–6 | 14–25 abr | Implementar o MVP mínimo jogável: iniciar sessão, configurar modo com ou sem temporizador, apresentar ronda, submeter palpite, calcular pontuação e registar resultados com um dataset europeu controlado. | |
 | Sem. 7 | 28 abr–2 mai | Integrar frontend, API e base de dados numa versão jogável ponta a ponta e ensaiar a demo interna. | **Demo interna** |
 | Sem. 8 | 5–6 mai | Corrigir falhas detetadas, consolidar documentação e preparar a entrega intercalar. | **Intercalar (6 mai)** |

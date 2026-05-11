@@ -36,7 +36,7 @@
 ### Should have
 
 - RF10 — O sistema deve permitir repetir a sessão com a mesma configuração após a apresentação do resultado final.
-- RF11 — A aplicação deve manter separação clara entre seleção de desafios, temporizador, cálculo de pontuação e persistência para suportar evolução futura.
+- RF11 — A aplicação deve manter separação clara entre seleção de desafios, temporizador, cálculo de pontuação e gravação de dados para suportar evolução futura.
 
 ### Could have
 
@@ -64,7 +64,7 @@
 
 ### Should have
 
-- RNF05 — **Manutenibilidade:** arquitetura modular com separação entre frontend, API, persistência e lógica de pontuação, permitindo evolução sem refatorização significativa.
+- RNF05 — **Manutenibilidade:** arquitetura modular com separação entre frontend, API, gravação de dados e lógica de pontuação, permitindo evolução sem refatorização significativa.
 - RNF06 — **Testabilidade:** existência de testes básicos aos fluxos principais do jogo, ao cálculo de distância/pontuação e ao registo de resultados.
 
 ### Could have

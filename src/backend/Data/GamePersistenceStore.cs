@@ -7,10 +7,14 @@ namespace GeoExplorer.Backend.Data;
 public sealed class GamePersistenceStore
 {
     private readonly IDbContextFactory<GeoExplorerDbContext> _contextFactory;
+    private readonly DatabaseUsageMetrics _metrics;
 
-    public GamePersistenceStore(IDbContextFactory<GeoExplorerDbContext> contextFactory)
+    public GamePersistenceStore(
+        IDbContextFactory<GeoExplorerDbContext> contextFactory,
+        DatabaseUsageMetrics metrics)
     {
         _contextFactory = contextFactory;
+        _metrics = metrics;
     }
 
     internal async Task CreateSessionAsync(SessionState session, CancellationToken cancellationToken = default)
@@ -41,6 +45,7 @@ public sealed class GamePersistenceStore
         });
 
         await db.SaveChangesAsync(cancellationToken);
+        _metrics.RecordWrite("session_create");
     }
 
     internal async Task ResolveRoundAsync(
@@ -57,6 +62,7 @@ public sealed class GamePersistenceStore
             .FirstOrDefaultAsync(candidate => candidate.Id == sessionId, cancellationToken);
         var roundEntity = await db.SessionRounds
             .FirstOrDefaultAsync(candidate => candidate.Id == roundId, cancellationToken);
+        _metrics.RecordRead("round_resolve", 2);
 
         if (sessionEntity is null || roundEntity is null)
         {
@@ -76,6 +82,7 @@ public sealed class GamePersistenceStore
         sessionEntity.Status = session.CurrentRoundIndex >= session.Rounds.Count ? "completed" : "active";
 
         await db.SaveChangesAsync(cancellationToken);
+        _metrics.RecordWrite("round_resolve");
     }
 
     internal async Task<PersistedSessionSnapshot?> LoadSessionAsync(
@@ -93,6 +100,7 @@ public sealed class GamePersistenceStore
             .AsNoTracking()
             .Include(session => session.Rounds)
             .FirstOrDefaultAsync(candidate => candidate.Id == parsedSessionId, cancellationToken);
+        _metrics.RecordRead("session_restore");
 
         if (sessionEntity is null)
         {

@@ -1,6 +1,6 @@
 # Arquitetura
 
-Esta pasta contém os artefactos de arquitetura do projeto.
+Esta pasta contém os documentos de arquitetura do projeto.
 
 ## Ficheiros obrigatórios
 

@@ -22,7 +22,7 @@ Decidi usar React com TypeScript e Vite para o frontend do GeoExplorer.
 
 | Alternativa | Razão de rejeição |
 |------------|------------------|
-| Angular | Aumenta a complexidade inicial para um MVP de licenciatura e não traz vantagem clara para esta primeira fatia vertical. |
+| Angular | Aumenta a complexidade inicial para um MVP de licenciatura e não traz vantagem clara para esta primeira parte funcional de ponta a ponta. |
 | HTML/CSS/JS sem framework | Reduziria a estrutura e a reutilização necessária para gerir o fluxo completo do jogo e a futura troca de `mock` para `api`. |
 
 ---

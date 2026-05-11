@@ -1,6 +1,6 @@
 # Design
 
-Esta pasta contém os artefactos de design de interface.
+Esta pasta contém os documentos de design de interface.
 
 ## Conteúdo esperado
 

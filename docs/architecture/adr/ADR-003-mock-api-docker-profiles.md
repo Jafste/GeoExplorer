@@ -30,7 +30,7 @@ Decidi implementar uma camada de dados abstrata no frontend, com dois modos (`mo
 ## Consequências
 
 **Positivas:**
-- O frontend pode ser demonstrado e validado antes da persistência real existir.
+- O frontend pode ser demonstrado e testado antes de a gravação real em base de dados existir.
 - A troca de `mock` para `api` fica concentrada na camada de serviços.
 - Docker Compose passa a ser uma forma oficial de execução desde cedo.
 

@@ -26,6 +26,20 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task DatabaseDiagnostics_ReturnsUsageSnapshot()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+
+        var snapshot = await GetJson<DatabaseUsageSnapshotDto>(client, "/api/diagnostics/database");
+
+        Assert.AreEqual(0, snapshot.TotalReads);
+        Assert.AreEqual(0, snapshot.TotalWrites);
+        Assert.AreEqual(0, snapshot.TotalOperations);
+        Assert.HasCount(0, snapshot.Operations);
+    }
+
+    [TestMethod]
     public async Task SessionFlow_CompletesThroughHttpApi()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -109,4 +123,16 @@ public sealed class GameApiIntegrationTests
         var value = await response.Content.ReadFromJsonAsync<T>(SerializerOptions);
         return value ?? throw new InvalidOperationException("A resposta HTTP não tinha JSON válido.");
     }
+
+    private sealed record DatabaseUsageSnapshotDto(
+        int TotalReads,
+        int TotalWrites,
+        int TotalOperations,
+        IReadOnlyList<DatabaseUsageOperationSnapshotDto> Operations);
+
+    private sealed record DatabaseUsageOperationSnapshotDto(
+        string Name,
+        int Reads,
+        int Writes,
+        int Total);
 }

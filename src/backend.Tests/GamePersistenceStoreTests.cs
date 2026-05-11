@@ -157,7 +157,49 @@ public sealed class GamePersistenceStoreTests
         Assert.AreEqual(StatusCodes.Status400BadRequest, exception.StatusCode);
     }
 
+    [TestMethod]
+    public void GameSessionService_TracksDatabaseUsageForPersistenceFlow()
+    {
+        var databaseName = $"geoexplorer-test-{Guid.NewGuid()}";
+        var options = new DbContextOptionsBuilder<GeoExplorerDbContext>()
+            .UseInMemoryDatabase(databaseName)
+            .Options;
+        var factory = new TestDbContextFactory(options);
+        var metrics = new DatabaseUsageMetrics();
+        var originalService = CreateService(factory, metrics);
+
+        var session = originalService.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 2,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        originalService.SubmitGuess(
+            session.SessionId,
+            session.CurrentRound.Id,
+            new GuessCoordinatesDto(41.1496, -8.6109, "Porto"));
+
+        var restoredService = CreateService(factory, metrics);
+        restoredService.GetCurrentRound(session.SessionId);
+
+        var snapshot = metrics.GetSnapshot();
+
+        Assert.AreEqual(3, snapshot.TotalReads);
+        Assert.AreEqual(2, snapshot.TotalWrites);
+        Assert.AreEqual(5, snapshot.TotalOperations);
+        Assert.IsTrue(snapshot.Operations.Any(operation => operation.Name == "session_create" && operation.Writes == 1));
+        Assert.IsTrue(snapshot.Operations.Any(operation => operation.Name == "round_resolve" && operation.Reads == 2 && operation.Writes == 1));
+        Assert.IsTrue(snapshot.Operations.Any(operation => operation.Name == "session_restore" && operation.Reads == 1));
+    }
+
     private static GameSessionService CreateService(IDbContextFactory<GeoExplorerDbContext> factory)
+    {
+        return CreateService(factory, new DatabaseUsageMetrics());
+    }
+
+    private static GameSessionService CreateService(
+        IDbContextFactory<GeoExplorerDbContext> factory,
+        DatabaseUsageMetrics metrics)
     {
         var environment = new TestWebHostEnvironment
         {
@@ -170,7 +212,7 @@ public sealed class GamePersistenceStoreTests
             })
             .Build();
         var catalog = new SeedLocationCatalog(environment);
-        var store = new GamePersistenceStore(factory);
+        var store = new GamePersistenceStore(factory, metrics);
 
         return new GameSessionService(
             catalog,

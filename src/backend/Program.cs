@@ -17,6 +17,7 @@ builder.Services.AddSingleton<SeedLocationCatalog>();
 builder.Services.AddSingleton<GameSessionService>();
 builder.Services.AddPooledDbContextFactory<GeoExplorerDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeoExplorerDb")));
+builder.Services.AddSingleton<DatabaseUsageMetrics>();
 builder.Services.AddSingleton<LocationCatalogStore>();
 builder.Services.AddSingleton<GamePersistenceStore>();
 
@@ -28,6 +29,8 @@ app.UseCors();
 var api = app.MapGroup("/api");
 
 api.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+api.MapGet("/diagnostics/database", (DatabaseUsageMetrics metrics) => Results.Ok(metrics.GetSnapshot()));
 
 api.MapPost("/sessions", (CreateSessionRequest request, GameSessionService gameSessions) =>
 {
