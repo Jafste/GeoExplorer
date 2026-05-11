@@ -80,9 +80,9 @@
 
 ## Sem. 10 · 12–16 mai
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** reduzi escritas desnecessárias no catálogo de locais em PostgreSQL. O backend continua a importar o seed, mas agora só volta a escrever locais quando encontra dados novos ou alterados. Também confirmei o comportamento em Docker ao reiniciar o backend e consultar o diagnóstico da base de dados.
+**Bloqueou:** ainda falta fechar o fluxo visual completo no browser com o frontend em modo API.
+**Próxima semana:** continuar a fechar o fluxo frontend + API e depois avançar para a expansão controlada do dataset.
 
 ---
 

@@ -33,22 +33,32 @@ public sealed class LocationCatalogStore
             .ToDictionaryAsync(location => location.Id, cancellationToken);
         _metrics.RecordRead("catalog_import_load");
 
+        var hasChanges = false;
+
         foreach (var seedLocation in seedLocations)
         {
             var entity = ToEntity(seedLocation);
 
             if (existingLocations.TryGetValue(seedLocation.Id, out var existing))
             {
-                db.Entry(existing).CurrentValues.SetValues(entity);
+                if (HasChanged(existing, entity))
+                {
+                    db.Entry(existing).CurrentValues.SetValues(entity);
+                    hasChanges = true;
+                }
             }
             else
             {
                 db.Locations.Add(entity);
+                hasChanges = true;
             }
         }
 
-        await db.SaveChangesAsync(cancellationToken);
-        _metrics.RecordWrite("catalog_import_load");
+        if (hasChanges)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            _metrics.RecordWrite("catalog_import_load");
+        }
 
         var entities = await db.Locations
             .AsNoTracking()
@@ -57,6 +67,72 @@ public sealed class LocationCatalogStore
         _metrics.RecordRead("catalog_import_load");
 
         return entities.Select(ToSeedLocation).ToList();
+    }
+
+    private static bool HasChanged(LocationEntity existing, LocationEntity next)
+    {
+        return existing.Title != next.Title ||
+               existing.City != next.City ||
+               existing.Country != next.Country ||
+               existing.Region != next.Region ||
+               existing.Category != next.Category ||
+               existing.Latitude != next.Latitude ||
+               existing.Longitude != next.Longitude ||
+               existing.SceneLabel != next.SceneLabel ||
+               existing.SceneNote != next.SceneNote ||
+               existing.SceneImage != next.SceneImage ||
+               existing.MediaSourceProvider != next.MediaSourceProvider ||
+               existing.ImageUrl != next.ImageUrl ||
+               existing.ImageSourceUrl != next.ImageSourceUrl ||
+               existing.ImageAttribution != next.ImageAttribution ||
+               existing.ImageLicense != next.ImageLicense ||
+               existing.ImageLicenseUrl != next.ImageLicenseUrl ||
+               existing.StreetViewProvider != next.StreetViewProvider ||
+               existing.StreetViewUrl != next.StreetViewUrl ||
+               existing.MediaVerifiedAt != next.MediaVerifiedAt ||
+               existing.Prompt != next.Prompt ||
+               !HasSameVisualGradient(existing.VisualGradient, next.VisualGradient) ||
+               !HasSameClues(existing.Clues, next.Clues);
+    }
+
+    private static bool HasSameVisualGradient(string existing, string next)
+    {
+        var existingGradient = DeserializeJson<string[]>(existing);
+        var nextGradient = DeserializeJson<string[]>(next);
+
+        return existingGradient is not null &&
+               nextGradient is not null &&
+               existingGradient.SequenceEqual(nextGradient);
+    }
+
+    private static bool HasSameClues(string existing, string next)
+    {
+        var existingClues = DeserializeJson<List<SeedClue>>(existing);
+        var nextClues = DeserializeJson<List<SeedClue>>(next);
+
+        if (existingClues is null || nextClues is null || existingClues.Count != nextClues.Count)
+        {
+            return false;
+        }
+
+        return existingClues
+            .Zip(nextClues)
+            .All(pair =>
+                pair.First.Label == pair.Second.Label &&
+                pair.First.Value == pair.Second.Value &&
+                pair.First.Confidence == pair.Second.Confidence);
+    }
+
+    private static T? DeserializeJson<T>(string value)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<T>(value, SerializerOptions);
+        }
+        catch (JsonException)
+        {
+            return default;
+        }
     }
 
     private static LocationEntity ToEntity(SeedLocation location)

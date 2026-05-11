@@ -90,6 +90,8 @@ docker compose --profile full up
 docker compose --profile database up
 ```
 
+Se alguma porta já estiver ocupada, posso mudar os valores no `.env`: `FRONTEND_PORT`, `BACKEND_PORT` e `POSTGRES_PORT`.
+
 ### Acesso
 
 ```text
