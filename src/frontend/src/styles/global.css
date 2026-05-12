@@ -4934,7 +4934,7 @@ body::after {
   }
 }
 
-@media (max-height: 820px) and (min-width: 821px) {
+@media (max-height: 820px) and (min-width: 821px), (max-width: 1800px) {
   .round-briefing-panel {
     top: 76px;
     bottom: 24px;
@@ -4976,6 +4976,10 @@ body::after {
 
   .round-play-submit {
     min-height: 44px;
+  }
+
+  .round-corner-hud {
+    display: none;
   }
 }
 

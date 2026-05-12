@@ -80,9 +80,9 @@
 
 ## Sem. 10 · 12–16 mai
 
-**Feito:** reduzi escritas desnecessárias no catálogo de locais em PostgreSQL. O backend continua a importar o seed, mas agora só volta a escrever locais quando encontra dados novos ou alterados. Também confirmei o comportamento em Docker ao reiniciar o backend e consultar o diagnóstico da base de dados.
-**Bloqueou:** ainda falta fechar o fluxo visual completo no browser com o frontend em modo API.
-**Próxima semana:** continuar a fechar o fluxo frontend + API e depois avançar para a expansão controlada do dataset.
+**Feito:** reduzi escritas desnecessárias no catálogo de locais em PostgreSQL. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites, relatório final e diagnóstico da base de dados.
+**Bloqueou:** a validação visual mostrou que o HUD tático podia tapar a zona de submissão em ecrãs de resolução menor, por isso ajustei esse comportamento antes de fechar o teste.
+**Próxima semana:** avançar para a expansão controlada do dataset e reforçar os testes dos fluxos principais.
 
 ---
 

@@ -2,7 +2,15 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using GeoExplorer.Backend.Contracts;
+using GeoExplorer.Backend.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace GeoExplorer.Backend.Tests;
 
@@ -87,6 +95,60 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task SessionFlow_WithDatabaseFlags_RestoresSessionAfterApiRestart()
+    {
+        var databaseName = $"geoexplorer-api-test-{Guid.NewGuid()}";
+        var databaseRoot = new InMemoryDatabaseRoot();
+
+        CreateSessionResponse created;
+        RoundResolutionResponse firstResolution;
+
+        using (var firstFactory = CreatePostgresModeFactory(databaseName, databaseRoot))
+        using (var firstClient = firstFactory.CreateClient())
+        {
+            created = await PostJson<CreateSessionResponse>(
+                firstClient,
+                "/api/sessions",
+                new CreateSessionRequest("europe", RoundCount: 2, Timed: false, RoundTimeSeconds: null));
+
+            firstResolution = await PostJson<RoundResolutionResponse>(
+                firstClient,
+                $"/api/sessions/{created.SessionId}/rounds/{created.CurrentRound.Id}/guess",
+                new GuessRequest(new GuessCoordinatesDto(41.1496, -8.6109, "Porto")));
+
+            Assert.IsFalse(firstResolution.Progress.Completed);
+            Assert.AreEqual(2, firstResolution.Progress.NextRoundNumber);
+        }
+
+        using var secondFactory = CreatePostgresModeFactory(databaseName, databaseRoot);
+        using var secondClient = secondFactory.CreateClient();
+
+        var restoredRound = await GetJson<ChallengeRoundDto>(
+            secondClient,
+            $"/api/sessions/{created.SessionId}/current-round");
+
+        Assert.AreEqual(2, restoredRound.RoundNumber);
+        Assert.AreNotEqual(created.CurrentRound.Id, restoredRound.Id);
+
+        var restoredResults = await GetJson<SessionResultDto>(
+            secondClient,
+            $"/api/sessions/{created.SessionId}/results");
+
+        Assert.AreEqual(created.SessionId, restoredResults.SessionId);
+        Assert.AreEqual(2, restoredResults.TotalRounds);
+        Assert.HasCount(1, restoredResults.Rounds);
+        Assert.AreEqual(firstResolution.Result.RoundId, restoredResults.Rounds[0].RoundId);
+        Assert.AreEqual("manual", restoredResults.Rounds[0].Resolution);
+
+        var diagnostics = await GetJson<DatabaseUsageSnapshotDto>(secondClient, "/api/diagnostics/database");
+
+        Assert.IsTrue(diagnostics.Operations.Any(operation =>
+            operation.Name == "catalog_import_load" && operation.Writes == 0));
+        Assert.IsTrue(diagnostics.Operations.Any(operation =>
+            operation.Name == "session_restore" && operation.Reads == 1));
+    }
+
+    [TestMethod]
     public async Task CreateSession_WithUnsupportedRegion_ReturnsProblemDetails()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -116,6 +178,31 @@ public sealed class GameApiIntegrationTests
         response.EnsureSuccessStatusCode();
 
         return await Deserialize<T>(response);
+    }
+
+    private static WebApplicationFactory<Program> CreatePostgresModeFactory(
+        string databaseName,
+        InMemoryDatabaseRoot databaseRoot)
+    {
+        return new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureAppConfiguration((_, configuration) =>
+            {
+                configuration.AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    ["GeoExplorer:UsePostgresCatalog"] = "true",
+                    ["GeoExplorer:UsePostgresPersistence"] = "true",
+                });
+            });
+
+            builder.ConfigureTestServices(services =>
+            {
+                services.RemoveAll<IDbContextFactory<GeoExplorerDbContext>>();
+                services.RemoveAll<DbContextOptions<GeoExplorerDbContext>>();
+                services.AddDbContextFactory<GeoExplorerDbContext>(options =>
+                    options.UseInMemoryDatabase(databaseName, databaseRoot));
+            });
+        });
     }
 
     private static async Task<T> Deserialize<T>(HttpResponseMessage response)
