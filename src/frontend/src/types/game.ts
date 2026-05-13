@@ -35,6 +35,7 @@ export interface SeedLocation {
   prompt: string;
   visualGradient: [string, string, string];
   media?: ChallengeMedia;
+  visualSources?: ChallengeMedia[];
   clues: ChallengeClue[];
 }
 
@@ -79,6 +80,7 @@ export interface RoundResult {
   resolution: "manual" | "timeout";
   timed: boolean;
   media?: ChallengeMedia;
+  visualSources?: ChallengeMedia[];
   clues: ChallengeClue[];
 }
 

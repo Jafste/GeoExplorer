@@ -40,6 +40,7 @@ public sealed class GeoExplorerDbContext : DbContext
             entity.Property(location => location.StreetViewProvider).HasColumnName("street_view_provider");
             entity.Property(location => location.StreetViewUrl).HasColumnName("street_view_url");
             entity.Property(location => location.MediaVerifiedAt).HasColumnName("media_verified_at");
+            entity.Property(location => location.VisualSources).HasColumnName("visual_sources").HasColumnType("jsonb");
             entity.Property(location => location.Prompt).HasColumnName("prompt");
             entity.Property(location => location.VisualGradient).HasColumnName("visual_gradient").HasColumnType("jsonb");
             entity.Property(location => location.Clues).HasColumnName("clues").HasColumnType("jsonb");

@@ -222,7 +222,8 @@ public sealed class GameSessionService
             distanceKm,
             resolution,
             session.Config.Timed,
-            BuildMedia(round.Location.Media),
+            BuildMedia(GetPrimaryMedia(round.Location)),
+            BuildVisualSources(round.Location),
             round.Location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                 .ToList());
@@ -259,7 +260,8 @@ public sealed class GameSessionService
                 round.Location.SceneImage,
                 round.Location.Prompt,
                 round.Location.VisualGradient,
-                BuildMedia(round.Location.Media),
+                BuildMedia(GetPrimaryMedia(round.Location)),
+                BuildVisualSources(round.Location),
                 round.Location.Clues
                     .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                     .ToList()));
@@ -279,6 +281,11 @@ public sealed class GameSessionService
                 media.StreetViewProvider,
                 media.StreetViewUrl,
                 media.VerifiedAt);
+    }
+
+    private static SeedMedia? GetPrimaryMedia(SeedLocation location)
+    {
+        return location.Media ?? location.GetVisualSources().FirstOrDefault();
     }
 
     private static GuessCoordinatesDto ClampGuess(GuessCoordinatesDto guess)
@@ -441,10 +448,19 @@ public sealed class GameSessionService
             round.DistanceKm,
             round.ResolutionReason ?? "manual",
             config.Timed,
-            BuildMedia(location.Media),
+            BuildMedia(GetPrimaryMedia(location)),
+            BuildVisualSources(location),
             location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                 .ToList());
+    }
+
+    private static IReadOnlyList<ChallengeMediaDto> BuildVisualSources(SeedLocation location)
+    {
+        return location.GetVisualSources()
+            .Select(source => BuildMedia(source))
+            .OfType<ChallengeMediaDto>()
+            .ToList();
     }
 }
 

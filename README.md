@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 158 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 158 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei ainda o contrato e a base de dados para várias fontes visuais por local. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -29,6 +29,7 @@
 - [x] Mapa real no frontend com OpenStreetMap/Leaflet
 - [x] 158 locais reais com imagem, fonte, licença e atribuição
 - [x] Resultados de ronda com dados de fonte/licença e respetivas ligações
+- [x] Campo `visualSources` preparado para várias fontes visuais por local
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
 - [x] Execução local do frontend preparada
@@ -49,6 +50,7 @@
 - [ ] Avaliar Supabase como hosted quando a gravação em base de dados estiver estável
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Expandir o dataset curado para 250-300 locais reais
+- [ ] Adicionar fontes Mapillary/Panoramax a locais selecionados quando houver cobertura
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 

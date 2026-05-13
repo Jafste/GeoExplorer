@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS locations (
   street_view_provider TEXT NULL,
   street_view_url TEXT NULL,
   media_verified_at DATE NULL,
+  visual_sources JSONB NULL,
   prompt TEXT NOT NULL,
   visual_gradient JSONB NOT NULL,
   clues JSONB NOT NULL

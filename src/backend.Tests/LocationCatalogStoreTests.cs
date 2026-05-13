@@ -90,6 +90,39 @@ public sealed class LocationCatalogStoreTests
         Assert.AreEqual("Rio Douro, ponte e frente urbana histórica.", loaded.Single().Clues.Single().Value);
     }
 
+    [TestMethod]
+    public async Task ImportAndLoadAsync_PreservesVisualSources()
+    {
+        var factory = CreateFactory();
+        var metrics = new DatabaseUsageMetrics();
+        var store = new LocationCatalogStore(factory, metrics);
+
+        var loaded = await store.ImportAndLoadAsync(new[] { CreateLocation("porto-ribeira", includeStreetViewSource: true) });
+
+        var visualSources = loaded.Single().VisualSources;
+
+        Assert.IsNotNull(visualSources);
+        Assert.HasCount(2, visualSources);
+        Assert.AreEqual("Wikimedia Commons", visualSources[0].SourceProvider);
+        Assert.AreEqual("Mapillary", visualSources[1].StreetViewProvider);
+        Assert.AreEqual("https://www.mapillary.com/app/?pKey=porto-test", visualSources[1].StreetViewUrl);
+    }
+
+    [TestMethod]
+    public async Task ImportAndLoadAsync_WritesWhenVisualSourceChanges()
+    {
+        var factory = CreateFactory();
+        var metrics = new DatabaseUsageMetrics();
+        var store = new LocationCatalogStore(factory, metrics);
+
+        await store.ImportAndLoadAsync(new[] { CreateLocation("porto-ribeira", includeStreetViewSource: true) });
+        await store.ImportAndLoadAsync(new[] { CreateLocation("porto-ribeira", includeStreetViewSource: true, streetViewUrl: "https://www.mapillary.com/app/?pKey=porto-updated") });
+
+        var operation = GetCatalogOperation(metrics);
+
+        Assert.AreEqual(2, operation.Writes);
+    }
+
     private static DatabaseUsageOperationSnapshot GetCatalogOperation(DatabaseUsageMetrics metrics)
     {
         return metrics.GetSnapshot().Operations.Single(operation => operation.Name == "catalog_import_load");
@@ -108,7 +141,9 @@ public sealed class LocationCatalogStoreTests
     private static SeedLocation CreateLocation(
         string id,
         string city = "Porto",
-        string clueValue = "Rio Douro e frente urbana histórica.")
+        string clueValue = "Rio Douro e frente urbana histórica.",
+        bool includeStreetViewSource = false,
+        string streetViewUrl = "https://www.mapillary.com/app/?pKey=porto-test")
     {
         return new SeedLocation
         {
@@ -135,6 +170,31 @@ public sealed class LocationCatalogStoreTests
                 ImageLicenseUrl = "https://creativecommons.org/licenses/by-sa/4.0/",
                 VerifiedAt = "2026-05-01",
             },
+            VisualSources = includeStreetViewSource
+                ? new List<SeedMedia>
+                {
+                    new()
+                    {
+                        SourceProvider = "Wikimedia Commons",
+                        ImageUrl = "https://example.com/porto.jpg",
+                        ImageSourceUrl = "https://commons.wikimedia.org/wiki/File:Porto.jpg",
+                        ImageAttribution = "Example author",
+                        ImageLicense = "CC BY-SA 4.0",
+                        ImageLicenseUrl = "https://creativecommons.org/licenses/by-sa/4.0/",
+                        VerifiedAt = "2026-05-01",
+                    },
+                    new()
+                    {
+                        SourceProvider = "Mapillary",
+                        StreetViewProvider = "Mapillary",
+                        StreetViewUrl = streetViewUrl,
+                        ImageAttribution = "Mapillary contributor",
+                        ImageLicense = "CC BY-SA 4.0",
+                        ImageLicenseUrl = "https://www.mapillary.com/terms",
+                        VerifiedAt = "2026-05-12",
+                    },
+                }
+                : null,
             Clues = new List<SeedClue>
             {
                 new()

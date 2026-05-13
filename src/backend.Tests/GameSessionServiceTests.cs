@@ -40,6 +40,11 @@ public sealed class GameSessionServiceTests
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageAttribution));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageLicense));
         Assert.IsTrue(DateOnly.TryParse(response.CurrentRound.Challenge.Media.VerifiedAt, out _));
+        Assert.IsNotNull(response.CurrentRound.Challenge.VisualSources);
+        Assert.IsGreaterThanOrEqualTo(1, response.CurrentRound.Challenge.VisualSources.Count);
+        Assert.AreEqual(
+            response.CurrentRound.Challenge.Media.ImageUrl,
+            response.CurrentRound.Challenge.VisualSources[0].ImageUrl);
     }
 
     [TestMethod]
@@ -87,6 +92,7 @@ public sealed class GameSessionServiceTests
         Assert.AreEqual("Wikimedia Commons", response.Result.Media.SourceProvider);
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageSourceUrl));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageLicenseUrl));
+        Assert.IsGreaterThanOrEqualTo(1, response.Result.VisualSources.Count);
     }
 
     [TestMethod]
@@ -98,6 +104,7 @@ public sealed class GameSessionServiceTests
         StringAssert.Contains(sql, "media_source_provider TEXT NULL");
         StringAssert.Contains(sql, "image_attribution TEXT NULL");
         StringAssert.Contains(sql, "street_view_url TEXT NULL");
+        StringAssert.Contains(sql, "visual_sources JSONB NULL");
     }
 
     private static GameSessionService CreateService()

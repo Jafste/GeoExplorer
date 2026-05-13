@@ -59,6 +59,14 @@ function selectRandomLocations(count: number): SeedLocation[] {
   return pool.slice(0, selectedCount);
 }
 
+function getVisualSources(location: SeedLocation) {
+  return location.visualSources?.length ? location.visualSources : location.media ? [location.media] : [];
+}
+
+function getPrimaryMedia(location: SeedLocation) {
+  return location.media ?? getVisualSources(location)[0];
+}
+
 function buildRound(round: StoredRound, session: StoredSession): ChallengeRound {
   const { latitude: _latitude, longitude: _longitude, region: _region, ...challenge } = round.location;
 
@@ -68,7 +76,11 @@ function buildRound(round: StoredRound, session: StoredSession): ChallengeRound 
     totalRounds: session.rounds.length,
     timed: session.config.timed,
     timeLimitSeconds: session.config.timed ? session.config.roundTimeSeconds : null,
-    challenge,
+    challenge: {
+      ...challenge,
+      media: getPrimaryMedia(round.location),
+      visualSources: getVisualSources(round.location),
+    },
   };
 }
 
@@ -133,7 +145,8 @@ function createResolution(
     distanceKm,
     resolution,
     timed: session.config.timed,
-    media: round.location.media,
+    media: getPrimaryMedia(round.location),
+    visualSources: getVisualSources(round.location),
     clues: round.location.clues,
   };
 

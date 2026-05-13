@@ -22,6 +22,7 @@ public sealed class LocationEntity
     public string? StreetViewProvider { get; set; }
     public string? StreetViewUrl { get; set; }
     public DateOnly? MediaVerifiedAt { get; set; }
+    public string? VisualSources { get; set; }
     public required string Prompt { get; set; }
     public required string VisualGradient { get; set; }
     public required string Clues { get; set; }

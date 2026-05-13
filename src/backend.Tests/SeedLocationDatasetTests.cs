@@ -53,6 +53,12 @@ public sealed class SeedLocationDatasetTests
             StringAssert.StartsWith(media.ImageUrl!, "https://");
             StringAssert.StartsWith(media.ImageSourceUrl!, "https://commons.wikimedia.org/wiki/File:");
             Assert.IsTrue(DateOnly.TryParse(media.VerifiedAt, out _), $"{location.Id} tem verifiedAt inválido.");
+
+            var visualSources = location.GetVisualSources();
+            Assert.IsGreaterThanOrEqualTo(1, visualSources.Count, $"{location.Id} deve expor pelo menos uma fonte visual.");
+            Assert.IsTrue(
+                visualSources.Any(source => source.SourceProvider == media.SourceProvider && source.ImageUrl == media.ImageUrl),
+                $"{location.Id} deve manter media como uma das fontes visuais.");
         }
     }
 

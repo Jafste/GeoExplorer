@@ -102,7 +102,18 @@ public sealed class SeedLocation
     public required string Prompt { get; init; }
     public required string[] VisualGradient { get; init; }
     public SeedMedia? Media { get; init; }
+    public List<SeedMedia>? VisualSources { get; init; }
     public required List<SeedClue> Clues { get; init; }
+
+    public IReadOnlyList<SeedMedia> GetVisualSources()
+    {
+        if (VisualSources is { Count: > 0 })
+        {
+            return VisualSources;
+        }
+
+        return Media is null ? Array.Empty<SeedMedia>() : new[] { Media };
+    }
 }
 
 public sealed class SeedMedia

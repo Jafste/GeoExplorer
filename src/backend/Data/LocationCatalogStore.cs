@@ -90,6 +90,7 @@ public sealed class LocationCatalogStore
                existing.StreetViewProvider != next.StreetViewProvider ||
                existing.StreetViewUrl != next.StreetViewUrl ||
                existing.MediaVerifiedAt != next.MediaVerifiedAt ||
+               !HasSameVisualSources(existing.VisualSources, next.VisualSources) ||
                existing.Prompt != next.Prompt ||
                !HasSameVisualGradient(existing.VisualGradient, next.VisualGradient) ||
                !HasSameClues(existing.Clues, next.Clues);
@@ -123,6 +124,30 @@ public sealed class LocationCatalogStore
                 pair.First.Confidence == pair.Second.Confidence);
     }
 
+    private static bool HasSameVisualSources(string? existing, string? next)
+    {
+        var existingSources = DeserializeJson<List<SeedMedia>>(string.IsNullOrWhiteSpace(existing) ? "[]" : existing);
+        var nextSources = DeserializeJson<List<SeedMedia>>(string.IsNullOrWhiteSpace(next) ? "[]" : next);
+
+        if (existingSources is null || nextSources is null || existingSources.Count != nextSources.Count)
+        {
+            return false;
+        }
+
+        return existingSources
+            .Zip(nextSources)
+            .All(pair =>
+                pair.First.SourceProvider == pair.Second.SourceProvider &&
+                pair.First.ImageUrl == pair.Second.ImageUrl &&
+                pair.First.ImageSourceUrl == pair.Second.ImageSourceUrl &&
+                pair.First.ImageAttribution == pair.Second.ImageAttribution &&
+                pair.First.ImageLicense == pair.Second.ImageLicense &&
+                pair.First.ImageLicenseUrl == pair.Second.ImageLicenseUrl &&
+                pair.First.StreetViewProvider == pair.Second.StreetViewProvider &&
+                pair.First.StreetViewUrl == pair.Second.StreetViewUrl &&
+                pair.First.VerifiedAt == pair.Second.VerifiedAt);
+    }
+
     private static T? DeserializeJson<T>(string value)
     {
         try
@@ -137,7 +162,8 @@ public sealed class LocationCatalogStore
 
     private static LocationEntity ToEntity(SeedLocation location)
     {
-        var media = location.Media;
+        var media = GetPrimaryMedia(location);
+        var visualSources = location.GetVisualSources();
 
         return new LocationEntity
         {
@@ -161,6 +187,7 @@ public sealed class LocationCatalogStore
             StreetViewProvider = media?.StreetViewProvider,
             StreetViewUrl = media?.StreetViewUrl,
             MediaVerifiedAt = DateOnly.TryParse(media?.VerifiedAt, out var verifiedAt) ? verifiedAt : null,
+            VisualSources = visualSources.Count == 0 ? null : JsonSerializer.Serialize(visualSources, SerializerOptions),
             Prompt = location.Prompt,
             VisualGradient = JsonSerializer.Serialize(location.VisualGradient, SerializerOptions),
             Clues = JsonSerializer.Serialize(location.Clues, SerializerOptions),
@@ -199,8 +226,44 @@ public sealed class LocationCatalogStore
                     StreetViewUrl = location.StreetViewUrl,
                     VerifiedAt = location.MediaVerifiedAt?.ToString("yyyy-MM-dd"),
                 },
+            VisualSources = DeserializeVisualSources(location),
             Clues = JsonSerializer.Deserialize<List<SeedClue>>(location.Clues, SerializerOptions) ??
                     throw new InvalidOperationException("A coluna clues não tinha JSON válido."),
+        };
+    }
+
+    private static SeedMedia? GetPrimaryMedia(SeedLocation location)
+    {
+        return location.Media ?? location.GetVisualSources().FirstOrDefault();
+    }
+
+    private static List<SeedMedia>? DeserializeVisualSources(LocationEntity location)
+    {
+        if (!string.IsNullOrWhiteSpace(location.VisualSources))
+        {
+            return JsonSerializer.Deserialize<List<SeedMedia>>(location.VisualSources, SerializerOptions) ??
+                   throw new InvalidOperationException("A coluna visual_sources não tinha JSON válido.");
+        }
+
+        if (string.IsNullOrWhiteSpace(location.MediaSourceProvider))
+        {
+            return null;
+        }
+
+        return new List<SeedMedia>
+        {
+            new()
+            {
+                SourceProvider = location.MediaSourceProvider,
+                ImageUrl = location.ImageUrl,
+                ImageSourceUrl = location.ImageSourceUrl,
+                ImageAttribution = location.ImageAttribution,
+                ImageLicense = location.ImageLicense,
+                ImageLicenseUrl = location.ImageLicenseUrl,
+                StreetViewProvider = location.StreetViewProvider,
+                StreetViewUrl = location.StreetViewUrl,
+                VerifiedAt = location.MediaVerifiedAt?.ToString("yyyy-MM-dd"),
+            },
         };
     }
 }

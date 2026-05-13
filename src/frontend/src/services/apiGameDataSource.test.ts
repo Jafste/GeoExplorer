@@ -41,6 +41,21 @@ const challengeRound: ChallengeRound = {
       imageAttribution: "Autor teste",
       imageLicense: "CC BY-SA 4.0",
     },
+    visualSources: [
+      {
+        sourceProvider: "Wikimedia Commons",
+        imageUrl: "https://example.test/image.jpg",
+        imageAttribution: "Autor teste",
+        imageLicense: "CC BY-SA 4.0",
+      },
+      {
+        sourceProvider: "Mapillary",
+        streetViewProvider: "Mapillary",
+        streetViewUrl: "https://www.mapillary.com/app/?pKey=teste",
+        imageAttribution: "Contribuidor Mapillary",
+        imageLicense: "CC BY-SA 4.0",
+      },
+    ],
     clues: [
       {
         label: "Água",
@@ -77,6 +92,7 @@ const resolutionResponse: RoundResolutionResponse = {
     resolution: "manual",
     timed: true,
     media: challengeRound.challenge.media,
+    visualSources: challengeRound.challenge.visualSources,
     clues: challengeRound.challenge.clues,
   },
   progress: {

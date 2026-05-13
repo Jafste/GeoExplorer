@@ -41,6 +41,7 @@ public sealed record ChallengeDto(
     string Prompt,
     string[] VisualGradient,
     ChallengeMediaDto? Media,
+    IReadOnlyList<ChallengeMediaDto> VisualSources,
     IReadOnlyList<ChallengeClueDto> Clues);
 
 public sealed record ChallengeRoundDto(
@@ -69,6 +70,7 @@ public sealed record RoundResultDto(
     string Resolution,
     bool Timed,
     ChallengeMediaDto? Media,
+    IReadOnlyList<ChallengeMediaDto> VisualSources,
     IReadOnlyList<ChallengeClueDto> Clues);
 
 public sealed record RoundProgressDto(
