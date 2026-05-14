@@ -62,6 +62,30 @@ public sealed class SeedLocationDatasetTests
         }
     }
 
+    [TestMethod]
+    public void SeedLocations_IncludeSelectedPanoramaxVisualSources()
+    {
+        var panoramaxLocations = LoadLocations()
+            .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Panoramax"))
+            .ToList();
+
+        Assert.IsGreaterThanOrEqualTo(10, panoramaxLocations.Count, "O dataset deve manter um primeiro conjunto de locais com Panoramax validado.");
+
+        foreach (var location in panoramaxLocations)
+        {
+            var source = location.GetVisualSources().Single(candidate => candidate.SourceProvider == "Panoramax");
+
+            AssertRequired(location.Id, source.ImageUrl, "visualSources.imageUrl");
+            AssertRequired(location.Id, source.ImageSourceUrl, "visualSources.imageSourceUrl");
+            AssertRequired(location.Id, source.ImageAttribution, "visualSources.imageAttribution");
+            Assert.AreEqual("CC BY-SA 4.0", source.ImageLicense, $"{location.Id} deve manter licença Panoramax normalizada.");
+            Assert.AreEqual("https://creativecommons.org/licenses/by-sa/4.0/", source.ImageLicenseUrl);
+            Assert.AreEqual("Panoramax", source.StreetViewProvider);
+            AssertRequired(location.Id, source.StreetViewUrl, "visualSources.streetViewUrl");
+            Assert.IsTrue(DateOnly.TryParse(source.VerifiedAt, out _), $"{location.Id} tem visualSources.verifiedAt inválido.");
+        }
+    }
+
     private static void AssertRequired(string locationId, string? value, string fieldName)
     {
         Assert.IsFalse(string.IsNullOrWhiteSpace(value), $"{locationId} não tem media.{fieldName} preenchido.");

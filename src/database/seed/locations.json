@@ -26,6 +26,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/6f/0b/55/76/760f-4296-8e65-a34d251d20f4/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/2dfb7a20-3543-4bd8-9ccc-94c9cb97f33e/items/6f0b5576-760f-4296-8e65-a34d251d20f4",
+        "imageAttribution": "p4n-pics",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=6f0b5576-760f-4296-8e65-a34d251d20f4",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Arquitetura",
@@ -71,6 +84,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/02/26/93/4b/70ad-4d0b-bbab-91e1df6bc9a9/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/0d43a85a-707d-4d80-bd9c-4b5a9c9d2e20/items/0226934b-70ad-4d0b-bbab-91e1df6bc9a9",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0226934b-70ad-4d0b-bbab-91e1df6bc9a9",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Topografia",
@@ -116,6 +142,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/28/5f/3c/bf/6474-4328-95c0-da7ccd2b2756/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f3d02893-b4c1-4cd6-8b27-e27ab57eb59a/items/285f3cbf-6474-4328-95c0-da7ccd2b2756",
+        "imageAttribution": "mapcomplete, Pieter Vander Vennet",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=285f3cbf-6474-4328-95c0-da7ccd2b2756",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Material",
@@ -161,6 +200,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivates/19/ba/5f/16/1f0c-497e-be82-7ff0f92986e4/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6e702976-580b-419c-8fb3-cf7bd364e6f8/items/19ba5f16-1f0c-497e-be82-7ff0f92986e4",
+        "imageAttribution": "mapcomplete, 5R-MFT",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=19ba5f16-1f0c-497e-be82-7ff0f92986e4",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Clima visual",
@@ -206,6 +258,19 @@
       "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/7c/4c/89/00/2362-41d9-a8df-aa275fadb982/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/8e1cc8d6-8565-4502-a694-f7e9d26c5677/items/7c4c8900-2362-41d9-a8df-aa275fadb982",
+        "imageAttribution": "Pfabing",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=7c4c8900-2362-41d9-a8df-aa275fadb982",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Escala",
@@ -251,6 +316,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/01/eb/ad/5b/56f8-4b86-8b5a-ea18b34c9ab5/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/4618cd2c-c5fe-49a3-bca4-b56a0efc0af4/items/01ebad5b-56f8-4b86-8b5a-ea18b34c9ab5",
+        "imageAttribution": "PanierAvide",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=01ebad5b-56f8-4b86-8b5a-ea18b34c9ab5",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Clima",
@@ -296,6 +374,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://nl.panoramax.xyz/derivates/33/d1/b2/ba/0089-4c92-ae24-8bbfd8b2f054/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/2f367ad0-d22c-4a37-be99-8ffc6b54acfa/items/33d1b2ba-0089-4c92-ae24-8bbfd8b2f054",
+        "imageAttribution": "Panoramax Test-NL, City of Amsterdam",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=33d1b2ba-0089-4c92-ae24-8bbfd8b2f054",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Malha urbana",
@@ -341,6 +432,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/c9/62/b8/a2/fa6f-4fe9-ab31-a2f89ef812b0/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/1df1e220-b788-40b5-bdf3-fc6467348822/items/c962b8a2-fa6f-4fe9-ab31-a2f89ef812b0",
+        "imageAttribution": "Robot8A, robot8a",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c962b8a2-fa6f-4fe9-ab31-a2f89ef812b0",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Escala fluvial",
@@ -386,6 +490,19 @@
       "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/9d/13/88/8e/d109-4499-8775-3b9dfc5542a9/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/c744a893-1f0b-4b13-89e5-4cce592c563d/items/9d13888e-d109-4499-8775-3b9dfc5542a9",
+        "imageAttribution": "Moosh",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=9d13888e-d109-4499-8775-3b9dfc5542a9",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Espaço público",
@@ -431,6 +548,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
       "verifiedAt": "2026-04-27"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/02/31/db/a4/4d90-49a7-bd54-86ecdd9d1cb2/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6e537ed7-cecb-4674-a4ee-592024d3ac20/items/0231dba4-4d90-49a7-bd54-86ecdd9d1cb2",
+        "imageAttribution": "scai",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0231dba4-4d90-49a7-bd54-86ecdd9d1cb2",
+        "verifiedAt": "2026-05-13"
+      }
+    ],
     "clues": [
       {
         "label": "Coberturas",
@@ -492,7 +622,20 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
-    }
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/51/84/ce/3c/f6b7-4e0f-a8f1-4c70343712ff/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/1d2d2cae-51a0-4e85-8707-ad6718115359/items/5184ce3c-f6b7-4e0f-a8f1-4c70343712ff",
+        "imageAttribution": "motocultrice, bernardvoyageur",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5184ce3c-f6b7-4e0f-a8f1-4c70343712ff",
+        "verifiedAt": "2026-05-13"
+      }
+    ]
   },
   {
     "id": "seville-plaza",
@@ -537,7 +680,20 @@
       "imageLicense": "CC BY 2.0",
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
-    }
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/e1/1f/34/f3/f7d1-4aa8-a710-8836be8cbe38/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e06f4af3-a9d4-4958-aa78-da97f197d24e/items/e11f34f3-f7d1-4aa8-a710-8836be8cbe38",
+        "imageAttribution": "p4n-pics",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e11f34f3-f7d1-4aa8-a710-8836be8cbe38",
+        "verifiedAt": "2026-05-13"
+      }
+    ]
   },
   {
     "id": "lisbon-alfama",

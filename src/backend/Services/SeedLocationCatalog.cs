@@ -107,12 +107,34 @@ public sealed class SeedLocation
 
     public IReadOnlyList<SeedMedia> GetVisualSources()
     {
-        if (VisualSources is { Count: > 0 })
+        var sources = new List<SeedMedia>();
+
+        if (Media is not null)
         {
-            return VisualSources;
+            sources.Add(Media);
         }
 
-        return Media is null ? Array.Empty<SeedMedia>() : new[] { Media };
+        if (VisualSources is not null)
+        {
+            foreach (var source in VisualSources)
+            {
+                if (!sources.Any(existing => HasSameSource(existing, source)))
+                {
+                    sources.Add(source);
+                }
+            }
+        }
+
+        return sources;
+    }
+
+    private static bool HasSameSource(SeedMedia existing, SeedMedia next)
+    {
+        return existing.SourceProvider == next.SourceProvider &&
+               existing.ImageUrl == next.ImageUrl &&
+               existing.ImageSourceUrl == next.ImageSourceUrl &&
+               existing.StreetViewProvider == next.StreetViewProvider &&
+               existing.StreetViewUrl == next.StreetViewUrl;
     }
 }
 

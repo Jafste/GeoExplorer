@@ -2,7 +2,7 @@
 
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 158 locais reais com dados de fonte/licença validados.
+- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 158 locais reais com dados de fonte/licença validados e um primeiro conjunto de locais com Panoramax como fonte adicional.
 - `sql/001-init.sql` documenta o esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
@@ -28,4 +28,4 @@ Decidi manter PostgreSQL como base principal e não usar Supabase completo em Do
 
 O campo `sceneImage` continua a suportar as cenas SVG mock como fallback. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a street-level imagery.
 
-Também adicionei `visualSources` para preparar várias fontes visuais por local. Por agora, quando esta lista não existe no JSON, o backend usa `media` como única fonte visual. A próxima etapa será preencher alguns locais com Wikimedia Commons e Mapillary/Panoramax quando houver cobertura, e só depois escolher aleatoriamente uma fonte disponível por ronda mantendo sempre a licença e a atribuição associadas à imagem apresentada.
+Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax. Quando a API devolve uma ronda, junta a fonte principal com as fontes adicionais e mantém a licença e a atribuição associadas a cada uma. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura e depois escolher uma fonte disponível por ronda.

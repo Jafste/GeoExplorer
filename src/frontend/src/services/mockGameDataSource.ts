@@ -59,8 +59,26 @@ function selectRandomLocations(count: number): SeedLocation[] {
   return pool.slice(0, selectedCount);
 }
 
+function hasSameSource(left: NonNullable<SeedLocation["media"]>, right: NonNullable<SeedLocation["media"]>) {
+  return (
+    left.sourceProvider === right.sourceProvider &&
+    left.imageUrl === right.imageUrl &&
+    left.imageSourceUrl === right.imageSourceUrl &&
+    left.streetViewProvider === right.streetViewProvider &&
+    left.streetViewUrl === right.streetViewUrl
+  );
+}
+
 function getVisualSources(location: SeedLocation) {
-  return location.visualSources?.length ? location.visualSources : location.media ? [location.media] : [];
+  const sources = location.media ? [location.media] : [];
+
+  for (const source of location.visualSources ?? []) {
+    if (!sources.some((existing) => hasSameSource(existing, source))) {
+      sources.push(source);
+    }
+  }
+
+  return sources;
 }
 
 function getPrimaryMedia(location: SeedLocation) {
