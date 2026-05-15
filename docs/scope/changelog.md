@@ -80,7 +80,7 @@
 
 ## Sem. 10 · 12–16 mai
 
-**Feito:** reduzi escritas desnecessárias no catálogo de locais em PostgreSQL. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites, relatório final e diagnóstico da base de dados. Preparei ainda o contrato e a base de dados para guardar várias fontes visuais por local através de `visualSources`, adicionei Panoramax a um primeiro conjunto de locais e passei a guardar a fonte visual escolhida por ronda.
+**Feito:** reduzi escritas desnecessárias no catálogo de locais em PostgreSQL. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites, relatório final e diagnóstico da base de dados. Preparei ainda o contrato e a base de dados para guardar várias fontes visuais por local através de `visualSources`, adicionei Panoramax a 30 locais e passei a guardar a fonte visual escolhida por ronda.
 **Bloqueou:** a validação visual mostrou que o HUD tático podia tapar a zona de submissão em ecrãs de resolução menor, por isso ajustei esse comportamento antes de fechar o teste.
 **Próxima semana:** avançar para a expansão controlada do dataset, continuar a preencher Mapillary/Panoramax onde houver cobertura e reforçar os testes dos fluxos principais.
 

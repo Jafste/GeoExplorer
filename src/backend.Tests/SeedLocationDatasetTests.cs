@@ -69,7 +69,7 @@ public sealed class SeedLocationDatasetTests
             .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Panoramax"))
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(10, panoramaxLocations.Count, "O dataset deve manter um primeiro conjunto de locais com Panoramax validado.");
+        Assert.IsGreaterThanOrEqualTo(30, panoramaxLocations.Count, "O dataset deve manter pelo menos 30 locais com Panoramax validado.");
 
         foreach (var location in panoramaxLocations)
         {
