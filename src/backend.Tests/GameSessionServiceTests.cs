@@ -48,6 +48,24 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void CreateSession_UsesSelectedVisualSourceAsRoundMedia()
+    {
+        using var seed = TestSeedDirectory.CreateWithVisualSources();
+        var service = CreateService(seed.BackendContentRoot, randomIndex: maxExclusive => maxExclusive - 1);
+
+        var response = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        Assert.IsNotNull(response.CurrentRound.Challenge.Media);
+        Assert.AreEqual("Panoramax", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.AreEqual("https://example.test/panoramax.jpg", response.CurrentRound.Challenge.Media.ImageUrl);
+        Assert.HasCount(2, response.CurrentRound.Challenge.VisualSources);
+    }
+
+    [TestMethod]
     public void CreateSession_SelectsUniqueLocationsWithinSession()
     {
         var service = CreateService();
@@ -105,16 +123,24 @@ public sealed class GameSessionServiceTests
         StringAssert.Contains(sql, "image_attribution TEXT NULL");
         StringAssert.Contains(sql, "street_view_url TEXT NULL");
         StringAssert.Contains(sql, "visual_sources JSONB NULL");
+        StringAssert.Contains(sql, "visual_source JSONB NULL");
     }
 
     private static GameSessionService CreateService()
     {
+        return CreateService(Path.Combine(FindRepoRoot(), "src", "backend"));
+    }
+
+    private static GameSessionService CreateService(
+        string contentRootPath,
+        Func<int, int>? randomIndex = null)
+    {
         var environment = new TestWebHostEnvironment
         {
-            ContentRootPath = Path.Combine(FindRepoRoot(), "src", "backend"),
+            ContentRootPath = contentRootPath,
         };
 
-        return new GameSessionService(new SeedLocationCatalog(environment));
+        return new GameSessionService(new SeedLocationCatalog(environment), randomIndex: randomIndex);
     }
 
     private static string FindRepoRoot()
@@ -142,5 +168,84 @@ public sealed class GameSessionServiceTests
         public string EnvironmentName { get; set; } = "Development";
         public string WebRootPath { get; set; } = string.Empty;
         public IFileProvider WebRootFileProvider { get; set; } = new NullFileProvider();
+    }
+
+    private sealed class TestSeedDirectory : IDisposable
+    {
+        private readonly string _root;
+
+        private TestSeedDirectory(string root)
+        {
+            _root = root;
+            BackendContentRoot = Path.Combine(root, "backend");
+        }
+
+        public string BackendContentRoot { get; }
+
+        public static TestSeedDirectory CreateWithVisualSources()
+        {
+            var root = Path.Combine(Path.GetTempPath(), $"geoexplorer-seed-{Guid.NewGuid()}");
+            var seedDirectory = Path.Combine(root, "database", "seed");
+            Directory.CreateDirectory(seedDirectory);
+            Directory.CreateDirectory(Path.Combine(root, "backend"));
+            File.WriteAllText(Path.Combine(seedDirectory, "locations.json"), """
+                [
+                  {
+                    "id": "test-location",
+                    "title": "Local de teste",
+                    "city": "Porto",
+                    "country": "Portugal",
+                    "region": "europe",
+                    "category": "historic-core",
+                    "latitude": 41.1402,
+                    "longitude": -8.611,
+                    "sceneLabel": "Rua de teste",
+                    "sceneNote": "Nota visual de teste.",
+                    "sceneImage": "/mock-scenes/test.svg",
+                    "prompt": "Observa o local de teste.",
+                    "visualGradient": ["#111111", "#222222", "#333333"],
+                    "media": {
+                      "sourceProvider": "Wikimedia Commons",
+                      "imageUrl": "https://example.test/wikimedia.jpg",
+                      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Teste.jpg",
+                      "imageAttribution": "Autor Wikimedia",
+                      "imageLicense": "CC BY-SA 4.0",
+                      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+                      "verifiedAt": "2026-05-14"
+                    },
+                    "visualSources": [
+                      {
+                        "sourceProvider": "Panoramax",
+                        "imageUrl": "https://example.test/panoramax.jpg",
+                        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/test/items/test",
+                        "imageAttribution": "Autor Panoramax",
+                        "imageLicense": "CC BY-SA 4.0",
+                        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+                        "streetViewProvider": "Panoramax",
+                        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=test",
+                        "verifiedAt": "2026-05-14"
+                      }
+                    ],
+                    "clues": [
+                      {
+                        "label": "Fonte",
+                        "value": "Local com duas fontes visuais",
+                        "confidence": "Alta"
+                      }
+                    ]
+                  }
+                ]
+                """);
+
+            return new TestSeedDirectory(root);
+        }
+
+        public void Dispose()
+        {
+            if (Directory.Exists(_root))
+            {
+                Directory.Delete(_root, recursive: true);
+            }
+        }
     }
 }

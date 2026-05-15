@@ -75,6 +75,7 @@ public sealed class GeoExplorerDbContext : DbContext
             entity.Property(round => round.SessionId).HasColumnName("session_id");
             entity.Property(round => round.LocationId).HasColumnName("location_id");
             entity.Property(round => round.RoundNumber).HasColumnName("round_number");
+            entity.Property(round => round.VisualSource).HasColumnName("visual_source").HasColumnType("jsonb");
             entity.Property(round => round.Status).HasColumnName("status");
             entity.Property(round => round.GuessLabel).HasColumnName("guess_label");
             entity.Property(round => round.GuessLatitude).HasColumnName("guess_latitude");

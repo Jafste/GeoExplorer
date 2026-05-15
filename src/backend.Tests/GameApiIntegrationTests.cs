@@ -149,6 +149,20 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task DatabaseCompatibility_WithDatabaseFlags_AllowsInMemoryFactory()
+    {
+        var databaseName = $"geoexplorer-api-test-{Guid.NewGuid()}";
+        var databaseRoot = new InMemoryDatabaseRoot();
+
+        using var factory = CreatePostgresModeFactory(databaseName, databaseRoot);
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync("/api/health");
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [TestMethod]
     public async Task CreateSession_WithUnsupportedRegion_ReturnsProblemDetails()
     {
         using var factory = new WebApplicationFactory<Program>();

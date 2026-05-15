@@ -12,13 +12,15 @@ public sealed class GameSessionService
     private readonly IConfiguration _configuration;
     private readonly ILogger<GameSessionService> _logger;
     private readonly GamePersistenceStore? _persistenceStore;
+    private readonly Func<int, int> _randomIndex;
 
-    public GameSessionService(SeedLocationCatalog catalog)
+    public GameSessionService(SeedLocationCatalog catalog, Func<int, int>? randomIndex = null)
         : this(
             catalog,
             new ConfigurationBuilder().Build(),
             Microsoft.Extensions.Logging.Abstractions.NullLogger<GameSessionService>.Instance,
-            null)
+            null,
+            randomIndex)
     {
     }
 
@@ -26,13 +28,15 @@ public sealed class GameSessionService
         SeedLocationCatalog catalog,
         IConfiguration configuration,
         ILogger<GameSessionService> logger,
-        GamePersistenceStore? persistenceStore = null)
+        GamePersistenceStore? persistenceStore = null,
+        Func<int, int>? randomIndex = null)
     {
         _locations = catalog.GetAll();
         _locationsById = _locations.ToDictionary(location => location.Id, StringComparer.OrdinalIgnoreCase);
         _configuration = configuration;
         _logger = logger;
         _persistenceStore = persistenceStore;
+        _randomIndex = randomIndex ?? Random.Shared.Next;
     }
 
     public CreateSessionResponse CreateSession(CreateSessionRequest request)
@@ -63,6 +67,7 @@ public sealed class GameSessionService
             Id = Guid.NewGuid().ToString(),
             RoundNumber = index + 1,
             Location = location,
+            SelectedMedia = SelectVisualSource(location),
         }).ToList();
 
         var session = new SessionState
@@ -92,11 +97,30 @@ public sealed class GameSessionService
 
         for (var index = 0; index < selectedCount; index++)
         {
-            var swapIndex = Random.Shared.Next(index, pool.Count);
+            var swapIndex = index + NextRandomIndex(pool.Count - index);
             (pool[index], pool[swapIndex]) = (pool[swapIndex], pool[index]);
         }
 
         return pool.Take(selectedCount).ToList();
+    }
+
+    private SeedMedia? SelectVisualSource(SeedLocation location)
+    {
+        var visualSources = location.GetVisualSources();
+
+        return visualSources.Count == 0
+            ? null
+            : visualSources[NextRandomIndex(visualSources.Count)];
+    }
+
+    private int NextRandomIndex(int maxExclusive)
+    {
+        if (maxExclusive <= 1)
+        {
+            return 0;
+        }
+
+        return Math.Clamp(_randomIndex(maxExclusive), 0, maxExclusive - 1);
     }
 
     public ChallengeRoundDto GetCurrentRound(string sessionId)
@@ -222,7 +246,7 @@ public sealed class GameSessionService
             distanceKm,
             resolution,
             session.Config.Timed,
-            BuildMedia(GetPrimaryMedia(round.Location)),
+            BuildMedia(GetRoundMedia(round)),
             BuildVisualSources(round.Location),
             round.Location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -260,7 +284,7 @@ public sealed class GameSessionService
                 round.Location.SceneImage,
                 round.Location.Prompt,
                 round.Location.VisualGradient,
-                BuildMedia(GetPrimaryMedia(round.Location)),
+                BuildMedia(GetRoundMedia(round)),
                 BuildVisualSources(round.Location),
                 round.Location.Clues
                     .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -286,6 +310,11 @@ public sealed class GameSessionService
     private static SeedMedia? GetPrimaryMedia(SeedLocation location)
     {
         return location.Media ?? location.GetVisualSources().FirstOrDefault();
+    }
+
+    private static SeedMedia? GetRoundMedia(RoundState round)
+    {
+        return round.SelectedMedia ?? GetPrimaryMedia(round.Location);
     }
 
     private static GuessCoordinatesDto ClampGuess(GuessCoordinatesDto guess)
@@ -402,6 +431,7 @@ public sealed class GameSessionService
                 Id = round.Id,
                 RoundNumber = round.RoundNumber,
                 Location = location,
+                SelectedMedia = round.VisualSource ?? GetPrimaryMedia(location),
             };
 
             if (string.Equals(round.Status, "resolved", StringComparison.OrdinalIgnoreCase))
@@ -448,7 +478,7 @@ public sealed class GameSessionService
             round.DistanceKm,
             round.ResolutionReason ?? "manual",
             config.Timed,
-            BuildMedia(GetPrimaryMedia(location)),
+            BuildMedia(round.VisualSource ?? GetPrimaryMedia(location)),
             BuildVisualSources(location),
             location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -496,5 +526,6 @@ internal sealed class RoundState
     public required string Id { get; init; }
     public required int RoundNumber { get; init; }
     public required SeedLocation Location { get; init; }
+    public SeedMedia? SelectedMedia { get; init; }
     public RoundResultDto? Result { get; set; }
 }

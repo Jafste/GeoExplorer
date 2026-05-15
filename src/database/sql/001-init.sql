@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS session_rounds (
   session_id UUID NOT NULL REFERENCES game_sessions(id) ON DELETE CASCADE,
   location_id TEXT NOT NULL REFERENCES locations(id),
   round_number INTEGER NOT NULL,
+  visual_source JSONB NULL,
   status TEXT NOT NULL DEFAULT 'pending',
   guess_label TEXT NULL,
   guess_latitude DOUBLE PRECISION NULL,

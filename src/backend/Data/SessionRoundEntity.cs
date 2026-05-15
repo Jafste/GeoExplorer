@@ -6,6 +6,7 @@ public sealed class SessionRoundEntity
     public Guid SessionId { get; set; }
     public required string LocationId { get; set; }
     public int RoundNumber { get; set; }
+    public string? VisualSource { get; set; }
     public required string Status { get; set; }
     public string? GuessLabel { get; set; }
     public double? GuessLatitude { get; set; }

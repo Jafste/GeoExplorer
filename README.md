@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 158 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei ainda várias fontes visuais por local e comecei a validar Panoramax em alguns locais. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 158 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, comecei a validar Panoramax em alguns locais e passei a escolher uma fonte visual por ronda. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -31,6 +31,7 @@
 - [x] Resultados de ronda com dados de fonte/licença e respetivas ligações
 - [x] Campo `visualSources` preparado para várias fontes visuais por local
 - [x] Primeiro conjunto de locais com fonte adicional Panoramax validada
+- [x] Escolha de uma fonte visual disponível por ronda com atribuição e licença
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
 - [x] Execução local do frontend preparada
@@ -52,7 +53,6 @@
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Expandir o dataset curado para 250-300 locais reais
 - [ ] Continuar a adicionar fontes Mapillary/Panoramax a locais selecionados quando houver cobertura
-- [ ] Escolher uma fonte visual disponível por ronda sem perder atribuição e licença
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 
@@ -94,7 +94,7 @@ docker compose --profile full up
 docker compose --profile database up
 ```
 
-Se alguma porta já estiver ocupada, posso mudar os valores no `.env`: `FRONTEND_PORT`, `BACKEND_PORT` e `POSTGRES_PORT`.
+Se alguma porta já estiver ocupada, posso mudar os valores no `.env`: `FRONTEND_PORT`, `BACKEND_PORT` e `POSTGRES_PORT`. No Docker Compose, o PostgreSQL fica exposto na porta `15432` por omissão para evitar conflito com instalações locais na porta `5432`.
 
 ### Acesso
 

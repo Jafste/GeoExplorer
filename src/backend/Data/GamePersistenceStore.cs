@@ -1,3 +1,4 @@
+using System.Text.Json;
 using GeoExplorer.Backend.Contracts;
 using GeoExplorer.Backend.Services;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,11 @@ namespace GeoExplorer.Backend.Data;
 
 public sealed class GamePersistenceStore
 {
+    private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web)
+    {
+        PropertyNameCaseInsensitive = true,
+    };
+
     private readonly IDbContextFactory<GeoExplorerDbContext> _contextFactory;
     private readonly DatabaseUsageMetrics _metrics;
 
@@ -39,6 +45,7 @@ public sealed class GamePersistenceStore
                 SessionId = sessionId,
                 LocationId = round.Location.Id,
                 RoundNumber = round.RoundNumber,
+                VisualSource = SerializeVisualSource(round.SelectedMedia),
                 Status = "pending",
                 Score = 0,
             }).ToList(),
@@ -120,6 +127,7 @@ public sealed class GamePersistenceStore
                     round.Id.ToString(),
                     round.LocationId,
                     round.RoundNumber,
+                    DeserializeVisualSource(round.VisualSource),
                     round.Status,
                     round.GuessLabel,
                     round.GuessLatitude,
@@ -128,6 +136,21 @@ public sealed class GamePersistenceStore
                     round.Score,
                     round.ResolutionReason))
                 .ToList());
+    }
+
+    private static string? SerializeVisualSource(SeedMedia? visualSource)
+    {
+        return visualSource is null ? null : JsonSerializer.Serialize(visualSource, SerializerOptions);
+    }
+
+    private static SeedMedia? DeserializeVisualSource(string? visualSource)
+    {
+        if (string.IsNullOrWhiteSpace(visualSource))
+        {
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<SeedMedia>(visualSource, SerializerOptions);
     }
 }
 
@@ -144,6 +167,7 @@ internal sealed record PersistedRoundSnapshot(
     string Id,
     string LocationId,
     int RoundNumber,
+    SeedMedia? VisualSource,
     string Status,
     string? GuessLabel,
     double? GuessLatitude,

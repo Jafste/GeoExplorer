@@ -15,12 +15,14 @@ docker compose --profile full up
 Em execução local fora de Docker, a connection string esperada é:
 
 ```text
-ConnectionStrings__GeoExplorerDb=Host=localhost;Port=5432;Database=geoexplorer;Username=geoexplorer;Password=geoexplorer_dev
+ConnectionStrings__GeoExplorerDb=Host=localhost;Port=15432;Database=geoexplorer;Username=geoexplorer;Password=geoexplorer_dev
 ```
 
-Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string por variável de ambiente.
+Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string por variável de ambiente. A porta externa do PostgreSQL é `15432` por omissão para evitar conflito com uma instalação local na porta `5432`.
 
 Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas.
+
+Enquanto o projeto ainda não tem migrations completas do Entity Framework, o backend aplica uma pequena verificação de compatibilidade no arranque para acrescentar colunas recentes em volumes PostgreSQL antigos. Se o volume local ficar inconsistente, o caminho mais simples continua a ser recriar o volume de desenvolvimento antes de voltar a arrancar o perfil `full`.
 
 O endpoint `/api/diagnostics/database` devolve um contador simples de leituras e escritas feitas na base de dados. Usei este contador para observar o padrão real durante testes locais e apoiar uma decisão futura sobre PostgreSQL hosted, Supabase ou Turso/libSQL, sem introduzir queries SQL manuais no código da aplicação.
 
@@ -28,4 +30,4 @@ Decidi manter PostgreSQL como base principal e não usar Supabase completo em Do
 
 O campo `sceneImage` continua a suportar as cenas SVG mock como fallback. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a street-level imagery.
 
-Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax. Quando a API devolve uma ronda, junta a fonte principal com as fontes adicionais e mantém a licença e a atribuição associadas a cada uma. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura e depois escolher uma fonte disponível por ronda.
+Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura.
