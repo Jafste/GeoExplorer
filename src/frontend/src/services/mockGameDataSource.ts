@@ -15,6 +15,7 @@ interface StoredRound {
   id: string;
   roundNumber: number;
   location: SeedLocation;
+  selectedMedia: SeedLocation["media"];
   result: RoundResult | null;
 }
 
@@ -85,6 +86,12 @@ function getPrimaryMedia(location: SeedLocation) {
   return location.media ?? getVisualSources(location)[0];
 }
 
+function selectVisualSource(location: SeedLocation) {
+  const visualSources = getVisualSources(location);
+
+  return visualSources.length === 0 ? undefined : visualSources[randomIndex(visualSources.length)];
+}
+
 function buildRound(round: StoredRound, session: StoredSession): ChallengeRound {
   const { latitude: _latitude, longitude: _longitude, region: _region, ...challenge } = round.location;
 
@@ -96,7 +103,7 @@ function buildRound(round: StoredRound, session: StoredSession): ChallengeRound 
     timeLimitSeconds: session.config.timed ? session.config.roundTimeSeconds : null,
     challenge: {
       ...challenge,
-      media: getPrimaryMedia(round.location),
+      media: round.selectedMedia ?? getPrimaryMedia(round.location),
       visualSources: getVisualSources(round.location),
     },
   };
@@ -163,7 +170,7 @@ function createResolution(
     distanceKm,
     resolution,
     timed: session.config.timed,
-    media: getPrimaryMedia(round.location),
+    media: round.selectedMedia ?? getPrimaryMedia(round.location),
     visualSources: getVisualSources(round.location),
     clues: round.location.clues,
   };
@@ -218,6 +225,7 @@ export function createMockGameDataSource(): GameDataSource {
         id: `${sessionId}-round-${index + 1}`,
         roundNumber: index + 1,
         location,
+        selectedMedia: selectVisualSource(location),
         result: null,
       }));
 

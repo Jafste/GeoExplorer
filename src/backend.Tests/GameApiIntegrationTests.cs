@@ -178,6 +178,31 @@ public sealed class GameApiIntegrationTests
         Assert.AreEqual("Apenas a região europeia está disponível neste MVP.", document.RootElement.GetProperty("detail").GetString());
     }
 
+    [TestMethod]
+    public async Task SubmitGuess_WhenRoundAlreadyResolved_ReturnsConflictProblemDetails()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+        var created = await PostJson<CreateSessionResponse>(
+            client,
+            "/api/sessions",
+            new CreateSessionRequest("europe", RoundCount: 1, Timed: false, RoundTimeSeconds: null));
+
+        await PostJson<RoundResolutionResponse>(
+            client,
+            $"/api/sessions/{created.SessionId}/rounds/{created.CurrentRound.Id}/guess",
+            new GuessRequest(new GuessCoordinatesDto(41.1496, -8.6109, "Porto")));
+
+        using var response = await client.PostAsJsonAsync(
+            $"/api/sessions/{created.SessionId}/rounds/{created.CurrentRound.Id}/guess",
+            new GuessRequest(new GuessCoordinatesDto(48.8566, 2.3522, "Paris")));
+
+        Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+
+        using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        Assert.AreEqual("A ronda já foi resolvida.", document.RootElement.GetProperty("detail").GetString());
+    }
+
     private static async Task<T> GetJson<T>(HttpClient client, string url)
     {
         using var response = await client.GetAsync(url);
