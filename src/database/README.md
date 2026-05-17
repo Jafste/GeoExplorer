@@ -3,7 +3,7 @@
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
 - `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 158 locais reais com dados de fonte/licença validados e 30 locais com Panoramax como fonte adicional.
-- `sql/001-init.sql` documenta o esquema base previsto em PostgreSQL.
+- `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
 
@@ -22,7 +22,7 @@ Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string
 
 Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas.
 
-Enquanto o projeto ainda não tem migrations completas do Entity Framework, o backend aplica uma pequena verificação de compatibilidade no arranque para acrescentar colunas recentes em volumes PostgreSQL antigos. Se o volume local ficar inconsistente, o caminho mais simples continua a ser recriar o volume de desenvolvimento antes de voltar a arrancar o perfil `full`.
+O schema passou a ser criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. O ficheiro SQL fica como apoio de leitura, mas já não é montado automaticamente no arranque do PostgreSQL. Se existir um volume antigo criado antes das migrations, o caminho mais simples em desenvolvimento é recriar o volume antes de voltar a arrancar o perfil `full`.
 
 O endpoint `/api/diagnostics/database` devolve um contador simples de leituras e escritas feitas na base de dados. Usei este contador para observar o padrão real durante testes locais e apoiar uma decisão futura sobre PostgreSQL hosted, Supabase ou Turso/libSQL, sem introduzir queries SQL manuais no código da aplicação.
 

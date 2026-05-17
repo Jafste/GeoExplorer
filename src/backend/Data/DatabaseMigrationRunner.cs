@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GeoExplorer.Backend.Data;
 
-public static class DatabaseSchemaCompatibility
+public static class DatabaseMigrationRunner
 {
-    public static async Task EnsureAsync(
+    public static async Task ApplyAsync(
         IServiceProvider services,
         IConfiguration configuration,
         CancellationToken cancellationToken = default)
@@ -16,7 +16,7 @@ public static class DatabaseSchemaCompatibility
 
         var logger = services
             .GetRequiredService<ILoggerFactory>()
-            .CreateLogger(nameof(DatabaseSchemaCompatibility));
+            .CreateLogger(nameof(DatabaseMigrationRunner));
         var factory = services.GetRequiredService<IDbContextFactory<GeoExplorerDbContext>>();
 
         const int maxAttempts = 12;
@@ -26,16 +26,14 @@ public static class DatabaseSchemaCompatibility
             try
             {
                 await using var db = await factory.CreateDbContextAsync(cancellationToken);
-                await db.Database.EnsureCreatedAsync(cancellationToken);
 
                 if (db.Database.IsRelational())
                 {
-                    await db.Database.ExecuteSqlRawAsync(
-                        """
-                        ALTER TABLE locations ADD COLUMN IF NOT EXISTS visual_sources JSONB NULL;
-                        ALTER TABLE session_rounds ADD COLUMN IF NOT EXISTS visual_source JSONB NULL;
-                        """,
-                        cancellationToken);
+                    await db.Database.MigrateAsync(cancellationToken);
+                }
+                else
+                {
+                    await db.Database.EnsureCreatedAsync(cancellationToken);
                 }
 
                 return;
@@ -44,7 +42,7 @@ public static class DatabaseSchemaCompatibility
             {
                 logger.LogWarning(
                     exception,
-                    "Database schema was not ready on attempt {Attempt}/{MaxAttempts}. Retrying.",
+                    "Database was not ready on attempt {Attempt}/{MaxAttempts}. Retrying.",
                     attempt,
                     maxAttempts);
                 await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);

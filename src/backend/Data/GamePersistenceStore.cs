@@ -26,7 +26,6 @@ public sealed class GamePersistenceStore
     internal async Task CreateSessionAsync(SessionState session, CancellationToken cancellationToken = default)
     {
         await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.Database.EnsureCreatedAsync(cancellationToken);
 
         var sessionId = Guid.Parse(session.Id);
         db.GameSessions.Add(new GameSessionEntity

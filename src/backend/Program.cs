@@ -23,7 +23,7 @@ builder.Services.AddSingleton<GamePersistenceStore>();
 
 var app = builder.Build();
 
-await DatabaseSchemaCompatibility.EnsureAsync(app.Services, app.Configuration);
+await DatabaseMigrationRunner.ApplyAsync(app.Services, app.Configuration);
 
 app.UseExceptionHandler();
 app.UseCors();

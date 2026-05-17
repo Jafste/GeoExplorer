@@ -55,3 +55,7 @@ Para realtime e multiplayer futuro, a opção preferencial passa a ser SignalR n
 Depois de comparar Supabase/PostgreSQL, Turso/libSQL e uma solução mais completa com Supabase self-hosted, optei por manter PostgreSQL em Docker como base principal. Achei melhor separar a decisão da base de dados da decisão de serviços geridos: o MVP precisa de guardar dados relacionais de forma estável e reproduzível, não de uma stack completa de backend-as-a-service.
 
 Supabase completo fica como alternativa futura se forem necessárias funcionalidades como Auth gerida, login social, Storage, Realtime simples baseado em tabelas ou Row Level Security. Para multiplayer, a direção escolhida é SignalR, com possível Redis backplane apenas se o backend tiver de escalar para várias instâncias.
+
+## Atualização de 15 de maio de 2026
+
+Formalizei o schema principal com migrations do Entity Framework. Com isto, o backend passa a criar e evoluir a base de dados através do próprio modelo EF, em vez de depender do ficheiro SQL inicial montado no Docker. O ficheiro SQL fica apenas como apoio documental, e as migrations passam a ser a referência técnica para `locations`, `game_sessions` e `session_rounds`.

@@ -40,6 +40,7 @@
 - [x] Testes mínimos de contrato do backend
 - [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR futuro
 - [x] Importação do catálogo de locais para PostgreSQL com Entity Framework Core
+- [x] Migrations do Entity Framework para criar o schema em PostgreSQL
 - [x] Gravação de sessões, rondas, palpites e resultados em PostgreSQL
 - [x] Recuperação de sessões guardadas a partir do PostgreSQL
 - [x] Contador simples de leituras/escritas feitas na base de dados

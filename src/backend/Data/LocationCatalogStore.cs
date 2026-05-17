@@ -27,7 +27,6 @@ public sealed class LocationCatalogStore
         CancellationToken cancellationToken = default)
     {
         await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.Database.EnsureCreatedAsync(cancellationToken);
 
         var existingLocations = await db.Locations
             .ToDictionaryAsync(location => location.Id, cancellationToken);
