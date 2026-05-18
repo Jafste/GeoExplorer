@@ -37,7 +37,7 @@ public sealed class SeedLocationDatasetTests
             .Where(location => location.Media is not null && location.Media.SourceProvider != "mock")
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(100, realMediaLocations.Count, "O dataset deve manter pelo menos 100 locais com media real validada.");
+        Assert.IsGreaterThanOrEqualTo(200, realMediaLocations.Count, "O dataset deve manter pelo menos 200 locais com media real validada.");
 
         foreach (var location in realMediaLocations)
         {
@@ -52,6 +52,10 @@ public sealed class SeedLocationDatasetTests
             AssertRequired(location.Id, media.VerifiedAt, "verifiedAt");
             StringAssert.StartsWith(media.ImageUrl!, "https://");
             StringAssert.StartsWith(media.ImageSourceUrl!, "https://commons.wikimedia.org/wiki/File:");
+            Assert.IsTrue(
+                media.ImageLicenseUrl!.StartsWith("http://", StringComparison.Ordinal) ||
+                media.ImageLicenseUrl.StartsWith("https://", StringComparison.Ordinal),
+                $"{location.Id} deve manter imageLicenseUrl como URL absoluta.");
             Assert.IsTrue(DateOnly.TryParse(media.VerifiedAt, out _), $"{location.Id} tem verifiedAt inválido.");
 
             var visualSources = location.GetVisualSources();

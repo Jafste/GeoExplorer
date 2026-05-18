@@ -86,11 +86,11 @@
 
 ---
 
-## Sem. 11 · 19–23 mai
+## Sem. 11 · 17–23 mai
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** comecei a expansão seguinte do dataset e passei de 158 para 222 locais reais. Mantive imagem, coordenadas, fonte, licença e atribuição em cada entrada, e aproveitei para normalizar ligações de licença que não estavam como URL completa.
+**Bloqueou:** algumas páginas da Wikimedia não tinham imagem, coordenadas ou dados de licença suficientes, por isso deixei essas entradas de fora em vez de forçar dados incompletos.
+**Próxima semana:** continuar a expansão até 250-300 locais, procurar mais cobertura Mapillary/Panoramax e manter os testes do dataset a bloquear entradas sem fonte ou licença.
 
 ---
 

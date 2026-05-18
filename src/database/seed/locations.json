@@ -719,7 +719,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Alfama,_Lisbon_(DSC03367).jpg",
       "imageAttribution": "Matti Blume",
       "imageLicense": "CC BY-SA",
-      "imageLicenseUrl": "//commons.wikimedia.org/wiki/File:Alfama,_Lisbon_(DSC03367).jpg",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/File:Alfama,_Lisbon_(DSC03367).jpg",
       "verifiedAt": "2026-04-29"
     },
     "clues": [
@@ -7495,6 +7495,2886 @@
       {
         "label": "Região",
         "value": "Europa; compara clima, materiais e escala urbana antes de fechar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "galway-spanish-arch",
+    "title": "Centro histórico preservado",
+    "city": "Galway",
+    "country": "Irlanda",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 53.26976,
+    "longitude": -9.05403,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Spanihs_Arch.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Spanihs_Arch.jpg",
+      "imageAttribution": "Josi",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "kilkenny-castle",
+    "title": "Fortificação em relevo",
+    "city": "Kilkenny",
+    "country": "Irlanda",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 52.650278,
+    "longitude": -7.249167,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/18/Kilkenny-castle.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Kilkenny-castle.jpg",
+      "imageAttribution": "Tolivero~commonswiki",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "belfast-city-hall",
+    "title": "Marco arquitetónico urbano",
+    "city": "Belfast",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 54.596484,
+    "longitude": -5.930053,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/Belfast_City_Hall_-_Belfast%2C_Northern_Ireland%2C_UK_-_August_13%2C_2017_-_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Belfast_City_Hall_-_Belfast%2C_Northern_Ireland%2C_UK_-_August_13%2C_2017_-_01.jpg",
+      "imageAttribution": "Giorgio Galeotti",
+      "imageLicense": "CC BY 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "giants-causeway",
+    "title": "Costa basáltica atlântica",
+    "city": "Condado de Antrim",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 55.240833,
+    "longitude": -6.511667,
+    "sceneLabel": "Rocha e Atlântico",
+    "sceneNote": "Costa rochosa, mar aberto e relevo baixo dominam a leitura.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Costa rochosa, mar aberto e relevo baixo dominam a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Causeway-code_poet-4.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Causeway-code_poet-4.jpg",
+      "imageAttribution": "code poet on flickr.",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Rocha costeira, mar aberto e relevo baixo.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara formações naturais, luz e exposição atlântica.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a costa e o tipo de rocha reduzem a área provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "thessaloniki-white-tower",
+    "title": "Frente de água europeia",
+    "city": "Salónica",
+    "country": "Grécia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 40.6264,
+    "longitude": 22.9483,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/WhiteTowerThessaloniki_%283%29.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:WhiteTowerThessaloniki_(3).JPG",
+      "imageAttribution": "CeeGee",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "meteora-monasteries",
+    "title": "Paisagem urbana em relevo",
+    "city": "Meteora",
+    "country": "Grécia",
+    "region": "europe",
+    "category": "mountain-town",
+    "latitude": 39.714167,
+    "longitude": 21.631111,
+    "sceneLabel": "Relevo dominante",
+    "sceneNote": "Relevo forte e arquitetura adaptada à paisagem aparecem juntos.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Relevo forte e arquitetura adaptada à paisagem aparecem juntos. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d1c49b",
+      "#6d8064",
+      "#172c35"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Meteora%27s_monastery_2.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Meteora's_monastery_2.jpg",
+      "imageAttribution": "Stathis floros",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Relevo forte e arquitetura adaptada à paisagem.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara montanha, vale e materiais de construção.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa o terreno para reduzir a área provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "nafplio-old-town",
+    "title": "Frente de água europeia",
+    "city": "Náuplia",
+    "country": "Grécia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 37.565833,
+    "longitude": 22.8,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ab/%CE%94%CE%B7%CE%BC%CE%B1%CF%81%CF%87%CE%B5%CE%AF%CE%BF_%CE%9D%CE%B1%CF%85%CF%80%CE%BB%CE%AF%CE%BF%CF%85%2C_Nafplio_Town_Hall.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%CE%94%CE%B7%CE%BC%CE%B1%CF%81%CF%87%CE%B5%CE%AF%CE%BF_%CE%9D%CE%B1%CF%85%CF%80%CE%BB%CE%AF%CE%BF%CF%85%2C_Nafplio_Town_Hall.jpg",
+      "imageAttribution": "Apaleutos25",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "oia-santorini",
+    "title": "Frente de água europeia",
+    "city": "Oia",
+    "country": "Grécia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 36.466667,
+    "longitude": 25.366667,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Oia_sunset_-_panoramio_%282%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Oia_sunset_-_panoramio_(2).jpg",
+      "imageAttribution": "TomasEE",
+      "imageLicense": "CC BY 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "pecs-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Pécs",
+    "country": "Hungria",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 46.0786,
+    "longitude": 18.2236,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/P%C3%A9cs_Cathedral_-_Hungary.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:P%C3%A9cs_Cathedral_-_Hungary.jpg",
+      "imageAttribution": "Takkk",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "szeged-votive-church",
+    "title": "Marco arquitetónico urbano",
+    "city": "Szeged",
+    "country": "Hungria",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 46.2489,
+    "longitude": 20.1491,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Fogadalmi_templom_%2812498._sz%C3%A1m%C3%BA_m%C5%B1eml%C3%A9k%29_3.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Fogadalmi_templom_(12498._sz%C3%A1m%C3%BA_m%C5%B1eml%C3%A9k)_3.jpg",
+      "imageAttribution": "rezirezi",
+      "imageLicense": "CC BY-SA 2.5 hu",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/hu/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "eger-castle",
+    "title": "Fortificação em relevo",
+    "city": "Eger",
+    "country": "Hungria",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 47.9039,
+    "longitude": 20.3794,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/Er%C5%91drendszer_romjai_%2817237._sz%C3%A1m%C3%BA_m%C5%B1eml%C3%A9k%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Er%C5%91drendszer_romjai_(17237._sz%C3%A1m%C3%BA_m%C5%B1eml%C3%A9k).jpg",
+      "imageAttribution": "krokophoto",
+      "imageLicense": "CC BY-SA 2.5 hu",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/hu/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "kosice-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Košice",
+    "country": "Eslováquia",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 48.720222,
+    "longitude": 21.258106,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/St_Elisabeth_Cathedral_Kosice.jpeg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:St_Elisabeth_Cathedral_Kosice.jpeg",
+      "imageAttribution": "Ingo Mehling",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "banska-stiavnica",
+    "title": "Paisagem urbana em relevo",
+    "city": "Banská Štiavnica",
+    "country": "Eslováquia",
+    "region": "europe",
+    "category": "mountain-town",
+    "latitude": 48.458056,
+    "longitude": 18.896389,
+    "sceneLabel": "Relevo dominante",
+    "sceneNote": "Relevo forte e arquitetura adaptada à paisagem aparecem juntos.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Relevo forte e arquitetura adaptada à paisagem aparecem juntos. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d1c49b",
+      "#6d8064",
+      "#172c35"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/SK_BS_Trinity_Square.PNG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:SK_BS_Trinity_Square.PNG",
+      "imageAttribution": "Richard Managr",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Relevo forte e arquitetura adaptada à paisagem.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara montanha, vale e materiais de construção.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa o terreno para reduzir a área provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "trencin-castle",
+    "title": "Fortificação em relevo",
+    "city": "Trenčín",
+    "country": "Eslováquia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 48.894167,
+    "longitude": 18.044722,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Trencin_Castle_030.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Trencin_Castle_030.jpg",
+      "imageAttribution": "Ingo Mehling",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "plovdiv-roman-theatre",
+    "title": "Marco arquitetónico urbano",
+    "city": "Plovdiv",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 42.14684,
+    "longitude": 24.751006,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Roman_Theatre_Plovdiv_3.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roman_Theatre_Plovdiv_3.jpg",
+      "imageAttribution": "MrPanyGoff",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "rila-monastery",
+    "title": "Paisagem urbana em relevo",
+    "city": "Rila",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "mountain-town",
+    "latitude": 42.133333,
+    "longitude": 23.340278,
+    "sceneLabel": "Relevo dominante",
+    "sceneNote": "Relevo forte e arquitetura adaptada à paisagem aparecem juntos.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Relevo forte e arquitetura adaptada à paisagem aparecem juntos. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d1c49b",
+      "#6d8064",
+      "#172c35"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/46/Rila_Monastery%2C_August_2013.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Rila_Monastery%2C_August_2013.jpg",
+      "imageAttribution": "Raggatt2000",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Relevo forte e arquitetura adaptada à paisagem.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara montanha, vale e materiais de construção.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa o terreno para reduzir a área provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "veliko-tarnovo-tsarevets",
+    "title": "Fortificação em relevo",
+    "city": "Veliko Tarnovo",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 43.083333,
+    "longitude": 25.652778,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/03/20140621_Veliko_Tarnovo_002.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:20140621_Veliko_Tarnovo_002.jpg",
+      "imageAttribution": "Mark Ahsmann",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "varna-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Varna",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 43.205278,
+    "longitude": 27.91,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Varna_Cathedral_-_2.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Varna_Cathedral_-_2.jpg",
+      "imageAttribution": "MrPanyGoff",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "sighisoara-citadel",
+    "title": "Centro histórico preservado",
+    "city": "Sighișoara",
+    "country": "Roménia",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 46.217778,
+    "longitude": 24.792222,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Sighisoara_-_Strada_Turnului.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Sighisoara_-_Strada_Turnului.jpg",
+      "imageAttribution": "Paszczur01",
+      "imageLicense": "CC BY-SA 3.0 ro",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/ro/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "constanta-casino",
+    "title": "Frente de água europeia",
+    "city": "Constança",
+    "country": "Roménia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 44.1705,
+    "longitude": 28.6635,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Constan%C8%9Ba_Casino_2025_%2854606449888%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Constan%C8%9Ba_Casino_2025_(54606449888).jpg",
+      "imageAttribution": "Dennis Sylvester Hurd",
+      "imageLicense": "CC0",
+      "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "zagreb-st-mark",
+    "title": "Praça europeia monumental",
+    "city": "Zagreb",
+    "country": "Croácia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 45.816389,
+    "longitude": 15.973889,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Zagreb_Church_of_St._Mark_%2834411766366%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Zagreb_Church_of_St._Mark_(34411766366).jpg",
+      "imageAttribution": "Jorge Franganillo",
+      "imageLicense": "CC BY 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "rovinj-old-town",
+    "title": "Frente de água europeia",
+    "city": "Rovinj",
+    "country": "Croácia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 45.083333,
+    "longitude": 13.633333,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Rovinj%2C_Croatia.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Rovinj%2C_Croatia.jpg",
+      "imageAttribution": "Florian Hirzinger - http://www.fh-ap.com",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "pula-arena",
+    "title": "Marco arquitetónico urbano",
+    "city": "Pula",
+    "country": "Croácia",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 44.873,
+    "longitude": 13.85,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/Pula_Arena_%282024-10-10_1%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pula_Arena_(2024-10-10_1).jpg",
+      "imageAttribution": "Olgierd Rudak",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "zadar-sea-organ",
+    "title": "Frente de água europeia",
+    "city": "Zadar",
+    "country": "Croácia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 44.117222,
+    "longitude": 15.22,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Zadar-Sea-Organ.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Zadar-Sea-Organ.jpg",
+      "imageAttribution": "Ben Snooks",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "trogir-old-town",
+    "title": "Frente de água europeia",
+    "city": "Trogir",
+    "country": "Croácia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 43.516903,
+    "longitude": 16.251364,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Trogir_%2820611290808%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Trogir_(20611290808).jpg",
+      "imageAttribution": "Nick Savchenko from Kiev, Ukraine",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "lake-bled",
+    "title": "Paisagem urbana em relevo",
+    "city": "Bled",
+    "country": "Eslovénia",
+    "region": "europe",
+    "category": "mountain-town",
+    "latitude": 46.364444,
+    "longitude": 14.094722,
+    "sceneLabel": "Relevo dominante",
+    "sceneNote": "Relevo forte e arquitetura adaptada à paisagem aparecem juntos.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Relevo forte e arquitetura adaptada à paisagem aparecem juntos. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d1c49b",
+      "#6d8064",
+      "#172c35"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/Lake_Bled_from_the_Mountain.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Lake_Bled_from_the_Mountain.jpg",
+      "imageAttribution": "Canadianhockey91",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Relevo forte e arquitetura adaptada à paisagem.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara montanha, vale e materiais de construção.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa o terreno para reduzir a área provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "piran-tartini-square",
+    "title": "Praça europeia monumental",
+    "city": "Piran",
+    "country": "Eslovénia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 45.528517,
+    "longitude": 13.568394,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Tartini_Square_from_above%2C_Piran%2C_May_2009.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Tartini_Square_from_above%2C_Piran%2C_May_2009.jpg",
+      "imageAttribution": "Plamen Agov (user:MrPanyGoff)",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "blagaj-tekija",
+    "title": "Frente ribeirinha europeia",
+    "city": "Blagaj",
+    "country": "Bósnia e Herzegovina",
+    "region": "europe",
+    "category": "riverfront",
+    "latitude": 43.257266,
+    "longitude": 17.903581,
+    "sceneLabel": "Rio e encosta urbana",
+    "sceneNote": "Rio próximo, relevo e tecido urbano aparecem no mesmo enquadramento.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Rio próximo, relevo e tecido urbano aparecem no mesmo enquadramento. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#c9b184",
+      "#517c7c",
+      "#162735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Mostar_%2816636279160%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Mostar_(16636279160).jpg",
+      "imageAttribution": "lasserbua",
+      "imageLicense": "CC BY 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Rio, encosta e construção histórica no mesmo cenário.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura a forma do vale e a escala da margem.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara relevo e materiais antes de fechar.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "perast-waterfront",
+    "title": "Frente de água europeia",
+    "city": "Perast",
+    "country": "Montenegro",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 42.486944,
+    "longitude": 18.699167,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Perast_100.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Perast_100.jpg",
+      "imageAttribution": "FrDr",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "belgrade-kalemegdan",
+    "title": "Fortificação em relevo",
+    "city": "Belgrado",
+    "country": "Sérvia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 44.822593,
+    "longitude": 20.453066,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/%D0%A1%D0%B2%D1%98%D0%B5%D1%82%D0%BB%D0%BE%D0%BF%D0%B8%D1%81_%D0%B4%D0%B8%D1%98%D0%B5%D0%BB%D0%B0_%D0%9A%D0%B0%D0%BB%D0%B5%D0%BC%D0%B5%D0%B3%D0%B4%D0%B0%D0%BD%D0%B0_%D0%B8_%D1%80%D0%B8%D1%98%D0%B5%D0%BA%D0%B5_%D0%A1%D0%B0%D0%B2%D0%B5_%D0%B7%D0%B8%D0%BC%D0%B8.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%B2%D1%98%D0%B5%D1%82%D0%BB%D0%BE%D0%BF%D0%B8%D1%81_%D0%B4%D0%B8%D1%98%D0%B5%D0%BB%D0%B0_%D0%9A%D0%B0%D0%BB%D0%B5%D0%BC%D0%B5%D0%B3%D0%B4%D0%B0%D0%BD%D0%B0_%D0%B8_%D1%80%D0%B8%D1%98%D0%B5%D0%BA%D0%B5_%D0%A1%D0%B0%D0%B2%D0%B5_%D0%B7%D0%B8%D0%BC%D0%B8.jpg",
+      "imageAttribution": "Andrija12345678",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "novi-sad-petrovaradin",
+    "title": "Fortificação em relevo",
+    "city": "Novi Sad",
+    "country": "Sérvia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 45.2525,
+    "longitude": 19.8625,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Petrovaradin_Fortress_%28P%C3%A9terv%C3%A1radi_v%C3%A1r%2C_Peterwardein%29.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Petrovaradin_Fortress_(P%C3%A9terv%C3%A1radi_v%C3%A1r%2C_Peterwardein).JPG",
+      "imageAttribution": "Pudelek (Marcin Szala)",
+      "imageLicense": "CC BY-SA 3.0 rs",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/rs/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "subotica-city-hall",
+    "title": "Marco arquitetónico urbano",
+    "city": "Subotica",
+    "country": "Sérvia",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 46.099722,
+    "longitude": 19.664444,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/%D0%93%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0_%D0%BA%D1%83%D1%9B%D0%B0_%D1%83_%D0%A1%D1%83%D0%B1%D0%BE%D1%82%D0%B8%D1%86%D0%B8_-_%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%BD%D0%B8_%D0%B4%D0%B5%D1%82%D0%B0%D1%99%D0%BD%D0%B8_%D0%BF%D1%80%D0%B8%D0%BA%D0%B0%D0%B7.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%93%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0_%D0%BA%D1%83%D1%9B%D0%B0_%D1%83_%D0%A1%D1%83%D0%B1%D0%BE%D1%82%D0%B8%D1%86%D0%B8_-_%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%BD%D0%B8_%D0%B4%D0%B5%D1%82%D0%B0%D1%99%D0%BD%D0%B8_%D0%BF%D1%80%D0%B8%D0%BA%D0%B0%D0%B7.jpg",
+      "imageAttribution": "Sunce Niš",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "tirana-skanderbeg-square",
+    "title": "Praça europeia monumental",
+    "city": "Tirana",
+    "country": "Albânia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 41.328333,
+    "longitude": 19.818333,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Skanderbeg_square_from_the_Municipality_building_rooftop.jpeg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Skanderbeg_square_from_the_Municipality_building_rooftop.jpeg",
+      "imageAttribution": "Leeturtle",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "berat-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Berat",
+    "country": "Albânia",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 40.702222,
+    "longitude": 19.958333,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Berat_57.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Berat_57.jpg",
+      "imageAttribution": "Arianit",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "gjirokaster-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Gjirokastër",
+    "country": "Albânia",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 40.066667,
+    "longitude": 20.133333,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/16/Gjirokaster_2016-2017.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Gjirokaster_2016-2017.jpg",
+      "imageAttribution": "Name: Armin Flickr: flickr.com/octopuzz/",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "skopje-stone-bridge",
+    "title": "Travessia urbana marcante",
+    "city": "Skopje",
+    "country": "Macedónia do Norte",
+    "region": "europe",
+    "category": "bridge-view",
+    "latitude": 41.996992,
+    "longitude": 21.433071,
+    "sceneLabel": "Ponte e leitura de margem",
+    "sceneNote": "Ponte, água e margens urbanas ajudam a orientar a estimativa.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Ponte, água e margens urbanas ajudam a orientar a estimativa. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#c9d3c7",
+      "#5f8797",
+      "#132736"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/40/08_Skopje.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:08_Skopje.jpg",
+      "imageAttribution": "Делфина",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ponte e margens ajudam a localizar o ambiente urbano.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa tipo de ponte, rio e densidade envolvente.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a infraestrutura como pista de escala.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "cesis-castle",
+    "title": "Fortificação em relevo",
+    "city": "Cēsis",
+    "country": "Letónia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 57.313333,
+    "longitude": 25.27,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/CesuPils_2017-09-10.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:CesuPils_2017-09-10.jpg",
+      "imageAttribution": "CesisCastle",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "liepaja-seaside",
+    "title": "Frente de água europeia",
+    "city": "Liepāja",
+    "country": "Letónia",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 56.511667,
+    "longitude": 21.013889,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Liepajas_Sveta_Jazepa_Romas_katolu_katedrale_2.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Liepajas_Sveta_Jazepa_Romas_katolu_katedrale_2.jpg",
+      "imageAttribution": "Edgars Šulcs",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "vianden-castle",
+    "title": "Fortificação em relevo",
+    "city": "Vianden",
+    "country": "Luxemburgo",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 49.935,
+    "longitude": 6.202222,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Burg_Vianden%2C_Luxemburg.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Burg_Vianden%2C_Luxemburg.jpg",
+      "imageAttribution": "Jeff Croisé",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "maastricht-vrijthof",
+    "title": "Praça europeia monumental",
+    "city": "Maastricht",
+    "country": "Países Baixos",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 50.849172,
+    "longitude": 5.688419,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Vrijthof_-_Maastricht%2C_Holland_-_panoramio.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Vrijthof_-_Maastricht%2C_Holland_-_panoramio.jpg",
+      "imageAttribution": "Sergey Ashmarin",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "rotterdam-erasmus-bridge",
+    "title": "Travessia urbana marcante",
+    "city": "Roterdão",
+    "country": "Países Baixos",
+    "region": "europe",
+    "category": "bridge-view",
+    "latitude": 51.909167,
+    "longitude": 4.486667,
+    "sceneLabel": "Ponte e leitura de margem",
+    "sceneNote": "Ponte, água e margens urbanas ajudam a orientar a estimativa.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Ponte, água e margens urbanas ajudam a orientar a estimativa. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#c9d3c7",
+      "#5f8797",
+      "#132736"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Erasmusbrug%2C_September_2019.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Erasmusbrug%2C_September_2019.jpg",
+      "imageAttribution": "Martin Falbisoner",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ponte e margens ajudam a localizar o ambiente urbano.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa tipo de ponte, rio e densidade envolvente.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a infraestrutura como pista de escala.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "haarlem-grote-markt",
+    "title": "Praça europeia monumental",
+    "city": "Haarlem",
+    "country": "Países Baixos",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 52.381367,
+    "longitude": 4.635906,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/19/HaarlemGroteMarkt1.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:HaarlemGroteMarkt1.JPG",
+      "imageAttribution": "Fryslan0109 at English Wikipedia",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "leiden-canals",
+    "title": "Cidade de canais",
+    "city": "Leiden",
+    "country": "Países Baixos",
+    "region": "europe",
+    "category": "canal-city",
+    "latitude": 52.16,
+    "longitude": 4.49,
+    "sceneLabel": "Água urbana controlada",
+    "sceneNote": "Canais, fachadas alinhadas e escala baixa marcam a leitura.",
+    "sceneImage": "/mock-scenes/canal-city.svg",
+    "prompt": "Observa a cena: Canais, fachadas alinhadas e escala baixa marcam a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d2b98a",
+      "#5b8291",
+      "#142734"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Rapenburg_Leiden_Centrum.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Rapenburg_Leiden_Centrum.jpg",
+      "imageAttribution": "Roger Veringmeier",
+      "imageLicense": "CC BY 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Canais, fachadas alinhadas e escala baixa.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa o desenho da água e a densidade das ruas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza canais, materiais e desenho urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "leuven-town-hall",
+    "title": "Marco arquitetónico urbano",
+    "city": "Lovaina",
+    "country": "Bélgica",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 50.878889,
+    "longitude": 4.701111,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7c/42150_-_Belgi%C3%AB_-_Leuven_-_Stadhuis_-_00.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:42150_-_Belgi%C3%AB_-_Leuven_-_Stadhuis_-_00.jpg",
+      "imageAttribution": "EmDee",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "dinant-citadel",
+    "title": "Frente ribeirinha europeia",
+    "city": "Dinant",
+    "country": "Bélgica",
+    "region": "europe",
+    "category": "riverfront",
+    "latitude": 50.2618,
+    "longitude": 4.913,
+    "sceneLabel": "Rio e encosta urbana",
+    "sceneNote": "Rio próximo, relevo e tecido urbano aparecem no mesmo enquadramento.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Rio próximo, relevo e tecido urbano aparecem no mesmo enquadramento. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#c9b184",
+      "#517c7c",
+      "#162735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/07/0_Dinant_-_La_citadelle_%281%29.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:0_Dinant_-_La_citadelle_(1).JPG",
+      "imageAttribution": "Jean-Pol GRANDMONT",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Rio, encosta e construção histórica no mesmo cenário.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura a forma do vale e a escala da margem.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara relevo e materiais antes de fechar.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "rothenburg-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Rothenburg ob der Tauber",
+    "country": "Alemanha",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 49.383333,
+    "longitude": 10.183333,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Rothenburg_BW_4.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Rothenburg_BW_4.JPG",
+      "imageAttribution": "Berthold Werner",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "dresden-frauenkirche",
+    "title": "Marco arquitetónico urbano",
+    "city": "Dresden",
+    "country": "Alemanha",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 51.051944,
+    "longitude": 13.741667,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/93/100130_150006_Dresden_Frauenkirche_winter_blue_sky-2.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:100130_150006_Dresden_Frauenkirche_winter_blue_sky-2.jpg",
+      "imageAttribution": "Netopyr",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "cologne-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Colónia",
+    "country": "Alemanha",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 50.941389,
+    "longitude": 6.958333,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/K%C3%B6lner_Dom_-_Westfassade_2022_ohne_Ger%C3%BCst-0968_b.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:K%C3%B6lner_Dom_-_Westfassade_2022_ohne_Ger%C3%BCst-0968_b.jpg",
+      "imageAttribution": "Raimond Spekking",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "lubeck-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Lübeck",
+    "country": "Alemanha",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 53.869722,
+    "longitude": 10.686389,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/L%C3%BCbeck_-_panoramio.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:L%C3%BCbeck_-_panoramio.jpg",
+      "imageAttribution": "Oleg Dejan",
+      "imageLicense": "CC BY 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "regensburg-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Regensburg",
+    "country": "Alemanha",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 49.016667,
+    "longitude": 12.083333,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Regensburger_Altstadt_von_oben_.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Regensburger_Altstadt_von_oben_.jpg",
+      "imageAttribution": "Geschichtsfanatiker",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "kotor-old-town",
+    "title": "Frente de água europeia",
+    "city": "Kotor",
+    "country": "Montenegro",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 42.43,
+    "longitude": 18.77,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/26/20090719_Crkva_Gospa_od_Zdravlja_Kotor_Bay_Montenegro.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:20090719_Crkva_Gospa_od_Zdravlja_Kotor_Bay_Montenegro.jpg",
+      "imageAttribution": "User:Ggia",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "trakai-castle",
+    "title": "Fortificação em relevo",
+    "city": "Trakai",
+    "country": "Lituânia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 54.6525,
+    "longitude": 24.933056,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Trakai_castle_2016.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Trakai_castle_2016.jpg",
+      "imageAttribution": "Skelanard (Aleksandr Petukhov)",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "vilnius-cathedral-square",
+    "title": "Praça europeia monumental",
+    "city": "Vilnius",
+    "country": "Lituânia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 54.685278,
+    "longitude": 25.2875,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/09/Vilnius_Cathedral_Exterior_2%2C_Vilnius%2C_Lithuania_-_Diliff.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Vilnius_Cathedral_Exterior_2%2C_Vilnius%2C_Lithuania_-_Diliff.jpg",
+      "imageAttribution": "Diliff",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "tallinn-town-hall",
+    "title": "Praça europeia monumental",
+    "city": "Tallinn",
+    "country": "Estónia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 59.437092,
+    "longitude": 24.745469,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/18/Tallinna_Raekoda_11-06-2013.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Tallinna_Raekoda_11-06-2013.jpg",
+      "imageAttribution": "Ivar Leidus",
+      "imageLicense": "CC BY-SA 3.0 ee",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/ee/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "cluj-union-square",
+    "title": "Praça europeia monumental",
+    "city": "Cluj-Napoca",
+    "country": "Roménia",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 46.769306,
+    "longitude": 23.59,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/CJROcatholic.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:CJROcatholic.jpg",
+      "imageAttribution": "Alexandru Rap",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "pristina-national-library",
+    "title": "Marco arquitetónico urbano",
+    "city": "Pristina",
+    "country": "Kosovo",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 42.657222,
+    "longitude": 21.162222,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/73/National_Library_of_Kosovo_Pjeter_Bogdani.svg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:National_Library_of_Kosovo_Pjeter_Bogdani.svg",
+      "imageAttribution": "PrincLeka1914",
+      "imageLicense": "CC BY 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "nessebar-old-town",
+    "title": "Frente de água europeia",
+    "city": "Nessebar",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 42.65,
+    "longitude": 27.733333,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Nessebar_lead_collage.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Nessebar_lead_collage.jpg",
+      "imageAttribution": "NightBlade151",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "koprivshtitsa-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Koprivshtitsa",
+    "country": "Bulgária",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 42.633333,
+    "longitude": 24.35,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Bulgaria_Koprivshtica_10.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bulgaria_Koprivshtica_10.JPG",
+      "imageAttribution": "www.vacacionesbulgaria.com",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "corvin-castle",
+    "title": "Fortificação em relevo",
+    "city": "Hunedoara",
+    "country": "Roménia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 45.749167,
+    "longitude": 22.888333,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/38/Hunedoara_castle.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Hunedoara_castle.jpg",
+      "imageAttribution": "Paszczur01",
+      "imageLicense": "CC BY-SA 3.0 ro",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/ro/deed.en",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "burgos-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Burgos",
+    "country": "Espanha",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 42.340806,
+    "longitude": -3.704472,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/67/Escaleras_a_la_Catedral_--_2023_--_Burgos%2C_Castilla_y_Le%C3%B3n%2C_Espa%C3%B1a.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Escaleras_a_la_Catedral_--_2023_--_Burgos%2C_Castilla_y_Le%C3%B3n%2C_Espa%C3%B1a.jpg",
+      "imageAttribution": "Jose María Ligero Loarte",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "segovia-alcazar",
+    "title": "Fortificação em relevo",
+    "city": "Segóvia",
+    "country": "Espanha",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 40.9525,
+    "longitude": -4.1325,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/40/Panor%C3%A1mica_Oto%C3%B1o_Alc%C3%A1zar_de_Segovia.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Panor%C3%A1mica_Oto%C3%B1o_Alc%C3%A1zar_de_Segovia.jpg",
+      "imageAttribution": "Ángel Sanz de Andrés",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "avila-walls",
+    "title": "Fortificação em relevo",
+    "city": "Ávila",
+    "country": "Espanha",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 40.656389,
+    "longitude": -4.7,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/67/%C3%81vila_24-8-2002.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%C3%81vila_24-8-2002.jpg",
+      "imageAttribution": "Pelayo2",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "salamanca-plaza-mayor",
+    "title": "Praça europeia monumental",
+    "city": "Salamanca",
+    "country": "Espanha",
+    "region": "europe",
+    "category": "plaza",
+    "latitude": 40.965,
+    "longitude": -5.664167,
+    "sceneLabel": "Espaço público aberto",
+    "sceneNote": "Praça ampla, fachadas marcadas e circulação pedonal clara.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Praça ampla, fachadas marcadas e circulação pedonal clara. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#dfc894",
+      "#9a7a53",
+      "#1b2633"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Plaza_Mayor%2C_Salamanca.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Plaza_Mayor%2C_Salamanca.JPG",
+      "imageAttribution": "Stef Mec",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça aberta com edifícios históricos à volta.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa cor, materiais e densidade das fachadas.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a escala urbana para limitar a zona provável.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "sintra-national-palace",
+    "title": "Centro histórico preservado",
+    "city": "Sintra",
+    "country": "Portugal",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 38.797778,
+    "longitude": -9.390833,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Palacio_Sintra_February_2015-13a.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Palacio_Sintra_February_2015-13a.jpg",
+      "imageAttribution": "Alvesgaspar",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-17"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
         "confidence": "Média"
       }
     ]
