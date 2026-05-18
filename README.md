@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 222 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 30 locais e passei a escolher uma fonte visual por ronda. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 250 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais e passei a escolher uma fonte visual por ronda. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -27,10 +27,11 @@
 - [x] Dataset europeu inicial com cenas mock, caminhos `sceneImage` e contratos de jogo
 - [x] Assets visuais `mock` para cenas de jogo
 - [x] Mapa real no frontend com OpenStreetMap/Leaflet
-- [x] 222 locais reais com imagem, fonte, licença e atribuição
+- [x] 250 locais reais com imagem, fonte, licença e atribuição
 - [x] Resultados de ronda com dados de fonte/licença e respetivas ligações
 - [x] Campo `visualSources` preparado para várias fontes visuais por local
-- [x] 30 locais com fonte adicional Panoramax validada
+- [x] 95 locais com fonte adicional Panoramax validada
+- [x] Ferramenta local para procurar candidatos Mapillary com token fora do repositório
 - [x] Escolha de uma fonte visual disponível por ronda com atribuição e licença
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
@@ -52,8 +53,8 @@
 
 - [ ] Avaliar Supabase como hosted quando a gravação em base de dados estiver estável
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
-- [ ] Expandir o dataset curado para 250-300 locais reais
-- [ ] Continuar a adicionar fontes Mapillary/Panoramax a locais selecionados quando houver cobertura
+- [ ] Expandir o dataset curado para 300 locais reais
+- [ ] Rever candidatos Mapillary manualmente e adicionar apenas os que forem adequados
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 
@@ -134,6 +135,10 @@ Para detalhe adicional, ver [`docs/architecture/adr`]
 - PostgreSQL
 - Supabase
 - Docker Compose
+- OpenStreetMap/Leaflet
+- Wikimedia Commons
+- Panoramax
+- Mapillary
 
 ### Ferramentas de IA utilizadas
 

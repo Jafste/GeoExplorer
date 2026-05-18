@@ -13,6 +13,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "historic-core": "Centro histórico",
   landmark: "Marco urbano",
   "mountain-town": "Paisagem em relevo",
+  "natural-landscape": "Paisagem natural",
   plaza: "Praça urbana",
   riverfront: "Frente ribeirinha",
   waterfront: "Margem marítima",

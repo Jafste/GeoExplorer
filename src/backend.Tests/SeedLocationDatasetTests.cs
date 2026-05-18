@@ -37,7 +37,7 @@ public sealed class SeedLocationDatasetTests
             .Where(location => location.Media is not null && location.Media.SourceProvider != "mock")
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(200, realMediaLocations.Count, "O dataset deve manter pelo menos 200 locais com media real validada.");
+        Assert.IsGreaterThanOrEqualTo(250, realMediaLocations.Count, "O dataset deve manter pelo menos 250 locais com media real validada.");
 
         foreach (var location in realMediaLocations)
         {
@@ -73,7 +73,7 @@ public sealed class SeedLocationDatasetTests
             .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Panoramax"))
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(30, panoramaxLocations.Count, "O dataset deve manter pelo menos 30 locais com Panoramax validado.");
+        Assert.IsGreaterThanOrEqualTo(90, panoramaxLocations.Count, "O dataset deve manter pelo menos 90 locais com Panoramax validado.");
 
         foreach (var location in panoramaxLocations)
         {

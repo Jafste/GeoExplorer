@@ -2,7 +2,7 @@
 
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 222 locais reais com dados de fonte/licença validados e 30 locais com Panoramax como fonte adicional.
+- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 250 locais reais com dados de fonte/licença validados e 95 locais com Panoramax como fonte adicional.
 - `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
@@ -28,6 +28,19 @@ O endpoint `/api/diagnostics/database` devolve um contador simples de leituras e
 
 Decidi manter PostgreSQL como base principal e não usar Supabase completo em Docker nesta fase. Supabase fica como hipótese futura se forem necessárias funcionalidades geridas como Auth, Storage, Realtime simples ou Row Level Security. Para multiplayer/realtime do jogo, a direção prevista é SignalR no backend, porque a sincronização terá lógica própria de salas, jogadores, timers, palpites e pontuação.
 
-O campo `sceneImage` continua a suportar as cenas SVG mock como fallback. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a street-level imagery.
+O campo `sceneImage` continua a suportar as cenas SVG mock como alternativa. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a imagens ao nível da rua.
 
 Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura.
+
+## Recolha de candidatos Mapillary
+
+Mapillary fica como fonte visual adicional e não como dependência obrigatória do jogo. Para procurar candidatos junto dos locais já existentes, posso usar:
+
+```bash
+MAPILLARY_ACCESS_TOKEN=... node src/database/tools/find-mapillary-sources.mjs \
+  --max-results 25 \
+  --max-distance-meters 50 \
+  --output /tmp/geoexplorer-mapillary-candidates.json
+```
+
+O script apenas gera candidatos. Não altera `seed/locations.json`. Antes de copiar qualquer entrada para `visualSources`, devo confirmar manualmente se a imagem corresponde ao local, se a distância é aceitável e se a atribuição e a licença estão preenchidas. A chave `MAPILLARY_ACCESS_TOKEN` deve ficar apenas no ambiente local ou num `.env` privado.

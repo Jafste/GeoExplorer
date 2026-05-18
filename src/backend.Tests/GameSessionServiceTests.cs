@@ -35,16 +35,19 @@ public sealed class GameSessionServiceTests
             RoundTimeSeconds: 60));
 
         Assert.IsNotNull(response.CurrentRound.Challenge.Media);
-        Assert.AreEqual("Wikimedia Commons", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.SourceProvider));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageUrl));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageAttribution));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageLicense));
         Assert.IsTrue(DateOnly.TryParse(response.CurrentRound.Challenge.Media.VerifiedAt, out _));
         Assert.IsNotNull(response.CurrentRound.Challenge.VisualSources);
         Assert.IsGreaterThanOrEqualTo(1, response.CurrentRound.Challenge.VisualSources.Count);
-        Assert.AreEqual(
-            response.CurrentRound.Challenge.Media.ImageUrl,
-            response.CurrentRound.Challenge.VisualSources[0].ImageUrl);
+        Assert.IsTrue(
+            response.CurrentRound.Challenge.VisualSources.Any(source =>
+                source.SourceProvider == response.CurrentRound.Challenge.Media.SourceProvider &&
+                source.ImageUrl == response.CurrentRound.Challenge.Media.ImageUrl &&
+                source.ImageSourceUrl == response.CurrentRound.Challenge.Media.ImageSourceUrl),
+            "A fonte visual escolhida deve estar listada em visualSources.");
     }
 
     [TestMethod]

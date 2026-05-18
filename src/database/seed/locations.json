@@ -597,23 +597,6 @@
       "#667680",
       "#132531"
     ],
-    "clues": [
-      {
-        "label": "Pista principal",
-        "value": "Centro antigo preservado e malha urbana compacta",
-        "confidence": "Alta"
-      },
-      {
-        "label": "Contexto visual",
-        "value": "Fachadas históricas, ruas densas e leitura pedonal forte.",
-        "confidence": "Média"
-      },
-      {
-        "label": "Região",
-        "value": "Europa; compara clima, materiais e escala urbana antes de fechar o palpite.",
-        "confidence": "Média"
-      }
-    ],
     "media": {
       "sourceProvider": "Wikimedia Commons",
       "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Corner_between_S%C3%B6dra_Benickebrinken_and_%C3%96sterl%C3%A5nggatan_in_Gamla_Stan%2C_Stockholm%2C_Sweden%2C_2022_December.jpg/1920px-Corner_between_S%C3%B6dra_Benickebrinken_and_%C3%96sterl%C3%A5nggatan_in_Gamla_Stan%2C_Stockholm%2C_Sweden%2C_2022_December.jpg",
@@ -635,6 +618,23 @@
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5184ce3c-f6b7-4e0f-a8f1-4c70343712ff",
         "verifiedAt": "2026-05-13"
       }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Centro antigo preservado e malha urbana compacta",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Fachadas históricas, ruas densas e leitura pedonal forte.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, materiais e escala urbana antes de fechar o palpite.",
+        "confidence": "Média"
+      }
     ]
   },
   {
@@ -654,23 +654,6 @@
       "#e2b16a",
       "#9f6b4f",
       "#203343"
-    ],
-    "clues": [
-      {
-        "label": "Pista principal",
-        "value": "Praça principal com forte leitura cívica",
-        "confidence": "Alta"
-      },
-      {
-        "label": "Contexto visual",
-        "value": "Espaço público amplo, fachadas marcantes e luz mais aberta.",
-        "confidence": "Média"
-      },
-      {
-        "label": "Região",
-        "value": "Europa; compara clima, materiais e escala urbana antes de fechar o palpite.",
-        "confidence": "Média"
-      }
     ],
     "media": {
       "sourceProvider": "Wikimedia Commons",
@@ -692,6 +675,23 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e11f34f3-f7d1-4aa8-a710-8836be8cbe38",
         "verifiedAt": "2026-05-13"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Praça principal com forte leitura cívica",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Espaço público amplo, fachadas marcantes e luz mais aberta.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, materiais e escala urbana antes de fechar o palpite.",
+        "confidence": "Média"
       }
     ]
   },
@@ -2171,6 +2171,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/5f/5b/ef/55/a75e-4226-b9ab-4a91e1c2ae67/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/11a0ddf0-018e-4ab0-9ac9-4492d776aa7b/items/5f5bef55-a75e-4226-b9ab-4a91e1c2ae67",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5f5bef55-a75e-4226-b9ab-4a91e1c2ae67",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2351,6 +2364,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/e1/20/8c/8c/8070-4872-8bf9-ee46d2834af5/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f4506e5d-c9d0-4e30-87b3-06b5be5cfaec/items/e1208c8c-8070-4872-8bf9-ee46d2834af5",
+        "imageAttribution": "Jipeg76",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e1208c8c-8070-4872-8bf9-ee46d2834af5",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2576,6 +2602,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/da/b0/e5/9d/c431-4897-8b60-f9bc9eaff63b/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f3d02893-b4c1-4cd6-8b27-e27ab57eb59a/items/dab0e59d-c431-4897-8b60-f9bc9eaff63b",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dab0e59d-c431-4897-8b60-f9bc9eaff63b",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2621,6 +2660,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/00/0e/d8/ce/509a-44cd-8ea3-d8382a7d9c15/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f0d6f78a-ff95-4db1-8494-6eb44a17bb37/items/000ed8ce-509a-44cd-8ea3-d8382a7d9c15",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=000ed8ce-509a-44cd-8ea3-d8382a7d9c15",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2666,6 +2718,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/8c/27/58/ba/afc6-43af-ba79-0189ff22a5a0/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/8c2758ba-afc6-43af-ba79-0189ff22a5a0",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=8c2758ba-afc6-43af-ba79-0189ff22a5a0",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2711,6 +2776,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/1e/e9/86/82/ae3e-4705-977f-189c266c6c20/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/1ee98682-ae3e-4705-977f-189c266c6c20",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=1ee98682-ae3e-4705-977f-189c266c6c20",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2756,6 +2834,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/16/b7/2f/65/c636-46fa-aaf6-b8818475d9d2/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/372e73fe-168d-453e-909a-69053cfc00e1/items/16b72f65-c636-46fa-aaf6-b8818475d9d2",
+        "imageAttribution": "mbuege",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=16b72f65-c636-46fa-aaf6-b8818475d9d2",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2846,6 +2937,19 @@
       "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/e6/47/b5/26/e7f2-429c-a69d-eaea460f3981/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/bbaf837e-7a1a-4819-8d89-79da34d2c5b2/items/e647b526-e7f2-429c-a69d-eaea460f3981",
+        "imageAttribution": "JLZIMMERMANN",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e647b526-e7f2-429c-a69d-eaea460f3981",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2936,6 +3040,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/a0/c2/5c/4e/f405-479f-8623-30c3cf6d1300/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/efa25559-b944-4e23-a149-2750f5783cae/items/a0c25c4e-f405-479f-8623-30c3cf6d1300",
+        "imageAttribution": "JLZIMMERMANN",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=a0c25c4e-f405-479f-8623-30c3cf6d1300",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3026,6 +3143,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/5b/46/c9/29/d5d3-4e31-a8fc-a66b75791e39/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/cee1e0ec-3f0c-416c-8a99-23295e789692/items/5b46c929-d5d3-4e31-a8fc-a66b75791e39",
+        "imageAttribution": "paulb_imagery",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5b46c929-d5d3-4e31-a8fc-a66b75791e39",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3071,6 +3201,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/d5/c0/f4/a7/6fd5-486e-9d69-854a03d56cc4/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e8931a50-2dfe-4e94-a51c-366a6d949903/items/d5c0f4a7-6fd5-486e-9d69-854a03d56cc4",
+        "imageAttribution": "p4n-pics",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=d5c0f4a7-6fd5-486e-9d69-854a03d56cc4",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3116,6 +3259,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/66/c1/26/c7/4a18-47be-8913-78d3c4250aed/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/0bcee66c-69ae-4831-adfd-10c9d5c44971/items/66c126c7-4a18-47be-8913-78d3c4250aed",
+        "imageAttribution": "overflorian",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=66c126c7-4a18-47be-8913-78d3c4250aed",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3251,6 +3407,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/9a/f7/ff/c6/55d1-4c27-b6c5-b15204a3e482/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/9b830782-7458-4109-ae7f-cfabc1b8b12d/items/9af7ffc6-55d1-4c27-b6c5-b15204a3e482",
+        "imageAttribution": "scai",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=9af7ffc6-55d1-4c27-b6c5-b15204a3e482",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3296,6 +3465,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/dc/86/8c/25/585c-4c18-9782-c5c3e4dd8f09/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/a40a7bb6-fdb0-4d96-9502-3b80542599c8/items/dc868c25-585c-4c18-9782-c5c3e4dd8f09",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dc868c25-585c-4c18-9782-c5c3e4dd8f09",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3341,6 +3523,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/51/55/fd/16/5dad-4fe7-9094-25381a5eb7b9/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/059880f8-bbbf-4075-89ed-447ccb80a093/items/5155fd16-5dad-4fe7-9094-25381a5eb7b9",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5155fd16-5dad-4fe7-9094-25381a5eb7b9",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3386,6 +3581,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/c3/89/34/98/76a6-4e6c-860d-e80a1f8a6246/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/c68aff86-d6fe-40c6-b038-6b686d6a1b95/items/c3893498-76a6-4e6c-860d-e80a1f8a6246",
+        "imageAttribution": "Peter Bremer",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c3893498-76a6-4e6c-860d-e80a1f8a6246",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3476,6 +3684,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/e2/9c/c4/e6/acf0-4562-a440-aaf98f0c24a5/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/e29cc4e6-acf0-4562-a440-aaf98f0c24a5",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e29cc4e6-acf0-4562-a440-aaf98f0c24a5",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3836,6 +4057,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivates/80/af/f2/58/6f1c-4a86-a7cb-6de2c5d77085/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6e702976-580b-419c-8fb3-cf7bd364e6f8/items/80aff258-6f1c-4a86-a7cb-6de2c5d77085",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=80aff258-6f1c-4a86-a7cb-6de2c5d77085",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3881,6 +4115,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/02/66/33/f2/92b7-420c-8852-c084425072c1/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6c448f4b-8e63-4545-b22b-45ce067e1a02/items/026633f2-92b7-420c-8852-c084425072c1",
+        "imageAttribution": "Moosh",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=026633f2-92b7-420c-8852-c084425072c1",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3926,6 +4173,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/bb/09/fb/4f/1897-403c-bbee-4c0e9c5b10eb/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/2c95885b-0f63-4f55-bb60-91960401cb89/items/bb09fb4f-1897-403c-bbee-4c0e9c5b10eb",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=bb09fb4f-1897-403c-bbee-4c0e9c5b10eb",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4016,6 +4276,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/03/74/b0/c9/7887-4c70-962c-c797b1ab89fb/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/0374b0c9-7887-4c70-962c-c797b1ab89fb",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0374b0c9-7887-4c70-962c-c797b1ab89fb",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4421,6 +4694,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/b7/91/5c/51/3d69-4438-bc9b-9db37c3b3d1f/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e0b98491-2777-4596-968e-4841bac3e7c3/items/b7915c51-3d69-4438-bc9b-9db37c3b3d1f",
+        "imageAttribution": "trouyer",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=b7915c51-3d69-4438-bc9b-9db37c3b3d1f",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4466,6 +4752,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/e9/88/08/fa/eefe-4acb-b298-9a8a28ef6c03/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6cfebcf9-4e66-4c53-afd1-33ac830e593e/items/e98808fa-eefe-4acb-b298-9a8a28ef6c03",
+        "imageAttribution": "tykayn",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e98808fa-eefe-4acb-b298-9a8a28ef6c03",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4556,6 +4855,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/ed/6c/61/7d/43fc-42e1-8809-7d9621118277/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/cdf489e5-5869-4d2e-b918-5c1a8e83c035/items/ed6c617d-43fc-42e1-8809-7d9621118277",
+        "imageAttribution": "PierreNT",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ed6c617d-43fc-42e1-8809-7d9621118277",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4691,6 +5003,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/1.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/6a/12/2a/c6/a188-4c6c-bcc0-ed27e61dd7fa/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/c1c99eb9-8471-465e-97d5-4c1bf7ce9e6b/items/6a122ac6-a188-4c6c-bcc0-ed27e61dd7fa",
+        "imageAttribution": "sykul",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=6a122ac6-a188-4c6c-bcc0-ed27e61dd7fa",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4736,6 +5061,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/96/2b/d8/cf/b772-41d9-a809-eb53c282fb29/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f2c69107-8d55-4724-903b-933d12b2afe6/items/962bd8cf-b772-41d9-a809-eb53c282fb29",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=962bd8cf-b772-41d9-a809-eb53c282fb29",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4781,6 +5119,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/aa/7f/59/58/7441-479a-82c2-d94c93aca035/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e7fc1343-b155-4150-98d9-020c656cf767/items/aa7f5958-7441-479a-82c2-d94c93aca035",
+        "imageAttribution": "bestinthewest",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=aa7f5958-7441-479a-82c2-d94c93aca035",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4826,6 +5177,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/38/1d/79/20/5431-4d54-b477-36cc1520962b/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/19d8b488-be08-4078-a6fa-868f95ef6c21/items/381d7920-5431-4d54-b477-36cc1520962b",
+        "imageAttribution": "barnes38",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=381d7920-5431-4d54-b477-36cc1520962b",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4916,6 +5280,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/4c/05/f2/a1/4564-4779-b085-220648ea2cd2/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/264c15ac-6dc1-4817-baa9-9aadcf55311e/items/4c05f2a1-4564-4779-b085-220648ea2cd2",
+        "imageAttribution": "cquest",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=4c05f2a1-4564-4779-b085-220648ea2cd2",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5051,6 +5428,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/70/16/4a/61/8e91-4b9a-b5d2-35614f45ce64/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/4e7d1fe8-d284-452d-9a72-18c3c99dde94/items/70164a61-8e91-4b9a-b5d2-35614f45ce64",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=70164a61-8e91-4b9a-b5d2-35614f45ce64",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5096,6 +5486,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/2c/98/38/d1/bd0d-4c9e-9560-fbd7b6c9215b/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e8e45105-76f7-4c01-a1f0-42b85c0eb6d3/items/2c9838d1-bd0d-4c9e-9560-fbd7b6c9215b",
+        "imageAttribution": "jacopofar",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=2c9838d1-bd0d-4c9e-9560-fbd7b6c9215b",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5141,6 +5544,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/8a/92/ff/31/5ad6-46e2-9dfb-a1408d17c808/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/beb9ad9b-0914-47a8-998a-342a6c41f7d8/items/8a92ff31-5ad6-46e2-9dfb-a1408d17c808",
+        "imageAttribution": "scai",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=8a92ff31-5ad6-46e2-9dfb-a1408d17c808",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5231,6 +5647,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/25/38/53/8c/918f-4e75-a030-08a572e850a8/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6b15f06d-4d16-4da5-963e-3560eba7d3d4/items/2538538c-918f-4e75-a030-08a572e850a8",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=2538538c-918f-4e75-a030-08a572e850a8",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5636,6 +6065,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/e0/3e/09/cd/394c-4f72-9ff6-e723c4568f13/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e700402b-0a87-4a7a-913c-c69cc0ee7d75/items/e03e09cd-394c-4f72-9ff6-e723c4568f13",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e03e09cd-394c-4f72-9ff6-e723c4568f13",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5816,6 +6258,19 @@
       "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/fc/76/91/61/18b8-417b-a287-1b8fb5dee4a9/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/8d2d1f7c-fb8f-49d8-bd92-057607957535/items/fc769161-18b8-417b-a287-1b8fb5dee4a9",
+        "imageAttribution": "tyr_asd",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=fc769161-18b8-417b-a287-1b8fb5dee4a9",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6131,6 +6586,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/c4/a9/6d/2a/21c2-48d4-854e-760103e15182/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/68b4603a-8b50-43d0-b4d2-04f435cc7174/items/c4a96d2a-21c2-48d4-854e-760103e15182",
+        "imageAttribution": "wegavision",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c4a96d2a-21c2-48d4-854e-760103e15182",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6221,6 +6689,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/35/5a/5a/22/478e-488c-b6e3-45239ee1ec15/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/6f8989e9-1748-42b0-a1fc-63b3b987b6d7/items/355a5a22-478e-488c-b6e3-45239ee1ec15",
+        "imageAttribution": "DNL852",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=355a5a22-478e-488c-b6e3-45239ee1ec15",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6356,6 +6837,19 @@
       "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/58/7c/a8/fa/0509-467f-b6e6-259debac765d/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/eb504ac0-f9d9-4d6b-a693-b3c080d5b8b6/items/587ca8fa-0509-467f-b6e6-259debac765d",
+        "imageAttribution": "UnusualWorld",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=587ca8fa-0509-467f-b6e6-259debac765d",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6581,6 +7075,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/ae/37/1b/9b/4f37-4850-8faf-95889053088f/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/172dde68-37f1-4c3b-a20d-f9de0a631182/items/ae371b9b-4f37-4850-8faf-95889053088f",
+        "imageAttribution": "czecko",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ae371b9b-4f37-4850-8faf-95889053088f",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6626,6 +7133,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivates/f1/13/a7/5c/6625-44b7-8888-e9a16f7a44b2/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e9bcb8c0-8ade-4ac9-bc9f-cfa464221fd6/items/f113a75c-6625-44b7-8888-e9a16f7a44b2",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f113a75c-6625-44b7-8888-e9a16f7a44b2",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6671,6 +7191,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0/pl/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/72/c4/1b/6b/0b65-4bc7-b922-2ed637ac1887/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/51ef7174-8a11-4138-a622-311c8dcc84af/items/72c41b6b-0b65-4bc7-b922-2ed637ac1887",
+        "imageAttribution": "VietovesLt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=72c41b6b-0b65-4bc7-b922-2ed637ac1887",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6716,6 +7249,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/bd/71/41/2d/6f94-4534-b1dd-2df89a726847/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/e14e607a-7536-4d2d-a982-1772395f1e49/items/bd71412d-6f94-4534-b1dd-2df89a726847",
+        "imageAttribution": "stanton",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=bd71412d-6f94-4534-b1dd-2df89a726847",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7211,6 +7757,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/dd/40/7b/a4/af59-4c50-9ddf-3f294f68dbc8/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/430e57bd-a40c-40ae-bde5-fa31c97f55f5/items/dd407ba4-af59-4c50-9ddf-3f294f68dbc8",
+        "imageAttribution": "Peter Bremer",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dd407ba4-af59-4c50-9ddf-3f294f68dbc8",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7301,6 +7860,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/f8/fe/6f/56/1cff-4b8f-83da-38f33f42798c/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f94ccf74-84e5-4dad-8c77-3a02f035afd8/items/f8fe6f56-1cff-4b8f-83da-38f33f42798c",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f8fe6f56-1cff-4b8f-83da-38f33f42798c",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7571,6 +8143,19 @@
       "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/f4/2e/61/de/51ae-428b-a665-34e457d86e85/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/fb285ea8-d913-4790-b897-8b2ce5b45ea4/items/f42e61de-51ae-428b-a665-34e457d86e85",
+        "imageAttribution": "b-unicycling",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f42e61de-51ae-428b-a665-34e457d86e85",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7706,6 +8291,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/70/db/f3/4c/4974-492a-a243-31e6754c1ab8/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/122fb566-e080-4826-a8d0-ca866c935820/items/70dbf34c-4974-492a-a243-31e6754c1ab8",
+        "imageAttribution": "Sim100v",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=70dbf34c-4974-492a-a243-31e6754c1ab8",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8201,6 +8799,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/d7/05/53/e5/abc8-4ce4-83e0-78c5be63a03d/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/c36aa725-94db-4733-ab38-1557a0e625ff/items/d70553e5-abc8-4ce4-83e0-78c5be63a03d",
+        "imageAttribution": "p4n-pics",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=d70553e5-abc8-4ce4-83e0-78c5be63a03d",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8696,6 +9307,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivates/15/1c/5e/3a/4a3d-45b9-82cf-2582fab7ca38/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/1de6f4a1-73ac-4c75-ab7f-2a2aabddf50a/items/151c5e3a-4a3d-45b9-82cf-2582fab7ca38",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=151c5e3a-4a3d-45b9-82cf-2582fab7ca38",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8786,6 +9410,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.osm-hr.org/derivatives/19/3f/8c/f7/d9c4-4a96-b904-492efbd4aded/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/ebd14c63-72eb-4e9e-b252-bc150f768948/items/193f8cf7-d9c4-4a96-b904-492efbd4aded",
+        "imageAttribution": "borovac",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=193f8cf7-d9c4-4a96-b904-492efbd4aded",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8831,6 +9468,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/4a/a7/65/ee/d7e8-4b37-aa13-95ef749b36da/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/1d64801a-ed8f-41fb-b491-49e06bda2f9f/items/4aa765ee-d7e8-4b37-aa13-95ef749b36da",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=4aa765ee-d7e8-4b37-aa13-95ef749b36da",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8876,6 +9526,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/rs/deed.en",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/67/12/49/42/f810-409d-a477-a623a7455854/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/631b8629-0253-4888-b1a1-d1a60f1fd078/items/67124942-f810-409d-a477-a623a7455854",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=67124942-f810-409d-a477-a623a7455854",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9011,6 +9674,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/27/bd/b6/13/aed7-486f-8e03-5865c5a2a372/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/0db3f367-8ce1-47e6-9909-f06c962256ea/items/27bdb613-aed7-486f-8e03-5865c5a2a372",
+        "imageAttribution": "IrdiIs",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=27bdb613-aed7-486f-8e03-5865c5a2a372",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9371,6 +10047,19 @@
       "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/60/25/b7/87/d913-4003-aac8-d9737801db75/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/ce411746-79af-4eff-bed1-40070bb0cd60/items/6025b787-d913-4003-aac8-d9737801db75",
+        "imageAttribution": "motocultrice",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=6025b787-d913-4003-aac8-d9737801db75",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9416,6 +10105,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/7c/2c/53/14/a85e-45ba-a55e-6c946dc362b0/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/7c2c5314-a85e-45ba-a55e-6c946dc362b0",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=7c2c5314-a85e-45ba-a55e-6c946dc362b0",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9461,6 +10163,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/b2/2a/c4/60/3d5f-4810-a829-9bea8893794a/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/7c1b4561-7d02-4a52-a92b-36526c135804/items/b22ac460-3d5f-4810-a829-9bea8893794a",
+        "imageAttribution": "Mizuna",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=b22ac460-3d5f-4810-a829-9bea8893794a",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9821,6 +10536,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/f8/5d/df/8b/4581-49b4-aed4-dd2a18789e03/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/eb194cb1-d0b2-4a0e-aae5-7b29a715a712/items/f85ddf8b-4581-49b4-aed4-dd2a18789e03",
+        "imageAttribution": "VietovesLt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f85ddf8b-4581-49b4-aed4-dd2a18789e03",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10136,6 +10864,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/ro/deed.en",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/9c/52/34/71/179b-463d-bfea-75805f23490a/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/fc74e477-83de-46c8-b8e0-afbc98a84aaf/items/9c523471-179b-463d-bfea-75805f23490a",
+        "imageAttribution": "utvonalfelmeresek",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=9c523471-179b-463d-bfea-75805f23490a",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10181,6 +10922,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivates/94/ef/f3/ff/59b4-4c6c-8cd8-6bf140f7a0b8/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/1de6f4a1-73ac-4c75-ab7f-2a2aabddf50a/items/94eff3ff-59b4-4c6c-8cd8-6bf140f7a0b8",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=94eff3ff-59b4-4c6c-8cd8-6bf140f7a0b8",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10375,6 +11129,1357 @@
       {
         "label": "Região",
         "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "gullfoss-waterfall",
+    "title": "Paisagem natural nórdica",
+    "city": "Gullfoss",
+    "country": "Islândia",
+    "region": "europe",
+    "category": "natural-landscape",
+    "latitude": 64.326111,
+    "longitude": -20.121111,
+    "sceneLabel": "Relevo, água e luz fria",
+    "sceneNote": "Terreno aberto, água dominante e luz fria ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Terreno aberto, água dominante e luz fria ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8e3dc",
+      "#6f8f9b",
+      "#122a38"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/18/Gullfoss_from_the_Air_%28cropped%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Gullfoss_from_the_Air_(cropped).jpg",
+      "imageAttribution": "Nickspix",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Paisagem natural aberta com água e relevo marcados.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa clima, solo, gelo ou vegetação baixa.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a paisagem pesa mais do que a arquitetura.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "thingvellir-national-park",
+    "title": "Paisagem natural nórdica",
+    "city": "Þingvellir",
+    "country": "Islândia",
+    "region": "europe",
+    "category": "natural-landscape",
+    "latitude": 64.253806,
+    "longitude": -21.03725,
+    "sceneLabel": "Relevo, água e luz fria",
+    "sceneNote": "Terreno aberto, água dominante e luz fria ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Terreno aberto, água dominante e luz fria ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8e3dc",
+      "#6f8f9b",
+      "#122a38"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/%C3%9Eingvellir_from_the_information_centre.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%C3%9Eingvellir_from_the_information_centre.JPG",
+      "imageAttribution": "Ivan Sabljak",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Paisagem natural aberta com água e relevo marcados.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa clima, solo, gelo ou vegetação baixa.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a paisagem pesa mais do que a arquitetura.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "jokulsarlon-glacier-lagoon",
+    "title": "Paisagem natural nórdica",
+    "city": "Jökulsárlón",
+    "country": "Islândia",
+    "region": "europe",
+    "category": "natural-landscape",
+    "latitude": 64.070278,
+    "longitude": -16.211667,
+    "sceneLabel": "Relevo, água e luz fria",
+    "sceneNote": "Terreno aberto, água dominante e luz fria ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Terreno aberto, água dominante e luz fria ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8e3dc",
+      "#6f8f9b",
+      "#122a38"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/J%C3%B6kuls%C3%A1rl%C3%B3n_lagoon_in_southeastern_Iceland.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:J%C3%B6kuls%C3%A1rl%C3%B3n_lagoon_in_southeastern_Iceland.jpg",
+      "imageAttribution": "Molechaser",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Paisagem natural aberta com água e relevo marcados.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa clima, solo, gelo ou vegetação baixa.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a paisagem pesa mais do que a arquitetura.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "nicosia-buyuk-han",
+    "title": "Centro histórico preservado",
+    "city": "Nicósia",
+    "country": "Chipre",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 35.1763,
+    "longitude": 33.3625,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Nicosia_Buyuk_Han_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Nicosia_Buyuk_Han_02.jpg",
+      "imageAttribution": "User:MatthiasKabel",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/30/35/4c/1b/f874-408a-b479-0613e5c0ad71/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/9fd4f3ed-3fba-4336-b155-c74de46046b5/items/30354c1b-f874-408a-b479-0613e5c0ad71",
+        "imageAttribution": "Robot8A",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=30354c1b-f874-408a-b479-0613e5c0ad71",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "larnaca-saint-lazarus",
+    "title": "Marco arquitetónico urbano",
+    "city": "Lárnaca",
+    "country": "Chipre",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 34.911495,
+    "longitude": 33.634793,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Agios_Lazaros%2C_Larnaca_%283%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Agios_Lazaros%2C_Larnaca_(3).jpg",
+      "imageAttribution": "Chris06",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/91/b0/0d/68/0d16-4266-a871-043f49561938/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/b24b5040-5d71-4476-aac9-1bec14001a53/items/91b00d68-0d16-4266-a871-043f49561938",
+        "imageAttribution": "nave88",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=91b00d68-0d16-4266-a871-043f49561938",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "monaco-casino",
+    "title": "Marco arquitetónico urbano",
+    "city": "Monte Carlo",
+    "country": "Mónaco",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 43.739444,
+    "longitude": 7.428889,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/Monaco_-_panoramio_%28138%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Monaco_-_panoramio_(138).jpg",
+      "imageAttribution": "AwOiSoAk KaOsIoWa",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "monaco-prince-palace",
+    "title": "Fortificação em relevo",
+    "city": "Mónaco",
+    "country": "Mónaco",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 43.731417,
+    "longitude": 7.420275,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/20/%D0%9C%D0%9E%D0%9D%D0%90%D0%9A%D0%9E_-_panoramio_%284%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%9E%D0%9D%D0%90%D0%9A%D0%9E_-_panoramio_(4).jpg",
+      "imageAttribution": "Nikolai Karaneschev",
+      "imageLicense": "CC BY 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "andorra-casa-de-la-vall",
+    "title": "Centro histórico preservado",
+    "city": "Andorra-a-Velha",
+    "country": "Andorra",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 42.506667,
+    "longitude": 1.520556,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Casa_de_la_Vall_2015-10.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Casa_de_la_Vall_2015-10.JPG",
+      "imageAttribution": "Zinneke",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "riga-central-market",
+    "title": "Marco arquitetónico urbano",
+    "city": "Riga",
+    "country": "Letónia",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 56.94371,
+    "longitude": 24.114904,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Riga_Central_Market_Hall.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Riga_Central_Market_Hall.jpg",
+      "imageAttribution": "David Holt uploaded and derivative work: MrPanyGoff",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "dublin-trinity-college",
+    "title": "Marco arquitetónico urbano",
+    "city": "Dublin",
+    "country": "Irlanda",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 53.3444,
+    "longitude": -6.2577,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d7/The_entrance_of_the_historic_Trinity_College_%28Unsplash%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:The_entrance_of_the_historic_Trinity_College_(Unsplash).jpg",
+      "imageAttribution": "Stephen Bergin steve_",
+      "imageLicense": "CC0",
+      "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "cork-english-market",
+    "title": "Centro histórico preservado",
+    "city": "Cork",
+    "country": "Irlanda",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 51.898,
+    "longitude": -8.474,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/57/Princes_Street_Indoor_Market_-_geograph.org.uk_-_595328.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Princes_Street_Indoor_Market_-_geograph.org.uk_-_595328.jpg",
+      "imageAttribution": "Andy Beecroft",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "edinburgh-castle",
+    "title": "Fortificação em relevo",
+    "city": "Edimburgo",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 55.948611,
+    "longitude": -3.200833,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/City_of_Edinburgh_-_Edinburgh_Castle_-_20140421004403.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:City_of_Edinburgh_-_Edinburgh_Castle_-_20140421004403.jpg",
+      "imageAttribution": "Enric",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "york-minster",
+    "title": "Marco arquitetónico urbano",
+    "city": "York",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 53.961944,
+    "longitude": -1.081944,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/York_Minster_%282797690%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:York_Minster_(2797690).jpg",
+      "imageAttribution": "FEGreene",
+      "imageLicense": "CC0",
+      "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "bath-royal-crescent",
+    "title": "Centro histórico preservado",
+    "city": "Bath",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 51.386944,
+    "longitude": -2.368333,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/31/Royal.crescent.aerial.bath.arp.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Royal.crescent.aerial.bath.arp.jpg",
+      "imageAttribution": "Wikimedia Commons",
+      "imageLicense": "Public domain",
+      "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "oxford-radcliffe-camera",
+    "title": "Marco arquitetónico urbano",
+    "city": "Oxford",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 51.7534,
+    "longitude": -1.2539,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Radcliffe_Camera%2C_Oxford_-_Oct_2006.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Radcliffe_Camera%2C_Oxford_-_Oct_2006.jpg",
+      "imageAttribution": "Diliff",
+      "imageLicense": "CC BY 2.5",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "cardiff-castle",
+    "title": "Fortificação em relevo",
+    "city": "Cardiff",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 51.4823,
+    "longitude": -3.1812,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Aerial_view_of_Cardiff_Castle.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Cardiff_Castle.jpg",
+      "imageAttribution": "Clint Budd",
+      "imageLicense": "CC BY 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "stirling-castle",
+    "title": "Fortificação em relevo",
+    "city": "Stirling",
+    "country": "Reino Unido",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 56.123889,
+    "longitude": -3.947778,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Stirling_Castle_Aerial_Photo.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Stirling_Castle_Aerial_Photo.jpg",
+      "imageAttribution": "John McPake",
+      "imageLicense": "CC BY 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/39/36/0d/b7/abfd-4483-8143-6ac225609349/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/39360db7-abfd-4483-8143-6ac225609349",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=39360db7-abfd-4483-8143-6ac225609349",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "utrecht-dom-tower",
+    "title": "Marco arquitetónico urbano",
+    "city": "Utrecht",
+    "country": "Países Baixos",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 52.09065,
+    "longitude": 5.1214,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cb/DomTorenUtrechtNederland.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:DomTorenUtrechtNederland.jpg",
+      "imageAttribution": "Massimo Catarinella",
+      "imageLicense": "CC BY 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/3e/63/fe/e5/57e8-4f52-b280-623565dd9c2f/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/14ea2dff-2d5f-4134-9a9c-0b7ff34d87aa/items/3e63fee5-57e8-4f52-b280-623565dd9c2f",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=3e63fee5-57e8-4f52-b280-623565dd9c2f",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "bruges-belfry",
+    "title": "Marco arquitetónico urbano",
+    "city": "Bruges",
+    "country": "Bélgica",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 51.208333,
+    "longitude": 3.224722,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Brugge_Belfort_HDR.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Brugge_Belfort_HDR.jpg",
+      "imageAttribution": "Adiel lo",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/56/7a/05/2a/dab0-4296-a93b-92dd2ae80322/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/f0d6f78a-ff95-4db1-8494-6eb44a17bb37/items/567a052a-dab0-4296-a93b-92dd2ae80322",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=567a052a-dab0-4296-a93b-92dd2ae80322",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "antwerp-central-station",
+    "title": "Marco arquitetónico urbano",
+    "city": "Antuérpia",
+    "country": "Bélgica",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 51.217222,
+    "longitude": 4.421111,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Antwerpen_-_Station_Antwerpen-Centraal_%2811%29.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Antwerpen_-_Station_Antwerpen-Centraal_(11).jpg",
+      "imageAttribution": "Fred Romero from Paris, France",
+      "imageLicense": "CC BY 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.mapcomplete.org/derivatives/52/37/d7/d7/f16d-4fe1-9769-3f16fdb08c98/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/a7cf963f-8d1c-4bac-9717-e3149f5f9fff/items/5237d7d7-f16d-4fe1-9769-3f16fdb08c98",
+        "imageAttribution": "mapcomplete",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5237d7d7-f16d-4fe1-9769-3f16fdb08c98",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "lausanne-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Lausanne",
+    "country": "Suíça",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 46.5225,
+    "longitude": 6.635556,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Lausanne-cathe7.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Lausanne-cathe7.JPG",
+      "imageAttribution": "Arnaud Gaillard (arnaud () amarys.com)",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "lucerne-chapel-bridge",
+    "title": "Travessia urbana marcante",
+    "city": "Lucerna",
+    "country": "Suíça",
+    "region": "europe",
+    "category": "bridge-view",
+    "latitude": 47.051667,
+    "longitude": 8.3075,
+    "sceneLabel": "Ponte e leitura de margem",
+    "sceneNote": "Ponte, água e margens urbanas ajudam a orientar a estimativa.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Ponte, água e margens urbanas ajudam a orientar a estimativa. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#c9d3c7",
+      "#5f8797",
+      "#132736"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Kapellbruecke.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Kapellbruecke.JPG",
+      "imageAttribution": "Simon Koopmann",
+      "imageLicense": "CC BY-SA 2.5",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ponte e margens ajudam a localizar o ambiente urbano.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa tipo de ponte, rio e densidade envolvente.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a infraestrutura como pista de escala.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "trondheim-nidaros-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Trondheim",
+    "country": "Noruega",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 63.4267,
+    "longitude": 10.3962,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/Nidaros_Cathedral%2C_Trondheim%2C_West_view_20150605_1.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Nidaros_Cathedral%2C_Trondheim%2C_West_view_20150605_1.jpg",
+      "imageAttribution": "DXR",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "visualSources": [
+      {
+        "sourceProvider": "Panoramax",
+        "imageUrl": "https://panoramax.openstreetmap.fr/derivates/b0/4a/fb/dd/7106-40d5-959d-6d7cde0fef5c/sd.jpg",
+        "imageSourceUrl": "https://api.panoramax.xyz/api/collections/430e57bd-a40c-40ae-bde5-fa31c97f55f5/items/b04afbdd-7106-40d5-959d-6d7cde0fef5c",
+        "imageAttribution": "Peter Bremer",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Panoramax",
+        "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=b04afbdd-7106-40d5-959d-6d7cde0fef5c",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "alesund-art-nouveau",
+    "title": "Frente de água europeia",
+    "city": "Ålesund",
+    "country": "Noruega",
+    "region": "europe",
+    "category": "waterfront",
+    "latitude": 62.47226,
+    "longitude": 6.1549,
+    "sceneLabel": "Água e tecido urbano",
+    "sceneNote": "Água próxima, luz aberta e arquitetura ligada à margem.",
+    "sceneImage": "/mock-scenes/riverfront-city.svg",
+    "prompt": "Observa a cena: Água próxima, luz aberta e arquitetura ligada à margem. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d8c39d",
+      "#4f7890",
+      "#132735"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/View_on_%C3%85lesund.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_on_%C3%85lesund.jpg",
+      "imageAttribution": "Ysgrimor",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "A água próxima domina a composição visual.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara costa, luz, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; a relação com a água é a pista mais útil.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "porvoo-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Porvoo",
+    "country": "Finlândia",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 60.394444,
+    "longitude": 25.663889,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Porvoo_in_January.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Porvoo_in_January.jpg",
+      "imageAttribution": "Olga1969",
+      "imageLicense": "CC BY 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "aarhus-old-town",
+    "title": "Centro histórico preservado",
+    "city": "Aarhus",
+    "country": "Dinamarca",
+    "region": "europe",
+    "category": "historic-core",
+    "latitude": 56.159167,
+    "longitude": 10.190833,
+    "sceneLabel": "Malha antiga compacta",
+    "sceneNote": "Ruas antigas, escala pedonal e fachadas com identidade regional.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Ruas antigas, escala pedonal e fachadas com identidade regional. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d0b389",
+      "#6a6f5a",
+      "#172430"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/85/Aarhus_Den_Gamle_By_16.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Aarhus_Den_Gamle_By_16.JPG",
+      "imageAttribution": "Zairon",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Ruas antigas, fachadas compactas e escala pedonal.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Observa materiais, relevo e densidade urbana.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; compara clima, arquitetura e relação com o terreno.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "odense-cathedral",
+    "title": "Marco arquitetónico urbano",
+    "city": "Odense",
+    "country": "Dinamarca",
+    "region": "europe",
+    "category": "landmark",
+    "latitude": 55.3954,
+    "longitude": 10.388989,
+    "sceneLabel": "Edifício dominante",
+    "sceneNote": "Monumento urbano com presença forte no espaço público.",
+    "sceneImage": "/mock-scenes/southern-plaza.svg",
+    "prompt": "Observa a cena: Monumento urbano com presença forte no espaço público. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#d6c7a2",
+      "#7a827d",
+      "#182636"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Saint_Canute%27s_Cathedral.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Saint_Canute's_Cathedral.jpg",
+      "imageAttribution": "Samuel Damon",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Marco arquitetónico com forte leitura geográfica.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Compara materiais, escala e desenho do espaço público.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; cruza o estilo do edifício com o ambiente urbano.",
+        "confidence": "Média"
+      }
+    ]
+  },
+  {
+    "id": "malbork-castle",
+    "title": "Fortificação em relevo",
+    "city": "Malbork",
+    "country": "Polónia",
+    "region": "europe",
+    "category": "fortress",
+    "latitude": 54.039722,
+    "longitude": 19.027778,
+    "sceneLabel": "Muralhas e cota dominante",
+    "sceneNote": "Pedra, muralhas e posição elevada ajudam a orientar a leitura.",
+    "sceneImage": "/mock-scenes/historic-core-street.svg",
+    "prompt": "Observa a cena: Pedra, muralhas e posição elevada ajudam a orientar a leitura. Usa estas pistas para marcar uma estimativa no mapa real da Europa.",
+    "visualGradient": [
+      "#b9a27d",
+      "#6d7465",
+      "#17212b"
+    ],
+    "media": {
+      "sourceProvider": "Wikimedia Commons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Zesp%C3%B3%C5%82_Zamku_Krzy%C5%BCackiego_MALBORK_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Zesp%C3%B3%C5%82_Zamku_Krzy%C5%BCackiego_MALBORK_01.jpg",
+      "imageAttribution": "Gregy",
+      "imageLicense": "CC BY-SA 3.0 pl",
+      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/pl/deed.en",
+      "verifiedAt": "2026-05-18"
+    },
+    "clues": [
+      {
+        "label": "Pista principal",
+        "value": "Muralhas, pedra e posição elevada.",
+        "confidence": "Alta"
+      },
+      {
+        "label": "Contexto visual",
+        "value": "Procura relevo, clima e tipo de construção defensiva.",
+        "confidence": "Média"
+      },
+      {
+        "label": "Região",
+        "value": "Europa; usa a paisagem à volta para aproximar o palpite.",
         "confidence": "Média"
       }
     ]
