@@ -88,9 +88,9 @@
 
 ## Sem. 11 · 17–23 mai
 
-**Feito:** comecei a expansão seguinte do dataset e passei de 158 para 250 locais reais. Mantive imagem, coordenadas, fonte, licença e atribuição em cada entrada, e aproveitei para normalizar ligações de licença que não estavam como URL completa. Também acrescentei uma categoria simples para paisagens naturais, aumentei a cobertura Panoramax de 30 para 95 locais e preparei uma ferramenta local para procurar candidatos Mapillary com token fora do repositório.
+**Feito:** comecei a expansão seguinte do dataset e passei de 158 para 250 locais reais. Mantive imagem, coordenadas, fonte, licença e atribuição em cada entrada, e aproveitei para normalizar ligações de licença que não estavam como URL completa. Também acrescentei uma categoria simples para paisagens naturais, aumentei a cobertura Panoramax de 30 para 95 locais e preparei uma ferramenta local para procurar candidatos Mapillary com token fora do repositório. Depois acrescentei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend, e ajustei a ferramenta para gerar caminhos estáveis do backend em vez de URLs temporários.
 **Bloqueou:** algumas páginas da Wikimedia não tinham imagem, coordenadas ou dados de licença suficientes, por isso deixei essas entradas de fora em vez de forçar dados incompletos. No Panoramax deixei de fora resultados mais afastados; no Mapillary confirmei que as imagens diretas da API são temporárias, por isso não as gravei no dataset.
-**Próxima semana:** continuar a expansão até 300 locais, rever candidatos Mapillary manualmente e decidir se faz sentido criar um proxy no backend para servir essas imagens de forma controlada.
+**Próxima semana:** continuar a expansão até 300 locais, rever candidatos Mapillary manualmente e adicionar apenas os que fizerem sentido para o jogo.
 
 ---
 

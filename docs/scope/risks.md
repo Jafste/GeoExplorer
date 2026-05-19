@@ -26,7 +26,7 @@
 | R10 | Uma mudança tardia de PostgreSQL para Turso/libSQL pode exigir ajustes no schema, nos tipos de dados e no código que guarda informação | Baixa | Médio | Isolar o acesso à base de dados em serviços próprios, evitar SQL específico do fornecedor sempre que possível e documentar qualquer mudança futura num ADR próprio. |
 | R11 | Testes automáticos insuficientes podem deixar diferenças entre frontend `mock`, backend `api` e schema da base de dados passarem até tarde | Média | Médio | Manter testes mínimos de contrato já nesta fase e expandir os testes funcionais apenas depois de estabilizar a ligação frontend + API. |
 | R12 | Introduzir multiplayer antes de o núcleo guardar dados de forma estável pode aumentar muito a complexidade técnica | Média | Alto | Adiar SignalR até a base estar estável; quando avançar, manter a lógica de salas, timers, palpites e reconnects no backend. |
-| R13 | Guardar URLs temporários de serviços externos como Mapillary pode fazer com que imagens deixem de carregar mais tarde | Média | Médio | Usar Mapillary primeiro como ferramenta de recolha e revisão; só guardar fontes estáveis no dataset ou criar um proxy/backend se for necessário servir imagens durante o jogo. |
+| R13 | Guardar URLs temporários de serviços externos como Mapillary pode fazer com que imagens deixem de carregar mais tarde | Média | Médio | Usar Mapillary primeiro como ferramenta de recolha e revisão; quando for preciso usar imagens Mapillary no jogo, guardar um caminho estável do backend e deixar o backend resolver o thumbnail atual com token local. |
 
 ---
 
@@ -39,3 +39,4 @@
 | 23 de abril de 2026 | R08–R11 | Reavaliação dos riscos de alojamento hosted, volume de leituras, eventual migração futura de base de dados e cobertura mínima de testes | Em curso |
 | 30 de abril de 2026 | R08–R12 | Decisão de manter PostgreSQL em Docker como base principal para guardar dados e reservar SignalR para multiplayer/realtime futuro | Em curso |
 | 18 de maio de 2026 | R13 | Preparação de Mapillary como fonte visual adicional sem guardar imagens temporárias no dataset | Em curso |
+| 19 de maio de 2026 | R13 | Adição de endpoint backend para resolver thumbnails Mapillary sem expor token no frontend | Em curso |

@@ -163,6 +163,34 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task MapillaryMedia_WithInvalidImageId_ReturnsProblemDetails()
+    {
+        using var factory = CreateMapillaryFactory(accessToken: "");
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync("/api/media/mapillary/not-a-number");
+
+        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+
+        using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        Assert.AreEqual("O identificador Mapillary não é válido.", document.RootElement.GetProperty("detail").GetString());
+    }
+
+    [TestMethod]
+    public async Task MapillaryMedia_WithoutToken_ReturnsProblemDetails()
+    {
+        using var factory = CreateMapillaryFactory(accessToken: "");
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync("/api/media/mapillary/123456789");
+
+        Assert.AreEqual(HttpStatusCode.ServiceUnavailable, response.StatusCode);
+
+        using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        Assert.AreEqual("Mapillary não está configurado neste ambiente.", document.RootElement.GetProperty("detail").GetString());
+    }
+
+    [TestMethod]
     public async Task CreateSession_WithUnsupportedRegion_ReturnsProblemDetails()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -240,6 +268,20 @@ public sealed class GameApiIntegrationTests
                 services.RemoveAll<DbContextOptions<GeoExplorerDbContext>>();
                 services.AddDbContextFactory<GeoExplorerDbContext>(options =>
                     options.UseInMemoryDatabase(databaseName, databaseRoot));
+            });
+        });
+    }
+
+    private static WebApplicationFactory<Program> CreateMapillaryFactory(string accessToken)
+    {
+        return new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureAppConfiguration((_, configuration) =>
+            {
+                configuration.AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    ["Mapillary:AccessToken"] = accessToken,
+                });
             });
         });
     }

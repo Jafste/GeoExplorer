@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddProblemDetails();
+builder.Services.AddMemoryCache();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -20,6 +21,10 @@ builder.Services.AddPooledDbContextFactory<GeoExplorerDbContext>(options =>
 builder.Services.AddSingleton<DatabaseUsageMetrics>();
 builder.Services.AddSingleton<LocationCatalogStore>();
 builder.Services.AddSingleton<GamePersistenceStore>();
+builder.Services.AddHttpClient<MapillaryImageService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(8);
+});
 
 var app = builder.Build();
 
@@ -33,6 +38,21 @@ var api = app.MapGroup("/api");
 api.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 api.MapGet("/diagnostics/database", (DatabaseUsageMetrics metrics) => Results.Ok(metrics.GetSnapshot()));
+
+api.MapGet("/media/mapillary/{imageId}", async (
+    string imageId,
+    MapillaryImageService mapillaryImages,
+    CancellationToken cancellationToken) =>
+{
+    var result = await mapillaryImages.GetThumbnailAsync(imageId, cancellationToken);
+
+    if (result.ThumbnailUrl is not null)
+    {
+        return Results.Redirect(result.ThumbnailUrl, permanent: false);
+    }
+
+    return Results.Problem(result.Message, statusCode: (int)result.StatusCode);
+});
 
 api.MapPost("/sessions", (CreateSessionRequest request, GameSessionService gameSessions) =>
 {

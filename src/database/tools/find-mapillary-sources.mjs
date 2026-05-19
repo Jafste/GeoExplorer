@@ -156,6 +156,10 @@ function buildMapillaryUrl(imageId) {
   return `https://www.mapillary.com/app/?pKey=${encodeURIComponent(imageId)}`;
 }
 
+function buildBackendMapillaryUrl(imageId) {
+  return `/api/media/mapillary/${encodeURIComponent(imageId)}`;
+}
+
 function buildAttribution(image) {
   const creator = image.creator;
   const username = typeof creator === "object" && creator !== null ? creator.username : null;
@@ -164,12 +168,11 @@ function buildAttribution(image) {
 }
 
 function toVisualSource(image) {
-  const imageUrl = image.thumb_1024_url;
   const imageSourceUrl = buildMapillaryUrl(image.id);
 
   return {
     sourceProvider: "Mapillary",
-    imageUrl,
+    imageUrl: buildBackendMapillaryUrl(image.id),
     imageSourceUrl,
     imageAttribution: buildAttribution(image),
     imageLicense: "CC BY-SA 4.0",

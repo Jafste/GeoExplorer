@@ -43,6 +43,7 @@ services:
       GeoExplorer__UsePostgresCatalog: "true"
       GeoExplorer__UsePostgresPersistence: "true"
       ConnectionStrings__GeoExplorerDb: Host=db;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:-geoexplorer_dev}
+      MAPILLARY_ACCESS_TOKEN: ${MAPILLARY_ACCESS_TOKEN:-}
     depends_on:
       - db
     ports:

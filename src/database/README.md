@@ -44,3 +44,5 @@ MAPILLARY_ACCESS_TOKEN=... node src/database/tools/find-mapillary-sources.mjs \
 ```
 
 O script apenas gera candidatos. Não altera `seed/locations.json`. Antes de copiar qualquer entrada para `visualSources`, devo confirmar manualmente se a imagem corresponde ao local, se a distância é aceitável e se a atribuição e a licença estão preenchidas. A chave `MAPILLARY_ACCESS_TOKEN` deve ficar apenas no ambiente local ou num `.env` privado.
+
+Quando um candidato Mapillary for aprovado, não devo guardar o `thumb_1024_url` devolvido pela API no dataset, porque é temporário. Por isso, o script já coloca em `imageUrl` um caminho estável do backend, como `/api/media/mapillary/<id-da-imagem>`. O backend usa o token local para resolver o thumbnail no momento certo e devolve um redirect para a imagem atual.

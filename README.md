@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 250 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais e passei a escolher uma fonte visual por ronda. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 250 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, passei a escolher uma fonte visual por ronda e adicionei um endpoint backend para resolver thumbnails Mapillary sem guardar URLs temporários no dataset. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -32,6 +32,7 @@
 - [x] Campo `visualSources` preparado para várias fontes visuais por local
 - [x] 95 locais com fonte adicional Panoramax validada
 - [x] Ferramenta local para procurar candidatos Mapillary com token fora do repositório
+- [x] Endpoint backend para resolver thumbnails Mapillary com token local
 - [x] Escolha de uma fonte visual disponível por ronda com atribuição e licença
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
@@ -54,7 +55,7 @@
 - [ ] Avaliar Supabase como hosted quando a gravação em base de dados estiver estável
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Expandir o dataset curado para 300 locais reais
-- [ ] Rever candidatos Mapillary manualmente e adicionar apenas os que forem adequados
+- [ ] Rever candidatos Mapillary manualmente e adicionar apenas os que forem adequados ao dataset
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 
@@ -104,9 +105,10 @@ Se alguma porta já estiver ocupada, posso mudar os valores no `.env`: `FRONTEND
 Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
 Contador da base de dados: http://localhost:8080/api/diagnostics/database
+Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL no mesmo fluxo.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL no mesmo fluxo. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave.
 
 ---
 
@@ -118,7 +120,7 @@ O frontend pode correr em modo `mock` para demonstração rápida ou em modo `ap
 | ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
 | PostgreSQL em Docker | Supabase completo, Turso/libSQL | Permite guardar dados relacionais de forma reproduzível para desenvolvimento e avaliação; Supabase completo fica para necessidades futuras e Turso só será reavaliado com dados reais de uso. |
 | SignalR futuro no backend | Supabase Realtime | O multiplayer terá lógica de jogo, salas, timers, palpites e reconexões; por isso faz mais sentido centralizar realtime no backend ASP.NET Core. |
-| Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final. |
+| Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final; Mapillary fica opcional através do backend. |
 | Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
 
 Para detalhe adicional, ver [`docs/architecture/adr`]
@@ -154,4 +156,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [15 Maio 2026] · [Pós-relatório intercalar]*
+*Última atualização: [19 Maio 2026] · [Pós-relatório intercalar]*
