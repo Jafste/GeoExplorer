@@ -22,6 +22,8 @@ Para Mapillary, decidi preparar a recolha através de uma ferramenta local, mas 
 
 Também adicionei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend: `/api/media/mapillary/{imageId}`. Isto permite guardar no dataset um caminho estável do próprio projeto em vez de guardar diretamente URLs temporários devolvidos pela API.
 
+Depois da primeira recolha, adicionei Mapillary a 150 locais do dataset como fonte visual adicional. Estas entradas usam `/api/media/mapillary/<id>` em `imageUrl` e mantêm a página Mapillary original em `imageSourceUrl` e `streetViewUrl`.
+
 O fluxo passa a ser:
 
 1. Procurar candidatos Mapillary junto dos locais do dataset com `src/database/tools/find-mapillary-sources.mjs`.

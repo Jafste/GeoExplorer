@@ -110,10 +110,14 @@ public sealed class GameSessionServiceTests
             new GuessCoordinatesDto(47.2692, 11.4041, "Innsbruck"));
 
         Assert.IsNotNull(response.Result.Media);
-        Assert.AreEqual("Wikimedia Commons", response.Result.Media.SourceProvider);
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageSourceUrl));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.Result.Media.ImageLicenseUrl));
         Assert.IsGreaterThanOrEqualTo(1, response.Result.VisualSources.Count);
+        Assert.IsTrue(
+            response.Result.VisualSources.Any(source =>
+                source.SourceProvider == response.Result.Media.SourceProvider &&
+                source.ImageUrl == response.Result.Media.ImageUrl),
+            "A fonte visual escolhida deve estar listada em visualSources.");
     }
 
     [TestMethod]

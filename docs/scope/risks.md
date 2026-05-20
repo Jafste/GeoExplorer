@@ -40,3 +40,4 @@
 | 30 de abril de 2026 | R08–R12 | Decisão de manter PostgreSQL em Docker como base principal para guardar dados e reservar SignalR para multiplayer/realtime futuro | Em curso |
 | 18 de maio de 2026 | R13 | Preparação de Mapillary como fonte visual adicional sem guardar imagens temporárias no dataset | Em curso |
 | 19 de maio de 2026 | R13 | Adição de endpoint backend para resolver thumbnails Mapillary sem expor token no frontend | Em curso |
+| 20 de maio de 2026 | R13 | Lote de 150 fontes Mapillary guardado com caminhos estáveis do backend | Em curso |

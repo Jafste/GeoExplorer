@@ -90,6 +90,33 @@ public sealed class SeedLocationDatasetTests
         }
     }
 
+    [TestMethod]
+    public void SeedLocations_IncludeSelectedMapillaryVisualSources()
+    {
+        var mapillaryLocations = LoadLocations()
+            .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Mapillary"))
+            .ToList();
+
+        Assert.IsGreaterThanOrEqualTo(150, mapillaryLocations.Count, "O dataset deve manter pelo menos 150 locais com Mapillary selecionado.");
+
+        foreach (var location in mapillaryLocations)
+        {
+            var source = location.GetVisualSources().Single(candidate => candidate.SourceProvider == "Mapillary");
+
+            AssertRequired(location.Id, source.ImageUrl, "visualSources.imageUrl");
+            AssertRequired(location.Id, source.ImageSourceUrl, "visualSources.imageSourceUrl");
+            AssertRequired(location.Id, source.ImageAttribution, "visualSources.imageAttribution");
+            Assert.AreEqual("CC BY-SA 4.0", source.ImageLicense, $"{location.Id} deve manter licença Mapillary normalizada.");
+            Assert.AreEqual("https://creativecommons.org/licenses/by-sa/4.0/", source.ImageLicenseUrl);
+            Assert.AreEqual("Mapillary", source.StreetViewProvider);
+            AssertRequired(location.Id, source.StreetViewUrl, "visualSources.streetViewUrl");
+            StringAssert.StartsWith(source.ImageUrl!, "/api/media/mapillary/");
+            StringAssert.StartsWith(source.ImageSourceUrl!, "https://www.mapillary.com/app/?pKey=");
+            Assert.IsFalse(source.ImageUrl.Contains("scontent.", StringComparison.OrdinalIgnoreCase), $"{location.Id} não deve guardar URLs temporários Mapillary.");
+            Assert.IsTrue(DateOnly.TryParse(source.VerifiedAt, out _), $"{location.Id} tem visualSources.verifiedAt inválido.");
+        }
+    }
+
     private static void AssertRequired(string locationId, string? value, string fieldName)
     {
         Assert.IsFalse(string.IsNullOrWhiteSpace(value), $"{locationId} não tem media.{fieldName} preenchido.");

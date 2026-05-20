@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 250 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, passei a escolher uma fonte visual por ronda e adicionei um endpoint backend para resolver thumbnails Mapillary sem guardar URLs temporários no dataset. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 250 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, adicionei Mapillary a 150 locais e passei a escolher uma fonte visual por ronda. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -33,6 +33,7 @@
 - [x] 95 locais com fonte adicional Panoramax validada
 - [x] Ferramenta local para procurar candidatos Mapillary com token fora do repositório
 - [x] Endpoint backend para resolver thumbnails Mapillary com token local
+- [x] 150 locais com fonte adicional Mapillary através do backend
 - [x] Escolha de uma fonte visual disponível por ronda com atribuição e licença
 - [x] Testes de validação do dataset real e contratos backend/frontend
 - [x] Interface em português
@@ -55,7 +56,7 @@
 - [ ] Avaliar Supabase como hosted quando a gravação em base de dados estiver estável
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Expandir o dataset curado para 300 locais reais
-- [ ] Rever candidatos Mapillary manualmente e adicionar apenas os que forem adequados ao dataset
+- [ ] Continuar a rever candidatos Mapillary e adicionar apenas os que forem adequados ao dataset
 - [ ] Expandir testes automáticos aos fluxos principais do frontend e backend
 - [ ] Preparar SignalR para multiplayer/realtime apenas após estabilização do núcleo
 
@@ -156,4 +157,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [19 Maio 2026] · [Pós-relatório intercalar]*
+*Última atualização: [20 Maio 2026] · [Pós-relatório intercalar]*

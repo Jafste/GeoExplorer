@@ -29,7 +29,12 @@ describe("createMockGameDataSource", () => {
       roundTimeSeconds: null,
     });
 
-    expect(session.currentRound.challenge.visualSources).toHaveLength(2);
+    expect(session.currentRound.challenge.visualSources).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sourceProvider: "Panoramax" }),
+        expect.objectContaining({ sourceProvider: "Mapillary" }),
+      ]),
+    );
     expect(session.currentRound.challenge.media?.sourceProvider).toBe("Panoramax");
   });
 
@@ -46,6 +51,11 @@ describe("createMockGameDataSource", () => {
     const resolution = await dataSource.timeoutRound(session.sessionId, session.currentRound.id, null);
 
     expect(resolution.result.media?.sourceProvider).toBe("Panoramax");
-    expect(resolution.result.visualSources).toHaveLength(2);
+    expect(resolution.result.visualSources).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ sourceProvider: "Panoramax" }),
+        expect.objectContaining({ sourceProvider: "Mapillary" }),
+      ]),
+    );
   });
 });

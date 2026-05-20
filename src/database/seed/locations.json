@@ -37,6 +37,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=6f0b5576-760f-4296-8e65-a34d251d20f4",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/3890531174509925",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=3890531174509925",
+        "imageAttribution": "innsbruck-barrierefrei",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=3890531174509925",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -95,6 +106,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0226934b-70ad-4d0b-bbab-91e1df6bc9a9",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/796759401228032",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=796759401228032",
+        "imageAttribution": "cartixa",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=796759401228032",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -153,6 +175,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=285f3cbf-6474-4328-95c0-da7ccd2b2756",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/408080481765640",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=408080481765640",
+        "imageAttribution": "teddy73",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=408080481765640",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -211,6 +244,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=19ba5f16-1f0c-497e-be82-7ff0f92986e4",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1003920220967225",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1003920220967225",
+        "imageAttribution": "jorrarro",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1003920220967225",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -269,6 +313,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=7c4c8900-2362-41d9-a8df-aa275fadb982",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1020501285796566",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1020501285796566",
+        "imageAttribution": "changchun1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1020501285796566",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -327,6 +382,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=01ebad5b-56f8-4b86-8b5a-ea18b34c9ab5",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1902472573235704",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1902472573235704",
+        "imageAttribution": "mapfool",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1902472573235704",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -501,6 +567,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=9d13888e-d109-4499-8775-3b9dfc5542a9",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/299049308337827",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=299049308337827",
+        "imageAttribution": "ahzf",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=299049308337827",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -559,6 +636,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0231dba4-4d90-49a7-bd54-86ecdd9d1cb2",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1296039754896598",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1296039754896598",
+        "imageAttribution": "ente",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1296039754896598",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -675,6 +763,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e11f34f3-f7d1-4aa8-a710-8836be8cbe38",
         "verifiedAt": "2026-05-13"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/205871314543320",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=205871314543320",
+        "imageAttribution": "filohipo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=205871314543320",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -722,6 +821,19 @@
       "imageLicenseUrl": "https://commons.wikimedia.org/wiki/File:Alfama,_Lisbon_(DSC03367).jpg",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1014690996893512",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1014690996893512",
+        "imageAttribution": "claudiop",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1014690996893512",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -767,6 +879,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/231836612071820",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=231836612071820",
+        "imageAttribution": "marcuscalabresus",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=231836612071820",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -823,6 +948,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=6d5d21a0-e2d0-44b8-ab77-7937e76f3022",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/317847116356934",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=317847116356934",
+        "imageAttribution": "marcuscalabresus",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=317847116356934",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -881,6 +1017,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ec49b144-67a5-4e70-9a71-c7c505d726f4",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1300083277052082",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1300083277052082",
+        "imageAttribution": "angoca",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1300083277052082",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -997,6 +1144,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=d60e0533-da25-4aa9-a184-55b96cee8142",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/184057890207691",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=184057890207691",
+        "imageAttribution": "txllxt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=184057890207691",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -1055,6 +1213,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dc1d1ff1-7511-4a9a-8735-ed553532a242",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/253331313250074",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=253331313250074",
+        "imageAttribution": "quicky",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=253331313250074",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1102,6 +1271,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/141571614695229",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=141571614695229",
+        "imageAttribution": "sebastienw",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=141571614695229",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -1158,6 +1340,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ff2d0398-318c-4222-8cd0-05a78c8bf8bd",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1397203357345344",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1397203357345344",
+        "imageAttribution": "micmin1972",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1397203357345344",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -1274,6 +1467,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=1a306d59-8670-4f33-8a70-77a38814d28c",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1744865609240602",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1744865609240602",
+        "imageAttribution": "mapconcierge",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1744865609240602",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1332,6 +1536,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=2ec80289-186a-4cbd-b7ec-3642347b236a",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1015918842276242",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1015918842276242",
+        "imageAttribution": "blaszlo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1015918842276242",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1390,6 +1605,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c502e956-7cab-4ff7-8a38-ce76b71ff289",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/841502630052967",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=841502630052967",
+        "imageAttribution": "richlv",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=841502630052967",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1506,6 +1732,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=300d557f-c285-4369-93ec-4e2460811722",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/303609657899153",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=303609657899153",
+        "imageAttribution": "egorka",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=303609657899153",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1564,6 +1801,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=51a58734-dcd5-45f0-8c57-9887aea5fad0",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1598897913632019",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1598897913632019",
+        "imageAttribution": "mappatman",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1598897913632019",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1680,6 +1928,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=544852cd-701e-4325-bfc2-9823d40f0b3b",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1716117159215719",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1716117159215719",
+        "imageAttribution": "igorzo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1716117159215719",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1738,6 +1997,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=542e2d8b-507c-40dc-855d-a5d1cca0e6ce",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1396906540686677",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1396906540686677",
+        "imageAttribution": "perron",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1396906540686677",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -1841,6 +2111,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=18c6fd80-b4f6-4066-b9b4-50d96562f300",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/320231892825779",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=320231892825779",
+        "imageAttribution": "knistertoni",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=320231892825779",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -1899,6 +2180,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=1133f7ae-d909-4c38-8406-7562ed40b9bc",
         "verifiedAt": "2026-05-15"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1309186619687655",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1309186619687655",
+        "imageAttribution": "changchun1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1309186619687655",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2036,6 +2328,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1002196503929850",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1002196503929850",
+        "imageAttribution": "grobin",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1002196503929850",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2081,6 +2386,19 @@
       "imageLicenseUrl": "http://www.gnu.org/licenses/old-licenses/fdl-1.2.html",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/132582745486240",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=132582745486240",
+        "imageAttribution": "kino",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=132582745486240",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2126,6 +2444,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/855940491625332",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=855940491625332",
+        "imageAttribution": "oermen",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=855940491625332",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2182,6 +2513,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5f5bef55-a75e-4226-b9ab-4a91e1c2ae67",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/462766624828253",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=462766624828253",
+        "imageAttribution": "pbb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=462766624828253",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2229,6 +2571,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1049655738898452",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1049655738898452",
+        "imageAttribution": "chris",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1049655738898452",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2319,6 +2674,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.5",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/458667175203404",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=458667175203404",
+        "imageAttribution": "coljay72",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=458667175203404",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2375,6 +2743,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e1208c8c-8070-4872-8bf9-ee46d2834af5",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1243479022756286",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1243479022756286",
+        "imageAttribution": "pbb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1243479022756286",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2422,6 +2801,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/172922967947400",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=172922967947400",
+        "imageAttribution": "gyllen",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=172922967947400",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2467,6 +2859,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1153482128412213",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1153482128412213",
+        "imageAttribution": "osm1012",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1153482128412213",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2512,6 +2917,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1788429115884252",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1788429115884252",
+        "imageAttribution": "richlv",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1788429115884252",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2557,6 +2975,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/1.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/465928028969048",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=465928028969048",
+        "imageAttribution": "bcostacurta",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=465928028969048",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2613,6 +3044,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dab0e59d-c431-4897-8b60-f9bc9eaff63b",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1048071305719626",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1048071305719626",
+        "imageAttribution": "zors1843",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1048071305719626",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2670,6 +3112,17 @@
         "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=000ed8ce-509a-44cd-8ea3-d8382a7d9c15",
+        "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1032281531873341",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1032281531873341",
+        "imageAttribution": "koninklijke",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1032281531873341",
         "verifiedAt": "2026-05-18"
       }
     ],
@@ -2729,6 +3182,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=8c2758ba-afc6-43af-ba79-0189ff22a5a0",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/134146372075571",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=134146372075571",
+        "imageAttribution": "fietsersbond",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=134146372075571",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2786,6 +3250,17 @@
         "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=1ee98682-ae3e-4705-977f-189c266c6c20",
+        "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1143144243639895",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1143144243639895",
+        "imageAttribution": "changchun1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1143144243639895",
         "verifiedAt": "2026-05-18"
       }
     ],
@@ -2845,6 +3320,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=16b72f65-c636-46fa-aaf6-b8818475d9d2",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1122091608289046",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1122091608289046",
+        "imageAttribution": "veloroute_hamburg",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1122091608289046",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -2892,6 +3378,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1156962654819250",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1156962654819250",
+        "imageAttribution": "hubert87",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1156962654819250",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -2948,6 +3447,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e647b526-e7f2-429c-a69d-eaea460f3981",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/139125028502022",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=139125028502022",
+        "imageAttribution": "marcuscalabresus",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=139125028502022",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -3051,6 +3561,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=a0c25c4e-f405-479f-8623-30c3cf6d1300",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1093046401921176",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1093046401921176",
+        "imageAttribution": "zimmy",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1093046401921176",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -3098,6 +3619,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/3054686608178071",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=3054686608178071",
+        "imageAttribution": "changchun1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=3054686608178071",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3153,6 +3687,17 @@
         "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5b46c929-d5d3-4e31-a8fc-a66b75791e39",
+        "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1525187398045528",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1525187398045528",
+        "imageAttribution": "quickness805",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1525187398045528",
         "verifiedAt": "2026-05-18"
       }
     ],
@@ -3270,6 +3815,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=66c126c7-4a18-47be-8913-78d3c4250aed",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1194009265885040",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1194009265885040",
+        "imageAttribution": "richlv",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1194009265885040",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -3317,6 +3873,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/137843104978969",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=137843104978969",
+        "imageAttribution": "akyrkou",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=137843104978969",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3362,6 +3931,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2857499041156648",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2857499041156648",
+        "imageAttribution": "txllxt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2857499041156648",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3418,6 +4000,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=9af7ffc6-55d1-4c27-b6c5-b15204a3e482",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/454769932287639",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=454769932287639",
+        "imageAttribution": "fabiofornasari",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=454769932287639",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -3475,6 +4068,17 @@
         "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dc868c25-585c-4c18-9782-c5c3e4dd8f09",
+        "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1781469985357504",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1781469985357504",
+        "imageAttribution": "marcuscalabresus",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1781469985357504",
         "verifiedAt": "2026-05-18"
       }
     ],
@@ -3534,6 +4138,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=5155fd16-5dad-4fe7-9094-25381a5eb7b9",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1100661240415503",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1100661240415503",
+        "imageAttribution": "raxpa",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1100661240415503",
+        "verifiedAt": "2026-05-18"
       }
     ],
     "clues": [
@@ -3592,6 +4207,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c3893498-76a6-4e6c-860d-e80a1f8a6246",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1089451658232154",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1089451658232154",
+        "imageAttribution": "pbb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1089451658232154",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -3695,6 +4321,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e29cc4e6-acf0-4562-a440-aaf98f0c24a5",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1270112981547789",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1270112981547789",
+        "imageAttribution": "hajty",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1270112981547789",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -3742,6 +4379,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/216496056673953",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=216496056673953",
+        "imageAttribution": "neau",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=216496056673953",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3787,6 +4437,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/113375711456178",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=113375711456178",
+        "imageAttribution": "tavi",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=113375711456178",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -3967,6 +4630,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1361970950839726",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1361970950839726",
+        "imageAttribution": "mariadmm",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1361970950839726",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4012,6 +4688,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/es/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1165481148855929",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1165481148855929",
+        "imageAttribution": "miguel_andrade",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1165481148855929",
+        "verifiedAt": "2026-05-18"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4068,6 +4757,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=80aff258-6f1c-4a86-a7cb-6de2c5d77085",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1072608889930327",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1072608889930327",
+        "imageAttribution": "elpbatista",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1072608889930327",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4184,6 +4884,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=bb09fb4f-1897-403c-bbee-4c0e9c5b10eb",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/148201107271424",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=148201107271424",
+        "imageAttribution": "robot8a",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=148201107271424",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4231,6 +4942,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2046088812223311",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2046088812223311",
+        "imageAttribution": "multimaze",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2046088812223311",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4287,6 +5011,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=0374b0c9-7887-4c70-962c-c797b1ab89fb",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/633272601611492",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=633272601611492",
+        "imageAttribution": "filohipo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=633272601611492",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4334,6 +5069,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/351330296327922",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=351330296327922",
+        "imageAttribution": "andrewsnow",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=351330296327922",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4379,6 +5127,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1021890992409947",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1021890992409947",
+        "imageAttribution": "sanjorgepinho",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1021890992409947",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4514,6 +5275,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2025519284660830",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2025519284660830",
+        "imageAttribution": "RSTQ",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2025519284660830",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4559,6 +5333,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/481194823224677",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=481194823224677",
+        "imageAttribution": "zors1843",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=481194823224677",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4604,6 +5391,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1209319240561516",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1209319240561516",
+        "imageAttribution": "varun959",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1209319240561516",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4649,6 +5449,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1388680701942997",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1388680701942997",
+        "imageAttribution": "txominh",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1388680701942997",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4705,6 +5518,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=b7915c51-3d69-4438-bc9b-9db37c3b3d1f",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/3845658538814744",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=3845658538814744",
+        "imageAttribution": "frodrigo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=3845658538814744",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4763,6 +5587,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e98808fa-eefe-4acb-b298-9a8a28ef6c03",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/300257832465134",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=300257832465134",
+        "imageAttribution": "RemiSimonnin",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=300257832465134",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4810,6 +5645,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/119403677351197",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=119403677351197",
+        "imageAttribution": "Jo_pa",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=119403677351197",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4866,6 +5714,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ed6c617d-43fc-42e1-8809-7d9621118277",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/177918184184982",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=177918184184982",
+        "imageAttribution": "nicolas",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=177918184184982",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -4913,6 +5772,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1032912255448063",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1032912255448063",
+        "imageAttribution": "fcignat",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1032912255448063",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -4958,6 +5830,19 @@
       "imageLicenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1219723993425516",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1219723993425516",
+        "imageAttribution": "marcuscalabresus",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1219723993425516",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5130,6 +6015,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=aa7f5958-7441-479a-82c2-d94c93aca035",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1167726840892624",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1167726840892624",
+        "imageAttribution": "spock",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1167726840892624",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -5188,6 +6084,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=381d7920-5431-4d54-b477-36cc1520962b",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1938626876288870",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1938626876288870",
+        "imageAttribution": "crenouli",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1938626876288870",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -5235,6 +6142,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/810301236577880",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=810301236577880",
+        "imageAttribution": "polyglot",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=810301236577880",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5291,6 +6211,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=4c05f2a1-4564-4779-b085-220648ea2cd2",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/197808508831494",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=197808508831494",
+        "imageAttribution": "rausk",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=197808508831494",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -5338,6 +6269,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/269808544867241",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=269808544867241",
+        "imageAttribution": "kobykarin",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=269808544867241",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5383,6 +6327,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1552832621813927",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1552832621813927",
+        "imageAttribution": "sogefi",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1552832621813927",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5602,6 +6559,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1635061937376186",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1635061937376186",
+        "imageAttribution": "voschix",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1635061937376186",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5658,6 +6628,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=2538538c-918f-4e75-a030-08a572e850a8",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1155922641546556",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1155922641546556",
+        "imageAttribution": "txllxt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1155922641546556",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -5705,6 +6686,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/164601882255071",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=164601882255071",
+        "imageAttribution": "ale_zena_it",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=164601882255071",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5750,6 +6744,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2614568465417040",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2614568465417040",
+        "imageAttribution": "ente",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2614568465417040",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5840,6 +6847,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/787223465889448",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=787223465889448",
+        "imageAttribution": "tatermangia",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=787223465889448",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5885,6 +6905,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/308318147589507",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=308318147589507",
+        "imageAttribution": "agliatav",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=308318147589507",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -5930,6 +6963,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/874899443126241",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=874899443126241",
+        "imageAttribution": "mrey",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=874899443126241",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6020,6 +7066,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/183886596929691",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=183886596929691",
+        "imageAttribution": "caronegiancarlo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=183886596929691",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6076,6 +7135,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=e03e09cd-394c-4f72-9ff6-e723c4568f13",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/286028349837675",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=286028349837675",
+        "imageAttribution": "shlublu",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=286028349837675",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -6123,6 +7193,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1261232840946787",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1261232840946787",
+        "imageAttribution": "voschix",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1261232840946787",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6168,6 +7251,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/468602451139463",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=468602451139463",
+        "imageAttribution": "peterneubauer",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=468602451139463",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6269,6 +7365,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=fc769161-18b8-417b-a287-1b8fb5dee4a9",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1239444796510771",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1239444796510771",
+        "imageAttribution": "chrisbeddow",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1239444796510771",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -6361,6 +7468,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/at/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1117445272087508",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1117445272087508",
+        "imageAttribution": "aceini",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1117445272087508",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6406,6 +7526,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1090931271869459",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1090931271869459",
+        "imageAttribution": "puerki",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1090931271869459",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6451,6 +7584,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/139471474825581",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=139471474825581",
+        "imageAttribution": "aceini",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=139471474825581",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6541,6 +7687,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/10024387284265525",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=10024387284265525",
+        "imageAttribution": "Duro",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=10024387284265525",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6597,6 +7756,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=c4a96d2a-21c2-48d4-854e-760103e15182",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2139947126372113",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2139947126372113",
+        "imageAttribution": "wegavision",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2139947126372113",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -6644,6 +7814,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/3104764033186494",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=3104764033186494",
+        "imageAttribution": "txllxt",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=3104764033186494",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6848,6 +8031,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=587ca8fa-0509-467f-b6e6-259debac765d",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1303667933368334",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1303667933368334",
+        "imageAttribution": "masterofnoroad",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1303667933368334",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -6895,6 +8089,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/543088240007244",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=543088240007244",
+        "imageAttribution": "tommasz",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=543088240007244",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -6940,6 +8147,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1189912728130140",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1189912728130140",
+        "imageAttribution": "changchun1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1189912728130140",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7030,6 +8250,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1509922357414047",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1509922357414047",
+        "imageAttribution": "inwazjamb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1509922357414047",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7086,6 +8319,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=ae371b9b-4f37-4850-8faf-95889053088f",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1027330921131310",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1027330921131310",
+        "imageAttribution": "mhenclik",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1027330921131310",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7144,6 +8388,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f113a75c-6625-44b7-8888-e9a16f7a44b2",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1136551550161437",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1136551550161437",
+        "imageAttribution": "masterofnoroad",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1136551550161437",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7202,6 +8457,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=72c41b6b-0b65-4bc7-b922-2ed637ac1887",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/764145357617170",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=764145357617170",
+        "imageAttribution": "fatty_by",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=764145357617170",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7260,6 +8526,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=bd71412d-6f94-4534-b1dd-2df89a726847",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/206057801332815",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=206057801332815",
+        "imageAttribution": "edainius",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=206057801332815",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7307,6 +8584,19 @@
       "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1569731290595016",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1569731290595016",
+        "imageAttribution": "jorrarro",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1569731290595016",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7397,6 +8687,19 @@
       "imageLicenseUrl": "http://artlibre.org/licence/lal/en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/704571025187026",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=704571025187026",
+        "imageAttribution": "quickness805",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=704571025187026",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7442,6 +8745,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/174503637883461",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=174503637883461",
+        "imageAttribution": "aristo",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=174503637883461",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7577,6 +8893,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/219469186349991",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=219469186349991",
+        "imageAttribution": "kelvinminn",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=219469186349991",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7622,6 +8951,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/550409332614726",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=550409332614726",
+        "imageAttribution": "floke",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=550409332614726",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7667,6 +9009,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/177245674260352",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=177245674260352",
+        "imageAttribution": "jopparn",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=177245674260352",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7768,6 +9123,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=dd407ba4-af59-4c50-9ddf-3f294f68dbc8",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/192433052715887",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=192433052715887",
+        "imageAttribution": "pbb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=192433052715887",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7815,6 +9181,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1462766401166782",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1462766401166782",
+        "imageAttribution": "Albergarri788",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1462766401166782",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -7871,6 +9250,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f8fe6f56-1cff-4b8f-83da-38f33f42798c",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1614978722035400",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1614978722035400",
+        "imageAttribution": "pbb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1614978722035400",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -7963,6 +9353,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/261862025765194",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=261862025765194",
+        "imageAttribution": "mszilas",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=261862025765194",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8008,6 +9411,19 @@
       "imageLicenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "verifiedAt": "2026-04-29"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/152733880154496",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=152733880154496",
+        "imageAttribution": "petermains",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=152733880154496",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8154,6 +9570,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=f42e61de-51ae-428b-a665-34e457d86e85",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1137098021783871",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1137098021783871",
+        "imageAttribution": "toho",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1137098021783871",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -8246,6 +9673,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/3840677662654671",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=3840677662654671",
+        "imageAttribution": "smsm1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=3840677662654671",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8394,6 +9834,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2580305095603827",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2580305095603827",
+        "imageAttribution": "hubertj",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2580305095603827",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8529,6 +9982,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/hu/deed.en",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/721511594093020",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=721511594093020",
+        "imageAttribution": "goprohero",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=721511594093020",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8619,6 +10085,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/236321344605184",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=236321344605184",
+        "imageAttribution": "miguel_andrade",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=236321344605184",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8664,6 +10143,19 @@
       "imageLicenseUrl": "https://commons.wikimedia.org/wiki/Commons:Public_domain",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/285259593149068",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=285259593149068",
+        "imageAttribution": "kolesajr",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=285259593149068",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8709,6 +10201,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1119480336692816",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1119480336692816",
+        "imageAttribution": "km2bp",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1119480336692816",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8754,6 +10259,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1098940874359454",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1098940874359454",
+        "imageAttribution": "batvanyu",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1098940874359454",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8810,6 +10328,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=d70553e5-abc8-4ce4-83e0-78c5be63a03d",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/323772962437954",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=323772962437954",
+        "imageAttribution": "chrisbeddow",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=323772962437954",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -8902,6 +10431,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/902171035301757",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=902171035301757",
+        "imageAttribution": "alexanderbtodorov",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=902171035301757",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -8947,6 +10489,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/ro/deed.en",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/313892244403504",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=313892244403504",
+        "imageAttribution": "grozsa11",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=313892244403504",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9037,6 +10592,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/491387548580360",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=491387548580360",
+        "imageAttribution": "hbogner",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=491387548580360",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9082,6 +10650,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1055476391729907",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1055476391729907",
+        "imageAttribution": "filipb",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1055476391729907",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9127,6 +10708,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1223541636242893",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1223541636242893",
+        "imageAttribution": "inextremo96",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1223541636242893",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9172,6 +10766,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1360394580998830",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1360394580998830",
+        "imageAttribution": "jerneja",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1360394580998830",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9217,6 +10824,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/778947416087103",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=778947416087103",
+        "imageAttribution": "serj_nickel",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=778947416087103",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9318,6 +10938,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=151c5e3a-4a3d-45b9-82cf-2582fab7ca38",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/408578633803989",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=408578633803989",
+        "imageAttribution": "lesko987",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=408578633803989",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -9421,6 +11052,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=193f8cf7-d9c4-4a96-b904-492efbd4aded",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/2460223611013679",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=2460223611013679",
+        "imageAttribution": "borovac",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=2460223611013679",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -9479,6 +11121,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=4aa765ee-d7e8-4b37-aa13-95ef749b36da",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1154174742547133",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1154174742547133",
+        "imageAttribution": "robot8a",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1154174742547133",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -9584,6 +11237,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/587109834427065",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=587109834427065",
+        "imageAttribution": "smajser1",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=587109834427065",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9629,6 +11295,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/217039346532567",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=217039346532567",
+        "imageAttribution": "malenki",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=217039346532567",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9685,6 +11364,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=27bdb613-aed7-486f-8e03-5865c5a2a372",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/216432503270936",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=216432503270936",
+        "imageAttribution": "malenki",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=216432503270936",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -9822,6 +11512,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1090404092827460",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1090404092827460",
+        "imageAttribution": "richlv",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1090404092827460",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9867,6 +11570,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/513132519840934",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=513132519840934",
+        "imageAttribution": "grobin",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=513132519840934",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -9912,6 +11628,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1179910695856747",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1179910695856747",
+        "imageAttribution": "micmin1972",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1179910695856747",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10002,6 +11731,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/312905247073882",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=312905247073882",
+        "imageAttribution": "shravan91",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=312905247073882",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10116,6 +11858,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=7c2c5314-a85e-45ba-a55e-6c946dc362b0",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1012174599968221",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1012174599968221",
+        "imageAttribution": "chuck",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1012174599968221",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -10174,6 +11927,17 @@
         "streetViewProvider": "Panoramax",
         "streetViewUrl": "https://api.panoramax.xyz/#focus=pic&pic=b22ac460-3d5f-4810-a829-9bea8893794a",
         "verifiedAt": "2026-05-18"
+      },
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1056058282080322",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1056058282080322",
+        "imageAttribution": "Stefdegreef",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1056058282080322",
+        "verifiedAt": "2026-05-20"
       }
     ],
     "clues": [
@@ -10221,6 +11985,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/445389627497631",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=445389627497631",
+        "imageAttribution": "km2bp",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=445389627497631",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10311,6 +12088,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1221445259450156",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1221445259450156",
+        "imageAttribution": "osmplus_org",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1221445259450156",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10356,6 +12146,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/1006159067068428",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1006159067068428",
+        "imageAttribution": "VIA_KK",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1006159067068428",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",
@@ -10491,6 +12294,19 @@
       "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "verifiedAt": "2026-05-17"
     },
+    "visualSources": [
+      {
+        "sourceProvider": "Mapillary",
+        "imageUrl": "/api/media/mapillary/888167125073154",
+        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=888167125073154",
+        "imageAttribution": "egorka",
+        "imageLicense": "CC BY-SA 4.0",
+        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "streetViewProvider": "Mapillary",
+        "streetViewUrl": "https://www.mapillary.com/app/?pKey=888167125073154",
+        "verifiedAt": "2026-05-20"
+      }
+    ],
     "clues": [
       {
         "label": "Pista principal",

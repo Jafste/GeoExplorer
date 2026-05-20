@@ -2,7 +2,7 @@
 
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 250 locais reais com dados de fonte/licença validados e 95 locais com Panoramax como fonte adicional.
+- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 250 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
 - `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
@@ -30,7 +30,7 @@ Decidi manter PostgreSQL como base principal e não usar Supabase completo em Do
 
 O campo `sceneImage` continua a suportar as cenas SVG mock como alternativa. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a imagens ao nível da rua.
 
-Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura.
+Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax e Mapillary. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura.
 
 ## Recolha de candidatos Mapillary
 
