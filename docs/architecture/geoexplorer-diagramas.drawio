@@ -92,7 +92,7 @@
         <mxCell id="27" value="Serviço de Mapas Base&lt;br&gt;&lt;br&gt;Fornece cartografia e suporte&lt;br&gt;de interação com o mapa.&lt;br&gt;&lt;br&gt;Ex.: MapLibre + OpenStreetMap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
           <mxGeometry x="1135" y="80" width="300" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="28" value="Fontes de Dados&lt;br&gt;&lt;br&gt;Apoiam a recolha inicial de&lt;br&gt;locais, metadados e imagens&lt;br&gt;para o dataset curado.&lt;br&gt;&lt;br&gt;Uso indireto para preparação de dados" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
+        <mxCell id="28" value="Fontes de Dados&lt;br&gt;&lt;br&gt;Apoiam a recolha inicial de&lt;br&gt;locais, metadados e imagens&lt;br&gt;para o conjunto de locais revisto.&lt;br&gt;&lt;br&gt;Uso indireto para preparação de dados" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#555555;strokeWidth=2;arcSize=18;align=center;verticalAlign=middle;fontSize=15;fontColor=#000000;spacing=8;" parent="1" vertex="1">
           <mxGeometry x="1135" y="450" width="315" height="190" as="geometry" />
         </mxCell>
         <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="25" target="26" edge="1">
@@ -196,7 +196,7 @@
         <mxCell id="54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="42" target="45" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="55" value="importação/curadoria" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="54" vertex="1" connectable="0">
+        <mxCell id="55" value="importação/revisão" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fillColor=#ffffff;strokeColor=none;" parent="54" vertex="1" connectable="0">
           <mxGeometry y="-18" relative="1" as="geometry" />
         </mxCell>
       </root>

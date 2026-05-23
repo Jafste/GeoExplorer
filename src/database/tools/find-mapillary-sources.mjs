@@ -26,22 +26,22 @@ const defaultOptions = {
 };
 
 function printHelp() {
-  console.log(`Usage:
-  MAPILLARY_ACCESS_TOKEN=... node src/database/tools/find-mapillary-sources.mjs [options]
+  console.log(`Uso:
+  MAPILLARY_ACCESS_TOKEN=... node src/database/tools/find-mapillary-sources.mjs [opções]
 
-Options:
-  --seed <path>                Path to locations.json. Defaults to src/database/seed/locations.json.
-  --output <path>              Write JSON output to a file instead of stdout.
-  --bbox-degrees <number>      Search radius in degrees around each point. Default: 0.002.
-  --image-limit <number>       Number of Mapillary images to request per location. Default: 20.
-  --max-distance-meters <num>  Maximum accepted distance from the challenge point. Default: 50.
-  --max-results <number>       Stop after this many candidates. Default: 25.
-  --max-locations <number>     Only inspect the first N eligible locations.
-  --timeout-ms <number>        Timeout for each Mapillary request. Default: 8000.
-  --include-existing           Include locations that already have a Mapillary visual source.
-  --help                       Show this help.
+Opções:
+  --seed <caminho>             Caminho para locations.json. Por omissão usa src/database/seed/locations.json.
+  --output <caminho>           Escreve o resultado JSON num ficheiro em vez de usar stdout.
+  --bbox-degrees <número>      Raio de pesquisa em graus à volta de cada ponto. Por omissão: 0.002.
+  --image-limit <número>       Número de imagens Mapillary a pedir por local. Por omissão: 20.
+  --max-distance-meters <num>  Distância máxima aceite a partir do ponto do desafio. Por omissão: 50.
+  --max-results <número>       Interrompe depois de encontrar este número de candidatos. Por omissão: 25.
+  --max-locations <número>     Analisa apenas os primeiros N locais elegíveis.
+  --timeout-ms <número>        Timeout de cada pedido Mapillary. Por omissão: 8000.
+  --include-existing           Inclui locais que já têm uma fonte visual Mapillary.
+  --help                       Mostra esta ajuda.
 
-The script only finds candidates. It does not edit locations.json.`);
+O script apenas encontra candidatos. Não altera locations.json.`);
 }
 
 function parseArgs(args) {

@@ -17,7 +17,7 @@
 ## Sem. 2 · 25 mar–1 abr
 
 **Feito:** consolidei a stack tecnológica, a arquitetura de alto nível, o calendário individual e o preenchimento inicial dos documentos de proposta, requisitos e riscos. Também clarifiquei o modo temporizado opcional e reposicionei o multijogador como objetivo adicional não obrigatório.
-**Bloqueou:** escolha final entre dataset totalmente curado e abordagem híbrida com APIs externas, bem como a seleção concreta do fornecedor de mapas.  
+**Bloqueou:** escolha final entre dataset validado manualmente e abordagem híbrida com APIs externas, bem como a seleção concreta do fornecedor de mapas.
 **Próxima semana:** concluir wireframes simples, C4 contexto/contentores, modelo de dados e estrutura base de `src/frontend` e `src/backend`.
 
 ---
@@ -88,9 +88,9 @@
 
 ## Sem. 11 · 17–23 mai
 
-**Feito:** comecei a expansão seguinte do dataset e passei de 158 para 250 locais reais. Mantive imagem, coordenadas, fonte, licença e atribuição em cada entrada, e aproveitei para normalizar ligações de licença que não estavam como URL completa. Também acrescentei uma categoria simples para paisagens naturais, aumentei a cobertura Panoramax de 30 para 95 locais e preparei uma ferramenta local para procurar candidatos Mapillary com token fora do repositório. Depois acrescentei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend, ajustei a ferramenta para gerar caminhos estáveis do backend em vez de URLs temporários e adicionei Mapillary a 150 locais.
-**Bloqueou:** algumas páginas da Wikimedia não tinham imagem, coordenadas ou dados de licença suficientes, por isso deixei essas entradas de fora em vez de forçar dados incompletos. No Panoramax deixei de fora resultados mais afastados; no Mapillary confirmei que as imagens diretas da API são temporárias, por isso não as gravei no dataset.
-**Próxima semana:** continuar a expansão até 300 locais, rever candidatos Mapillary manualmente e adicionar apenas os que fizerem sentido para o jogo.
+**Feito:** comecei a expansão seguinte do conjunto de locais e passei de 158 para 300 locais reais. Mantive imagem, coordenadas, fonte, licença e atribuição em cada entrada, e aproveitei para normalizar ligações de licença que não estavam como URL completa. Também acrescentei uma categoria simples para paisagens naturais, aumentei a cobertura Panoramax de 30 para 95 locais e preparei uma ferramenta local para procurar candidatos Mapillary com token fora do repositório. Depois acrescentei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend, ajustei a ferramenta para gerar caminhos estáveis do backend em vez de URLs temporários e adicionei Mapillary a 150 locais. No fim fiz uma primeira verificação de qualidade, corrigi uma imagem repetida, substituí pares demasiado próximos por novos locais reais, revi a dificuldade de vários locais para remover pistas demasiado diretas, títulos genéricos e etiquetas repetidas, e troquei imagens aéreas fracas em Cardiff, Ronda e San Gimignano. Também alinhei a seleção de rondas do modo `mock` com a API, acrescentei testes para sessão mock com várias rondas, corrigi o aviso de segurança do `postcss` e passei o Dockerfile do frontend para `npm ci` com `package-lock.json`.
+**Bloqueou:** algumas páginas da Wikimedia não tinham imagem, coordenadas ou dados de licença suficientes, por isso deixei essas entradas de fora em vez de forçar dados incompletos. No Panoramax deixei de fora resultados mais afastados; no Mapillary confirmei que as imagens diretas da API são temporárias, por isso não as gravei no conjunto de locais. A verificação já não encontra pares de locais abaixo do limite definido, pistas que revelem diretamente cidade ou país, textos de dificuldade demasiado repetidos nem imagens aéreas por decidir. As imagens aéreas que ficaram foram revistas manualmente e mantidas quando ajudam a ler melhor o local no jogo.
+**Próxima semana:** testar o conjunto de locais em sessões reais, continuar a preencher Mapillary/Panoramax quando houver cobertura útil e começar a preparar a base para multiplayer com SignalR.
 
 ---
 

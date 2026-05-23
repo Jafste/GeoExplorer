@@ -6,6 +6,8 @@ namespace GeoExplorer.Backend.Services;
 
 public sealed class GameSessionService
 {
+    private const double MinimumRoundLocationDistanceKm = 1.0;
+
     private readonly ConcurrentDictionary<string, SessionState> _sessions = new();
     private readonly IReadOnlyList<SeedLocation> _locations;
     private readonly IReadOnlyDictionary<string, SeedLocation> _locationsById;
@@ -101,7 +103,32 @@ public sealed class GameSessionService
             (pool[index], pool[swapIndex]) = (pool[swapIndex], pool[index]);
         }
 
-        return pool.Take(selectedCount).ToList();
+        var selected = new List<SeedLocation>(selectedCount);
+        var deferred = new List<SeedLocation>();
+
+        foreach (var location in pool)
+        {
+            if (selected.Count == selectedCount)
+            {
+                break;
+            }
+
+            if (selected.All(existing => DistanceBetween(existing, location) >= MinimumRoundLocationDistanceKm))
+            {
+                selected.Add(location);
+            }
+            else
+            {
+                deferred.Add(location);
+            }
+        }
+
+        if (selected.Count < selectedCount)
+        {
+            selected.AddRange(deferred.Take(selectedCount - selected.Count));
+        }
+
+        return selected;
     }
 
     private SeedMedia? SelectVisualSource(SeedLocation location)
@@ -343,6 +370,11 @@ public sealed class GameSessionService
                 Math.Cos(latA) * Math.Cos(latB) * Math.Pow(Math.Sin(deltaLng / 2), 2);
 
         return 2 * earthRadiusKm * Math.Asin(Math.Sqrt(a));
+    }
+
+    private static double DistanceBetween(SeedLocation first, SeedLocation second)
+    {
+        return HaversineDistanceKm(first.Latitude, first.Longitude, second.Latitude, second.Longitude);
     }
 
     private static int ScoreFromDistance(double distanceKm)

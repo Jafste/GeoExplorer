@@ -26,8 +26,14 @@ interface StoredSession {
   currentRoundIndex: number;
 }
 
+interface MockGameDataSourceOptions {
+  locations?: SeedLocation[];
+  randomIndex?: (maxExclusive: number) => number;
+}
+
 const sessions = new Map<string, StoredSession>();
 let sessionCounter = 0;
+const MINIMUM_ROUND_LOCATION_DISTANCE_KM = 1;
 
 const EUROPE_BOUNDS = {
   minLat: 34,
@@ -48,16 +54,48 @@ function randomIndex(maxExclusive: number): number {
   return Math.floor(Math.random() * maxExclusive);
 }
 
-function selectRandomLocations(count: number): SeedLocation[] {
-  const pool = [...mockLocations];
+function selectRandomLocations(
+  count: number,
+  locations: SeedLocation[],
+  getRandomIndex = randomIndex
+): SeedLocation[] {
+  const pool = [...locations];
   const selectedCount = Math.min(count, pool.length);
 
   for (let index = 0; index < selectedCount; index += 1) {
-    const swapIndex = index + randomIndex(pool.length - index);
+    const swapIndex = index + getRandomIndex(pool.length - index);
     [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
   }
 
-  return pool.slice(0, selectedCount);
+  const selected: SeedLocation[] = [];
+  const deferred: SeedLocation[] = [];
+
+  for (const location of pool) {
+    if (selected.length === selectedCount) {
+      break;
+    }
+
+    if (
+      selected.every(
+        (existing) => haversineDistanceKm(
+          existing.latitude,
+          existing.longitude,
+          location.latitude,
+          location.longitude
+        ) >= MINIMUM_ROUND_LOCATION_DISTANCE_KM
+      )
+    ) {
+      selected.push(location);
+    } else {
+      deferred.push(location);
+    }
+  }
+
+  if (selected.length < selectedCount) {
+    selected.push(...deferred.slice(0, selectedCount - selected.length));
+  }
+
+  return selected;
 }
 
 function hasSameSource(left: NonNullable<SeedLocation["media"]>, right: NonNullable<SeedLocation["media"]>) {
@@ -86,10 +124,10 @@ function getPrimaryMedia(location: SeedLocation) {
   return location.media ?? getVisualSources(location)[0];
 }
 
-function selectVisualSource(location: SeedLocation) {
+function selectVisualSource(location: SeedLocation, getRandomIndex = randomIndex) {
   const visualSources = getVisualSources(location);
 
-  return visualSources.length === 0 ? undefined : visualSources[randomIndex(visualSources.length)];
+  return visualSources.length === 0 ? undefined : visualSources[getRandomIndex(visualSources.length)];
 }
 
 function buildRound(round: StoredRound, session: StoredSession): ChallengeRound {
@@ -214,18 +252,42 @@ function getPendingRound(session: StoredSession, roundId: string): StoredRound {
   return pending;
 }
 
-export function createMockGameDataSource(): GameDataSource {
+function validateConfig(config: SessionConfig) {
+  if (config.region !== "europe") {
+    throw new Error("Apenas a região europeia está disponível neste MVP.");
+  }
+
+  if (config.roundCount < 1 || config.roundCount > 10) {
+    throw new Error("O número de rondas deve estar entre 1 e 10.");
+  }
+
+  if (
+    config.timed &&
+    (config.roundTimeSeconds === null ||
+      config.roundTimeSeconds < 15 ||
+      config.roundTimeSeconds > 180)
+  ) {
+    throw new Error("O tempo por ronda deve estar entre 15 e 180 segundos.");
+  }
+}
+
+export function createMockGameDataSource(options: MockGameDataSourceOptions = {}): GameDataSource {
+  const locations = options.locations ?? mockLocations;
+  const getRandomIndex = options.randomIndex ?? randomIndex;
+
   return {
     async createSession(config: SessionConfig): Promise<CreateSessionResponse> {
+      validateConfig(config);
+
       sessionCounter += 1;
       const sessionId = `mock-session-${sessionCounter}`;
-      const selectedLocations = selectRandomLocations(config.roundCount);
+      const selectedLocations = selectRandomLocations(config.roundCount, locations, getRandomIndex);
 
       const rounds: StoredRound[] = selectedLocations.map((location, index) => ({
         id: `${sessionId}-round-${index + 1}`,
         roundNumber: index + 1,
         location,
-        selectedMedia: selectVisualSource(location),
+        selectedMedia: selectVisualSource(location, getRandomIndex),
         result: null,
       }));
 

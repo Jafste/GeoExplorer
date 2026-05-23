@@ -95,6 +95,28 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void CreateSession_AvoidsVeryCloseLocationsWhenAlternativesExist()
+    {
+        using var seed = TestSeedDirectory.CreateWithNearbyLocations();
+        var service = CreateService(seed.BackendContentRoot, randomIndex: _ => 0);
+
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 2,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        var firstRound = session.CurrentRound;
+        var firstResponse = service.TimeoutRound(session.SessionId, firstRound.Id, null);
+        Assert.IsFalse(firstResponse.Progress.Completed);
+
+        var secondRound = service.GetCurrentRound(session.SessionId);
+        var selectedLocationIds = new[] { firstRound.Challenge.Id, secondRound.Challenge.Id };
+
+        CollectionAssert.AreEquivalent(new[] { "nearby-a", "far-away" }, selectedLocationIds);
+    }
+
+    [TestMethod]
     public void SubmitGuess_ReturnsMediaMetadataInRoundResult()
     {
         var service = CreateService();
@@ -237,6 +259,86 @@ public sealed class GameSessionServiceTests
                       {
                         "label": "Fonte",
                         "value": "Local com duas fontes visuais",
+                        "confidence": "Alta"
+                      }
+                    ]
+                  }
+                ]
+                """);
+
+            return new TestSeedDirectory(root);
+        }
+
+        public static TestSeedDirectory CreateWithNearbyLocations()
+        {
+            var root = Path.Combine(Path.GetTempPath(), $"geoexplorer-seed-{Guid.NewGuid()}");
+            var seedDirectory = Path.Combine(root, "database", "seed");
+            Directory.CreateDirectory(seedDirectory);
+            Directory.CreateDirectory(Path.Combine(root, "backend"));
+            File.WriteAllText(Path.Combine(seedDirectory, "locations.json"), """
+                [
+                  {
+                    "id": "nearby-a",
+                    "title": "Local próximo A",
+                    "city": "Porto",
+                    "country": "Portugal",
+                    "region": "europe",
+                    "category": "historic-core",
+                    "latitude": 41.1402,
+                    "longitude": -8.611,
+                    "sceneLabel": "Rua de teste",
+                    "sceneNote": "Nota visual de teste.",
+                    "sceneImage": "/mock-scenes/test.svg",
+                    "prompt": "Observa o local de teste.",
+                    "visualGradient": ["#111111", "#222222", "#333333"],
+                    "clues": [
+                      {
+                        "label": "Fonte",
+                        "value": "Local de teste",
+                        "confidence": "Alta"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "nearby-b",
+                    "title": "Local próximo B",
+                    "city": "Porto",
+                    "country": "Portugal",
+                    "region": "europe",
+                    "category": "historic-core",
+                    "latitude": 41.14025,
+                    "longitude": -8.61105,
+                    "sceneLabel": "Rua de teste",
+                    "sceneNote": "Nota visual de teste.",
+                    "sceneImage": "/mock-scenes/test.svg",
+                    "prompt": "Observa o local de teste.",
+                    "visualGradient": ["#111111", "#222222", "#333333"],
+                    "clues": [
+                      {
+                        "label": "Fonte",
+                        "value": "Local de teste",
+                        "confidence": "Alta"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "far-away",
+                    "title": "Local afastado",
+                    "city": "Lisboa",
+                    "country": "Portugal",
+                    "region": "europe",
+                    "category": "historic-core",
+                    "latitude": 38.7169,
+                    "longitude": -9.1399,
+                    "sceneLabel": "Rua de teste",
+                    "sceneNote": "Nota visual de teste.",
+                    "sceneImage": "/mock-scenes/test.svg",
+                    "prompt": "Observa o local de teste.",
+                    "visualGradient": ["#111111", "#222222", "#333333"],
+                    "clues": [
+                      {
+                        "label": "Fonte",
+                        "value": "Local de teste",
                         "confidence": "Alta"
                       }
                     ]

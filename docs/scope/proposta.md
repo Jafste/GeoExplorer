@@ -116,7 +116,7 @@ Como objetivo adicional não obrigatório para a versão final do projeto, consi
 
 **Sistemas externos:**
 - Serviço de mapas base — fornece cartografia e interação de mapa para recolha do palpite do utilizador.
-- Fontes de dados geográficos e visuais — suportam a recolha e preparação do dataset curado usado pelo MVP.
+- Fontes de dados geográficos e visuais — suportam a recolha e preparação do conjunto de locais usado pelo MVP.
 
 ---
 

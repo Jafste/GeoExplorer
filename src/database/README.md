@@ -2,7 +2,7 @@
 
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 250 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
+- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 300 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
 - `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
@@ -46,3 +46,15 @@ MAPILLARY_ACCESS_TOKEN=... node src/database/tools/find-mapillary-sources.mjs \
 O script apenas gera candidatos. Não altera `seed/locations.json`. Antes de copiar qualquer entrada para `visualSources`, devo confirmar manualmente se a imagem corresponde ao local, se a distância é aceitável e se a atribuição e a licença estão preenchidas. A chave `MAPILLARY_ACCESS_TOKEN` deve ficar apenas no ambiente local ou num `.env` privado.
 
 Quando um candidato Mapillary for aprovado, não devo guardar o `thumb_1024_url` devolvido pela API no dataset, porque é temporário. Por isso, o script já coloca em `imageUrl` um caminho estável do backend, como `/api/media/mapillary/<id-da-imagem>`. O backend usa o token local para resolver o thumbnail no momento certo e devolve um redirect para a imagem atual.
+
+## Verificação do dataset
+
+Para rever o dataset sem alterar ficheiros, posso correr:
+
+```bash
+node src/database/tools/audit-location-dataset.mjs --fail-on-errors
+```
+
+Este script mostra contagens por país e fonte visual, deteta IDs duplicados, imagens principais repetidas, dados obrigatórios em falta, locais muito próximos, textos demasiado repetidos, pistas que revelam diretamente cidade ou país e imagens que parecem ser aéreas ou panorâmicas. Usei esta verificação para corrigir uma imagem repetida em Kotor, substituir pares demasiado próximos por novos locais reais, melhorar descrições demasiado parecidas e trocar imagens fracas em Cardiff, Ronda e San Gimignano. Neste momento, a verificação já não encontra pares abaixo de 75 metros, grupos de texto repetido no limiar atual, pistas diretas nos textos jogáveis nem imagens aéreas por decidir. As imagens aéreas que ficaram estão registadas como revistas porque ajudam a ler melhor alguns locais no jogo.
+
+Além desta revisão do conjunto de locais, o backend tenta não escolher locais a menos de 1 km entre si dentro da mesma sessão quando existem alternativas suficientes no catálogo.

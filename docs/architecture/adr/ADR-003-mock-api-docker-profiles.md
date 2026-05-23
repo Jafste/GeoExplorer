@@ -16,6 +16,8 @@ Era importante começar pelo frontend jogável sem ficar bloqueado por backend e
 
 Decidi implementar uma camada de dados abstrata no frontend, com dois modos (`mock` e `api`), e definir Docker Compose com perfis separados para `frontend-mock` e `full`.
 
+Depois de ligar a API real, alinhei o comportamento principal do modo `mock` com o backend: ambos evitam selecionar locais demasiado próximos dentro da mesma sessão quando existem alternativas. Também acrescentei testes ao modo `mock` para cobrir uma sessão de várias rondas, resultados finais e validação básica de configuração.
+
 ---
 
 ## Alternativas consideradas
@@ -37,3 +39,7 @@ Decidi implementar uma camada de dados abstrata no frontend, com dois modos (`mo
 **Negativas / trade-offs:**
 - Surge o risco de divergência entre o comportamento do `mock` e da API real.
 - A configuração do projeto fica ligeiramente mais complexa do que num arranque puramente local.
+
+**Mitigação atual:**
+- A diferença entre `mock` e `api` é controlada por testes de contrato e por testes de fluxo no frontend.
+- O perfil `full` continua a ser a validação principal antes de considerar a base do jogo estável para modos futuros.
