@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 300 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, adicionei Mapillary a 150 locais e passei a escolher uma fonte visual por ronda. Antes de avançar para multiplayer, alinhei a seleção de rondas entre `mock` e `api`, reforcei testes de fluxo e deixei a verificação do conjunto de locais sem avisos visuais pendentes. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 300 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, adicionei Mapillary a 150 locais e passei a escolher uma fonte visual por ronda. Depois avancei para uma primeira versão multiplayer com salas por link, owner da sala, nomes únicos por sala, rondas sincronizadas por SignalR e resultados guardados em PostgreSQL. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -52,13 +52,19 @@
 - [x] Backend inicial ASP.NET Core para sessões, ronda atual, submissão de palpite, timeout e resultados
 - [x] Docker Compose com perfis de execução
 - [x] Testes mínimos de contrato do backend
-- [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR futuro
+- [x] Decisão de arquitetura para PostgreSQL em Docker e SignalR no backend
 - [x] Importação do catálogo de locais para PostgreSQL com Entity Framework Core
 - [x] Migrations do Entity Framework para criar o schema em PostgreSQL
 - [x] Gravação de sessões, rondas, palpites e resultados em PostgreSQL
 - [x] Recuperação de sessões guardadas a partir do PostgreSQL
 - [x] Contador simples de leituras/escritas feitas na base de dados
 - [x] Validação do frontend em modo `api` com backend e PostgreSQL em Docker
+- [x] Multiplayer inicial com salas por link e nomes únicos por sala
+- [x] Salas públicas listáveis, salas por link e password opcional
+- [x] Owner da sala a escolher configuração e iniciar a partida
+- [x] Rondas multiplayer sincronizadas com SignalR
+- [x] Resultado da ronda apenas depois de todos submeterem ou o tempo terminar
+- [x] Gravação de salas, jogadores, rondas e palpites multiplayer em PostgreSQL
 
 ---
 
@@ -68,7 +74,7 @@
 - [ ] Recolher dados reais de uso e reavaliar Turso/libSQL apenas se o padrão real justificar
 - [ ] Continuar a melhorar o conjunto de locais durante testes reais de jogo
 - [ ] Continuar a rever candidatos Mapillary/Panoramax quando houver cobertura útil
-- [ ] Preparar SignalR para multiplayer/realtime apenas depois de a base do jogo estar estável
+- [ ] Testar o multiplayer com mais utilizadores e rever casos de reconexão
 
 ---
 
@@ -110,6 +116,8 @@ docker compose --profile database up
 
 Se alguma porta já estiver ocupada, posso mudar os valores no `.env`: `FRONTEND_PORT`, `BACKEND_PORT` e `POSTGRES_PORT`. No Docker Compose, o PostgreSQL fica exposto na porta `15432` por omissão para evitar conflito com instalações locais na porta `5432`.
 
+No Dockerfile do frontend usei `npm ci` em vez de `npm install`, porque o Docker deve instalar exatamente as versões registadas no `package-lock.json`. Assim, a instalação fica mais previsível para mim, para os professores e para qualquer ambiente de validação. Continuo a usar `npm install` em desenvolvimento local quando preciso de adicionar ou atualizar dependências.
+
 ### Acesso
 
 ```text
@@ -117,6 +125,7 @@ Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
 Contador da base de dados: http://localhost:8080/api/diagnostics/database
 Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
+Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
 ```
 
 O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL no mesmo fluxo. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave.
@@ -130,7 +139,7 @@ O frontend pode correr em modo `mock` para demonstração rápida ou em modo `ap
 | React + TypeScript | Angular | Permite construir rapidamente a interface do jogo e manter uma base de frontend tipada e extensível. |
 | ASP.NET Core .NET 8 Minimal API | Outra stack backend | Mantém coerência com a proposta aprovada e fica preparado para a fase seguinte de integração. |
 | PostgreSQL em Docker | Supabase completo, Turso/libSQL | Permite guardar dados relacionais de forma reproduzível para desenvolvimento e avaliação; Supabase completo fica para necessidades futuras e Turso só será reavaliado com dados reais de uso. |
-| SignalR futuro no backend | Supabase Realtime | O multiplayer terá lógica de jogo, salas, timers, palpites e reconexões; por isso faz mais sentido centralizar realtime no backend ASP.NET Core. |
+| SignalR no backend | Supabase Realtime | O multiplayer tem lógica de jogo, salas, timers, palpites e reconexões; por isso faz mais sentido centralizar realtime no backend ASP.NET Core. |
 | Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final; Mapillary fica opcional através do backend. |
 | Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
 

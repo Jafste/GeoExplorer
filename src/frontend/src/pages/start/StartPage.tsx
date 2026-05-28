@@ -3,11 +3,12 @@ import { Card } from "../../components/layout/card/card";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 
 interface StartPageProps {
+  onMultiplayer: () => void;
   onOpenTutorial: () => void;
   onStart: () => void;
 }
 
-export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
+export function StartPage({ onMultiplayer, onOpenTutorial, onStart }: StartPageProps) {
   const previewHotspots: MapHotspot[] = [
     { label: "Porto", latitude: 41.1402, longitude: -8.611, tone: "primary", value: "imagem real" },
     { label: "Innsbruck", latitude: 47.2692, longitude: 11.4041, tone: "neutral", value: "alpes" },
@@ -38,6 +39,9 @@ export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
             </RoundedButton>
             <RoundedButton color="neon" radius="none" onClick={onStart}>
              Iniciar missão
+            </RoundedButton>
+            <RoundedButton color="neon" tone="subtle" radius="none" onClick={onMultiplayer}>
+             Criar sala
             </RoundedButton>
           </div>
 
@@ -189,6 +193,9 @@ export function StartPage({ onOpenTutorial, onStart }: StartPageProps) {
           </RoundedButton>
           <RoundedButton intent="primary" radius="none" onClick={onStart} type="button">
             Entrar em missão
+          </RoundedButton>
+          <RoundedButton color="neon" tone="subtle" radius="none" onClick={onMultiplayer} type="button">
+            Jogar com amigos
           </RoundedButton>
         </div>
       </Card>

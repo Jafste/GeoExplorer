@@ -1,7 +1,7 @@
 # Levantamento de Requisitos
 
 **Projeto:** GeoExplorer  
-**Versão:** 1.1 · 26 de março de 2026  
+**Versão:** 1.2 · 23 de maio de 2026
 **Referência MoSCoW:** https://www.productplan.com/glossary/moscow-prioritization/
 
 ---
@@ -40,7 +40,7 @@
 
 ### Could have
 
-- RF12 — O sistema poderá suportar um modo multijogador simples, permitindo comparar pontuações entre vários jogadores na mesma sessão ou em sessões equivalentes.
+- RF12 — O sistema poderá suportar um modo multijogador simples, com sala partilhada por URL, salas públicas listáveis, password opcional, owner da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
 - RF13 — O sistema poderá suportar filtros adicionais dentro do âmbito europeu, como país ou categoria de local, sem alterar o núcleo do jogo.
 - RF14 — O sistema poderá apresentar estatísticas básicas por sessão para apoio à análise do desempenho.
 
@@ -79,3 +79,4 @@
 |--------|------|-----------|-------|
 | 1.0 | 25 de março de 2026 | Versão inicial | Proposta de projeto |
 | 1.1 | 26 de março de 2026 | Clarificação do modo temporizado opcional e reposicionamento do multijogador como objetivo adicional não obrigatório | Ajuste do âmbito funcional |
+| 1.2 | 23 de maio de 2026 | Clarificação do modo multijogador implementado por salas partilhadas | Alinhamento com a primeira versão SignalR |

@@ -18,7 +18,7 @@ Decidi usar ASP.NET Core .NET 8 com Minimal API no backend e PostgreSQL como bas
 
 O backend mantém temporariamente o estado das partidas em memória enquanto a ligação à base de dados é feita por etapas. A gravação real deve guardar sessões, rondas, palpites e resultados em PostgreSQL. Se for necessário login, a autenticação deve ficar no backend ASP.NET Core e usar a mesma base de dados, por exemplo com Identity/JWT.
 
-Para realtime e multiplayer futuro, a opção preferencial passa a ser SignalR no backend. Esta escolha encaixa melhor na lógica do jogo, porque o multiplayer do GeoExplorer terá salas, jogadores prontos, rondas, palpites, pontuação, timers, reconnects e sincronização de estado.
+Para realtime e multiplayer, a opção preferencial passa a ser SignalR no backend. Esta escolha encaixa melhor na lógica do jogo, porque o multiplayer do GeoExplorer tem salas, jogadores prontos, rondas, palpites, pontuação, timers, reconnects e sincronização de estado.
 
 ---
 
@@ -29,7 +29,7 @@ Para realtime e multiplayer futuro, a opção preferencial passa a ser SignalR n
 | FastAPI | Menor alinhamento com a experiência prévia escolhida para o projeto e menor coerência com a proposta aprovada. |
 | Base de dados apenas local em ficheiros | Não prepara bem a gravação relacional necessária para sessões, rondas e pontuações. |
 | Supabase completo em Docker | Acrescenta serviços que ainda não são necessários, porque o projeto já tem backend próprio e precisa inicialmente apenas de PostgreSQL. |
-| Supabase Realtime para multiplayer | É útil para atualizações simples baseadas em tabelas, mas não substitui bem a lógica de jogo em tempo real que será necessária. |
+| Supabase Realtime para multiplayer | É útil para atualizações simples baseadas em tabelas, mas não substitui bem a lógica de jogo em tempo real que o projeto precisa. |
 | Turso/libSQL | Pode ser reavaliado no futuro se os dados reais mostrarem muitas leituras e necessidade de outra distribuição, mas não é a escolha inicial. |
 
 ---
@@ -59,3 +59,11 @@ Supabase completo fica como alternativa futura se forem necessárias funcionalid
 ## Atualização de 15 de maio de 2026
 
 Formalizei o schema principal com migrations do Entity Framework. Com isto, o backend passa a criar e evoluir a base de dados através do próprio modelo EF, em vez de depender do ficheiro SQL inicial montado no Docker. O ficheiro SQL fica apenas como apoio documental, e as migrations passam a ser a referência técnica para `locations`, `game_sessions` e `session_rounds`.
+
+## Atualização de 23 de maio de 2026
+
+Implementei a primeira versão multiplayer com SignalR no backend. Decidi começar sem login obrigatório: a sala é partilhada por URL, cada jogador escolhe um nome único dentro da sala e o primeiro jogador fica como owner. O owner escolhe a configuração e inicia a partida.
+
+Mantive a lógica do jogo no backend: todos recebem a mesma ronda, cada jogador só pode submeter um palpite e o resultado só é mostrado quando todos os jogadores ativos terminam ou quando o tempo acaba. Também adicionei tabelas próprias para salas, jogadores, rondas e palpites multiplayer, mantendo PostgreSQL e Entity Framework como base de gravação.
+
+Depois acrescentei a opção de sala pública listável e password opcional. Para não guardar passwords em texto simples, o backend guarda apenas um hash PBKDF2 da password da sala.

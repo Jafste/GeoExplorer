@@ -6,8 +6,6 @@ namespace GeoExplorer.Backend.Services;
 
 public sealed class GameSessionService
 {
-    private const double MinimumRoundLocationDistanceKm = 1.0;
-
     private readonly ConcurrentDictionary<string, SessionState> _sessions = new();
     private readonly IReadOnlyList<SeedLocation> _locations;
     private readonly IReadOnlyDictionary<string, SeedLocation> _locationsById;
@@ -94,60 +92,12 @@ public sealed class GameSessionService
 
     private List<SeedLocation> SelectRandomLocations(int count)
     {
-        var pool = _locations.ToList();
-        var selectedCount = Math.Min(count, pool.Count);
-
-        for (var index = 0; index < selectedCount; index++)
-        {
-            var swapIndex = index + NextRandomIndex(pool.Count - index);
-            (pool[index], pool[swapIndex]) = (pool[swapIndex], pool[index]);
-        }
-
-        var selected = new List<SeedLocation>(selectedCount);
-        var deferred = new List<SeedLocation>();
-
-        foreach (var location in pool)
-        {
-            if (selected.Count == selectedCount)
-            {
-                break;
-            }
-
-            if (selected.All(existing => DistanceBetween(existing, location) >= MinimumRoundLocationDistanceKm))
-            {
-                selected.Add(location);
-            }
-            else
-            {
-                deferred.Add(location);
-            }
-        }
-
-        if (selected.Count < selectedCount)
-        {
-            selected.AddRange(deferred.Take(selectedCount - selected.Count));
-        }
-
-        return selected;
+        return GameRoundRules.SelectRandomLocations(_locations, count, _randomIndex);
     }
 
     private SeedMedia? SelectVisualSource(SeedLocation location)
     {
-        var visualSources = location.GetVisualSources();
-
-        return visualSources.Count == 0
-            ? null
-            : visualSources[NextRandomIndex(visualSources.Count)];
-    }
-
-    private int NextRandomIndex(int maxExclusive)
-    {
-        if (maxExclusive <= 1)
-        {
-            return 0;
-        }
-
-        return Math.Clamp(_randomIndex(maxExclusive), 0, maxExclusive - 1);
+        return GameRoundRules.SelectVisualSource(location, _randomIndex);
     }
 
     public ChallengeRoundDto GetCurrentRound(string sessionId)
@@ -251,33 +201,14 @@ public sealed class GameSessionService
         GuessCoordinatesDto? guess,
         string resolution)
     {
-        var boundedGuess = guess is null ? null : ClampGuess(guess);
-        double? distanceKm = boundedGuess is null
-            ? null
-            : HaversineDistanceKm(
-                boundedGuess.Latitude,
-                boundedGuess.Longitude,
-                round.Location.Latitude,
-                round.Location.Longitude);
-
-        var result = new RoundResultDto(
+        var result = GameRoundRules.BuildRoundResult(
             round.Id,
             round.RoundNumber,
-            round.Location.Title,
-            round.Location.City,
-            round.Location.Country,
-            round.Location.Latitude,
-            round.Location.Longitude,
-            boundedGuess,
-            distanceKm is null ? 0 : ScoreFromDistance(distanceKm.Value),
-            distanceKm,
+            round.Location,
+            round.SelectedMedia,
+            guess,
             resolution,
-            session.Config.Timed,
-            BuildMedia(GetRoundMedia(round)),
-            BuildVisualSources(round.Location),
-            round.Location.Clues
-                .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
-                .ToList());
+            session.Config.Timed);
 
         round.Result = result;
         session.CurrentRoundIndex += 1;
@@ -294,92 +225,14 @@ public sealed class GameSessionService
 
     private static ChallengeRoundDto BuildRound(RoundState round, SessionState session)
     {
-        return new ChallengeRoundDto(
+        return GameRoundRules.BuildChallengeRound(
             round.Id,
             round.RoundNumber,
             session.Rounds.Count,
             session.Config.Timed,
-            session.Config.Timed ? session.Config.RoundTimeSeconds : null,
-            new ChallengeDto(
-                round.Location.Id,
-                round.Location.Title,
-                round.Location.City,
-                round.Location.Country,
-                round.Location.Category,
-                round.Location.SceneLabel,
-                round.Location.SceneNote,
-                round.Location.SceneImage,
-                round.Location.Prompt,
-                round.Location.VisualGradient,
-                BuildMedia(GetRoundMedia(round)),
-                BuildVisualSources(round.Location),
-                round.Location.Clues
-                    .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
-                    .ToList()));
-    }
-
-    private static ChallengeMediaDto? BuildMedia(SeedMedia? media)
-    {
-        return media is null
-            ? null
-            : new ChallengeMediaDto(
-                media.SourceProvider,
-                media.ImageUrl,
-                media.ImageSourceUrl,
-                media.ImageAttribution,
-                media.ImageLicense,
-                media.ImageLicenseUrl,
-                media.StreetViewProvider,
-                media.StreetViewUrl,
-                media.VerifiedAt);
-    }
-
-    private static SeedMedia? GetPrimaryMedia(SeedLocation location)
-    {
-        return location.Media ?? location.GetVisualSources().FirstOrDefault();
-    }
-
-    private static SeedMedia? GetRoundMedia(RoundState round)
-    {
-        return round.SelectedMedia ?? GetPrimaryMedia(round.Location);
-    }
-
-    private static GuessCoordinatesDto ClampGuess(GuessCoordinatesDto guess)
-    {
-        const double minLat = 34;
-        const double maxLat = 72;
-        const double minLng = -25;
-        const double maxLng = 45;
-
-        return new GuessCoordinatesDto(
-            Math.Clamp(guess.Latitude, minLat, maxLat),
-            Math.Clamp(guess.Longitude, minLng, maxLng),
-            guess.Label);
-    }
-
-    private static double HaversineDistanceKm(double latitudeA, double longitudeA, double latitudeB, double longitudeB)
-    {
-        const double earthRadiusKm = 6371;
-        static double ToRadians(double value) => value * Math.PI / 180;
-
-        var deltaLat = ToRadians(latitudeB - latitudeA);
-        var deltaLng = ToRadians(longitudeB - longitudeA);
-        var latA = ToRadians(latitudeA);
-        var latB = ToRadians(latitudeB);
-        var a = Math.Pow(Math.Sin(deltaLat / 2), 2) +
-                Math.Cos(latA) * Math.Cos(latB) * Math.Pow(Math.Sin(deltaLng / 2), 2);
-
-        return 2 * earthRadiusKm * Math.Asin(Math.Sqrt(a));
-    }
-
-    private static double DistanceBetween(SeedLocation first, SeedLocation second)
-    {
-        return HaversineDistanceKm(first.Latitude, first.Longitude, second.Latitude, second.Longitude);
-    }
-
-    private static int ScoreFromDistance(double distanceKm)
-    {
-        return Math.Max(0, (int)Math.Round(5000 * Math.Exp(-distanceKm / 650)));
+            session.Config.RoundTimeSeconds,
+            round.Location,
+            round.SelectedMedia);
     }
 
     private bool ShouldPersist => _configuration.GetValue<bool>("GeoExplorer:UsePostgresPersistence");
@@ -463,7 +316,7 @@ public sealed class GameSessionService
                 Id = round.Id,
                 RoundNumber = round.RoundNumber,
                 Location = location,
-                SelectedMedia = round.VisualSource ?? GetPrimaryMedia(location),
+                SelectedMedia = round.VisualSource ?? GameRoundRules.GetPrimaryMedia(location),
             };
 
             if (string.Equals(round.Status, "resolved", StringComparison.OrdinalIgnoreCase))
@@ -510,19 +363,11 @@ public sealed class GameSessionService
             round.DistanceKm,
             round.ResolutionReason ?? "manual",
             config.Timed,
-            BuildMedia(round.VisualSource ?? GetPrimaryMedia(location)),
-            BuildVisualSources(location),
+            GameRoundRules.BuildMedia(round.VisualSource ?? GameRoundRules.GetPrimaryMedia(location)),
+            GameRoundRules.BuildVisualSources(location),
             location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                 .ToList());
-    }
-
-    private static IReadOnlyList<ChallengeMediaDto> BuildVisualSources(SeedLocation location)
-    {
-        return location.GetVisualSources()
-            .Select(source => BuildMedia(source))
-            .OfType<ChallengeMediaDto>()
-            .ToList();
     }
 }
 

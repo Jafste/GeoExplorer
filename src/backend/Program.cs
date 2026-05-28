@@ -1,5 +1,6 @@
 using GeoExplorer.Backend.Contracts;
 using GeoExplorer.Backend.Data;
+using GeoExplorer.Backend.Hubs;
 using GeoExplorer.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddProblemDetails();
 builder.Services.AddMemoryCache();
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -21,6 +23,8 @@ builder.Services.AddPooledDbContextFactory<GeoExplorerDbContext>(options =>
 builder.Services.AddSingleton<DatabaseUsageMetrics>();
 builder.Services.AddSingleton<LocationCatalogStore>();
 builder.Services.AddSingleton<GamePersistenceStore>();
+builder.Services.AddSingleton<MultiplayerPersistenceStore>();
+builder.Services.AddSingleton<MultiplayerRoomService>();
 builder.Services.AddHttpClient<MapillaryImageService>(client =>
 {
     client.Timeout = TimeSpan.FromSeconds(8);
@@ -126,6 +130,8 @@ api.MapGet("/sessions/{sessionId}/results", (string sessionId, GameSessionServic
         return Results.Problem(exception.Message, statusCode: exception.StatusCode);
     }
 });
+
+app.MapHub<MultiplayerHub>("/hubs/multiplayer");
 
 app.MapGet("/", () => Results.Redirect("/api/health"));
 

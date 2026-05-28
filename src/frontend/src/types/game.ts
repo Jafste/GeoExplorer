@@ -103,6 +103,91 @@ export interface RoundResolutionResponse {
   progress: RoundProgress;
 }
 
+export type MultiplayerRoomStatus = "lobby" | "playing" | "round-result" | "completed";
+
+export interface MultiplayerPlayer {
+  playerId: string;
+  displayName: string;
+  isOwner: boolean;
+  connected: boolean;
+  submitted: boolean;
+  ready: boolean;
+  totalScore: number;
+}
+
+export interface MultiplayerRoomState {
+  roomCode: string;
+  status: MultiplayerRoomStatus;
+  ownerPlayerId: string;
+  isPublic: boolean;
+  hasPassword: boolean;
+  config: SessionConfig;
+  players: MultiplayerPlayer[];
+  currentRound: ChallengeRound | null;
+  lastRoundResult: MultiplayerRoundResult | null;
+  finalResult: MultiplayerSessionResult | null;
+}
+
+export interface MultiplayerOpenRoom {
+  roomCode: string;
+  ownerDisplayName: string;
+  playerCount: number;
+  roundCount: number;
+  timed: boolean;
+  roundTimeSeconds: number | null;
+  hasPassword: boolean;
+}
+
+export interface MultiplayerPlayerRoundResult {
+  playerId: string;
+  displayName: string;
+  guess: GuessCoordinates | null;
+  score: number;
+  distanceKm: number | null;
+  resolution: "manual" | "timeout" | "missing";
+}
+
+export interface MultiplayerRoundResult {
+  roomCode: string;
+  roundId: string;
+  roundNumber: number;
+  totalRounds: number;
+  title: string;
+  city: string;
+  country: string;
+  correctLatitude: number;
+  correctLongitude: number;
+  media?: ChallengeMedia;
+  visualSources?: ChallengeMedia[];
+  clues: ChallengeClue[];
+  playerResults: MultiplayerPlayerRoundResult[];
+  completed: boolean;
+  nextRoundNumber: number | null;
+}
+
+export interface MultiplayerSessionPlayerResult {
+  playerId: string;
+  displayName: string;
+  totalScore: number;
+}
+
+export interface MultiplayerSessionResult {
+  roomCode: string;
+  totalRounds: number;
+  players: MultiplayerSessionPlayerResult[];
+  rounds: MultiplayerRoundResult[];
+}
+
+export interface MultiplayerClientEvents {
+  onRoomUpdated: (state: MultiplayerRoomState) => void;
+  onRoundStarted: (round: ChallengeRound) => void;
+  onRoundResolved: (result: MultiplayerRoundResult) => void;
+  onGameCompleted: (result: MultiplayerSessionResult) => void;
+  onPlayerSubmitted: (playerId: string) => void;
+  onPlayerJoining: () => void;
+  onError: (message: string) => void;
+}
+
 export interface GameDataSource {
   createSession(config: SessionConfig): Promise<CreateSessionResponse>;
   getCurrentRound(sessionId: string): Promise<ChallengeRound>;

@@ -3,17 +3,20 @@ using System;
 using GeoExplorer.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GeoExplorer.Backend.Data.Migrations
+namespace backend.Data.Migrations
 {
     [DbContext(typeof(GeoExplorerDbContext))]
-    partial class GeoExplorerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260523220256_AddMultiplayerRooms")]
+    partial class AddMultiplayerRooms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,18 +300,10 @@ namespace GeoExplorer.Backend.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_public");
-
                     b.Property<string>("OwnerPlayerId")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("owner_player_id");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text")
-                        .HasColumnName("password_hash");
 
                     b.Property<string>("Region")
                         .IsRequired()

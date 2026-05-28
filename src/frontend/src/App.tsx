@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useMemo, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
 import { getAnalysisPhase, type SurfacePhase } from "./app/navigation";
 import { appConfig, defaultSessionConfig } from "./app/config";
 import { AppSidebar } from "./components/AppSidebar";
@@ -18,6 +18,11 @@ import type {
 } from "./types/game";
 
 const TUTORIAL_STORAGE_KEY = "geoexplorer.tutorial.completed";
+const MultiplayerPage = lazy(() =>
+  import("./pages/multiplayer/MultiplayerPage").then((module) => ({
+    default: module.MultiplayerPage,
+  }))
+);
 
 export default function App() {
   const dataSource = useMemo(
@@ -35,20 +40,29 @@ export default function App() {
   const [sessionResult, setSessionResult] = useState<SessionResult | null>(null);
   const [tutorialOpen, setTutorialOpen] = useState(false);
   const [tutorialCompleted, setTutorialCompleted] = useState(false);
+  const [multiplayerRoomCode, setMultiplayerRoomCode] = useState<string | null>(null);
 
   useEffect(() => {
     const completed = window.localStorage.getItem(TUTORIAL_STORAGE_KEY) === "true";
     setTutorialCompleted(completed);
     setTutorialOpen(!completed);
+
+    const roomCode = new URLSearchParams(window.location.search).get("room");
+    if (roomCode) {
+      setMultiplayerRoomCode(roomCode.toUpperCase());
+      setPhase("multiplayer");
+    }
   }, []);
 
   const resetToHome = () => {
     setError(null);
     setBusy(false);
     setSessionId(null);
+    setMultiplayerRoomCode(null);
     setCurrentRound(null);
     setRoundResolution(null);
     setSessionResult(null);
+    window.history.replaceState(null, "", window.location.pathname);
     startTransition(() => {
       setPhase("landing");
     });
@@ -143,6 +157,13 @@ export default function App() {
     });
   };
 
+  const openMultiplayer = () => {
+    setError(null);
+    startTransition(() => {
+      setPhase("multiplayer");
+    });
+  };
+
   const openAnalysis = () => {
     if (!roundResolution && !sessionResult) {
       return;
@@ -190,7 +211,20 @@ export default function App() {
         {error ? <div className="alert-banner">{error}</div> : null}
 
         {phase === "landing" ? (
-          <StartPage onOpenTutorial={openTutorial} onStart={goToSetup} />
+          <StartPage
+            onMultiplayer={openMultiplayer}
+            onOpenTutorial={openTutorial}
+            onStart={goToSetup}
+          />
+        ) : null}
+
+        {phase === "multiplayer" ? (
+          <Suspense fallback={<div className="alert-banner">A carregar multiplayer...</div>}>
+            <MultiplayerPage
+              initialRoomCode={multiplayerRoomCode}
+              onBack={resetToHome}
+            />
+          </Suspense>
         ) : null}
 
         {phase === "setup" ? (

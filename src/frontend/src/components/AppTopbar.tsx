@@ -27,6 +27,8 @@ function getPhaseLabel(phase: SurfacePhase) {
       return "Resumo da ronda";
     case "session-result":
       return "Relatório final";
+    case "multiplayer":
+      return "Sala multiplayer";
   }
 }
 

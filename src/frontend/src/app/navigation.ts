@@ -1,6 +1,12 @@
 import type { RoundResolutionResponse, SessionResult } from "../types/game";
 
-export type SurfacePhase = "landing" | "setup" | "round" | "round-result" | "session-result";
+export type SurfacePhase =
+  | "landing"
+  | "setup"
+  | "round"
+  | "round-result"
+  | "session-result"
+  | "multiplayer";
 
 interface AnalysisPhaseInput {
   roundResolution: RoundResolutionResponse | null;

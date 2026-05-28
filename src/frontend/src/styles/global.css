@@ -21,6 +21,163 @@
   --color-danger: #ff5f74;
 }
 
+.multiplayer-screen {
+  display: grid;
+  gap: 24px;
+}
+
+.multiplayer-entry-grid,
+.multiplayer-lobby-grid,
+.multiplayer-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.multiplayer-play-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.42fr);
+  gap: 20px;
+}
+
+.multiplayer-map-card {
+  grid-column: 1 / -1;
+}
+
+.multiplayer-scene-card {
+  min-height: 520px;
+}
+
+.multiplayer-scene-card .challenge-scene-art {
+  min-height: 430px;
+}
+
+.multiplayer-round-head,
+.multiplayer-map-actions,
+.multiplayer-player-row,
+.multiplayer-leaderboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.multiplayer-field {
+  display: grid;
+  gap: 8px;
+}
+
+.multiplayer-name-editor {
+  display: grid;
+  gap: 10px;
+}
+
+.multiplayer-field span {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.multiplayer-field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  background: rgba(8, 12, 18, 0.72);
+  color: var(--text-main);
+  outline: none;
+}
+
+.multiplayer-field input:focus {
+  border-color: var(--line-bright);
+  box-shadow: 0 0 0 3px rgba(154, 232, 93, 0.12);
+}
+
+.multiplayer-player-list,
+.multiplayer-leaderboard {
+  display: grid;
+  gap: 10px;
+}
+
+.multiplayer-player-row,
+.multiplayer-leaderboard-row {
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.multiplayer-player-row--pending {
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.multiplayer-open-room-list {
+  display: grid;
+  gap: 10px;
+}
+
+.multiplayer-open-room {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-main);
+  text-align: left;
+}
+
+.multiplayer-open-room:hover {
+  border-color: var(--line-bright);
+  background: rgba(154, 232, 93, 0.08);
+}
+
+.multiplayer-open-room span {
+  font-weight: 900;
+}
+
+.multiplayer-open-room strong,
+.multiplayer-empty-state {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.multiplayer-player-row span,
+.multiplayer-leaderboard-row span {
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+.multiplayer-player-row strong,
+.multiplayer-leaderboard-row strong {
+  color: var(--color-primary);
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.multiplayer-waiting {
+  padding: 14px;
+  border: 1px solid rgba(154, 232, 93, 0.28);
+  background: rgba(154, 232, 93, 0.08);
+  color: var(--text-soft);
+}
+
+.multiplayer-leaderboard--final .multiplayer-leaderboard-row:first-child {
+  border-color: rgba(154, 232, 93, 0.52);
+  background: rgba(154, 232, 93, 0.12);
+}
+
+@media (max-width: 900px) {
+  .multiplayer-entry-grid,
+  .multiplayer-lobby-grid,
+  .multiplayer-result-grid,
+  .multiplayer-play-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @layer base {
   * {
     box-sizing: border-box;

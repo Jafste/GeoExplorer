@@ -153,6 +153,12 @@ public sealed class GameSessionServiceTests
         StringAssert.Contains(sql, "street_view_url TEXT NULL");
         StringAssert.Contains(sql, "visual_sources JSONB NULL");
         StringAssert.Contains(sql, "visual_source JSONB NULL");
+        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_rooms");
+        StringAssert.Contains(sql, "is_public BOOLEAN NOT NULL DEFAULT FALSE");
+        StringAssert.Contains(sql, "password_hash TEXT NULL");
+        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_players");
+        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_rounds");
+        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_guesses");
     }
 
     private static GameSessionService CreateService()

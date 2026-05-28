@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace GeoExplorer.Backend.Data;
 
@@ -38,6 +39,17 @@ public static class DatabaseMigrationRunner
 
                 return;
             }
+            catch (PostgresException exception) when (IsLegacySchemaConflict(exception))
+            {
+                logger.LogError(
+                    exception,
+                    "The PostgreSQL database already has GeoExplorer tables but no EF migration history.");
+                throw new InvalidOperationException(
+                    "A base de dados PostgreSQL já tem tabelas do GeoExplorer, mas não tem histórico de migrations do Entity Framework. " +
+                    "Isto costuma acontecer quando existe um volume Docker antigo criado antes das migrations. " +
+                    "Em desenvolvimento, recria o volume com: docker compose --profile full down -v && docker compose --profile full up --build",
+                    exception);
+            }
             catch (Exception exception) when (attempt < maxAttempts)
             {
                 logger.LogWarning(
@@ -54,5 +66,10 @@ public static class DatabaseMigrationRunner
     {
         return configuration.GetValue<bool>("GeoExplorer:UsePostgresCatalog") ||
                configuration.GetValue<bool>("GeoExplorer:UsePostgresPersistence");
+    }
+
+    private static bool IsLegacySchemaConflict(PostgresException exception)
+    {
+        return exception.SqlState == PostgresErrorCodes.DuplicateTable;
     }
 }
