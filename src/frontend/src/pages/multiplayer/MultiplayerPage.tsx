@@ -19,6 +19,7 @@ import type {
   MultiplayerSessionResult,
   SessionConfig,
 } from "../../types/game";
+import { getMultiplayerPlayerStatus } from "./multiplayerLabels";
 
 interface MultiplayerPageProps {
   initialRoomCode?: string | null;
@@ -530,7 +531,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
               {room.players.map((player) => (
                 <div className="multiplayer-player-row" key={player.playerId}>
                   <span>{formatPlayerName(player.displayName, player.playerId)}</span>
-                  <strong>{player.submitted ? "Palpite enviado" : "A jogar"}</strong>
+                  <strong>{getMultiplayerPlayerStatus(player, "playing")}</strong>
                 </div>
               ))}
               {playerJoining ? (
@@ -686,7 +687,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
             {room.players.map((player) => (
               <div className="multiplayer-player-row" key={player.playerId}>
                 <span>{formatPlayerName(player.displayName, player.playerId)}</span>
-                <strong>{player.isOwner ? "Owner" : player.connected ? "Ligado" : "Offline"}</strong>
+                <strong>{getMultiplayerPlayerStatus(player, "lobby")}</strong>
               </div>
             ))}
             {playerJoining ? (

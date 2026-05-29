@@ -111,6 +111,76 @@ public sealed class MultiplayerRoomServiceTests
     }
 
     [TestMethod]
+    public async Task LeaveRoom_WhenOwnerLeavesLobby_AssignsNextPlayerAsOwner()
+    {
+        var service = CreateService();
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig()),
+            "connection-a");
+        await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-b", "Ana"),
+            "connection-b");
+
+        var afterLeave = await service.LeaveRoomAsync(
+            new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+
+        Assert.AreEqual("lobby", afterLeave.State.Status);
+        Assert.AreEqual("player-b", afterLeave.State.OwnerPlayerId);
+        Assert.HasCount(1, afterLeave.State.Players);
+        Assert.IsTrue(afterLeave.State.Players[0].IsOwner);
+    }
+
+    [TestMethod]
+    public async Task JoinRoom_WithExistingPlayerDuringGame_ReconnectsWithoutDuplicatingPlayer()
+    {
+        var service = CreateService();
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest(
+                "player-a",
+                "Marcos",
+                DefaultConfig(),
+                IsPublic: false,
+                Password: "porto123"),
+            "connection-a");
+        await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-b", "Ana", Password: "porto123"),
+            "connection-b");
+        await service.StartGameAsync(new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+        await service.MarkDisconnectedAsync("connection-a");
+
+        var reconnected = await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-a", "Marcos"),
+            "connection-a-2");
+
+        Assert.AreEqual("playing", reconnected.State.Status);
+        Assert.HasCount(2, reconnected.State.Players);
+        var player = reconnected.State.Players.Single(candidate => candidate.PlayerId == "player-a");
+        Assert.IsTrue(player.Connected);
+        Assert.IsTrue(player.IsOwner);
+    }
+
+    [TestMethod]
+    public async Task LeaveRoom_WhenOwnerLeavesDuringGame_AssignsNextConnectedPlayerAsOwner()
+    {
+        var service = CreateService();
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig()),
+            "connection-a");
+        await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-b", "Ana"),
+            "connection-b");
+        await service.StartGameAsync(new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+
+        var afterLeave = await service.LeaveRoomAsync(
+            new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+        var state = afterLeave.State;
+
+        Assert.AreEqual("player-b", state.OwnerPlayerId);
+        Assert.IsFalse(state.Players.Single(player => player.PlayerId == "player-a").Connected);
+        Assert.IsTrue(state.Players.Single(player => player.PlayerId == "player-b").IsOwner);
+    }
+
+    [TestMethod]
     public async Task SubmitGuess_WaitsForEveryConnectedPlayerBeforeRoundResult()
     {
         var service = CreateService();
@@ -144,6 +214,70 @@ public sealed class MultiplayerRoomServiceTests
         Assert.IsNotNull(secondSubmit.RoundResolved);
         Assert.AreEqual("round-result", secondSubmit.State.Status);
         Assert.HasCount(2, secondSubmit.RoundResolved.PlayerResults);
+    }
+
+    [TestMethod]
+    public async Task LeaveRoom_DuringActiveRound_ResolvesWhenRemainingConnectedPlayersAlreadySubmitted()
+    {
+        var service = CreateService();
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig()),
+            "connection-a");
+        await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-b", "Ana"),
+            "connection-b");
+        var started = await service.StartGameAsync(new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+        var round = started.RoundStarted ?? throw new AssertFailedException("A sala devia iniciar a primeira ronda.");
+
+        await service.SubmitGuessAsync(
+            new SubmitMultiplayerGuessRequest(
+                created.RoomCode,
+                "player-a",
+                round.Id,
+                new GuessCoordinatesDto(41.1496, -8.6109, "Porto")));
+
+        var afterLeave = await service.LeaveRoomAsync(
+            new MultiplayerRoomPlayerRequest(created.RoomCode, "player-b"));
+
+        Assert.IsNotNull(afterLeave.RoundResolved);
+        Assert.AreEqual("round-result", afterLeave.State.Status);
+        Assert.IsFalse(afterLeave.State.Players.Single(player => player.PlayerId == "player-b").Connected);
+    }
+
+    [TestMethod]
+    public async Task LeaveRoom_DuringRoundResult_CompletesWhenRemainingConnectedPlayersAlreadyReady()
+    {
+        var service = CreateService();
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig(roundCount: 1)),
+            "connection-a");
+        await service.JoinRoomAsync(
+            new JoinMultiplayerRoomRequest(created.RoomCode, "player-b", "Ana"),
+            "connection-b");
+        var started = await service.StartGameAsync(new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+        var round = started.RoundStarted ?? throw new AssertFailedException("A sala devia iniciar a primeira ronda.");
+
+        await service.SubmitGuessAsync(
+            new SubmitMultiplayerGuessRequest(
+                created.RoomCode,
+                "player-a",
+                round.Id,
+                new GuessCoordinatesDto(41.1496, -8.6109, "Porto")));
+        await service.SubmitGuessAsync(
+            new SubmitMultiplayerGuessRequest(
+                created.RoomCode,
+                "player-b",
+                round.Id,
+                new GuessCoordinatesDto(48.8566, 2.3522, "Paris")));
+        await service.ReadyForNextRoundAsync(
+            new MultiplayerRoomPlayerRequest(created.RoomCode, "player-a"));
+
+        var afterLeave = await service.LeaveRoomAsync(
+            new MultiplayerRoomPlayerRequest(created.RoomCode, "player-b"));
+
+        Assert.AreEqual("completed", afterLeave.State.Status);
+        Assert.IsNotNull(afterLeave.GameCompleted);
+        Assert.HasCount(2, afterLeave.GameCompleted.Players);
     }
 
     [TestMethod]
