@@ -5,7 +5,7 @@ using GeoExplorer.Backend.Services;
 namespace GeoExplorer.Backend.Tests;
 
 [TestClass]
-public sealed class SeedLocationDatasetTests
+public sealed partial class SeedLocationDatasetTests
 {
     private static readonly IReadOnlyDictionary<string, string> ReviewedAerialImageSources =
         new Dictionary<string, string>(StringComparer.Ordinal)
@@ -122,13 +122,33 @@ public sealed class SeedLocationDatasetTests
     }
 
     [TestMethod]
+    public void SeedLocations_DoNotExposeMachineIdsInVisibleText()
+    {
+        var locationsWithMachineIds = LoadLocations()
+            .Where(location => MachineIdRegex().IsMatch(string.Join(
+                " ",
+                location.City,
+                location.Title,
+                location.SceneLabel,
+                location.SceneNote,
+                location.Prompt,
+                GetPlayableText(location))))
+            .Select(location => location.Id)
+            .ToList();
+
+        Assert.IsEmpty(
+            locationsWithMachineIds,
+            $"Há identificadores técnicos visíveis no dataset: {string.Join(", ", locationsWithMachineIds)}");
+    }
+
+    [TestMethod]
     public void RealMediaLocations_HaveRequiredSourceAndLicenseMetadata()
     {
         var realMediaLocations = LoadLocations()
             .Where(location => location.Media is not null && location.Media.SourceProvider != "mock")
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(300, realMediaLocations.Count, "O dataset deve manter pelo menos 300 locais com media real validada.");
+        Assert.IsGreaterThanOrEqualTo(1000, realMediaLocations.Count, "O dataset deve manter pelo menos 1000 locais com media real validada.");
 
         foreach (var location in realMediaLocations)
         {
@@ -299,6 +319,9 @@ public sealed class SeedLocationDatasetTests
 
         return aerialPatterns.Any(pattern => Regex.IsMatch(sourceText, pattern, RegexOptions.IgnoreCase));
     }
+
+    [GeneratedRegex(@"\bQ\d+\b", RegexOptions.IgnoreCase)]
+    private static partial Regex MachineIdRegex();
 
     private static List<SeedLocation> LoadLocations()
     {

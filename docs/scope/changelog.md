@@ -96,9 +96,9 @@
 
 ## Sem. 12 · 26–30 mai
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** aumentei o conjunto de locais de 300 para 1000 entradas reais, mantendo imagem, coordenadas, fonte, licença e atribuição. Também criei uma ferramenta local para procurar candidatos no Wikidata/Wikimedia Commons, recolher metadados em lotes, evitar pontos demasiado próximos, rejeitar labels técnicas visíveis e não guardar imagens aéreas/panorâmicas por rever. Durante a revisão, retirei recintos desportivos fracos, corrigi IDs/cidades que tinham ficado como `Q...` em campos visíveis e variei os textos gerados para reduzir descrições demasiado repetidas.
+**Bloqueou:** algumas respostas do Wikidata falharam por timeout ou `502`, e várias imagens do Commons não tinham metadados suficientes para entrar no dataset. Preferi deixar esses candidatos de fora em vez de guardar dados incompletos. A auditoria já não encontra erros bloqueantes, mas ainda pode apontar alguns textos parecidos por causa da geração automática; deixei isso como apoio para revisão manual futura.
+**Próxima semana:** testar mais sessões com o dataset maior, rever visualmente uma amostra dos novos locais e continuar a preencher fontes adicionais Mapillary/Panoramax quando houver cobertura útil.
 
 ---
 

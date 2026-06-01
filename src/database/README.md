@@ -2,7 +2,7 @@
 
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 300 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
+- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 1000 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
 - `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A primeira versão multiplayer também guarda salas, jogadores, rondas e palpites em PostgreSQL. As salas podem ser privadas por link ou públicas na lista de salas abertas; se tiverem password, o backend guarda apenas o hash da password. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
@@ -60,6 +60,18 @@ Para rever o dataset sem alterar ficheiros, posso correr:
 node src/database/tools/audit-location-dataset.mjs --fail-on-errors
 ```
 
-Este script mostra contagens por país e fonte visual, deteta IDs duplicados, imagens principais repetidas, dados obrigatórios em falta, locais muito próximos, textos demasiado repetidos, pistas que revelam diretamente cidade ou país e imagens que parecem ser aéreas ou panorâmicas. Usei esta verificação para corrigir uma imagem repetida em Kotor, substituir pares demasiado próximos por novos locais reais, melhorar descrições demasiado parecidas e trocar imagens fracas em Cardiff, Ronda e San Gimignano. Neste momento, a verificação já não encontra pares abaixo de 75 metros, grupos de texto repetido no limiar atual, pistas diretas nos textos jogáveis nem imagens aéreas por decidir. As imagens aéreas que ficaram estão registadas como revistas porque ajudam a ler melhor alguns locais no jogo.
+Este script mostra contagens por país e fonte visual, deteta IDs duplicados, imagens principais repetidas, dados obrigatórios em falta, locais muito próximos, textos demasiado repetidos, pistas que revelam diretamente cidade ou país e imagens que parecem ser aéreas ou panorâmicas. Usei esta verificação para corrigir uma imagem repetida em Kotor, substituir pares demasiado próximos por novos locais reais, melhorar descrições demasiado parecidas e trocar imagens fracas em Cardiff, Ronda e San Gimignano. Neste momento, a verificação já não encontra pares abaixo de 75 metros, pistas diretas nos textos jogáveis, imagens aéreas por decidir, imagens principais repetidas nem metadados obrigatórios em falta. As imagens aéreas que ficaram estão registadas como revistas porque ajudam a ler melhor alguns locais no jogo.
 
 Além desta revisão do conjunto de locais, o backend tenta não escolher locais a menos de 1 km entre si dentro da mesma sessão quando existem alternativas suficientes no catálogo.
+
+## Expansão Wikimedia
+
+Para aumentar o conjunto de locais sem introduzir dados sem licença, posso usar a ferramenta local:
+
+```bash
+node src/database/tools/expand-wikimedia-locations.mjs --target-count 1000
+```
+
+A ferramenta procura candidatos no Wikidata, recolhe metadados de imagem no Wikimedia Commons, evita imagens principais repetidas, pontos demasiado próximos, labels técnicas visíveis e ficheiros que parecem ser imagens aéreas/panorâmicas por rever. Também limita quantos locais entram por país em cada passe, para evitar que o dataset fique concentrado num conjunto pequeno de países.
+
+Depois de expandir, corro sempre a auditoria do dataset. Nesta fase a auditoria já não encontrou erros bloqueantes, mas ainda pode assinalar alguns textos parecidos por causa da geração automática de descrições; esses avisos ficam como apoio para revisões manuais futuras.

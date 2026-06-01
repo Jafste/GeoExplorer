@@ -16,7 +16,7 @@
 |----|-------|--------------|---------|-----------|
 | R01 | Deriva de âmbito para múltiplos modos de jogo, multijogador ou autenticação antes de o MVP estar estável | Média | Alto | Manter o MVP contratualizado em `docs/scope/requirements.md`; qualquer extensão fica classificada como `Should`, `Could` ou `Won't have`. |
 | R02 | Dependência excessiva de APIs externas para imagens, localizações ou mapas durante a demonstração | Média | Alto | Preparar um conjunto de locais revisto para o MVP e usar serviços externos apenas como apoio à recolha/preparação dos dados. |
-| R03 | Dataset europeu insuficiente, inconsistente ou com dúvidas de licenciamento | Baixa | Alto | Manter o conjunto atual de 300 locais com origem documentada, coordenadas, licença, atribuição e verificação automática de duplicados, proximidade e pistas demasiado diretas. |
+| R03 | Dataset europeu insuficiente, inconsistente ou com dúvidas de licenciamento | Baixa | Alto | Manter o conjunto atual de 1000 locais com origem documentada, coordenadas, licença, atribuição e verificação automática de duplicados, proximidade e pistas demasiado diretas. |
 | R04 | Subestimação da complexidade de ligar frontend com mapa, API .NET e base de dados | Média | Médio | Implementar uma parte jogável de ponta a ponta desde cedo e integrar continuamente em vez de deixar a junção para a fase final. |
 | R05 | Falta de tempo para testes, diagramas, relatório e preparação da defesa | Alta | Médio | Reservar semanas específicas para estabilização e documentação e evitar concentrar trabalho apenas perto das entregas formais. |
 | R06 | Divergência entre o comportamento do frontend em `mock` e a API real | Baixa | Médio | Definir contratos comuns para `mock` e `api`, reutilizar o mesmo dataset inicial, alinhar regras de seleção de rondas e manter testes de fluxo para ambos os modos principais. |
@@ -43,3 +43,4 @@
 | 20 de maio de 2026 | R13 | Lote de 150 fontes Mapillary guardado com caminhos estáveis do backend | Em curso |
 | 23 de maio de 2026 | R03, R06, R11 | Revisão do conjunto de locais para 300 entradas, registo de imagens aéreas já revistas e alinhamento do fluxo `mock` com a API | Mitigado para o MVP |
 | 23 de maio de 2026 | R12 | Primeira versão multiplayer com salas por link, SignalR e gravação de resultados em PostgreSQL | Mitigado parcialmente |
+| 29 de maio de 2026 | R03 | Expansão do conjunto de locais para 1000 entradas reais com imagem, coordenadas, fonte, licença e atribuição | Mitigado para o MVP |
