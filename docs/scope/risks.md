@@ -1,7 +1,7 @@
 # Gestão de Riscos
 
 **Projeto:** GeoExplorer  
-**Versão:** 1.4 · 23 de maio de 2026
+**Versão:** 1.5 · 2 de junho de 2026
 
 ---
 
@@ -25,8 +25,9 @@
 | R09 | O uso real pode mostrar mais leituras à base de dados do que eu previa no início | Média | Médio | Registar chamadas importantes à base de dados, guardar em cache dados estáveis como o catálogo de locais e reavaliar Turso/libSQL apenas com dados reais. |
 | R10 | Uma mudança tardia de PostgreSQL para Turso/libSQL pode exigir ajustes no schema, nos tipos de dados e no código que guarda informação | Baixa | Médio | Isolar o acesso à base de dados em serviços próprios, evitar SQL específico do fornecedor sempre que possível e documentar qualquer mudança futura num ADR próprio. |
 | R11 | Testes automáticos insuficientes podem deixar diferenças entre frontend `mock`, backend `api` e schema da base de dados passarem até tarde | Baixa | Médio | Manter testes de contrato, fluxo mock, fluxo HTTP da API, gravação com Entity Framework e validação do dataset antes de avançar para modos mais complexos. |
-| R12 | Introduzir multiplayer antes de a base do jogo guardar dados de forma estável pode aumentar muito a complexidade técnica | Baixa | Alto | Implementei primeiro uma versão simples com salas por link, owner, nomes únicos e SignalR no backend; a próxima mitigação é testar reconexões e sessões com mais jogadores. |
+| R12 | Introduzir multiplayer antes de a base do jogo guardar dados de forma estável pode aumentar muito a complexidade técnica | Baixa | Alto | Implementei primeiro uma versão simples com salas por link, dono da sala, nomes únicos e SignalR no backend; a próxima mitigação é testar reconexões e sessões com mais jogadores. |
 | R13 | Guardar URLs temporários de serviços externos como Mapillary pode fazer com que imagens deixem de carregar mais tarde | Média | Médio | Usar Mapillary primeiro como ferramenta de recolha e revisão; quando for preciso usar imagens Mapillary no jogo, guardar um caminho estável do backend e deixar o backend resolver o thumbnail atual com token local. |
+| R14 | Exposição acidental de tokens, origens externas ou dados locais durante a entrega | Baixa | Alto | Manter `.env` fora do Git, deixar `MAPILLARY_ACCESS_TOKEN` apenas no ambiente local, configurar CORS com origens explícitas e rever artefactos locais antes dos commits finais. |
 
 ---
 
@@ -44,3 +45,4 @@
 | 23 de maio de 2026 | R03, R06, R11 | Revisão do conjunto de locais para 300 entradas, registo de imagens aéreas já revistas e alinhamento do fluxo `mock` com a API | Mitigado para o MVP |
 | 23 de maio de 2026 | R12 | Primeira versão multiplayer com salas por link, SignalR e gravação de resultados em PostgreSQL | Mitigado parcialmente |
 | 29 de maio de 2026 | R03 | Expansão do conjunto de locais para 1000 entradas reais com imagem, coordenadas, fonte, licença e atribuição | Mitigado para o MVP |
+| 2 de junho de 2026 | R14 | Revisão de segredos, CORS e validações server-side antes da validação final em Docker | Mitigado para o MVP |

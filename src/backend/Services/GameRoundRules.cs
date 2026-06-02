@@ -1,10 +1,16 @@
 using GeoExplorer.Backend.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace GeoExplorer.Backend.Services;
 
 internal static class GameRoundRules
 {
     private const double MinimumRoundLocationDistanceKm = 1.0;
+    private const double MinGuessLatitude = 34;
+    private const double MaxGuessLatitude = 72;
+    private const double MinGuessLongitude = -25;
+    private const double MaxGuessLongitude = 45;
+    private const int MaxGuessLabelLength = 80;
 
     public static List<SeedLocation> SelectRandomLocations(
         IReadOnlyList<SeedLocation> locations,
@@ -99,12 +105,12 @@ internal static class GameRoundRules
         string resolution,
         bool timed)
     {
-        var boundedGuess = guess is null ? null : ClampGuess(guess);
-        double? distanceKm = boundedGuess is null
+        var validatedGuess = guess is null ? null : ValidateGuess(guess);
+        double? distanceKm = validatedGuess is null
             ? null
             : HaversineDistanceKm(
-                boundedGuess.Latitude,
-                boundedGuess.Longitude,
+                validatedGuess.Latitude,
+                validatedGuess.Longitude,
                 location.Latitude,
                 location.Longitude);
 
@@ -116,7 +122,7 @@ internal static class GameRoundRules
             location.Country,
             location.Latitude,
             location.Longitude,
-            boundedGuess,
+            validatedGuess,
             distanceKm is null ? 0 : ScoreFromDistance(distanceKm.Value),
             distanceKm,
             resolution,
@@ -162,17 +168,32 @@ internal static class GameRoundRules
         return selectedMedia ?? GetPrimaryMedia(location);
     }
 
-    public static GuessCoordinatesDto ClampGuess(GuessCoordinatesDto guess)
+    public static GuessCoordinatesDto ValidateGuess(GuessCoordinatesDto guess)
     {
-        const double minLat = 34;
-        const double maxLat = 72;
-        const double minLng = -25;
-        const double maxLng = 45;
+        if (!double.IsFinite(guess.Latitude) || !double.IsFinite(guess.Longitude))
+        {
+            throw new GameFlowException("O palpite tem coordenadas inválidas.", StatusCodes.Status400BadRequest);
+        }
+
+        if (guess.Latitude is < MinGuessLatitude or > MaxGuessLatitude ||
+            guess.Longitude is < MinGuessLongitude or > MaxGuessLongitude)
+        {
+            throw new GameFlowException("O palpite tem coordenadas fora do mapa europeu.", StatusCodes.Status400BadRequest);
+        }
+
+        var label = string.IsNullOrWhiteSpace(guess.Label)
+            ? "Palpite"
+            : guess.Label.Trim();
+
+        if (label.Length > MaxGuessLabelLength || label.Any(char.IsControl))
+        {
+            throw new GameFlowException("A descrição do palpite não é válida.", StatusCodes.Status400BadRequest);
+        }
 
         return new GuessCoordinatesDto(
-            Math.Clamp(guess.Latitude, minLat, maxLat),
-            Math.Clamp(guess.Longitude, minLng, maxLng),
-            guess.Label);
+            guess.Latitude,
+            guess.Longitude,
+            label);
     }
 
     public static double DistanceBetween(SeedLocation first, SeedLocation second)

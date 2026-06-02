@@ -62,7 +62,7 @@ Formalizei o schema principal com migrations do Entity Framework. Com isto, o ba
 
 ## Atualização de 23 de maio de 2026
 
-Implementei a primeira versão multiplayer com SignalR no backend. Decidi começar sem login obrigatório: a sala é partilhada por URL, cada jogador escolhe um nome único dentro da sala e o primeiro jogador fica como owner. O owner escolhe a configuração e inicia a partida.
+Implementei a primeira versão multiplayer com SignalR no backend. Decidi começar sem login obrigatório: a sala é partilhada por link, cada jogador escolhe um nome único dentro da sala e o primeiro jogador fica como dono da sala. O dono da sala escolhe a configuração e inicia a partida.
 
 Mantive a lógica do jogo no backend: todos recebem a mesma ronda, cada jogador só pode submeter um palpite e o resultado só é mostrado quando todos os jogadores ativos terminam ou quando o tempo acaba. Também adicionei tabelas próprias para salas, jogadores, rondas e palpites multiplayer, mantendo PostgreSQL e Entity Framework como base de gravação.
 

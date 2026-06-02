@@ -111,6 +111,23 @@ public sealed class MultiplayerRoomServiceTests
     }
 
     [TestMethod]
+    public async Task JoinRoom_WithInvalidRoomCodeCharacters_ReturnsBadRequest()
+    {
+        var service = CreateService();
+        await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig()),
+            "connection-a");
+
+        var exception = await Assert.ThrowsExactlyAsync<GameFlowException>(() =>
+            service.JoinRoomAsync(
+                new JoinMultiplayerRoomRequest("!!!!!!", "player-b", "Ana"),
+                "connection-b"));
+
+        Assert.AreEqual(StatusCodes.Status400BadRequest, exception.StatusCode);
+        Assert.AreEqual("Código de sala inválido.", exception.Message);
+    }
+
+    [TestMethod]
     public async Task LeaveRoom_WhenOwnerLeavesLobby_AssignsNextPlayerAsOwner()
     {
         var service = CreateService();

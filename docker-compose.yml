@@ -42,6 +42,7 @@ services:
       ASPNETCORE_HTTP_PORT: ${ASPNETCORE_HTTP_PORT:-8080}
       GeoExplorer__UsePostgresCatalog: "true"
       GeoExplorer__UsePostgresPersistence: "true"
+      GeoExplorer__AllowedOrigins: ${GeoExplorer__AllowedOrigins:-http://localhost:5173;http://127.0.0.1:5173}
       ConnectionStrings__GeoExplorerDb: Host=db;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:-geoexplorer_dev}
       MAPILLARY_ACCESS_TOKEN: ${MAPILLARY_ACCESS_TOKEN:-}
     depends_on:

@@ -11,9 +11,14 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
+    var allowedOrigins = GetAllowedOrigins(builder.Configuration);
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        policy
+            .WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 builder.Services.AddSingleton<SeedLocationCatalog>();
@@ -136,6 +141,25 @@ app.MapHub<MultiplayerHub>("/hubs/multiplayer");
 app.MapGet("/", () => Results.Redirect("/api/health"));
 
 app.Run();
+
+static string[] GetAllowedOrigins(IConfiguration configuration)
+{
+    var configuredOrigins = configuration["GeoExplorer:AllowedOrigins"];
+
+    if (string.IsNullOrWhiteSpace(configuredOrigins))
+    {
+        return
+        [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+        ];
+    }
+
+    return configuredOrigins
+        .Split([';', ','], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+}
 
 public partial class Program
 {

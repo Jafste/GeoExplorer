@@ -147,7 +147,7 @@ public sealed class MultiplayerRoomService
                 var owner = room.Players.FirstOrDefault(player => player.PlayerId == room.OwnerPlayerId);
                 rooms.Add(new MultiplayerOpenRoomDto(
                     room.RoomCode,
-                    owner?.DisplayName ?? "Owner",
+                    owner?.DisplayName ?? "Dono da sala",
                     room.Players.Count,
                     room.Config.RoundCount,
                     room.Config.Timed,
@@ -275,13 +275,14 @@ public sealed class MultiplayerRoomService
         {
             var player = GetConnectedPlayer(room, playerId);
             var round = GetActiveRound(room, request.RoundId);
+            var guess = GameRoundRules.ValidateGuess(request.Guess);
 
             if (round.Guesses.ContainsKey(playerId))
             {
                 throw new GameFlowException("Já submeteste um palpite nesta ronda.", StatusCodes.Status409Conflict);
             }
 
-            round.Guesses[playerId] = BuildPlayerGuess(player, round, request.Guess, "manual");
+            round.Guesses[playerId] = BuildPlayerGuess(player, round, guess, "manual");
 
             var resolved = ShouldResolveRound(room, round)
                 ? ResolveRound(room, round, "manual")
@@ -902,7 +903,7 @@ public sealed class MultiplayerRoomService
     {
         var normalized = playerId.Trim();
 
-        if (string.IsNullOrWhiteSpace(normalized) || normalized.Length > 80)
+        if (string.IsNullOrWhiteSpace(normalized) || normalized.Length > 80 || normalized.Any(char.IsControl))
         {
             throw new GameFlowException("Identificador de jogador inválido.", StatusCodes.Status400BadRequest);
         }
@@ -917,6 +918,11 @@ public sealed class MultiplayerRoomService
         if (normalized.Length is < 2 or > 24)
         {
             throw new GameFlowException("O nome deve ter entre 2 e 24 caracteres.", StatusCodes.Status400BadRequest);
+        }
+
+        if (normalized.Any(char.IsControl))
+        {
+            throw new GameFlowException("O nome tem caracteres inválidos.", StatusCodes.Status400BadRequest);
         }
 
         return normalized;
@@ -976,7 +982,7 @@ public sealed class MultiplayerRoomService
     {
         if (!string.Equals(room.OwnerPlayerId, playerId, StringComparison.Ordinal))
         {
-            throw new GameFlowException("Só o owner da sala pode fazer esta ação.", StatusCodes.Status403Forbidden);
+            throw new GameFlowException("Só o dono da sala pode fazer esta ação.", StatusCodes.Status403Forbidden);
         }
     }
 
@@ -1010,7 +1016,8 @@ public sealed class MultiplayerRoomService
     {
         var normalized = roomCode.Trim().ToUpperInvariant();
 
-        if (normalized.Length != RoomCodeLength)
+        if (normalized.Length != RoomCodeLength ||
+            normalized.Any(character => !RoomCodeAlphabet.Contains(character)))
         {
             throw new GameFlowException("Código de sala inválido.", StatusCodes.Status400BadRequest);
         }

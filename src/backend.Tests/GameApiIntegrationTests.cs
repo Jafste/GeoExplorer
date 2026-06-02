@@ -34,6 +34,35 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task Cors_WithConfiguredLocalOrigin_AllowsPreflight()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+        using var request = new HttpRequestMessage(HttpMethod.Options, "/api/health");
+        request.Headers.Add("Origin", "http://localhost:5173");
+        request.Headers.Add("Access-Control-Request-Method", "GET");
+
+        using var response = await client.SendAsync(request);
+
+        Assert.IsTrue(response.Headers.TryGetValues("Access-Control-Allow-Origin", out var origins));
+        Assert.AreEqual("http://localhost:5173", origins.Single());
+    }
+
+    [TestMethod]
+    public async Task Cors_WithUnknownOrigin_DoesNotAllowPreflight()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+        using var request = new HttpRequestMessage(HttpMethod.Options, "/api/health");
+        request.Headers.Add("Origin", "https://example.invalid");
+        request.Headers.Add("Access-Control-Request-Method", "GET");
+
+        using var response = await client.SendAsync(request);
+
+        Assert.IsFalse(response.Headers.Contains("Access-Control-Allow-Origin"));
+    }
+
+    [TestMethod]
     public async Task DatabaseDiagnostics_ReturnsUsageSnapshot()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -229,6 +258,26 @@ public sealed class GameApiIntegrationTests
 
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.AreEqual("A ronda já foi resolvida.", document.RootElement.GetProperty("detail").GetString());
+    }
+
+    [TestMethod]
+    public async Task SubmitGuess_WithCoordinatesOutsideEurope_ReturnsProblemDetails()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+        var created = await PostJson<CreateSessionResponse>(
+            client,
+            "/api/sessions",
+            new CreateSessionRequest("europe", RoundCount: 1, Timed: false, RoundTimeSeconds: null));
+
+        using var response = await client.PostAsJsonAsync(
+            $"/api/sessions/{created.SessionId}/rounds/{created.CurrentRound.Id}/guess",
+            new GuessRequest(new GuessCoordinatesDto(91, 0, "Fora do mapa")));
+
+        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+
+        using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        Assert.AreEqual("O palpite tem coordenadas fora do mapa europeu.", document.RootElement.GetProperty("detail").GetString());
     }
 
     private static async Task<T> GetJson<T>(HttpClient client, string url)

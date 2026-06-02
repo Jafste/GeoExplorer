@@ -40,7 +40,7 @@
 
 ### Could have
 
-- RF12 — O sistema poderá suportar um modo multijogador simples, com sala partilhada por URL, salas públicas listáveis, password opcional, owner da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
+- RF12 — O sistema poderá suportar um modo multijogador simples, com sala partilhada por link, salas públicas listáveis, password opcional, dono da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
 - RF13 — O sistema poderá suportar filtros adicionais dentro do âmbito europeu, como país ou categoria de local, sem alterar o núcleo do jogo.
 - RF14 — O sistema poderá apresentar estatísticas básicas por sessão para apoio à análise do desempenho.
 

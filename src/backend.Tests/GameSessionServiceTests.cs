@@ -143,6 +143,46 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void SubmitGuess_WithNonFiniteCoordinates_ThrowsBadRequest()
+    {
+        var service = CreateService();
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        var exception = Assert.ThrowsExactly<GameFlowException>(() =>
+            service.SubmitGuess(
+                session.SessionId,
+                session.CurrentRound.Id,
+                new GuessCoordinatesDto(double.NaN, -8.6109, "Porto")));
+
+        Assert.AreEqual(400, exception.StatusCode);
+        Assert.AreEqual("O palpite tem coordenadas inválidas.", exception.Message);
+    }
+
+    [TestMethod]
+    public void SubmitGuess_WithControlCharacterInLabel_ThrowsBadRequest()
+    {
+        var service = CreateService();
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        var exception = Assert.ThrowsExactly<GameFlowException>(() =>
+            service.SubmitGuess(
+                session.SessionId,
+                session.CurrentRound.Id,
+                new GuessCoordinatesDto(41.1496, -8.6109, "Porto\nNorte")));
+
+        Assert.AreEqual(400, exception.StatusCode);
+        Assert.AreEqual("A descrição do palpite não é válida.", exception.Message);
+    }
+
+    [TestMethod]
     public void DatabaseSchema_IncludesSceneImageColumn()
     {
         var sql = File.ReadAllText(Path.Combine(FindRepoRoot(), "src", "database", "sql", "001-init.sql"));
