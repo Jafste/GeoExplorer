@@ -39,6 +39,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   const [joinPassword, setJoinPassword] = useState("");
   const [openRooms, setOpenRooms] = useState<MultiplayerOpenRoom[]>([]);
   const [loadingOpenRooms, setLoadingOpenRooms] = useState(false);
+  const [openRoomsLoaded, setOpenRoomsLoaded] = useState(false);
   const [playerJoining, setPlayerJoining] = useState(false);
   const [config, setConfig] = useState<SessionConfig>(defaultSessionConfig);
   const [room, setRoom] = useState<MultiplayerRoomState | null>(null);
@@ -181,6 +182,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
     try {
       setOpenRooms(await client.listOpenRooms());
+      setOpenRoomsLoaded(true);
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Não foi possível carregar salas abertas.");
     } finally {
@@ -330,10 +332,10 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
       <section className="screen-shell multiplayer-screen">
         <Card as="article" variant="tacticalStack">
           <span className="eyebrow">multiplayer</span>
-          <h2 className="section-title">O multiplayer precisa do backend em modo API.</h2>
+          <h2 className="section-title">O multiplayer precisa do backend em modo api.</h2>
           <p>
-            Para testar salas em tempo real, arranca o projeto com o perfil `full` ou com o frontend em
-            modo `api`.
+            Para testar salas em tempo real, arranca o projeto com o perfil full ou com o frontend em
+            modo api.
           </p>
           <RoundedButton intent="primary" radius="none" onClick={onBack} type="button">
             Voltar ao início
@@ -356,7 +358,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           </RoundedButton>
         </div>
 
-        {error ? <div className="alert-banner">{error}</div> : null}
+        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
 
         <div className="multiplayer-entry-grid">
           <Card as="article" variant="setupPanelStack">
@@ -442,7 +444,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           <Card as="article" variant="setupPanelStack">
             <span className="muted-eyebrow">Convite</span>
             <h3>Entrar numa sala existente</h3>
-            <p>Usa o código recebido por URL. O nome tem de ser único dentro da sala.</p>
+            <p>Usa o código recebido por link. O nome tem de ser único dentro da sala.</p>
             <label className="multiplayer-field">
               <span>Código da sala</span>
               <input
@@ -470,7 +472,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           <Card as="article" variant="setupPanelStack">
             <span className="muted-eyebrow">Salas abertas</span>
             <h3>Entrar sem convite direto</h3>
-            <p>Lista salas públicas ainda em lobby. Algumas podem pedir password.</p>
+            <p>Mostra salas abertas que ainda não começaram. Algumas podem pedir password.</p>
             <RoundedButton
               disabled={loadingOpenRooms}
               color="neon"
@@ -479,11 +481,17 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
               onClick={loadOpenRooms}
               type="button"
             >
-              {loadingOpenRooms ? "A procurar..." : "Ver salas abertas"}
+              {loadingOpenRooms ? "A procurar salas..." : "Ver salas abertas"}
             </RoundedButton>
-            <div className="multiplayer-open-room-list">
+            <div className="multiplayer-open-room-list" aria-busy={loadingOpenRooms} aria-live="polite">
               {openRooms.length === 0 ? (
-                <span className="multiplayer-empty-state">Nenhuma sala aberta carregada.</span>
+                <span className="multiplayer-empty-state">
+                  {loadingOpenRooms
+                    ? "A procurar salas abertas..."
+                    : openRoomsLoaded
+                      ? "Não há salas abertas neste momento. Cria uma sala aberta ou entra por link."
+                      : "Ainda não procurei salas abertas. Usa o botão acima para atualizar a lista."}
+                </span>
               ) : (
                 openRooms.map((openRoom) => (
                   <button
@@ -512,7 +520,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   if (room.status === "playing" && currentRound) {
     return (
       <section className="screen-shell multiplayer-screen multiplayer-screen--play">
-        {error ? <div className="alert-banner">{error}</div> : null}
+        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
         <div className="multiplayer-play-grid">
           <Card as="article" variant="tactical" className="multiplayer-scene-card">
             <div className="multiplayer-round-head">
@@ -543,7 +551,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
             </div>
             {hasSubmitted ? (
               <div className="multiplayer-waiting">
-                À espera dos outros jogadores ou do fecho do tempo.
+                Palpite registado. À espera dos outros jogadores ou do fim do tempo.
               </div>
             ) : null}
           </Card>
@@ -584,7 +592,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
     return (
       <section className="screen-shell multiplayer-screen">
-        {error ? <div className="alert-banner">{error}</div> : null}
+        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
         <div className="section-header section-header-inline">
           <div>
             <div className="eyebrow">resultado da sala {room.roomCode}</div>
@@ -659,11 +667,11 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
   return (
     <section className="screen-shell multiplayer-screen">
-      {error ? <div className="alert-banner">{error}</div> : null}
+      {error ? <div className="alert-banner" role="alert">{error}</div> : null}
       <div className="section-header section-header-inline">
         <div>
           <div className="eyebrow">sala {room.roomCode}</div>
-          <h2 className="section-title">Lobby multiplayer.</h2>
+          <h2 className="section-title">Sala multiplayer.</h2>
           <p>
             {room.isPublic ? "Sala aberta na lista pública." : "Sala privada por link."}
             {room.hasPassword ? " Protegida por password." : " Sem password."}
@@ -739,7 +747,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
             />
           ) : null}
           <RoundedButton disabled={!isOwner || busy} intent="primary" radius="none" onClick={startGame} type="button">
-            {isOwner ? "Iniciar partida" : "À espera do owner"}
+            {isOwner ? "Iniciar partida" : "À espera do dono da sala"}
           </RoundedButton>
         </Card>
       </div>

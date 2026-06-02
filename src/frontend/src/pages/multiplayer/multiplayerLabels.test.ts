@@ -19,7 +19,7 @@ describe("getMultiplayerPlayerStatus", () => {
         isOwner: true,
         submitted: false,
       }, "lobby")
-    ).toBe("Owner");
+    ).toBe("Dono da sala");
 
     expect(
       getMultiplayerPlayerStatus({

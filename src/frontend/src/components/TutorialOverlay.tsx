@@ -19,12 +19,12 @@ const TUTORIAL_STEPS = [
   {
     badge: "Passo 1",
     title: "Configura a sessão",
-    text: "Escolhe quantas rondas queres jogar e se preferes jogar com ou sem cronómetro.",
+    text: "Escolhe quantas rondas queres jogar, define se há cronómetro e decide se vais jogar a solo ou numa sala.",
     accent: "3 / 5 / 7 rondas",
-    helper: "O modo é individual e focado na Europa, para manter a demo simples e direta.",
+    helper: "No modo multiplayer, o dono da sala escolhe a configuração antes de iniciar a partida.",
     telemetry: [
       { label: "Âmbito", value: "Europa" },
-      { label: "Perfil", value: "Individual" },
+      { label: "Perfil", value: "Solo ou sala" },
       { label: "Ritmo", value: "Opcional" },
     ],
     icon: Flag,
@@ -34,9 +34,9 @@ const TUTORIAL_STEPS = [
     title: "Observa a imagem real",
     text: "Cada ronda mostra uma fotografia de um local europeu. Procura pistas na arquitetura, relevo, luz e contexto urbano.",
     accent: "Imagem + pistas",
-    helper: "As pistas ajudam a orientar a leitura, mas a resposta final depende do teu palpite no mapa.",
+    helper: "As pistas ajudam a orientar a leitura, mas evitam revelar diretamente a cidade ou o país.",
     telemetry: [
-      { label: "Fonte", value: "Wikimedia" },
+      { label: "Fonte", value: "Wikimedia / rua" },
       { label: "Leitura", value: "Visual" },
       { label: "Pistas", value: "Contextuais" },
     ],
@@ -47,7 +47,7 @@ const TUTORIAL_STEPS = [
     title: "Marca no mapa real",
     text: "Abre o mapa, aproxima a zona que achas correta e coloca o pino no ponto mais provável.",
     accent: "Mapa real",
-    helper: "Só existe uma submissão por ronda. Depois de enviares o palpite, o resultado fica fechado.",
+    helper: "Só existe uma submissão por ronda. No multiplayer, cada jogador marca o seu próprio ponto.",
     telemetry: [
       { label: "Mapa", value: "OpenStreetMap" },
       { label: "Pino", value: "Uma submissão" },
@@ -60,7 +60,7 @@ const TUTORIAL_STEPS = [
     title: "Compara o resultado",
     text: "No fim da ronda vês a distância ao local correto, a pontuação, as pistas e a fonte/licença da imagem.",
     accent: "Distância → pontos",
-    helper: "O relatório final junta todas as rondas para veres onde acertaste melhor e onde te desviaste.",
+    helper: "Numa sala, o resultado aparece quando todos submetem ou quando o tempo termina.",
     telemetry: [
       { label: "Pontuação", value: "Imediata" },
       { label: "Fonte", value: "Visível" },
@@ -140,7 +140,7 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
               Aprende o fluxo do jogo em quatro passos.
             </h2>
             <p className="tutorial-intro">
-              O tutorial segue o mesmo ritmo do produto: configurar, observar, marcar no mapa e comparar o resultado.
+              O tutorial segue o mesmo ritmo do jogo: configurar, observar, marcar no mapa e comparar o resultado.
             </p>
           </div>
 
@@ -184,7 +184,7 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
               <span className="muted-eyebrow">Protocolo</span>
               <strong>Uma imagem, um pino, uma pontuação.</strong>
               <p>
-                O jogo usa imagens reais e um mapa real. O cronómetro só muda o ritmo da decisão.
+                O jogo usa imagens reais, mapa real e salas por link. O cronómetro só muda o ritmo da decisão.
               </p>
               <span className="tutorial-rail-hint">Esc fecha. Setas esquerda/direita navegam os passos.</span>
             </div>

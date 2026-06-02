@@ -208,7 +208,7 @@ export default function App() {
           phase={phase}
         />
 
-        {error ? <div className="alert-banner">{error}</div> : null}
+        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
 
         {phase === "landing" ? (
           <StartPage
@@ -219,7 +219,7 @@ export default function App() {
         ) : null}
 
         {phase === "multiplayer" ? (
-          <Suspense fallback={<div className="alert-banner">A carregar multiplayer...</div>}>
+          <Suspense fallback={<div className="alert-banner" role="status">A preparar sala multiplayer...</div>}>
             <MultiplayerPage
               initialRoomCode={multiplayerRoomCode}
               onBack={resetToHome}

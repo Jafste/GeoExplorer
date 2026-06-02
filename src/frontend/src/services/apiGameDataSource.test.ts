@@ -216,4 +216,29 @@ describe("createApiGameDataSource", () => {
 
     await expect(dataSource.getCurrentRound("missing-session")).rejects.toThrow("Sessão não encontrada.");
   });
+
+  it("uses a Portuguese network error when the backend cannot be reached", async () => {
+    fetchMock.mockRejectedValueOnce(new TypeError("Failed to fetch"));
+
+    const dataSource = createApiGameDataSource(apiBaseUrl);
+
+    await expect(dataSource.getCurrentRound("session-1")).rejects.toThrow(
+      "Não foi possível contactar o backend. Confirma se o modo api está ativo."
+    );
+  });
+
+  it("uses a stable message when an error response cannot be parsed", async () => {
+    fetchMock.mockResolvedValueOnce(new Response("not-json", {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }));
+
+    const dataSource = createApiGameDataSource(apiBaseUrl);
+
+    await expect(dataSource.getCurrentRound("session-1")).rejects.toThrow(
+      "O servidor devolveu um erro, mas a resposta não pôde ser lida."
+    );
+  });
 });

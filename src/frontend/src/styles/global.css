@@ -118,6 +118,10 @@
   gap: 10px;
 }
 
+.multiplayer-open-room-list[aria-busy="true"] {
+  opacity: 0.78;
+}
+
 .multiplayer-open-room {
   display: grid;
   gap: 6px;
@@ -141,6 +145,14 @@
 .multiplayer-empty-state {
   color: var(--text-muted);
   font-size: 0.86rem;
+}
+
+.multiplayer-empty-state {
+  display: block;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  background: rgba(255, 255, 255, 0.025);
+  line-height: 1.5;
 }
 
 .multiplayer-player-row span,
@@ -175,6 +187,31 @@
   .multiplayer-result-grid,
   .multiplayer-play-grid {
     grid-template-columns: 1fr;
+  }
+
+  .multiplayer-scene-card,
+  .multiplayer-scene-card .challenge-scene-art {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .multiplayer-round-head,
+  .multiplayer-map-actions,
+  .multiplayer-player-row,
+  .multiplayer-leaderboard-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .multiplayer-player-row strong,
+  .multiplayer-leaderboard-row strong {
+    align-self: flex-start;
+  }
+
+  .multiplayer-scene-card,
+  .multiplayer-scene-card .challenge-scene-art {
+    min-height: 300px;
   }
 }
 

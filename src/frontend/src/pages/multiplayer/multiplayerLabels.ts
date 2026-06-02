@@ -16,7 +16,7 @@ export function getMultiplayerPlayerStatus(
   }
 
   if (context === "lobby") {
-    return player.isOwner ? "Owner" : "Ligado";
+    return player.isOwner ? "Dono da sala" : "Ligado";
   }
 
   return player.submitted ? "Palpite enviado" : "A jogar";

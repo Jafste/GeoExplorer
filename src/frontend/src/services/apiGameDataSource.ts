@@ -9,13 +9,19 @@ import type {
 } from "../types/game";
 
 async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {}),
-    },
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(url, {
+      ...init,
+      headers: {
+        "Content-Type": "application/json",
+        ...(init?.headers ?? {}),
+      },
+    });
+  } catch {
+    throw new Error("Não foi possível contactar o backend. Confirma se o modo api está ativo.");
+  }
 
   if (!response.ok) {
     const message = await readErrorMessage(response);
@@ -28,12 +34,16 @@ async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
 async function readErrorMessage(response: Response): Promise<string> {
   const contentType = response.headers.get("Content-Type") ?? "";
 
-  if (contentType.includes("application/problem+json") || contentType.includes("application/json")) {
-    const problem = (await response.json()) as { detail?: string; title?: string };
-    return problem.detail ?? problem.title ?? "O servidor devolveu um erro.";
-  }
+  try {
+    if (contentType.includes("application/problem+json") || contentType.includes("application/json")) {
+      const problem = (await response.json()) as { detail?: string; title?: string };
+      return problem.detail ?? problem.title ?? "O servidor devolveu um erro.";
+    }
 
-  return response.text();
+    return await response.text();
+  } catch {
+    return "O servidor devolveu um erro, mas a resposta não pôde ser lida.";
+  }
 }
 
 export function createApiGameDataSource(apiBaseUrl: string): GameDataSource {
