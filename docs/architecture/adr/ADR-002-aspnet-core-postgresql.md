@@ -8,7 +8,7 @@
 
 ## Contexto
 
-O projeto precisa de uma API para gerir sessões, rondas, palpites, timeout e resultados finais. Também precisa de uma base de dados relacional para guardar sessões e rondas numa fase seguinte, mesmo que a primeira implementação funcional use armazenamento em memória para acelerar o arranque do MVP.
+O projeto precisa de uma API para gerir sessões, rondas, palpites, timeout e resultados finais. Também precisa de uma base de dados relacional para guardar catálogo, sessões, rondas, salas multiplayer e palpites, mantendo a execução local reproduzível para avaliação.
 
 ---
 
@@ -16,7 +16,7 @@ O projeto precisa de uma API para gerir sessões, rondas, palpites, timeout e re
 
 Decidi usar ASP.NET Core .NET 8 com Minimal API no backend e PostgreSQL como base de dados principal. Para desenvolvimento e demonstração, a base de dados deve correr em Docker Compose, para que o projeto seja reproduzível sem depender da minha infraestrutura ou de serviços cloud.
 
-O backend mantém temporariamente o estado das partidas em memória enquanto a ligação à base de dados é feita por etapas. A gravação real deve guardar sessões, rondas, palpites e resultados em PostgreSQL. Se for necessário login, a autenticação deve ficar no backend ASP.NET Core e usar a mesma base de dados, por exemplo com Identity/JWT.
+O backend usa memória para estado rápido durante a execução, mas a gravação real fica em PostgreSQL quando as flags de base de dados estão ativas. O catálogo, as sessões solo, as rondas, as salas multiplayer, os jogadores e os palpites são guardados através de Entity Framework. Se for necessário login no futuro, a autenticação deve ficar no backend ASP.NET Core e usar a mesma base de dados, por exemplo com Identity/JWT.
 
 Para realtime e multiplayer, a opção preferencial passa a ser SignalR no backend. Esta escolha encaixa melhor na lógica do jogo, porque o multiplayer do GeoExplorer tem salas, jogadores prontos, rondas, palpites, pontuação, timers, reconnects e sincronização de estado.
 
@@ -45,7 +45,7 @@ Para realtime e multiplayer, a opção preferencial passa a ser SignalR no backe
 
 **Negativas / trade-offs:**
 - Exige gerir dois runtimes no desenvolvimento: Node.js e .NET.
-- A gravação real em PostgreSQL fica para uma etapa seguinte, criando uma fase transitória com armazenamento em memória.
+- Exige manter migrations e modelo EF alinhados sempre que o schema muda.
 - A responsabilidade por autenticação e multiplayer fica no backend, o que exige mais implementação própria do que usar um backend-as-a-service completo.
 
 ---
@@ -67,3 +67,9 @@ Implementei a primeira versão multiplayer com SignalR no backend. Decidi começ
 Mantive a lógica do jogo no backend: todos recebem a mesma ronda, cada jogador só pode submeter um palpite e o resultado só é mostrado quando todos os jogadores ativos terminam ou quando o tempo acaba. Também adicionei tabelas próprias para salas, jogadores, rondas e palpites multiplayer, mantendo PostgreSQL e Entity Framework como base de gravação.
 
 Depois acrescentei a opção de sala pública listável e password opcional. Para não guardar passwords em texto simples, o backend guarda apenas um hash PBKDF2 da password da sala.
+
+## Atualização de 2 de junho de 2026
+
+Validei o perfil `full` em Docker com PostgreSQL limpo, frontend em modo `api`, backend e migrations do Entity Framework. A validação passou por uma sessão solo curta, uma sala multiplayer curta, consulta ao diagnóstico da base de dados e confirmação das tabelas principais em PostgreSQL.
+
+Com isto, PostgreSQL em Docker fica confirmado como base principal para desenvolvimento e demonstração local. Supabase hosted e Turso/libSQL continuam apenas como hipóteses futuras, a rever se os dados reais de uso justificarem outra solução.

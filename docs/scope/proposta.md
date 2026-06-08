@@ -107,7 +107,7 @@ Como objetivo adicional não obrigatório para a versão final do projeto, consi
 
 <!-- Opcional mas recomendado se já houver clareza sobre a fronteira do sistema. -->
 <!-- Pode ser uma imagem, um diagrama em texto, ou uma descrição estruturada. -->
-<!-- Vai ser refinado em docs/architecture/c4-context.png durante o desenvolvimento. -->
+<!-- Foi refinado nos diagramas em docs/architecture/. -->
 
 **Sistema:** GeoExplorer
 

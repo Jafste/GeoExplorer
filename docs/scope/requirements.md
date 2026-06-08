@@ -1,7 +1,7 @@
 # Levantamento de Requisitos
 
 **Projeto:** GeoExplorer  
-**Versão:** 1.2 · 23 de maio de 2026
+**Versão:** 1.3 · 8 de junho de 2026
 **Referência MoSCoW:** https://www.productplan.com/glossary/moscow-prioritization/
 
 ---
@@ -37,10 +37,10 @@
 
 - RF10 — O sistema deve permitir repetir a sessão com a mesma configuração após a apresentação do resultado final.
 - RF11 — A aplicação deve manter separação clara entre seleção de desafios, temporizador, cálculo de pontuação e gravação de dados para suportar evolução futura.
+- RF12 — O sistema deve suportar um modo multijogador simples, com sala partilhada por link, salas públicas listáveis, password opcional, dono da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
 
 ### Could have
 
-- RF12 — O sistema poderá suportar um modo multijogador simples, com sala partilhada por link, salas públicas listáveis, password opcional, dono da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
 - RF13 — O sistema poderá suportar filtros adicionais dentro do âmbito europeu, como país ou categoria de local, sem alterar o núcleo do jogo.
 - RF14 — O sistema poderá apresentar estatísticas básicas por sessão para apoio à análise do desempenho.
 
@@ -66,10 +66,11 @@
 
 - RNF05 — **Manutenibilidade:** arquitetura modular com separação entre frontend, API, gravação de dados e lógica de pontuação, permitindo evolução sem refatorização significativa.
 - RNF06 — **Testabilidade:** existência de testes básicos aos fluxos principais do jogo, ao cálculo de distância/pontuação e ao registo de resultados.
+- RNF07 — **Portabilidade:** execução reprodutível em ambiente local documentado, com Docker para frontend, backend e PostgreSQL.
 
 ### Could have
 
-- RNF07 — **Portabilidade:** execução reprodutível em ambiente local documentado, com possibilidade de apoio por Docker se necessário.
+- RNF08 — **Escalabilidade futura:** possibilidade de acrescentar autenticação, mais modos de jogo ou backplane para SignalR sem alterar a arquitetura base.
 
 ---
 
@@ -80,3 +81,4 @@
 | 1.0 | 25 de março de 2026 | Versão inicial | Proposta de projeto |
 | 1.1 | 26 de março de 2026 | Clarificação do modo temporizado opcional e reposicionamento do multijogador como objetivo adicional não obrigatório | Ajuste do âmbito funcional |
 | 1.2 | 23 de maio de 2026 | Clarificação do modo multijogador implementado por salas partilhadas | Alinhamento com a primeira versão SignalR |
+| 1.3 | 8 de junho de 2026 | Reposicionamento do multiplayer como extensão implementada e atualização da portabilidade por Docker | Alinhamento com a validação final em Docker limpo e preparação do relatório final |

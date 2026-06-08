@@ -18,6 +18,8 @@ Decidi implementar uma camada de dados abstrata no frontend, com dois modos (`mo
 
 Depois de ligar a API real, alinhei o comportamento principal do modo `mock` com o backend: ambos evitam selecionar locais demasiado próximos dentro da mesma sessão quando existem alternativas. Também acrescentei testes ao modo `mock` para cobrir uma sessão de várias rondas, resultados finais e validação básica de configuração.
 
+Na validação final, usei o perfil `full` para correr frontend em modo `api`, backend e PostgreSQL com um volume limpo. Este perfil passou a ser a forma mais completa de demonstrar o projeto sem configuração escondida.
+
 ---
 
 ## Alternativas consideradas
@@ -42,4 +44,4 @@ Depois de ligar a API real, alinhei o comportamento principal do modo `mock` com
 
 **Mitigação atual:**
 - A diferença entre `mock` e `api` é controlada por testes de contrato e por testes de fluxo no frontend.
-- O perfil `full` continua a ser a validação principal antes de considerar a base do jogo estável para modos futuros.
+- O perfil `full` já foi validado com sessão solo, sala multiplayer curta, migrations EF e dados confirmados em PostgreSQL.

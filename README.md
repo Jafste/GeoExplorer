@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 1000 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, adicionei Mapillary a 150 locais e passei a escolher uma fonte visual por ronda. Depois avancei para uma primeira versão multiplayer com salas por link, dono da sala, nomes únicos por sala, rondas sincronizadas por SignalR e resultados guardados em PostgreSQL. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 1000 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, validei Panoramax em 95 locais, adicionei Mapillary a 150 locais e passei a escolher uma fonte visual por ronda. Depois avancei para uma primeira versão multiplayer com salas por link, dono da sala, nomes únicos por sala, rondas sincronizadas por SignalR e resultados guardados em PostgreSQL. Fiz ainda uma validação limpa do perfil `full` em Docker, com sessão solo, sala multiplayer curta, migrations do Entity Framework e dados confirmados em PostgreSQL. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -59,6 +59,7 @@
 - [x] Recuperação de sessões guardadas a partir do PostgreSQL
 - [x] Contador simples de leituras/escritas feitas na base de dados
 - [x] Validação do frontend em modo `api` com backend e PostgreSQL em Docker
+- [x] Validação limpa do perfil `full` em Docker com sessão solo e sala multiplayer curta
 - [x] Multiplayer inicial com salas por link e nomes únicos por sala
 - [x] Salas públicas listáveis, salas por link e password opcional
 - [x] Dono da sala a escolher configuração e iniciar a partida
@@ -131,7 +132,7 @@ Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL no mesmo fluxo. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo e uma sala multiplayer curta. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
 
 ---
 
@@ -146,7 +147,14 @@ O frontend pode correr em modo `mock` para demonstração rápida ou em modo `ap
 | Dataset europeu local partilhado | Dependência imediata de APIs externas | Reduz risco técnico e permite preparar um modo `mock` controlado antes da integração final; Mapillary fica opcional através do backend. |
 | Docker Compose com perfis | Execução apenas manual | Uniformiza o arranque do frontend, backend e base de dados sem obrigar todos os serviços a correrem sempre em simultâneo. |
 
-Para detalhe adicional, ver [`docs/architecture/adr`]
+Para detalhe adicional, ver:
+
+- [`docs/architecture/c4-context.md`](docs/architecture/c4-context.md)
+- [`docs/architecture/c4-containers.md`](docs/architecture/c4-containers.md)
+- [`docs/architecture/data-model.md`](docs/architecture/data-model.md)
+- [`docs/architecture/game-flows.md`](docs/architecture/game-flows.md)
+- [`docs/architecture/visual-sources.md`](docs/architecture/visual-sources.md)
+- [`docs/architecture/adr`](docs/architecture/adr)
 
 ---
 
@@ -179,4 +187,4 @@ Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à v
 
 ---
 
-*Última atualização: [23 Maio 2026] · [Pós-relatório intercalar]*
+*Última atualização: [8 de junho de 2026] · [Preparação do relatório final]*

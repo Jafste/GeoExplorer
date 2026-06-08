@@ -1,5 +1,4 @@
 # Database
-
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
 - `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 1000 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
@@ -22,7 +21,21 @@ Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string
 
 Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas. No multiplayer, a mesma flag ativa a gravação de `multiplayer_rooms`, `multiplayer_players`, `multiplayer_rounds` e `multiplayer_guesses`.
 
-O schema passou a ser criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. O ficheiro SQL fica como apoio de leitura, mas já não é montado automaticamente no arranque do PostgreSQL. Se existir um volume antigo criado antes das migrations, o backend pode encontrar tabelas como `game_sessions` sem histórico EF e falhar com `relation already exists`. Nesse caso, como é ambiente de desenvolvimento, o caminho mais simples é recriar o volume antes de voltar a arrancar o perfil `full`:
+## Tabelas principais
+
+| Tabela | Para que serve |
+|--------|----------------|
+| `locations` | Catálogo de locais reais, coordenadas, imagem principal, licenças, pistas e fontes visuais adicionais. |
+| `game_sessions` | Sessões solo criadas pelo jogador. |
+| `session_rounds` | Rondas de sessões solo, incluindo local escolhido, fonte visual usada, palpite, distância e pontuação. |
+| `multiplayer_rooms` | Salas multiplayer, código da sala, configuração, estado, visibilidade e hash da password quando existe. |
+| `multiplayer_players` | Jogadores dentro de cada sala, nome visível, dono da sala, estado de ligação e pontuação total. |
+| `multiplayer_rounds` | Rondas multiplayer sincronizadas para todos os jogadores da sala. |
+| `multiplayer_guesses` | Palpites de cada jogador numa ronda multiplayer. |
+
+O modelo ER atualizado está em `docs/architecture/data-model.md`.
+
+O schema passou a ser criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. O ficheiro SQL fica como apoio de leitura, mas já não é montado automaticamente no arranque do PostgreSQL. Validei o perfil `full` com um volume limpo: as migrations foram aplicadas, o catálogo foi importado e ficaram gravadas uma sessão solo e uma sala multiplayer curta. Se existir um volume antigo criado antes das migrations, o backend pode encontrar tabelas como `game_sessions` sem histórico EF e falhar com `relation already exists`. Nesse caso, como é ambiente de desenvolvimento, o caminho mais simples é recriar o volume antes de voltar a arrancar o perfil `full`:
 
 ```bash
 docker compose --profile full down -v

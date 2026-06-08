@@ -2,14 +2,29 @@
 
 Esta pasta contém os documentos de arquitetura do projeto.
 
-## Ficheiros obrigatórios
+## Diagramas atuais
 
-| Ficheiro | Descrição | Quando |
-|---------|-----------|--------|
-| `c4-context.png` | C4 Nível 1 — sistema, utilizadores, sistemas externos | Até à Entrega 1 |
-| `c4-containers.png` | C4 Nível 2 — contentores principais e tecnologias | Até à Entrega 1 |
-| `data-model.png` | Modelo de dados (ER, schema, ou equivalente) | Até à Entrega 1 |
-| `adr/` | Decisões de arquitetura | Durante todo o semestre |
+| Ficheiro | Descrição |
+|---------|-----------|
+| `c4-context.md` | C4 Nível 1 — sistema, utilizadores e serviços externos. |
+| `c4-containers.md` | C4 Nível 2 — frontend, backend, PostgreSQL, SignalR e fontes externas. |
+| `data-model.md` | Modelo ER/PostgreSQL baseado nas entidades e migrations do Entity Framework. |
+| `game-flows.md` | Fluxo solo e fluxo multiplayer com API, SignalR e base de dados. |
+| `visual-sources.md` | Fluxo de fontes visuais: Wikimedia, Panoramax, Mapillary e dataset local. |
+| `adr/` | Decisões de arquitetura registadas ao longo do projeto. |
+
+## Estado atual
+
+Decidi manter os diagramas em Markdown com Mermaid, porque assim consigo versionar a arquitetura juntamente com o código e atualizar os desenhos sem depender sempre de exportações PNG. Se for necessário para o relatório ou defesa, posso exportar estes diagramas para imagem mais tarde.
+
+O estado atual do projeto é:
+
+- Frontend React/Vite em modo `mock` ou `api`.
+- Backend ASP.NET Core .NET 8 com Minimal API e SignalR.
+- PostgreSQL em Docker, criado por migrations do Entity Framework.
+- Dataset local com 1000 locais reais, imagem, licença, atribuição e coordenadas.
+- Fontes visuais adicionais com Panoramax e Mapillary quando há cobertura útil.
+- Multiplayer por link, salas públicas, password opcional, dono da sala e rondas sincronizadas.
 
 ## Notas sobre o modelo de dados
 

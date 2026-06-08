@@ -8,7 +8,7 @@
 
 ## Contexto
 
-O GeoExplorer precisa de imagens reais para tornar as rondas úteis e credíveis, mas não deve depender de uma API externa em tempo real para correr a demo. O projeto já usa Wikimedia Commons como fonte principal das imagens e Panoramax como fonte adicional em vários locais.
+O GeoExplorer precisa de imagens reais para tornar as rondas úteis e credíveis, mas não deve depender de uma API externa em tempo real para correr a demo. O projeto já usa Wikimedia Commons como fonte principal das imagens e Panoramax/Mapillary como fontes adicionais em vários locais.
 
 O professor também sugeriu uma solução mais aberta e controlada baseada em Mapillary, MapLibre, OpenStreetMap ou num conjunto delimitado de localizações georreferenciadas. A parte do mapa já usa OpenStreetMap/Leaflet no frontend; a parte visual deve continuar a crescer de forma controlada.
 
@@ -22,7 +22,7 @@ Para Mapillary, decidi preparar a recolha através de uma ferramenta local, mas 
 
 Também adicionei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend: `/api/media/mapillary/{imageId}`. Isto permite guardar no dataset um caminho estável do próprio projeto em vez de guardar diretamente URLs temporários devolvidos pela API.
 
-Depois da primeira recolha, adicionei Mapillary a 150 locais do dataset como fonte visual adicional. Estas entradas usam `/api/media/mapillary/<id>` em `imageUrl` e mantêm a página Mapillary original em `imageSourceUrl` e `streetViewUrl`.
+Depois da primeira recolha, adicionei Mapillary a 150 locais do dataset como fonte visual adicional. Estas entradas usam `/api/media/mapillary/<id>` em `imageUrl` e mantêm a página Mapillary original em `imageSourceUrl` e `streetViewUrl`. O dataset tem agora 1000 locais reais, com imagem, coordenadas, fonte, licença e atribuição.
 
 O fluxo passa a ser:
 
@@ -59,3 +59,7 @@ O fluxo passa a ser:
 - Adicionar Mapillary continua a exigir revisão manual.
 - A cobertura depende da disponibilidade de imagens junto de cada local.
 - O script ajuda a encontrar candidatos, mas não substitui a validação visual.
+
+## Atualização de 2 de junho de 2026
+
+Documentei o fluxo de fontes visuais em `docs/architecture/visual-sources.md`. A regra principal mantém-se: o jogo corre com o dataset local e as fontes externas servem para recolha, atribuição e enriquecimento controlado dos locais, não como dependência obrigatória durante a demo.

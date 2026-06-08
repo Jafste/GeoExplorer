@@ -104,9 +104,9 @@
 
 ## Sem. 13 · 2–6 jun
 
-**Feito:** reforcei a segurança prática do backend antes da validação final: passei o CORS para origens configuradas, documentei `GeoExplorer__AllowedOrigins`, confirmei que o token Mapillary fica só no ambiente local e acrescentei validação server-side para palpites e códigos de salas multiplayer.
-**Bloqueou:** ainda falta fazer uma validação limpa em Docker e decidir se os ficheiros do relatório entram no Git ou ficam fora do repositório.
-**Próxima semana:** fazer a validação final em Docker limpo, rever documentação técnica e preparar o relatório final.
+**Feito:** reforcei a segurança prática do backend antes da validação final: passei o CORS para origens configuradas, documentei `GeoExplorer__AllowedOrigins`, confirmei que o token Mapillary fica só no ambiente local e acrescentei validação server-side para palpites e códigos de salas multiplayer. Também fiz uma validação limpa do perfil `full` em Docker, com PostgreSQL novo, migrations do Entity Framework, sessão solo curta, sala multiplayer curta e confirmação dos dados guardados na base de dados. Depois alinhei a documentação técnica com o estado atual do projeto, incluindo requisitos, riscos, ADRs, documentação da base de dados e diagramas para C4, modelo ER, fluxos de jogo e fontes visuais. Preparei ainda um rascunho para o relatório final, um guião de defesa e capturas finais do jogo.
+**Bloqueou:** ainda falta decidir se os ficheiros do relatório entram no Git ou ficam fora do repositório.
+**Próxima semana:** passar o rascunho para o documento final, ensaiar a demo e fechar a submissão.
 
 ---
 
