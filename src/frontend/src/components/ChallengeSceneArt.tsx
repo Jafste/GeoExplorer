@@ -1,8 +1,40 @@
-import type { CSSProperties } from "react";
-import type { ChallengeRound } from "../types/game";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import type { ChallengeMedia, ChallengeRound } from "../types/game";
 
 interface ChallengeSceneArtProps {
   challenge: ChallengeRound["challenge"];
+}
+
+interface ScenePhotoCandidate {
+  imageUrl: string;
+  media?: ChallengeMedia;
+}
+
+export function getScenePhotoCandidates(challenge: ChallengeRound["challenge"]): ScenePhotoCandidate[] {
+  const candidates: ScenePhotoCandidate[] = [];
+  const seenImageUrls = new Set<string>();
+
+  function addMediaCandidate(media: ChallengeMedia | undefined) {
+    const imageUrl = media?.imageUrl?.trim();
+    if (!imageUrl || seenImageUrls.has(imageUrl)) {
+      return;
+    }
+
+    seenImageUrls.add(imageUrl);
+    candidates.push({ imageUrl, media });
+  }
+
+  addMediaCandidate(challenge.media);
+  for (const source of challenge.visualSources ?? []) {
+    addMediaCandidate(source);
+  }
+
+  const sceneImage = challenge.sceneImage?.trim();
+  if (sceneImage && !seenImageUrls.has(sceneImage)) {
+    candidates.push({ imageUrl: sceneImage });
+  }
+
+  return candidates;
 }
 
 export function ChallengeSceneArt({ challenge }: ChallengeSceneArtProps) {
@@ -11,24 +43,54 @@ export function ChallengeSceneArt({ challenge }: ChallengeSceneArtProps) {
     "--scene-color-b": challenge.visualGradient[1],
     "--scene-color-c": challenge.visualGradient[2],
   } as CSSProperties;
-  const photoSource = challenge.media?.imageUrl ?? challenge.sceneImage;
-  const showSourceBadge = Boolean(challenge.media?.imageUrl && challenge.media.sourceProvider);
+  const photoCandidates = useMemo(() => getScenePhotoCandidates(challenge), [challenge]);
+  const photoCandidateSignature = photoCandidates.map((candidate) => candidate.imageUrl).join("|");
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const activePhotoCandidate =
+    activePhotoIndex < photoCandidates.length ? photoCandidates[activePhotoIndex] : undefined;
+  const activeMedia = activePhotoCandidate?.media;
+  const showSourceBadge = Boolean(activeMedia?.sourceProvider);
+  const [photoLoaded, setPhotoLoaded] = useState(false);
 
-  if (photoSource) {
+  useEffect(() => {
+    setActivePhotoIndex(0);
+  }, [photoCandidateSignature]);
+
+  useEffect(() => {
+    setPhotoLoaded(false);
+  }, [activePhotoCandidate?.imageUrl]);
+
+  function handlePhotoError() {
+    setPhotoLoaded(false);
+    setActivePhotoIndex((currentIndex) =>
+      currentIndex < photoCandidates.length ? currentIndex + 1 : currentIndex
+    );
+  }
+
+  if (activePhotoCandidate) {
     return (
       <div className={`scene-art scene-art--photo scene-art--${challenge.category}`} style={style}>
+        {!photoLoaded ? (
+          <span className="scene-photo-loading" role="status">
+            A carregar imagem
+          </span>
+        ) : null}
+
         <img
           alt=""
           aria-hidden="true"
-          className="scene-photo"
+          className={`scene-photo${photoLoaded ? " is-loaded" : " is-loading"}`}
+          decoding="async"
           draggable={false}
           loading="eager"
-          src={photoSource}
+          onError={handlePhotoError}
+          onLoad={() => setPhotoLoaded(true)}
+          src={activePhotoCandidate.imageUrl}
         />
         {showSourceBadge ? (
           <span className="scene-source-pill">
-            {challenge.media?.sourceProvider}
-            {challenge.media?.imageLicense ? ` · ${challenge.media.imageLicense}` : ""}
+            {activeMedia?.sourceProvider}
+            {activeMedia?.imageLicense ? ` · ${activeMedia.imageLicense}` : ""}
           </span>
         ) : null}
       </div>

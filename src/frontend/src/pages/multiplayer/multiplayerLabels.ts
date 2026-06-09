@@ -1,10 +1,10 @@
-import type { MultiplayerPlayer } from "../../types/game";
+import type { MultiplayerPlayer, MultiplayerPlayerRoundResult } from "../../types/game";
 
 type MultiplayerPlayerStatusContext = "lobby" | "playing";
 
 type MultiplayerPlayerStatusInput = Pick<
   MultiplayerPlayer,
-  "connected" | "isOwner" | "submitted"
+  "connected" | "disconnectGraceEndsAt" | "isOwner" | "submitted"
 >;
 
 export function getMultiplayerPlayerStatus(
@@ -12,7 +12,7 @@ export function getMultiplayerPlayerStatus(
   context: MultiplayerPlayerStatusContext
 ): string {
   if (!player.connected) {
-    return "Offline";
+    return player.disconnectGraceEndsAt ? "A reconectar" : "Offline";
   }
 
   if (context === "lobby") {
@@ -20,4 +20,20 @@ export function getMultiplayerPlayerStatus(
   }
 
   return player.submitted ? "Palpite enviado" : "A jogar";
+}
+
+export function getMultiplayerRoundResolutionLabel(
+  resolution: MultiplayerPlayerRoundResult["resolution"]
+): string {
+  switch (resolution) {
+    case "manual":
+      return "Palpite registado";
+    case "timeout":
+      return "Tempo esgotado";
+    case "disconnect":
+      return "Vitória por abandono";
+    case "missing":
+    default:
+      return "Sem palpite";
+  }
 }

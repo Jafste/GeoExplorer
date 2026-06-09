@@ -38,6 +38,7 @@ public sealed record MultiplayerPlayerDto(
     string DisplayName,
     bool IsOwner,
     bool Connected,
+    DateTimeOffset? DisconnectGraceEndsAt,
     bool Submitted,
     bool Ready,
     int TotalScore);

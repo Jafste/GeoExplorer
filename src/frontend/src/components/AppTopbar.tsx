@@ -1,4 +1,4 @@
-import { House, Play, Radar, ScrollText } from "lucide-react";
+import { House, Menu, Play, Radar, ScrollText } from "lucide-react";
 import type { SurfacePhase } from "../app/navigation";
 import type { SessionConfig } from "../types/game";
 import { RoundedButton } from "./ui/roundedButton";
@@ -6,9 +6,12 @@ import { RoundedButton } from "./ui/roundedButton";
 interface AppTopbarProps {
   config: SessionConfig;
   phase: SurfacePhase;
+  showSidebarToggle: boolean;
+  sidebarOpen: boolean;
   onHome: () => void;
   onOpenTutorial: () => void;
   onStart: () => void;
+  onToggleSidebar: () => void;
 }
 
 function getModeLabel(config: SessionConfig) {
@@ -35,15 +38,31 @@ function getPhaseLabel(phase: SurfacePhase) {
 export function AppTopbar({
   config,
   phase,
+  showSidebarToggle,
+  sidebarOpen,
   onHome,
   onOpenTutorial,
   onStart,
+  onToggleSidebar,
 }: AppTopbarProps) {
   const isLanding = phase === "landing";
   const isRound = phase === "round";
 
   return (
     <header className={`topbar${isRound ? " topbar--play" : ""}`}>
+      {showSidebarToggle ? (
+        <button
+          aria-expanded={sidebarOpen}
+          aria-label={sidebarOpen ? "Fechar menu" : "Abrir menu"}
+          className="topbar-menu-button"
+          onClick={onToggleSidebar}
+          title={sidebarOpen ? "Fechar menu" : "Abrir menu"}
+          type="button"
+        >
+          <Menu size={19} strokeWidth={2.2} />
+        </button>
+      ) : null}
+
       <button
         aria-label="Voltar ao início"
         className={`brand brand-button${isRound ? " brand-button--play" : ""}`}

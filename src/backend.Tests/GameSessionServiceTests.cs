@@ -1,7 +1,9 @@
 ﻿using GeoExplorer.Backend.Contracts;
 using GeoExplorer.Backend.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GeoExplorer.Backend.Tests;
 
@@ -66,6 +68,50 @@ public sealed class GameSessionServiceTests
         Assert.AreEqual("Panoramax", response.CurrentRound.Challenge.Media.SourceProvider);
         Assert.AreEqual("https://example.test/panoramax.jpg", response.CurrentRound.Challenge.Media.ImageUrl);
         Assert.HasCount(2, response.CurrentRound.Challenge.VisualSources);
+    }
+
+    [TestMethod]
+    public void CreateSession_WithoutMapillaryToken_DoesNotUseMapillaryAsRoundMedia()
+    {
+        using var seed = TestSeedDirectory.CreateWithMapillaryVisualSource();
+        var service = CreateService(seed.BackendContentRoot, randomIndex: maxExclusive => maxExclusive - 1);
+
+        var response = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        Assert.IsNotNull(response.CurrentRound.Challenge.Media);
+        Assert.AreEqual("Wikimedia Commons", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.AreEqual("https://example.test/wikimedia.jpg", response.CurrentRound.Challenge.Media.ImageUrl);
+        Assert.IsTrue(response.CurrentRound.Challenge.VisualSources.Any(source => source.SourceProvider == "Mapillary"));
+    }
+
+    [TestMethod]
+    public void CreateSession_WithMapillaryToken_CanUseMapillaryAsRoundMedia()
+    {
+        using var seed = TestSeedDirectory.CreateWithMapillaryVisualSource();
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Mapillary:AccessToken"] = "test-token",
+            })
+            .Build();
+        var service = CreateService(
+            seed.BackendContentRoot,
+            randomIndex: maxExclusive => maxExclusive - 1,
+            configuration);
+
+        var response = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: false,
+            RoundTimeSeconds: null));
+
+        Assert.IsNotNull(response.CurrentRound.Challenge.Media);
+        Assert.AreEqual("Mapillary", response.CurrentRound.Challenge.Media.SourceProvider);
+        Assert.AreEqual("/api/media/mapillary/1117445272087508", response.CurrentRound.Challenge.Media.ImageUrl);
     }
 
     [TestMethod]
@@ -208,14 +254,20 @@ public sealed class GameSessionServiceTests
 
     private static GameSessionService CreateService(
         string contentRootPath,
-        Func<int, int>? randomIndex = null)
+        Func<int, int>? randomIndex = null,
+        IConfiguration? configuration = null)
     {
         var environment = new TestWebHostEnvironment
         {
             ContentRootPath = contentRootPath,
         };
 
-        return new GameSessionService(new SeedLocationCatalog(environment), randomIndex: randomIndex);
+        return new GameSessionService(
+            new SeedLocationCatalog(environment),
+            configuration ?? new ConfigurationBuilder().Build(),
+            NullLogger<GameSessionService>.Instance,
+            persistenceStore: null,
+            randomIndex);
     }
 
     private static string FindRepoRoot()
@@ -305,6 +357,64 @@ public sealed class GameSessionServiceTests
                       {
                         "label": "Fonte",
                         "value": "Local com duas fontes visuais",
+                        "confidence": "Alta"
+                      }
+                    ]
+                  }
+                ]
+                """);
+
+            return new TestSeedDirectory(root);
+        }
+
+        public static TestSeedDirectory CreateWithMapillaryVisualSource()
+        {
+            var root = Path.Combine(Path.GetTempPath(), $"geoexplorer-seed-{Guid.NewGuid()}");
+            var seedDirectory = Path.Combine(root, "database", "seed");
+            Directory.CreateDirectory(seedDirectory);
+            Directory.CreateDirectory(Path.Combine(root, "backend"));
+            File.WriteAllText(Path.Combine(seedDirectory, "locations.json"), """
+                [
+                  {
+                    "id": "test-location",
+                    "title": "Local de teste",
+                    "city": "Porto",
+                    "country": "Portugal",
+                    "region": "europe",
+                    "category": "historic-core",
+                    "latitude": 41.1402,
+                    "longitude": -8.611,
+                    "sceneLabel": "Rua de teste",
+                    "sceneNote": "Nota visual de teste.",
+                    "sceneImage": "/mock-scenes/test.svg",
+                    "prompt": "Observa o local de teste.",
+                    "visualGradient": ["#111111", "#222222", "#333333"],
+                    "media": {
+                      "sourceProvider": "Wikimedia Commons",
+                      "imageUrl": "https://example.test/wikimedia.jpg",
+                      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Teste.jpg",
+                      "imageAttribution": "Autor Wikimedia",
+                      "imageLicense": "CC BY-SA 4.0",
+                      "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+                      "verifiedAt": "2026-05-14"
+                    },
+                    "visualSources": [
+                      {
+                        "sourceProvider": "Mapillary",
+                        "imageUrl": "/api/media/mapillary/1117445272087508",
+                        "imageSourceUrl": "https://www.mapillary.com/app/?pKey=1117445272087508",
+                        "imageAttribution": "Autor Mapillary",
+                        "imageLicense": "CC BY-SA 4.0",
+                        "imageLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+                        "streetViewProvider": "Mapillary",
+                        "streetViewUrl": "https://www.mapillary.com/app/?pKey=1117445272087508",
+                        "verifiedAt": "2026-05-20"
+                      }
+                    ],
+                    "clues": [
+                      {
+                        "label": "Fonte",
+                        "value": "Local com fonte Mapillary",
                         "confidence": "Alta"
                       }
                     ]

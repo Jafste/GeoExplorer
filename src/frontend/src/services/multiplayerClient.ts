@@ -1,4 +1,5 @@
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+import { NumberDictionary, uniqueNamesGenerator } from "unique-names-generator";
 import type {
   ChallengeRound,
   GuessCoordinates,
@@ -11,14 +12,69 @@ import type {
 } from "../types/game";
 
 const PLAYER_ID_STORAGE_KEY = "geoexplorer.multiplayer.playerId";
-const RANDOM_NAME_ADJECTIVES = ["Norte", "Bravo", "Rápido", "Sereno", "Atento", "Livre"];
-const RANDOM_NAME_NOUNS = ["Explorador", "Viajante", "Cartógrafo", "Guia", "Piloto", "Batedor"];
+const RANDOM_DISPLAY_NAME_MAX_LENGTH = 24;
+const RANDOM_DISPLAY_NAME_NUMBERS = NumberDictionary.generate({ min: 100, max: 999 });
+const RANDOM_DISPLAY_NAME_MOODS = [
+  "Arcade",
+  "Bright",
+  "Cosmic",
+  "Curious",
+  "Glitchy",
+  "Lucky",
+  "Neon",
+  "Rapid",
+  "Sharp",
+  "Silent",
+  "Sneaky",
+  "Solar",
+  "Turbo",
+  "Witty",
+];
+const RANDOM_DISPLAY_NAME_HANDLES = [
+  "Atlas",
+  "Beacon",
+  "Cipher",
+  "Clue",
+  "Compass",
+  "Echo",
+  "Grid",
+  "Marker",
+  "Meridian",
+  "Orbit",
+  "Parallax",
+  "Pixel",
+  "Quest",
+  "Radar",
+  "Route",
+  "Signal",
+  "Vector",
+  "Vertex",
+  "Waypoint",
+  "Zoom",
+];
 
 export function createRandomMultiplayerDisplayName(): string {
-  const adjective = RANDOM_NAME_ADJECTIVES[Math.floor(Math.random() * RANDOM_NAME_ADJECTIVES.length)];
-  const noun = RANDOM_NAME_NOUNS[Math.floor(Math.random() * RANDOM_NAME_NOUNS.length)];
-  const suffix = Math.floor(100 + Math.random() * 900);
-  return `${noun} ${adjective} ${suffix}`;
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const displayName = uniqueNamesGenerator({
+      dictionaries: [
+        RANDOM_DISPLAY_NAME_MOODS,
+        RANDOM_DISPLAY_NAME_HANDLES,
+        RANDOM_DISPLAY_NAME_NUMBERS,
+      ],
+      separator: " ",
+      style: "capital",
+    });
+
+    if (displayName.length <= RANDOM_DISPLAY_NAME_MAX_LENGTH) {
+      return displayName;
+    }
+  }
+
+  return uniqueNamesGenerator({
+    dictionaries: [["Geo"], RANDOM_DISPLAY_NAME_HANDLES, RANDOM_DISPLAY_NAME_NUMBERS],
+    separator: " ",
+    style: "capital",
+  });
 }
 
 export function getOrCreateMultiplayerPlayerId(): string {
@@ -43,8 +99,39 @@ export function buildMultiplayerHubUrl(apiBaseUrl: string): string {
   return `${trimmed}/hubs/multiplayer`;
 }
 
+export function formatMultiplayerError(error: unknown, fallbackMessage: string): string {
+  if (!(error instanceof Error)) {
+    return fallbackMessage;
+  }
+
+  const hubExceptionMatch = error.message.match(/HubException:\s*(.+)$/);
+  const message = (hubExceptionMatch?.[1] ?? error.message).trim();
+
+  if (
+    message === "Sala não encontrada." ||
+    message === "Password da sala inválida."
+  ) {
+    return "Sala não existe ou credenciais inválidas.";
+  }
+
+  return message || fallbackMessage;
+}
+
+export function formatMultiplayerConnectionClosedMessage(
+  error: Error | undefined,
+  stopRequested: boolean
+): string {
+  if (stopRequested || !error) {
+    return "";
+  }
+
+  return formatMultiplayerError(error, "Ligação ao servidor perdida. Tenta novamente.");
+}
+
 export class MultiplayerClient {
   private readonly connection: HubConnection;
+  private startPromise: Promise<void> | null = null;
+  private stopRequested = false;
 
   public constructor(apiBaseUrl: string, events: MultiplayerClientEvents) {
     this.connection = new HubConnectionBuilder()
@@ -56,24 +143,66 @@ export class MultiplayerClient {
     this.connection.on("roundStarted", events.onRoundStarted);
     this.connection.on("roundResolved", events.onRoundResolved);
     this.connection.on("gameCompleted", events.onGameCompleted);
+    this.connection.on("openRoomsUpdated", events.onOpenRoomsUpdated);
     this.connection.on("playerSubmitted", events.onPlayerSubmitted);
     this.connection.on("playerJoining", events.onPlayerJoining);
-    this.connection.on("roomError", events.onError);
+    this.connection.on("roomError", (message) => events.onError(formatMultiplayerError(new Error(message), message)));
     this.connection.onreconnecting(() => events.onError("Ligação à sala interrompida. A tentar ligar novamente."));
     this.connection.onreconnected(() => events.onError(""));
-    this.connection.onclose(() => events.onError("A ligação à sala foi fechada."));
+    this.connection.onclose((error) => {
+      const message = formatMultiplayerConnectionClosedMessage(error, this.stopRequested);
+      this.stopRequested = false;
+
+      if (message) {
+        events.onError(message);
+      }
+    });
   }
 
   public async start(): Promise<void> {
+    if (this.connection.state === HubConnectionState.Connected) {
+      return;
+    }
+
+    if (this.startPromise) {
+      await this.startPromise;
+      return;
+    }
+
     if (this.connection.state === HubConnectionState.Disconnected) {
-      await this.connection.start();
+      this.startPromise = this.connection.start().finally(() => {
+        this.startPromise = null;
+      });
+      await this.startPromise;
+      return;
+    }
+
+    await this.waitUntilConnectedOrDisconnected();
+
+    const stateAfterWait = this.connection.state as HubConnectionState;
+    if (stateAfterWait === HubConnectionState.Disconnected) {
+      await this.start();
     }
   }
 
   public async stop(): Promise<void> {
+    this.stopRequested = true;
+
+    if (this.startPromise) {
+      try {
+        await this.startPromise;
+      } catch {
+        this.stopRequested = false;
+        return;
+      }
+    }
+
     if (this.connection.state !== HubConnectionState.Disconnected) {
       await this.connection.stop();
+      return;
     }
+
+    this.stopRequested = false;
   }
 
   public async createRoom(
@@ -84,7 +213,7 @@ export class MultiplayerClient {
     password: string | null
   ): Promise<MultiplayerRoomState> {
     await this.start();
-    return this.connection.invoke<MultiplayerRoomState>("CreateRoom", {
+    return this.invoke<MultiplayerRoomState>("CreateRoom", {
       playerId,
       displayName,
       config,
@@ -100,8 +229,13 @@ export class MultiplayerClient {
     password: string | null
   ): Promise<MultiplayerRoomState> {
     await this.start();
-    await this.announceJoining(roomCode, playerId);
-    return this.connection.invoke<MultiplayerRoomState>("JoinRoom", {
+    try {
+      await this.announceJoining(roomCode, playerId);
+    } catch {
+      // This is only a presence hint. JoinRoom performs the authoritative validation.
+    }
+
+    return this.invoke<MultiplayerRoomState>("JoinRoom", {
       roomCode,
       playerId,
       displayName,
@@ -111,12 +245,17 @@ export class MultiplayerClient {
 
   public async listOpenRooms(): Promise<MultiplayerOpenRoom[]> {
     await this.start();
-    return this.connection.invoke<MultiplayerOpenRoom[]>("ListOpenRooms");
+    return this.invoke<MultiplayerOpenRoom[]>("ListOpenRooms");
+  }
+
+  public async watchOpenRooms(): Promise<MultiplayerOpenRoom[]> {
+    await this.start();
+    return this.invoke<MultiplayerOpenRoom[]>("WatchOpenRooms");
   }
 
   public async announceJoining(roomCode: string, playerId: string): Promise<void> {
     await this.start();
-    await this.connection.invoke("AnnounceJoining", {
+    await this.invoke("AnnounceJoining", {
       roomCode,
       playerId,
     });
@@ -127,7 +266,7 @@ export class MultiplayerClient {
     playerId: string,
     config: SessionConfig
   ): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("UpdateConfig", {
+    return this.invoke<MultiplayerRoomState>("UpdateConfig", {
       roomCode,
       playerId,
       config,
@@ -139,7 +278,7 @@ export class MultiplayerClient {
     playerId: string,
     displayName: string
   ): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("UpdateDisplayName", {
+    return this.invoke<MultiplayerRoomState>("UpdateDisplayName", {
       roomCode,
       playerId,
       displayName,
@@ -147,7 +286,7 @@ export class MultiplayerClient {
   }
 
   public async startGame(roomCode: string, playerId: string): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("StartGame", {
+    return this.invoke<MultiplayerRoomState>("StartGame", {
       roomCode,
       playerId,
     });
@@ -159,7 +298,7 @@ export class MultiplayerClient {
     roundId: string,
     guess: GuessCoordinates
   ): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("SubmitGuess", {
+    return this.invoke<MultiplayerRoomState>("SubmitGuess", {
       roomCode,
       playerId,
       roundId,
@@ -168,17 +307,48 @@ export class MultiplayerClient {
   }
 
   public async readyForNextRound(roomCode: string, playerId: string): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("ReadyForNextRound", {
+    return this.invoke<MultiplayerRoomState>("ReadyForNextRound", {
+      roomCode,
+      playerId,
+    });
+  }
+
+  public async returnToLobby(roomCode: string, playerId: string): Promise<MultiplayerRoomState> {
+    return this.invoke<MultiplayerRoomState>("ReturnToLobby", {
       roomCode,
       playerId,
     });
   }
 
   public async leaveRoom(roomCode: string, playerId: string): Promise<MultiplayerRoomState> {
-    return this.connection.invoke<MultiplayerRoomState>("LeaveRoom", {
+    return this.invoke<MultiplayerRoomState>("LeaveRoom", {
       roomCode,
       playerId,
     });
+  }
+
+  private async invoke<T>(methodName: string, ...args: unknown[]): Promise<T> {
+    try {
+      if (this.connection.state !== HubConnectionState.Connected) {
+        await this.start();
+      }
+
+      return await this.connection.invoke<T>(methodName, ...args);
+    } catch (error) {
+      throw new Error(formatMultiplayerError(error, "Não foi possível completar a ação."));
+    }
+  }
+
+  private async waitUntilConnectedOrDisconnected(): Promise<void> {
+    const deadline = Date.now() + 3000;
+
+    while (
+      this.connection.state !== HubConnectionState.Connected &&
+      this.connection.state !== HubConnectionState.Disconnected &&
+      Date.now() < deadline
+    ) {
+      await new Promise((resolve) => window.setTimeout(resolve, 50));
+    }
   }
 }
 

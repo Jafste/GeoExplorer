@@ -44,4 +44,4 @@ Na validação final, usei o perfil `full` para correr frontend em modo `api`, b
 
 **Mitigação atual:**
 - A diferença entre `mock` e `api` é controlada por testes de contrato e por testes de fluxo no frontend.
-- O perfil `full` já foi validado com sessão solo, sala multiplayer curta, migrations EF e dados confirmados em PostgreSQL.
+- Validei o perfil `full` com sessão solo, sala multiplayer curta, migrations EF e dados confirmados em PostgreSQL.

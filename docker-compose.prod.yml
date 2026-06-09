@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: geoexplorer-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-geoexplorer}
+      POSTGRES_USER: ${POSTGRES_USER:-geoexplorer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the VPS environment}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-geoexplorer} -d $${POSTGRES_DB:-geoexplorer}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    container_name: geoexplorer-backend
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+      target: production
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      GeoExplorer__UsePostgresCatalog: "true"
+      GeoExplorer__UsePostgresPersistence: "true"
+      GeoExplorer__AllowedOrigins: ${GEOEXPLORER_PUBLIC_ORIGIN:-https://geoexplorer.firmwork.pt}
+      ConnectionStrings__GeoExplorerDb: Host=geoexplorer-postgres;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the VPS environment}
+      MAPILLARY_ACCESS_TOKEN: ${MAPILLARY_ACCESS_TOKEN:-}
+    expose:
+      - "8080"
+    networks:
+      - default
+      - caddy
+
+  frontend:
+    container_name: geoexplorer-frontend
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+      target: production
+      args:
+        VITE_DATA_MODE: api
+        VITE_API_BASE_URL: /api
+    restart: unless-stopped
+    depends_on:
+      - backend
+    expose:
+      - "8080"
+    networks:
+      - default
+      - caddy
+
+networks:
+  caddy:
+    external: true
+    name: firmwork-helpdesk_default
+
+volumes:
+  postgres-data:

@@ -58,6 +58,24 @@ public sealed class MapillaryImageServiceTests
     }
 
     [TestMethod]
+    public async Task GetThumbnailAsync_WhenPreferredThumbnailIsMissing_UsesAvailableThumbnail()
+    {
+        var handler = new StubHttpMessageHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = JsonContent.Create(new
+            {
+                thumb_2048_url = "https://images.mapillary.com/example/larger.jpg",
+            }),
+        });
+        var service = CreateService("local-token", handler);
+
+        var result = await service.GetThumbnailAsync("123456789");
+
+        Assert.AreEqual(HttpStatusCode.Redirect, result.StatusCode);
+        Assert.AreEqual("https://images.mapillary.com/example/larger.jpg", result.ThumbnailUrl);
+    }
+
+    [TestMethod]
     public async Task GetThumbnailAsync_ReusesCachedThumbnail()
     {
         var handler = new StubHttpMessageHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)

@@ -114,6 +114,12 @@ public sealed class MultiplayerPersistenceStore
         MultiplayerRoomState room,
         MultiplayerRoomEntity roomEntity)
     {
+        var currentRoundIds = room.Rounds.Select(round => round.Id).ToHashSet();
+        foreach (var staleRound in roomEntity.Rounds.Where(round => !currentRoundIds.Contains(round.Id)).ToList())
+        {
+            db.MultiplayerRounds.Remove(staleRound);
+        }
+
         foreach (var round in room.Rounds)
         {
             var entity = roomEntity.Rounds.FirstOrDefault(candidate => candidate.Id == round.Id);

@@ -132,7 +132,7 @@ Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
 ```
 
-O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. O perfil `full` já foi validado com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo e uma sala multiplayer curta. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
+O frontend pode correr em modo `mock` para demonstração rápida ou em modo `api` para testar a ligação ao backend. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. Validei o perfil `full` com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo e uma sala multiplayer curta. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
 
 ---
 

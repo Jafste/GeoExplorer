@@ -127,11 +127,14 @@ export function EuropeGuessMap({
     const map = L.map(mapElementRef.current, {
       attributionControl: true,
       center: EUROPE_CENTER,
+      fadeAnimation: false,
+      markerZoomAnimation: false,
       maxBounds: EUROPE_BOUNDS.pad(0.18),
       maxBoundsViscosity: 0.85,
       maxZoom: 18,
       minZoom: 3,
       zoom: 4,
+      zoomAnimation: false,
       zoomControl: false,
     });
 
@@ -153,6 +156,7 @@ export function EuropeGuessMap({
     mapRef.current = map;
 
     return () => {
+      map.stop();
       map.remove();
       mapRef.current = null;
       markerLayerRef.current = null;
@@ -271,7 +275,12 @@ export function EuropeGuessMap({
         .filter((point): point is GuessCoordinates => Boolean(point))
         .map((point) => L.latLng(point.latitude, point.longitude));
 
+      let cancelled = false;
       const fitMarkers = (animate: boolean) => {
+        if (cancelled || mapRef.current !== map || !map.getContainer().isConnected) {
+          return;
+        }
+
         map.invalidateSize();
 
         if (markerPoints.length >= 2) {
@@ -288,8 +297,13 @@ export function EuropeGuessMap({
         }
       };
 
-      fitMarkers(true);
-      window.setTimeout(() => fitMarkers(false), 180);
+      fitMarkers(false);
+      const fitTimer = window.setTimeout(() => fitMarkers(false), 180);
+
+      return () => {
+        cancelled = true;
+        window.clearTimeout(fitTimer);
+      };
     }
   }, [actual, comparisonDistanceKm, fitToMarkers, guess, hotspots, showComparisonLine, showMarkerLabels]);
 
@@ -299,9 +313,19 @@ export function EuropeGuessMap({
       return;
     }
 
-    window.setTimeout(() => {
+    let cancelled = false;
+    const resizeTimer = window.setTimeout(() => {
+      if (cancelled || mapRef.current !== map || !map.getContainer().isConnected) {
+        return;
+      }
+
       map.invalidateSize();
     }, 160);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(resizeTimer);
+    };
   }, [compact]);
 
   return (

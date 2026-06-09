@@ -54,9 +54,14 @@ internal static class GameRoundRules
         return selected;
     }
 
-    public static SeedMedia? SelectVisualSource(SeedLocation location, Func<int, int> randomIndex)
+    public static SeedMedia? SelectVisualSource(
+        SeedLocation location,
+        Func<int, int> randomIndex,
+        Func<SeedMedia, bool>? isAvailable = null)
     {
-        var visualSources = location.GetVisualSources();
+        var visualSources = location.GetVisualSources()
+            .Where(source => isAvailable?.Invoke(source) ?? true)
+            .ToList();
 
         return visualSources.Count == 0
             ? null
@@ -70,7 +75,9 @@ internal static class GameRoundRules
         bool timed,
         int? roundTimeSeconds,
         SeedLocation location,
-        SeedMedia? selectedMedia)
+        SeedMedia? selectedMedia,
+        DateTimeOffset? endsAt = null,
+        Func<SeedMedia, bool>? isMediaAvailable = null)
     {
         return new ChallengeRoundDto(
             roundId,
@@ -78,6 +85,7 @@ internal static class GameRoundRules
             totalRounds,
             timed,
             timed ? roundTimeSeconds : null,
+            timed ? endsAt : null,
             new ChallengeDto(
                 location.Id,
                 location.Title,
@@ -89,7 +97,7 @@ internal static class GameRoundRules
                 location.SceneImage,
                 location.Prompt,
                 location.VisualGradient,
-                BuildMedia(GetRoundMedia(location, selectedMedia)),
+                BuildMedia(GetRoundMedia(location, selectedMedia, isMediaAvailable)),
                 BuildVisualSources(location),
                 location.Clues
                     .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -103,7 +111,8 @@ internal static class GameRoundRules
         SeedMedia? selectedMedia,
         GuessCoordinatesDto? guess,
         string resolution,
-        bool timed)
+        bool timed,
+        Func<SeedMedia, bool>? isMediaAvailable = null)
     {
         var validatedGuess = guess is null ? null : ValidateGuess(guess);
         double? distanceKm = validatedGuess is null
@@ -127,7 +136,7 @@ internal static class GameRoundRules
             distanceKm,
             resolution,
             timed,
-            BuildMedia(GetRoundMedia(location, selectedMedia)),
+            BuildMedia(GetRoundMedia(location, selectedMedia, isMediaAvailable)),
             BuildVisualSources(location),
             location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -158,14 +167,25 @@ internal static class GameRoundRules
             .ToList();
     }
 
-    public static SeedMedia? GetPrimaryMedia(SeedLocation location)
+    public static SeedMedia? GetPrimaryMedia(
+        SeedLocation location,
+        Func<SeedMedia, bool>? isMediaAvailable = null)
     {
-        return location.Media ?? location.GetVisualSources().FirstOrDefault();
+        return location.GetVisualSources()
+            .FirstOrDefault(source => isMediaAvailable?.Invoke(source) ?? true);
     }
 
-    public static SeedMedia? GetRoundMedia(SeedLocation location, SeedMedia? selectedMedia)
+    public static SeedMedia? GetRoundMedia(
+        SeedLocation location,
+        SeedMedia? selectedMedia,
+        Func<SeedMedia, bool>? isMediaAvailable = null)
     {
-        return selectedMedia ?? GetPrimaryMedia(location);
+        if (selectedMedia is not null && (isMediaAvailable?.Invoke(selectedMedia) ?? true))
+        {
+            return selectedMedia;
+        }
+
+        return GetPrimaryMedia(location, isMediaAvailable);
     }
 
     public static GuessCoordinatesDto ValidateGuess(GuessCoordinatesDto guess)

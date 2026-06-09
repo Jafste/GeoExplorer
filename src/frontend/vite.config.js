@@ -5,6 +5,30 @@ import tailwindcss from "@tailwindcss/vite";
 var proxyTarget = process.env.VITE_PROXY_TARGET;
 export default defineConfig({
     plugins: [react(), tailwindcss()],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: function (id) {
+                    if (!id.includes("node_modules")) {
+                        return undefined;
+                    }
+                    if (id.includes("leaflet")) {
+                        return "map-vendor";
+                    }
+                    if (id.includes("@microsoft/signalr")) {
+                        return "signalr-vendor";
+                    }
+                    if (id.includes("lucide-react")) {
+                        return "icons-vendor";
+                    }
+                    if (id.includes("react") || id.includes("scheduler")) {
+                        return "react-vendor";
+                    }
+                    return "vendor";
+                },
+            },
+        },
+    },
     resolve: {
         alias: {
             "@databaseSeed": path.resolve(__dirname, "../database/seed"),

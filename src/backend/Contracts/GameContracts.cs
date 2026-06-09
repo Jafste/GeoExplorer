@@ -50,6 +50,7 @@ public sealed record ChallengeRoundDto(
     int TotalRounds,
     bool Timed,
     int? TimeLimitSeconds,
+    DateTimeOffset? EndsAt,
     ChallengeDto Challenge);
 
 public sealed record CreateSessionResponse(

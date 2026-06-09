@@ -97,7 +97,13 @@ public sealed class GameSessionService
 
     private SeedMedia? SelectVisualSource(SeedLocation location)
     {
-        return GameRoundRules.SelectVisualSource(location, _randomIndex);
+        return GameRoundRules.SelectVisualSource(location, _randomIndex, IsVisualSourceAvailable);
+    }
+
+    private bool IsVisualSourceAvailable(SeedMedia media)
+    {
+        return !MapillaryImageService.IsMapillaryMedia(media) ||
+            MapillaryImageService.HasConfiguredAccessToken(_configuration);
     }
 
     public ChallengeRoundDto GetCurrentRound(string sessionId)
@@ -208,7 +214,8 @@ public sealed class GameSessionService
             round.SelectedMedia,
             guess,
             resolution,
-            session.Config.Timed);
+            session.Config.Timed,
+            IsVisualSourceAvailable);
 
         round.Result = result;
         session.CurrentRoundIndex += 1;
@@ -223,7 +230,7 @@ public sealed class GameSessionService
                     : session.Rounds[session.CurrentRoundIndex].RoundNumber));
     }
 
-    private static ChallengeRoundDto BuildRound(RoundState round, SessionState session)
+    private ChallengeRoundDto BuildRound(RoundState round, SessionState session)
     {
         return GameRoundRules.BuildChallengeRound(
             round.Id,
@@ -232,7 +239,8 @@ public sealed class GameSessionService
             session.Config.Timed,
             session.Config.RoundTimeSeconds,
             round.Location,
-            round.SelectedMedia);
+            round.SelectedMedia,
+            isMediaAvailable: IsVisualSourceAvailable);
     }
 
     private bool ShouldPersist => _configuration.GetValue<bool>("GeoExplorer:UsePostgresPersistence");
@@ -338,7 +346,7 @@ public sealed class GameSessionService
         };
     }
 
-    private static RoundResultDto BuildPersistedRoundResult(
+    private RoundResultDto BuildPersistedRoundResult(
         PersistedRoundSnapshot round,
         SeedLocation location,
         SessionConfiguration config)
@@ -363,7 +371,7 @@ public sealed class GameSessionService
             round.DistanceKm,
             round.ResolutionReason ?? "manual",
             config.Timed,
-            GameRoundRules.BuildMedia(round.VisualSource ?? GameRoundRules.GetPrimaryMedia(location)),
+            GameRoundRules.BuildMedia(round.VisualSource ?? GameRoundRules.GetPrimaryMedia(location, IsVisualSourceAvailable)),
             GameRoundRules.BuildVisualSources(location),
             location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))

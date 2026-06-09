@@ -1,6 +1,15 @@
 node_modules
 dist
 .vite
+.DS_Store
+.env
+.env.*
+.git
+.gitignore
+tmp
+**/bin
+**/obj
+**/.DS_Store
 src/frontend/node_modules
 src/frontend/dist
 src/frontend/.vite

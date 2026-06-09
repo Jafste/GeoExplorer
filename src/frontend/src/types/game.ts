@@ -45,6 +45,7 @@ export interface ChallengeRound {
   totalRounds: number;
   timed: boolean;
   timeLimitSeconds: number | null;
+  endsAt?: string | null;
   challenge: Omit<SeedLocation, "latitude" | "longitude" | "region">;
 }
 
@@ -110,6 +111,7 @@ export interface MultiplayerPlayer {
   displayName: string;
   isOwner: boolean;
   connected: boolean;
+  disconnectGraceEndsAt: string | null;
   submitted: boolean;
   ready: boolean;
   totalScore: number;
@@ -144,7 +146,7 @@ export interface MultiplayerPlayerRoundResult {
   guess: GuessCoordinates | null;
   score: number;
   distanceKm: number | null;
-  resolution: "manual" | "timeout" | "missing";
+  resolution: "manual" | "timeout" | "missing" | "disconnect";
 }
 
 export interface MultiplayerRoundResult {
@@ -183,6 +185,7 @@ export interface MultiplayerClientEvents {
   onRoundStarted: (round: ChallengeRound) => void;
   onRoundResolved: (result: MultiplayerRoundResult) => void;
   onGameCompleted: (result: MultiplayerSessionResult) => void;
+  onOpenRoomsUpdated: (rooms: MultiplayerOpenRoom[]) => void;
   onPlayerSubmitted: (playerId: string) => void;
   onPlayerJoining: () => void;
   onError: (message: string) => void;

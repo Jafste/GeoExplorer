@@ -5,6 +5,7 @@ import type { SessionConfig } from "../types/game";
 interface AppSidebarProps {
   analysisEnabled: boolean;
   config: SessionConfig;
+  isOpen?: boolean;
   phase: SurfacePhase;
   onHome: () => void;
   onOpenAnalysis: () => void;
@@ -19,6 +20,7 @@ function getTimerLabel(config: SessionConfig) {
 export function AppSidebar({
   analysisEnabled,
   config,
+  isOpen = false,
   phase,
   onHome,
   onOpenAnalysis,
@@ -26,7 +28,7 @@ export function AppSidebar({
   onStart,
 }: AppSidebarProps) {
   return (
-    <aside className="app-sidebar" aria-label="Painel lateral">
+    <aside className={`app-sidebar${isOpen ? " is-open" : ""}`} aria-label="Painel lateral">
       <div className="app-sidebar-profile">
         <div className="app-sidebar-avatar">
           <Compass size={18} strokeWidth={2} />

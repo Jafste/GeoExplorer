@@ -52,32 +52,34 @@ export function SessionResultPage({
 
   return (
     <section className="screen-shell screen-shell-session-report">
-      <div className="section-header">
-        <div>
-          <div className="eyebrow">relatório final</div>
-          <h2 className="section-title">Sessão concluída.</h2>
-          <p className="section-support">
-            Missão europeia arquivada. O relatório consolida precisão, desvio e consistência por ronda.
-          </p>
+      <div className="session-report-top">
+        <div className="section-header session-report-heading">
+          <div>
+            <div className="eyebrow">relatório final</div>
+            <h2 className="section-title">Sessão concluída.</h2>
+            <p className="section-support">
+              Missão europeia arquivada. O relatório consolida precisão, desvio e consistência por ronda.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className="summary-hero">
-        <div className="metric-card metric-card-large">
-          <span>Pontuação total</span>
-          <strong>{result.totalScore.toLocaleString("pt-PT")} pts</strong>
-        </div>
-        <div className="metric-card">
-          <span>Média por ronda</span>
-          <strong>{averageScore.toLocaleString("pt-PT")} pts</strong>
-        </div>
-        <div className="metric-card">
-          <span>Modo</span>
-          <strong>{config.timed ? `${config.roundTimeSeconds}s` : "Livre"}</strong>
-        </div>
-        <div className="metric-card">
-          <span>Rondas</span>
-          <strong>{result.totalRounds}</strong>
+        <div className="summary-hero session-report-summary">
+          <div className="metric-card metric-card-large">
+            <span>Pontuação total</span>
+            <strong>{result.totalScore.toLocaleString("pt-PT")} pts</strong>
+          </div>
+          <div className="metric-card">
+            <span>Média por ronda</span>
+            <strong>{averageScore.toLocaleString("pt-PT")} pts</strong>
+          </div>
+          <div className="metric-card">
+            <span>Modo</span>
+            <strong>{config.timed ? `${config.roundTimeSeconds}s` : "Livre"}</strong>
+          </div>
+          <div className="metric-card">
+            <span>Rondas</span>
+            <strong>{result.totalRounds}</strong>
+          </div>
         </div>
       </div>
 

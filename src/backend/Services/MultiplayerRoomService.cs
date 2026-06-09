@@ -16,8 +16,10 @@ public sealed class MultiplayerRoomService
     private const string ActiveRoundStatus = "active";
     private const string PendingRoundStatus = "pending";
     private const string ResolvedRoundStatus = "resolved";
+    private const string DisconnectResolution = "disconnect";
     private const string RoomCodeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private const int RoomCodeLength = 6;
+    private const int DisconnectGraceSeconds = 60;
 
     private readonly ConcurrentDictionary<string, MultiplayerRoomState> _rooms = new(StringComparer.OrdinalIgnoreCase);
     private readonly IReadOnlyList<SeedLocation> _locations;
@@ -26,6 +28,7 @@ public sealed class MultiplayerRoomService
     private readonly IHubContext<MultiplayerHub> _hubContext;
     private readonly ILogger<MultiplayerRoomService> _logger;
     private readonly Func<int, int> _randomIndex;
+    private readonly TimeSpan _disconnectGracePeriod;
 
     public MultiplayerRoomService(
         SeedLocationCatalog catalog,
@@ -33,7 +36,8 @@ public sealed class MultiplayerRoomService
         IHubContext<MultiplayerHub> hubContext,
         ILogger<MultiplayerRoomService> logger,
         MultiplayerPersistenceStore? persistenceStore = null,
-        Func<int, int>? randomIndex = null)
+        Func<int, int>? randomIndex = null,
+        TimeSpan? disconnectGracePeriod = null)
     {
         _locations = catalog.GetAll();
         _configuration = configuration;
@@ -41,6 +45,7 @@ public sealed class MultiplayerRoomService
         _logger = logger;
         _persistenceStore = persistenceStore;
         _randomIndex = randomIndex ?? Random.Shared.Next;
+        _disconnectGracePeriod = disconnectGracePeriod ?? TimeSpan.FromSeconds(DisconnectGraceSeconds);
     }
 
     public async Task<MultiplayerRoomUpdate> CreateRoomAsync(
@@ -99,9 +104,11 @@ public sealed class MultiplayerRoomService
                 EnsureNameAvailable(room, displayName, playerId);
                 existingPlayer.DisplayName = displayName;
                 existingPlayer.Connected = true;
+                existingPlayer.HasLeft = false;
                 existingPlayer.ConnectionId = connectionId;
                 existingPlayer.LastSeenAt = DateTimeOffset.UtcNow;
                 RefreshResultNames(room);
+                CancelDisconnectGraceIfNoDisconnectedPlayers(room);
                 state = BuildRoomState(room);
             }
             else
@@ -245,7 +252,7 @@ public sealed class MultiplayerRoomService
                 Id = Guid.NewGuid(),
                 RoundNumber = index + 1,
                 Location = location,
-                SelectedMedia = GameRoundRules.SelectVisualSource(location, _randomIndex),
+                SelectedMedia = GameRoundRules.SelectVisualSource(location, _randomIndex, IsVisualSourceAvailable),
                 Status = index == 0 ? ActiveRoundStatus : PendingRoundStatus,
             }).ToList();
             room.CurrentRoundIndex = 0;
@@ -263,6 +270,12 @@ public sealed class MultiplayerRoomService
         return update;
     }
 
+    private bool IsVisualSourceAvailable(SeedMedia media)
+    {
+        return !MapillaryImageService.IsMapillaryMedia(media) ||
+            MapillaryImageService.HasConfiguredAccessToken(_configuration);
+    }
+
     public async Task<MultiplayerRoomUpdate> SubmitGuessAsync(
         SubmitMultiplayerGuessRequest request,
         CancellationToken cancellationToken = default)
@@ -271,27 +284,35 @@ public sealed class MultiplayerRoomService
         var playerId = ValidatePlayerId(request.PlayerId);
         MultiplayerRoomUpdate update;
 
-        lock (room.SyncRoot)
+        try
         {
-            var player = GetConnectedPlayer(room, playerId);
-            var round = GetActiveRound(room, request.RoundId);
-            var guess = GameRoundRules.ValidateGuess(request.Guess);
-
-            if (round.Guesses.ContainsKey(playerId))
+            lock (room.SyncRoot)
             {
-                throw new GameFlowException("Já submeteste um palpite nesta ronda.", StatusCodes.Status409Conflict);
+                var player = GetConnectedPlayer(room, playerId);
+                var round = GetActiveRound(room, request.RoundId);
+                var guess = GameRoundRules.ValidateGuess(request.Guess);
+
+                if (round.Guesses.ContainsKey(playerId))
+                {
+                    throw new GameFlowException("Já submeteste um palpite nesta ronda.", StatusCodes.Status409Conflict);
+                }
+
+                round.Guesses[playerId] = BuildPlayerGuess(player, round, guess, "manual");
+
+                var resolved = ShouldResolveRound(room, round)
+                    ? ResolveRound(room, round, "manual")
+                    : null;
+
+                update = BuildUpdate(
+                    room,
+                    submittedPlayerId: playerId,
+                    roundResolved: resolved);
             }
-
-            round.Guesses[playerId] = BuildPlayerGuess(player, round, guess, "manual");
-
-            var resolved = ShouldResolveRound(room, round)
-                ? ResolveRound(room, round, "manual")
-                : null;
-
-            update = BuildUpdate(
-                room,
-                submittedPlayerId: playerId,
-                roundResolved: resolved);
+        }
+        catch (GameFlowException exception)
+        {
+            LogSubmitGuessRejected(room, playerId, request.RoundId, exception);
+            throw;
         }
 
         await PersistRoomAsync(room, cancellationToken);
@@ -320,7 +341,7 @@ public sealed class MultiplayerRoomService
 
             currentRound.ReadyPlayerIds.Add(playerId);
 
-            update = AllConnectedPlayersReady(room, currentRound)
+            update = AllRoundParticipantsReady(room, currentRound)
                 ? AdvanceAfterRoundResult(room)
                 : BuildUpdate(room);
         }
@@ -332,6 +353,60 @@ public sealed class MultiplayerRoomService
             ScheduleRoundTimeout(room);
         }
 
+        return update;
+    }
+
+    public async Task<MultiplayerRoomUpdate> ReturnToLobbyAsync(
+        MultiplayerRoomPlayerRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var room = GetRoom(request.RoomCode);
+        var playerId = ValidatePlayerId(request.PlayerId);
+        MultiplayerRoomUpdate update;
+
+        lock (room.SyncRoot)
+        {
+            EnsureOwner(room, playerId);
+
+            if (!string.Equals(room.Status, CompletedStatus, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new GameFlowException("A sala só pode voltar à lobby depois da partida terminar.", StatusCodes.Status409Conflict);
+            }
+
+            room.RoundTimerCancellation?.Cancel();
+            room.RoundTimerCancellation?.Dispose();
+            room.RoundTimerCancellation = null;
+            room.DisconnectGraceCancellation?.Cancel();
+            room.DisconnectGraceCancellation?.Dispose();
+            room.DisconnectGraceCancellation = null;
+            room.Status = LobbyStatus;
+            room.StartedAt = null;
+            room.CompletedAt = null;
+            room.CurrentRoundIndex = 0;
+            room.Rounds = [];
+            room.LastRoundResult = null;
+            room.FinalResult = null;
+            room.Players.RemoveAll(player => player.HasLeft);
+
+            foreach (var player in room.Players)
+            {
+                player.TotalScore = 0;
+            }
+
+            if (room.Players.Count == 0)
+            {
+                room.Status = CompletedStatus;
+                room.CompletedAt = DateTimeOffset.UtcNow;
+            }
+            else if (room.Players.All(player => player.PlayerId != room.OwnerPlayerId))
+            {
+                AssignNextOwner(room);
+            }
+
+            update = BuildUpdate(room);
+        }
+
+        await PersistRoomAsync(room, cancellationToken);
         return update;
     }
 
@@ -370,6 +445,7 @@ public sealed class MultiplayerRoomService
             else
             {
                 player.Connected = false;
+                player.HasLeft = true;
                 player.ConnectionId = null;
                 player.LastSeenAt = DateTimeOffset.UtcNow;
 
@@ -397,6 +473,7 @@ public sealed class MultiplayerRoomService
         CancellationToken cancellationToken = default)
     {
         var updates = new List<(MultiplayerRoomState Room, MultiplayerRoomUpdate Update)>();
+        var roomsNeedingGrace = new List<MultiplayerRoomState>();
 
         foreach (var room in _rooms.Values)
         {
@@ -437,6 +514,11 @@ public sealed class MultiplayerRoomService
                 }
 
                 updates.Add((room, BuildUpdate(room, roundResolved: resolved)));
+
+                if (ShouldScheduleDisconnectGrace(room))
+                {
+                    roomsNeedingGrace.Add(room);
+                }
             }
         }
 
@@ -445,11 +527,33 @@ public sealed class MultiplayerRoomService
             await PersistRoomAsync(room, cancellationToken);
         }
 
+        foreach (var room in roomsNeedingGrace.Distinct())
+        {
+            ScheduleDisconnectGrace(room);
+        }
+
         return updates.Select(update => update.Update).ToList();
     }
 
     private MultiplayerRoomUpdate BuildUpdateAfterConnectedPlayersChanged(MultiplayerRoomState room)
     {
+        if (IsInGameStatus(room) || string.Equals(room.Status, RoundResultStatus, StringComparison.OrdinalIgnoreCase))
+        {
+            var activePlayers = room.Players
+                .Where(IsRoundParticipant)
+                .ToList();
+
+            if (activePlayers.Count == 0)
+            {
+                return CompleteRoom(room);
+            }
+
+            if (activePlayers.Count == 1 && activePlayers[0].Connected)
+            {
+                return CompleteRoom(room, activePlayers[0].PlayerId, resolveActiveRound: true);
+            }
+        }
+
         if (string.Equals(room.Status, PlayingStatus, StringComparison.OrdinalIgnoreCase))
         {
             var round = room.Rounds.ElementAtOrDefault(room.CurrentRoundIndex);
@@ -462,10 +566,29 @@ public sealed class MultiplayerRoomService
         if (string.Equals(room.Status, RoundResultStatus, StringComparison.OrdinalIgnoreCase))
         {
             var round = room.Rounds.ElementAtOrDefault(room.CurrentRoundIndex);
-            if (round is not null && AllConnectedPlayersReady(room, round))
+            if (round is not null && AllRoundParticipantsReady(room, round))
             {
                 return AdvanceAfterRoundResult(room);
             }
+        }
+
+        return BuildUpdate(room);
+    }
+
+    private MultiplayerRoomUpdate BuildLobbyUpdateAfterExpiredDisconnects(MultiplayerRoomState room)
+    {
+        room.Players.RemoveAll(player => player.HasLeft);
+
+        if (room.Players.Count == 0)
+        {
+            room.Status = CompletedStatus;
+            room.CompletedAt = DateTimeOffset.UtcNow;
+            return BuildUpdate(room);
+        }
+
+        if (room.Players.All(player => player.PlayerId != room.OwnerPlayerId))
+        {
+            AssignNextOwner(room);
         }
 
         return BuildUpdate(room);
@@ -478,6 +601,7 @@ public sealed class MultiplayerRoomService
             room.Status = CompletedStatus;
             room.CompletedAt = DateTimeOffset.UtcNow;
             room.FinalResult = BuildFinalResult(room);
+            CancelDisconnectGrace(room);
             return BuildUpdate(room, gameCompleted: room.FinalResult);
         }
 
@@ -491,9 +615,17 @@ public sealed class MultiplayerRoomService
     private static void AssignNextOwner(MultiplayerRoomState room)
     {
         var nextOwner = room.Players
-            .Where(candidate => candidate.Connected)
+            .Where(candidate => !candidate.HasLeft && candidate.Connected)
             .OrderBy(candidate => candidate.JoinedAt)
             .FirstOrDefault() ??
+            room.Players
+                .Where(candidate => !candidate.HasLeft)
+                .OrderBy(candidate => candidate.JoinedAt)
+                .FirstOrDefault() ??
+            room.Players
+                .Where(candidate => candidate.Connected)
+                .OrderBy(candidate => candidate.JoinedAt)
+                .FirstOrDefault() ??
             room.Players
                 .OrderBy(candidate => candidate.JoinedAt)
                 .FirstOrDefault();
@@ -565,6 +697,135 @@ public sealed class MultiplayerRoomService
         });
     }
 
+    private void ScheduleDisconnectGrace(MultiplayerRoomState room)
+    {
+        CancellationTokenSource cancellation;
+        string roomCode;
+
+        lock (room.SyncRoot)
+        {
+            if (!ShouldScheduleDisconnectGrace(room))
+            {
+                CancelDisconnectGrace(room);
+                return;
+            }
+
+            CancelDisconnectGrace(room);
+            room.DisconnectGraceCancellation = new CancellationTokenSource();
+            cancellation = room.DisconnectGraceCancellation;
+            roomCode = room.RoomCode;
+        }
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(_disconnectGracePeriod, cancellation.Token);
+                await ResolveExpiredDisconnectsAsync(roomCode, cancellation.Token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (Exception exception)
+            {
+                _logger.LogWarning(exception, "Could not resolve multiplayer disconnects for room {RoomCode}.", roomCode);
+            }
+        });
+    }
+
+    private async Task<MultiplayerRoomUpdate?> ResolveExpiredDisconnectsAsync(
+        string roomCode,
+        CancellationToken cancellationToken)
+    {
+        return await ResolveExpiredDisconnectsAsync(roomCode, DateTimeOffset.UtcNow, cancellationToken);
+    }
+
+    private async Task<MultiplayerRoomUpdate?> ResolveExpiredDisconnectsAsync(
+        string roomCode,
+        DateTimeOffset now,
+        CancellationToken cancellationToken)
+    {
+        if (!_rooms.TryGetValue(roomCode, out var room))
+        {
+            return null;
+        }
+
+        MultiplayerRoomUpdate? update = null;
+        var shouldScheduleAgain = false;
+
+        lock (room.SyncRoot)
+        {
+            if (cancellationToken.IsCancellationRequested ||
+                string.Equals(room.Status, CompletedStatus, StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            var expiredPlayers = room.Players
+                .Where(player => !player.HasLeft &&
+                                 !player.Connected &&
+                                 IsDisconnectExpired(player, now))
+                .ToList();
+
+            if (expiredPlayers.Count == 0)
+            {
+                shouldScheduleAgain = ShouldScheduleDisconnectGrace(room);
+            }
+            else
+            {
+                foreach (var player in expiredPlayers)
+                {
+                    player.HasLeft = true;
+                    player.ConnectionId = null;
+                    player.LastSeenAt = now;
+                }
+
+                if (room.Players.All(player => player.PlayerId != room.OwnerPlayerId || player.HasLeft))
+                {
+                    AssignNextOwner(room);
+                }
+
+                update = string.Equals(room.Status, LobbyStatus, StringComparison.OrdinalIgnoreCase)
+                    ? BuildLobbyUpdateAfterExpiredDisconnects(room)
+                    : BuildUpdateAfterConnectedPlayersChanged(room);
+                shouldScheduleAgain = ShouldScheduleDisconnectGrace(room);
+            }
+        }
+
+        if (update is null)
+        {
+            if (shouldScheduleAgain)
+            {
+                ScheduleDisconnectGrace(room);
+            }
+
+            return null;
+        }
+
+        await PersistRoomAsync(room, CancellationToken.None);
+        await BroadcastUpdateAsync(update, CancellationToken.None);
+        await BroadcastOpenRoomsAsync(CancellationToken.None);
+
+        if (update.RoundStarted is not null)
+        {
+            ScheduleRoundTimeout(room);
+        }
+
+        if (shouldScheduleAgain)
+        {
+            ScheduleDisconnectGrace(room);
+        }
+        else
+        {
+            lock (room.SyncRoot)
+            {
+                CancelDisconnectGrace(room);
+            }
+        }
+
+        return update;
+    }
+
     private async Task ResolveRoundByTimeoutAsync(
         string roomCode,
         string roundId,
@@ -594,8 +855,36 @@ public sealed class MultiplayerRoomService
             update = BuildUpdate(room, roundResolved: resolved);
         }
 
-        await PersistRoomAsync(room, cancellationToken);
-        await BroadcastUpdateAsync(update, cancellationToken);
+        await PersistRoomAsync(room, CancellationToken.None);
+        await BroadcastUpdateAsync(update, CancellationToken.None);
+    }
+
+    private MultiplayerRoomUpdate CompleteRoom(
+        MultiplayerRoomState room,
+        string? winningPlayerId = null,
+        bool resolveActiveRound = false)
+    {
+        MultiplayerRoundResultDto? resolved = null;
+
+        if (resolveActiveRound && string.Equals(room.Status, PlayingStatus, StringComparison.OrdinalIgnoreCase))
+        {
+            var currentRound = room.Rounds.ElementAtOrDefault(room.CurrentRoundIndex);
+            if (currentRound is not null &&
+                string.Equals(currentRound.Status, ActiveRoundStatus, StringComparison.OrdinalIgnoreCase))
+            {
+                resolved = ResolveRound(room, currentRound, DisconnectResolution);
+            }
+        }
+
+        room.RoundTimerCancellation?.Cancel();
+        room.RoundTimerCancellation?.Dispose();
+        room.RoundTimerCancellation = null;
+        CancelDisconnectGrace(room);
+        room.Status = CompletedStatus;
+        room.CompletedAt = DateTimeOffset.UtcNow;
+        room.FinalResult = BuildFinalResult(room, winningPlayerId);
+
+        return BuildUpdate(room, roundResolved: resolved, gameCompleted: room.FinalResult);
     }
 
     private MultiplayerRoundResultDto ResolveRound(
@@ -603,11 +892,11 @@ public sealed class MultiplayerRoomService
         MultiplayerRoundState round,
         string resolution)
     {
-        foreach (var player in room.Players.Where(player => player.Connected))
+        foreach (var player in room.Players.Where(IsRoundParticipant))
         {
             if (!round.Guesses.ContainsKey(player.PlayerId))
             {
-                round.Guesses[player.PlayerId] = BuildPlayerGuess(player, round, guess: null, "timeout");
+                round.Guesses[player.PlayerId] = BuildPlayerGuess(player, round, guess: null, resolution);
             }
         }
 
@@ -664,7 +953,7 @@ public sealed class MultiplayerRoomService
         };
     }
 
-    private static MultiplayerRoundResultDto BuildRoundResult(
+    private MultiplayerRoundResultDto BuildRoundResult(
         MultiplayerRoomState room,
         MultiplayerRoundState round)
     {
@@ -678,7 +967,10 @@ public sealed class MultiplayerRoomService
             round.Location.Country,
             round.Location.Latitude,
             round.Location.Longitude,
-            GameRoundRules.BuildMedia(GameRoundRules.GetRoundMedia(round.Location, round.SelectedMedia)),
+            GameRoundRules.BuildMedia(GameRoundRules.GetRoundMedia(
+                round.Location,
+                round.SelectedMedia,
+                IsVisualSourceAvailable)),
             GameRoundRules.BuildVisualSources(round.Location),
             round.Location.Clues
                 .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
@@ -708,7 +1000,9 @@ public sealed class MultiplayerRoomService
                 : room.Rounds[room.CurrentRoundIndex + 1].RoundNumber);
     }
 
-    private static MultiplayerSessionResultDto BuildFinalResult(MultiplayerRoomState room)
+    private static MultiplayerSessionResultDto BuildFinalResult(
+        MultiplayerRoomState room,
+        string? winningPlayerId = null)
     {
         return new MultiplayerSessionResultDto(
             room.RoomCode,
@@ -718,7 +1012,9 @@ public sealed class MultiplayerRoomService
                     player.PlayerId,
                     player.DisplayName,
                     player.TotalScore))
-                .OrderByDescending(player => player.TotalScore)
+                .OrderByDescending(player => winningPlayerId is not null &&
+                                             string.Equals(player.PlayerId, winningPlayerId, StringComparison.Ordinal))
+                .ThenByDescending(player => player.TotalScore)
                 .ThenBy(player => player.DisplayName, StringComparer.CurrentCultureIgnoreCase)
                 .ToList(),
             room.Rounds
@@ -727,7 +1023,7 @@ public sealed class MultiplayerRoomService
                 .ToList());
     }
 
-    private static void RefreshResultNames(MultiplayerRoomState room)
+    private void RefreshResultNames(MultiplayerRoomState room)
     {
         foreach (var round in room.Rounds.Where(round => round.Result is not null))
         {
@@ -746,24 +1042,65 @@ public sealed class MultiplayerRoomService
 
     private static bool ShouldResolveRound(MultiplayerRoomState room, MultiplayerRoundState round)
     {
-        var connectedPlayers = room.Players
-            .Where(player => player.Connected)
+        var roundPlayers = room.Players
+            .Where(IsRoundParticipant)
             .Select(player => player.PlayerId)
             .ToList();
 
-        return connectedPlayers.Count > 0 &&
-               connectedPlayers.All(round.Guesses.ContainsKey);
+        return roundPlayers.Count > 0 &&
+               roundPlayers.All(round.Guesses.ContainsKey);
     }
 
-    private static bool AllConnectedPlayersReady(MultiplayerRoomState room, MultiplayerRoundState round)
+    private static bool IsRoundParticipant(MultiplayerPlayerState player)
     {
-        var connectedPlayers = room.Players
-            .Where(player => player.Connected)
+        return !player.HasLeft;
+    }
+
+    private void LogSubmitGuessRejected(
+        MultiplayerRoomState room,
+        string playerId,
+        string requestedRoundId,
+        GameFlowException exception)
+    {
+        lock (room.SyncRoot)
+        {
+            var currentRound = room.Rounds.ElementAtOrDefault(room.CurrentRoundIndex);
+            var players = room.Players
+                .OrderBy(player => player.JoinedAt)
+                .Select(player => new
+                {
+                    player.PlayerId,
+                    player.Connected,
+                    player.HasLeft,
+                    Submitted = currentRound?.Guesses.ContainsKey(player.PlayerId) ?? false,
+                    Ready = currentRound?.ReadyPlayerIds.Contains(player.PlayerId) ?? false,
+                })
+                .ToList();
+
+            _logger.LogWarning(
+                exception,
+                "SubmitGuess rejected for room {RoomCode}. PlayerId {PlayerId}; RequestedRoundId {RequestedRoundId}; RoomStatus {RoomStatus}; CurrentRoundIndex {CurrentRoundIndex}; CurrentRoundId {CurrentRoundId}; CurrentRoundStatus {CurrentRoundStatus}; StatusCode {StatusCode}; Players {@Players}",
+                room.RoomCode,
+                playerId,
+                requestedRoundId,
+                room.Status,
+                room.CurrentRoundIndex,
+                currentRound?.Id.ToString(),
+                currentRound?.Status,
+                exception.StatusCode,
+                players);
+        }
+    }
+
+    private static bool AllRoundParticipantsReady(MultiplayerRoomState room, MultiplayerRoundState round)
+    {
+        var roundPlayers = room.Players
+            .Where(IsRoundParticipant)
             .Select(player => player.PlayerId)
             .ToList();
 
-        return connectedPlayers.Count > 0 &&
-               connectedPlayers.All(round.ReadyPlayerIds.Contains);
+        return roundPlayers.Count > 0 &&
+               roundPlayers.All(round.ReadyPlayerIds.Contains);
     }
 
     private MultiplayerRoomUpdate BuildUpdate(
@@ -782,7 +1119,7 @@ public sealed class MultiplayerRoomService
             submittedPlayerId);
     }
 
-    private static MultiplayerRoomStateDto BuildRoomState(MultiplayerRoomState room)
+    private MultiplayerRoomStateDto BuildRoomState(MultiplayerRoomState room)
     {
         var currentRound = string.Equals(room.Status, PlayingStatus, StringComparison.OrdinalIgnoreCase)
             ? GetCurrentRound(room)
@@ -798,21 +1135,29 @@ public sealed class MultiplayerRoomService
             room.Config,
             room.Players
                 .OrderBy(player => player.JoinedAt)
-                .Select(player => new MultiplayerPlayerDto(
-                    player.PlayerId,
-                    player.DisplayName,
-                    room.OwnerPlayerId == player.PlayerId,
-                    player.Connected,
-                    currentRoundState?.Guesses.ContainsKey(player.PlayerId) ?? false,
-                    currentRoundState?.ReadyPlayerIds.Contains(player.PlayerId) ?? false,
-                    player.TotalScore))
+                .Select(player =>
+                {
+                    var disconnectGraceEndsAt = player is { Connected: false, HasLeft: false }
+                        ? (player.LastSeenAt ?? player.JoinedAt).Add(_disconnectGracePeriod)
+                        : (DateTimeOffset?)null;
+
+                    return new MultiplayerPlayerDto(
+                        player.PlayerId,
+                        player.DisplayName,
+                        room.OwnerPlayerId == player.PlayerId,
+                        player.Connected,
+                        disconnectGraceEndsAt,
+                        currentRoundState?.Guesses.ContainsKey(player.PlayerId) ?? false,
+                        currentRoundState?.ReadyPlayerIds.Contains(player.PlayerId) ?? false,
+                        player.TotalScore);
+                })
                 .ToList(),
             currentRound,
             room.LastRoundResult,
             room.FinalResult);
     }
 
-    private static ChallengeRoundDto? GetCurrentRound(MultiplayerRoomState room)
+    private ChallengeRoundDto? GetCurrentRound(MultiplayerRoomState room)
     {
         var round = room.Rounds.ElementAtOrDefault(room.CurrentRoundIndex);
 
@@ -825,7 +1170,9 @@ public sealed class MultiplayerRoomService
                 room.Config.Timed,
                 room.Config.RoundTimeSeconds,
                 round.Location,
-                round.SelectedMedia);
+                round.SelectedMedia,
+                round.EndsAt,
+                IsVisualSourceAvailable);
     }
 
     private MultiplayerRoomState GetRoom(string roomCode)
@@ -1082,6 +1429,48 @@ public sealed class MultiplayerRoomService
                 cancellationToken);
         }
     }
+
+    private async Task BroadcastOpenRoomsAsync(CancellationToken cancellationToken)
+    {
+        await _hubContext.Clients.Group(MultiplayerHub.OpenRoomsGroup).SendAsync(
+            "openRoomsUpdated",
+            ListOpenRooms(),
+            cancellationToken);
+    }
+
+    private static bool IsInGameStatus(MultiplayerRoomState room)
+    {
+        return string.Equals(room.Status, PlayingStatus, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool ShouldScheduleDisconnectGrace(MultiplayerRoomState room)
+    {
+        return !string.Equals(room.Status, CompletedStatus, StringComparison.OrdinalIgnoreCase) &&
+               room.Players.Any(player => !player.HasLeft && !player.Connected);
+    }
+
+    private bool IsDisconnectExpired(
+        MultiplayerPlayerState player,
+        DateTimeOffset now)
+    {
+        var disconnectedAt = player.LastSeenAt ?? player.JoinedAt;
+        return now - disconnectedAt >= _disconnectGracePeriod;
+    }
+
+    private static void CancelDisconnectGraceIfNoDisconnectedPlayers(MultiplayerRoomState room)
+    {
+        if (!ShouldScheduleDisconnectGrace(room))
+        {
+            CancelDisconnectGrace(room);
+        }
+    }
+
+    private static void CancelDisconnectGrace(MultiplayerRoomState room)
+    {
+        room.DisconnectGraceCancellation?.Cancel();
+        room.DisconnectGraceCancellation?.Dispose();
+        room.DisconnectGraceCancellation = null;
+    }
 }
 
 public sealed record MultiplayerRoomUpdate(
@@ -1110,6 +1499,7 @@ internal sealed class MultiplayerRoomState
     public MultiplayerRoundResultDto? LastRoundResult { get; set; }
     public MultiplayerSessionResultDto? FinalResult { get; set; }
     public CancellationTokenSource? RoundTimerCancellation { get; set; }
+    public CancellationTokenSource? DisconnectGraceCancellation { get; set; }
     public object SyncRoot { get; } = new();
 }
 
@@ -1119,6 +1509,7 @@ internal sealed class MultiplayerPlayerState
     public required string PlayerId { get; init; }
     public required string DisplayName { get; set; }
     public required bool Connected { get; set; }
+    public bool HasLeft { get; set; }
     public string? ConnectionId { get; set; }
     public required DateTimeOffset JoinedAt { get; init; }
     public DateTimeOffset? LastSeenAt { get; set; }

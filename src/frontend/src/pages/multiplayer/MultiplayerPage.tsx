@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { CircleHelp, Clock3, X } from "lucide-react";
 import { ChallengeSceneArt } from "../../components/ChallengeSceneArt";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
+import { AppNotice } from "../../components/ui/AppNotice";
 import { OptionGroup } from "../../components/ui/OptionGroup";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import { appConfig, defaultSessionConfig } from "../../app/config";
@@ -14,26 +16,44 @@ import type {
   ChallengeRound,
   GuessCoordinates,
   MultiplayerOpenRoom,
+  MultiplayerPlayer,
   MultiplayerRoomState,
   MultiplayerRoundResult,
   MultiplayerSessionResult,
   SessionConfig,
 } from "../../types/game";
-import { getMultiplayerPlayerStatus } from "./multiplayerLabels";
+import {
+  getMultiplayerPlayerStatus,
+  getMultiplayerRoundResolutionLabel,
+} from "./multiplayerLabels";
+import {
+  formatMultiplayerRoundTimer,
+  getMultiplayerRoundRemainingSeconds,
+} from "./multiplayerRoundTimer";
+import {
+  clearMultiplayerRoomResume,
+  isRecoverableMultiplayerResumeError,
+  readMultiplayerRoomResume,
+  saveMultiplayerRoomResume,
+} from "./multiplayerRoomResume";
 
 interface MultiplayerPageProps {
   initialRoomCode?: string | null;
   onBack: () => void;
 }
 
-const DISPLAY_NAME_STORAGE_KEY = "geoexplorer.multiplayer.displayName";
-
 export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProps) {
   const playerId = useMemo(() => getOrCreateMultiplayerPlayerId(), []);
-  const [displayName, setDisplayName] = useState(
-    () => window.localStorage.getItem(DISPLAY_NAME_STORAGE_KEY) ?? createRandomMultiplayerDisplayName()
-  );
-  const [roomCodeInput, setRoomCodeInput] = useState(initialRoomCode ?? "");
+  const [displayName, setDisplayName] = useState(() => {
+    const generatedName = createRandomMultiplayerDisplayName();
+
+    if (!initialRoomCode) {
+      return generatedName;
+    }
+
+    return readMultiplayerRoomResume(window.localStorage, initialRoomCode)?.displayName ?? generatedName;
+  });
+  const [roomCodeInput, setRoomCodeInput] = useState(initialRoomCode?.toUpperCase() ?? "");
   const [isPublicRoom, setIsPublicRoom] = useState(false);
   const [roomPassword, setRoomPassword] = useState("");
   const [joinPassword, setJoinPassword] = useState("");
@@ -44,12 +64,20 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   const [config, setConfig] = useState<SessionConfig>(defaultSessionConfig);
   const [room, setRoom] = useState<MultiplayerRoomState | null>(null);
   const [currentRound, setCurrentRound] = useState<ChallengeRound | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
   const [roundResult, setRoundResult] = useState<MultiplayerRoundResult | null>(null);
   const [finalResult, setFinalResult] = useState<MultiplayerSessionResult | null>(null);
   const [guess, setGuess] = useState<GuessCoordinates | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [cluesOpen, setCluesOpen] = useState(false);
+  const [disconnectClock, setDisconnectClock] = useState(() => Date.now());
+  const [autoJoinRetryNonce, setAutoJoinRetryNonce] = useState(0);
+  const [openRoomsRetryNonce, setOpenRoomsRetryNonce] = useState(0);
+  const autoJoinAttemptedRef = useRef(false);
+  const autoJoinRetryCountRef = useRef(0);
+  const openRoomsRetryCountRef = useRef(0);
 
   const client = useMemo(
     () =>
@@ -57,16 +85,24 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
         onRoomUpdated: (state) => applyRoomState(state),
         onRoundStarted: (round) => {
           setCurrentRound(round);
+          setRemainingSeconds(getMultiplayerRoundRemainingSeconds(round));
           setRoundResult(null);
           setFinalResult(null);
           setGuess(null);
+          setCluesOpen(false);
         },
         onRoundResolved: (result) => {
           setRoundResult(result);
+          setRemainingSeconds(null);
           setGuess(null);
         },
         onGameCompleted: (result) => {
           setFinalResult(result);
+        },
+        onOpenRoomsUpdated: (rooms) => {
+          setOpenRooms(rooms);
+          setOpenRoomsLoaded(true);
+          setLoadingOpenRooms(false);
         },
         onPlayerSubmitted: () => undefined,
         onPlayerJoining: () => {
@@ -85,16 +121,24 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   }, [client]);
 
   const applyRoomState = (state: MultiplayerRoomState) => {
+    autoJoinRetryCountRef.current = 0;
+    setError(null);
     setRoom(state);
     setConfig(state.config);
     setCurrentRound(state.currentRound);
+    setCluesOpen(false);
+    setRemainingSeconds(
+      state.status === "playing" && state.currentRound
+        ? getMultiplayerRoundRemainingSeconds(state.currentRound)
+        : null
+    );
     setRoundResult(state.lastRoundResult);
     setFinalResult(state.finalResult);
     setPlayerJoining(false);
     const ownPlayer = state.players.find((player) => player.playerId === playerId);
     if (ownPlayer) {
       setDisplayName(ownPlayer.displayName);
-      window.localStorage.setItem(DISPLAY_NAME_STORAGE_KEY, ownPlayer.displayName);
+      saveMultiplayerRoomResume(window.localStorage, state.roomCode, ownPlayer.displayName);
     }
 
     const nextUrl = `${window.location.pathname}?room=${state.roomCode}`;
@@ -106,13 +150,83 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   const isOwner = Boolean(currentPlayer?.isOwner);
   const hasSubmitted = Boolean(currentPlayer?.submitted);
   const hasReady = Boolean(currentPlayer?.ready);
+  const disconnectedPlayers = room?.players.filter(
+    (player) => !player.connected && Boolean(player.disconnectGraceEndsAt)
+  ) ?? [];
   const shareUrl = room
     ? `${window.location.origin}${window.location.pathname}?room=${room.roomCode}`
     : "";
 
-  const saveDisplayName = (name: string) => {
-    window.localStorage.setItem(DISPLAY_NAME_STORAGE_KEY, name);
+  const generateDisplayName = () => {
+    setDisplayName(createRandomMultiplayerDisplayName());
   };
+
+  useEffect(() => {
+    if (!currentRound || room?.status !== "playing") {
+      setRemainingSeconds(null);
+      return;
+    }
+
+    setRemainingSeconds(getMultiplayerRoundRemainingSeconds(currentRound));
+
+    if (!currentRound.timed) {
+      return;
+    }
+
+    const timerId = window.setInterval(() => {
+      setRemainingSeconds(getMultiplayerRoundRemainingSeconds(currentRound));
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timerId);
+    };
+  }, [currentRound, room?.status]);
+
+  useEffect(() => {
+    if (!isApiMode) {
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingOpenRooms(true);
+
+    void client.watchOpenRooms()
+      .then((rooms) => {
+        if (cancelled) {
+          return;
+        }
+
+        openRoomsRetryCountRef.current = 0;
+        setOpenRooms(rooms);
+        setOpenRoomsLoaded(true);
+      })
+      .catch((caughtError) => {
+        if (
+          !cancelled &&
+          isRecoverableMultiplayerResumeError(caughtError) &&
+          openRoomsRetryCountRef.current < 2
+        ) {
+          openRoomsRetryCountRef.current += 1;
+          window.setTimeout(() => {
+            setOpenRoomsRetryNonce((current) => current + 1);
+          }, 300);
+          return;
+        }
+
+        if (!cancelled) {
+          setError(caughtError instanceof Error ? caughtError.message : "Não foi possível acompanhar salas abertas.");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingOpenRooms(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [client, isApiMode, openRoomsRetryNonce]);
 
   const getDisplayNameForAction = () => {
     const currentName = displayName.trim();
@@ -130,12 +244,122 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
     return targetPlayerId === playerId ? `${name} (eu)` : name;
   };
 
+  const formatDisconnectRemaining = (endsAt: string) => {
+    const endTime = new Date(endsAt).getTime();
+    const remainingSecondsUntilExpiry = Number.isFinite(endTime)
+      ? Math.max(0, Math.ceil((endTime - disconnectClock) / 1000))
+      : 0;
+    const minutes = Math.floor(remainingSecondsUntilExpiry / 60);
+    const seconds = remainingSecondsUntilExpiry % 60;
+
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const formatDisconnectedNames = (players: MultiplayerPlayer[]) => {
+    const names = players.map((player) => formatPlayerName(player.displayName, player.playerId));
+
+    if (names.length <= 1) {
+      return names[0] ?? "Um jogador";
+    }
+
+    return `${names.slice(0, -1).join(", ")} e ${names[names.length - 1]}`;
+  };
+
+  const renderPlayerStatus = (
+    player: MultiplayerPlayer,
+    context: "lobby" | "playing"
+  ) => (
+    <strong className="multiplayer-player-status">
+      {getMultiplayerPlayerStatus(player, context)}
+      {!player.connected && player.disconnectGraceEndsAt ? (
+        <small>{formatDisconnectRemaining(player.disconnectGraceEndsAt)}</small>
+      ) : null}
+    </strong>
+  );
+
+  const renderDisconnectNotice = () => {
+    if (disconnectedPlayers.length === 0) {
+      return null;
+    }
+
+    const nextExpiry = disconnectedPlayers
+      .map((player) => player.disconnectGraceEndsAt)
+      .filter((endsAt): endsAt is string => Boolean(endsAt))
+      .sort()[0];
+    const plural = disconnectedPlayers.length > 1;
+    const playerNames = formatDisconnectedNames(disconnectedPlayers);
+    const remainingLabel = nextExpiry ? formatDisconnectRemaining(nextExpiry) : "00:00";
+
+    return (
+      <AppNotice
+        title="Ligação em espera"
+        message={`${playerNames} ${plural ? "perderam" : "perdeu"} a ligação. A sala segue automaticamente em ${remainingLabel} se ${plural ? "não voltarem" : "não voltar"}.`}
+        tone="info"
+      />
+    );
+  };
+
+  useEffect(() => {
+    const roomCode = initialRoomCode?.trim().toUpperCase() ?? "";
+
+    if (!isApiMode || !roomCode || room || autoJoinAttemptedRef.current) {
+      return;
+    }
+
+    autoJoinAttemptedRef.current = true;
+    setRoomCodeInput(roomCode);
+
+    const resume = readMultiplayerRoomResume(window.localStorage, roomCode);
+    const playerName = resume?.displayName ?? getDisplayNameForAction();
+
+    if (resume) {
+      setDisplayName(resume.displayName);
+    }
+
+    setBusy(true);
+    setError(null);
+
+    void client.joinRoom(roomCode, playerId, playerName, null)
+      .then(applyRoomState)
+      .catch((caughtError) => {
+        if (
+          isRecoverableMultiplayerResumeError(caughtError) &&
+          autoJoinRetryCountRef.current < 2
+        ) {
+          autoJoinRetryCountRef.current += 1;
+          autoJoinAttemptedRef.current = false;
+          setError(null);
+          window.setTimeout(() => {
+            setAutoJoinRetryNonce((current) => current + 1);
+          }, 300);
+          return;
+        }
+
+        setError(caughtError instanceof Error ? caughtError.message : "Não foi possível recuperar a sala.");
+      })
+      .finally(() => setBusy(false));
+  }, [autoJoinRetryNonce, client, initialRoomCode, isApiMode, playerId, room]);
+
+  useEffect(() => {
+    if (disconnectedPlayers.length === 0) {
+      return;
+    }
+
+    setDisconnectClock(Date.now());
+    const timerId = window.setInterval(() => {
+      setDisconnectClock(Date.now());
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timerId);
+    };
+  }, [disconnectedPlayers.length, room?.roomCode, room?.status]);
+
   const createRoom = async () => {
     const playerName = getDisplayNameForAction();
 
     setBusy(true);
     setError(null);
-    saveDisplayName(playerName);
 
     try {
       const state = await client.createRoom(
@@ -164,7 +388,6 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
     setBusy(true);
     setError(null);
-    saveDisplayName(playerName);
 
     try {
       const state = await client.joinRoom(roomCode, playerId, playerName, joinPassword.trim() || null);
@@ -181,7 +404,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
     setError(null);
 
     try {
-      setOpenRooms(await client.listOpenRooms());
+      setOpenRooms(await client.watchOpenRooms());
       setOpenRoomsLoaded(true);
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Não foi possível carregar salas abertas.");
@@ -198,7 +421,6 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
     const playerName = getDisplayNameForAction();
     setBusy(true);
     setError(null);
-    saveDisplayName(playerName);
 
     try {
       const state = await client.updateDisplayName(room.roomCode, playerId, playerName);
@@ -229,6 +451,16 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
         type="button"
       >
         Atualizar nome
+      </RoundedButton>
+      <RoundedButton
+        disabled={busy}
+        color="neon"
+        tone="ghost"
+        radius="none"
+        onClick={generateDisplayName}
+        type="button"
+      >
+        Gerar outro
       </RoundedButton>
     </div>
   );
@@ -303,6 +535,24 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
     }
   };
 
+  const returnToLobby = async () => {
+    if (!room) {
+      return;
+    }
+
+    setBusy(true);
+    setError(null);
+
+    try {
+      const state = await client.returnToLobby(room.roomCode, playerId);
+      applyRoomState(state);
+    } catch (caughtError) {
+      setError(caughtError instanceof Error ? caughtError.message : "Não foi possível voltar à sala.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const leaveRoom = async () => {
     if (room) {
       try {
@@ -312,6 +562,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
       }
     }
 
+    clearMultiplayerRoomResume(window.localStorage);
     window.history.replaceState(null, "", window.location.pathname);
     await client.stop();
     onBack();
@@ -325,6 +576,22 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
     await navigator.clipboard?.writeText(shareUrl);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
+  };
+
+  const renderClueItems = () => {
+    if (!currentRound?.challenge.clues.length) {
+      return <span className="multiplayer-empty-state">Sem dicas disponíveis nesta ronda.</span>;
+    }
+
+    return currentRound.challenge.clues.map((clue) => (
+      <div className="multiplayer-clue-item" key={clue.label}>
+        <div>
+          <span className="muted-eyebrow">{clue.label}</span>
+          <strong>{clue.value}</strong>
+        </div>
+        <span>{clue.confidence}</span>
+      </div>
+    ));
   };
 
   if (!isApiMode) {
@@ -358,7 +625,13 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           </RoundedButton>
         </div>
 
-        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
+        {error ? (
+          <AppNotice
+            message={error}
+            onDismiss={() => setError(null)}
+            tone="danger"
+          />
+        ) : null}
 
         <div className="multiplayer-entry-grid">
           <Card as="article" variant="setupPanelStack">
@@ -372,6 +645,16 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
                 value={displayName}
               />
             </label>
+            <RoundedButton
+              disabled={busy}
+              color="neon"
+              tone="ghost"
+              radius="none"
+              onClick={generateDisplayName}
+              type="button"
+            >
+              Gerar outro nome
+            </RoundedButton>
 
             <OptionGroup
               label="Visibilidade"
@@ -472,7 +755,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           <Card as="article" variant="setupPanelStack">
             <span className="muted-eyebrow">Salas abertas</span>
             <h3>Entrar sem convite direto</h3>
-            <p>Mostra salas abertas que ainda não começaram. Algumas podem pedir password.</p>
+            <p>Mostra salas abertas que ainda não começaram. A lista atualiza em tempo real.</p>
             <RoundedButton
               disabled={loadingOpenRooms}
               color="neon"
@@ -481,7 +764,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
               onClick={loadOpenRooms}
               type="button"
             >
-              {loadingOpenRooms ? "A procurar salas..." : "Ver salas abertas"}
+              {loadingOpenRooms ? "A procurar salas..." : "Atualizar agora"}
             </RoundedButton>
             <div className="multiplayer-open-room-list" aria-busy={loadingOpenRooms} aria-live="polite">
               {openRooms.length === 0 ? (
@@ -520,7 +803,14 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
   if (room.status === "playing" && currentRound) {
     return (
       <section className="screen-shell multiplayer-screen multiplayer-screen--play">
-        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
+        {error ? (
+          <AppNotice
+            message={error}
+            onDismiss={() => setError(null)}
+            tone="danger"
+          />
+        ) : null}
+        {renderDisconnectNotice()}
         <div className="multiplayer-play-grid">
           <Card as="article" variant="tactical" className="multiplayer-scene-card">
             <div className="multiplayer-round-head">
@@ -528,18 +818,36 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
               <span className="chip chip-highlight">
                 Ronda {currentRound.roundNumber}/{currentRound.totalRounds}
               </span>
+              <span className={`chip ${currentRound.timed ? "chip-highlight" : "chip-soft"}`}>
+                <Clock3 size={14} strokeWidth={2.1} />
+                {formatMultiplayerRoundTimer(currentRound, remainingSeconds)}
+              </span>
+              <button
+                aria-label="Ver dicas"
+                className="multiplayer-icon-button multiplayer-clue-button"
+                onClick={() => setCluesOpen(true)}
+                title="Ver dicas"
+                type="button"
+              >
+                <CircleHelp size={18} strokeWidth={2.2} />
+              </button>
             </div>
             <ChallengeSceneArt challenge={currentRound.challenge} />
+            <div className="multiplayer-clue-panel" aria-label="Dicas da ronda">
+              <span className="muted-eyebrow">Dicas</span>
+              <div className="multiplayer-clue-list">
+                {renderClueItems()}
+              </div>
+            </div>
           </Card>
 
-          <Card as="aside" variant="tacticalStack">
+          <Card as="aside" variant="tacticalStack" className="multiplayer-players-card">
             <span className="muted-eyebrow">Jogadores</span>
-            {renderNameEditor()}
             <div className="multiplayer-player-list">
               {room.players.map((player) => (
                 <div className="multiplayer-player-row" key={player.playerId}>
                   <span>{formatPlayerName(player.displayName, player.playerId)}</span>
-                  <strong>{getMultiplayerPlayerStatus(player, "playing")}</strong>
+                  {renderPlayerStatus(player, "playing")}
                 </div>
               ))}
               {playerJoining ? (
@@ -578,6 +886,33 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
             </div>
           </Card>
         </div>
+        {cluesOpen ? (
+          <div className="multiplayer-clue-modal-backdrop" role="presentation" onClick={() => setCluesOpen(false)}>
+            <div
+              aria-labelledby="multiplayer-clue-modal-title"
+              aria-modal="true"
+              className="multiplayer-clue-modal"
+              onClick={(event) => event.stopPropagation()}
+              role="dialog"
+            >
+              <div className="multiplayer-clue-modal-head">
+                <h3 id="multiplayer-clue-modal-title">Dicas da ronda</h3>
+                <button
+                  aria-label="Fechar dicas"
+                  className="multiplayer-icon-button"
+                  onClick={() => setCluesOpen(false)}
+                  title="Fechar dicas"
+                  type="button"
+                >
+                  <X size={18} strokeWidth={2.2} />
+                </button>
+              </div>
+              <div className="multiplayer-clue-list">
+                {renderClueItems()}
+              </div>
+            </div>
+          </div>
+        ) : null}
       </section>
     );
   }
@@ -592,7 +927,14 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
     return (
       <section className="screen-shell multiplayer-screen">
-        {error ? <div className="alert-banner" role="alert">{error}</div> : null}
+        {error ? (
+          <AppNotice
+            message={error}
+            onDismiss={() => setError(null)}
+            tone="danger"
+          />
+        ) : null}
+        {renderDisconnectNotice()}
         <div className="section-header section-header-inline">
           <div>
             <div className="eyebrow">resultado da sala {room.roomCode}</div>
@@ -620,11 +962,13 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
           <Card as="article" variant="tacticalStack">
             <span className="muted-eyebrow">Ranking da ronda</span>
             <h3>{roundResult.city}, {roundResult.country}</h3>
-            {renderNameEditor()}
             <div className="multiplayer-leaderboard">
               {roundResult.playerResults.map((result, index) => (
                 <div className="multiplayer-leaderboard-row" key={result.playerId}>
-                  <span>{index + 1}. {formatPlayerName(result.displayName, result.playerId)}</span>
+                  <div className="multiplayer-leaderboard-copy">
+                    <span>{index + 1}. {formatPlayerName(result.displayName, result.playerId)}</span>
+                    <small>{getMultiplayerRoundResolutionLabel(result.resolution)}</small>
+                  </div>
                   <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
                 </div>
               ))}
@@ -640,18 +984,36 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
     return (
       <section className="screen-shell multiplayer-screen">
+        {error ? (
+          <AppNotice
+            message={error}
+            onDismiss={() => setError(null)}
+            tone="danger"
+          />
+        ) : null}
+        {renderDisconnectNotice()}
         <div className="section-header section-header-inline">
           <div>
             <div className="eyebrow">fim da partida</div>
             <h2 className="section-title">Classificação final da sala.</h2>
           </div>
-          <RoundedButton intent="primary" radius="none" onClick={leaveRoom} type="button">
-            Voltar ao início
-          </RoundedButton>
+          <div className="setup-header-actions">
+            <RoundedButton
+              disabled={!isOwner || busy}
+              intent="primary"
+              radius="none"
+              onClick={returnToLobby}
+              type="button"
+            >
+              {isOwner ? "Voltar à sala" : "À espera do dono"}
+            </RoundedButton>
+            <RoundedButton color="neon" tone="ghost" radius="none" onClick={leaveRoom} type="button">
+              Sair
+            </RoundedButton>
+          </div>
         </div>
 
         <Card as="article" variant="tacticalStack">
-          {renderNameEditor()}
           <div className="multiplayer-leaderboard multiplayer-leaderboard--final">
             {result.players.map((player, index) => (
               <div className="multiplayer-leaderboard-row" key={player.playerId}>
@@ -667,7 +1029,14 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
 
   return (
     <section className="screen-shell multiplayer-screen">
-      {error ? <div className="alert-banner" role="alert">{error}</div> : null}
+      {error ? (
+        <AppNotice
+          message={error}
+          onDismiss={() => setError(null)}
+          tone="danger"
+        />
+      ) : null}
+      {renderDisconnectNotice()}
       <div className="section-header section-header-inline">
         <div>
           <div className="eyebrow">sala {room.roomCode}</div>
@@ -695,7 +1064,7 @@ export function MultiplayerPage({ initialRoomCode, onBack }: MultiplayerPageProp
             {room.players.map((player) => (
               <div className="multiplayer-player-row" key={player.playerId}>
                 <span>{formatPlayerName(player.displayName, player.playerId)}</span>
-                <strong>{getMultiplayerPlayerStatus(player, "lobby")}</strong>
+                {renderPlayerStatus(player, "lobby")}
               </div>
             ))}
             {playerJoining ? (

@@ -31,8 +31,7 @@ public sealed class MapillaryImageService(
             return MapillaryImageResult.Found(cachedThumbnailUrl);
         }
 
-        var accessToken = configuration["Mapillary:AccessToken"] ??
-            Environment.GetEnvironmentVariable("MAPILLARY_ACCESS_TOKEN");
+        var accessToken = GetAccessToken(configuration);
 
         if (string.IsNullOrWhiteSpace(accessToken))
         {
@@ -67,15 +66,16 @@ public sealed class MapillaryImageService(
         var payload = await response.Content.ReadFromJsonAsync<MapillaryImageResponse>(
             cancellationToken);
 
-        if (string.IsNullOrWhiteSpace(payload?.ThumbnailUrl))
+        var thumbnailUrl = payload?.GetBestThumbnailUrl();
+        if (string.IsNullOrWhiteSpace(thumbnailUrl))
         {
             return MapillaryImageResult.Failed(
                 HttpStatusCode.NotFound,
                 "A imagem Mapillary não tem thumbnail disponível.");
         }
 
-        cache.Set(cacheKey, payload.ThumbnailUrl, CacheDuration);
-        return MapillaryImageResult.Found(payload.ThumbnailUrl);
+        cache.Set(cacheKey, thumbnailUrl, CacheDuration);
+        return MapillaryImageResult.Found(thumbnailUrl);
     }
 
     public static bool IsValidImageId(string imageId)
@@ -83,14 +83,46 @@ public sealed class MapillaryImageService(
         return !string.IsNullOrWhiteSpace(imageId) && imageId.All(char.IsDigit);
     }
 
+    public static bool HasConfiguredAccessToken(IConfiguration configuration)
+    {
+        return !string.IsNullOrWhiteSpace(GetAccessToken(configuration));
+    }
+
+    public static bool IsMapillaryMedia(SeedMedia media)
+    {
+        return string.Equals(media.SourceProvider, "Mapillary", StringComparison.OrdinalIgnoreCase) ||
+            (media.ImageUrl?.StartsWith("/api/media/mapillary/", StringComparison.OrdinalIgnoreCase) ?? false);
+    }
+
+    private static string? GetAccessToken(IConfiguration configuration)
+    {
+        return configuration["Mapillary:AccessToken"] ??
+            Environment.GetEnvironmentVariable("MAPILLARY_ACCESS_TOKEN");
+    }
+
     private static string BuildGraphUrl(string imageId, string accessToken)
     {
         return $"https://graph.mapillary.com/{Uri.EscapeDataString(imageId)}" +
-            $"?fields=thumb_1024_url&access_token={Uri.EscapeDataString(accessToken)}";
+            "?fields=thumb_2048_url,thumb_1024_url,thumb_original_url,thumb_256_url" +
+            $"&access_token={Uri.EscapeDataString(accessToken)}";
     }
 
     private sealed record MapillaryImageResponse(
-        [property: JsonPropertyName("thumb_1024_url")] string? ThumbnailUrl);
+        [property: JsonPropertyName("thumb_2048_url")] string? Thumbnail2048Url,
+        [property: JsonPropertyName("thumb_1024_url")] string? Thumbnail1024Url,
+        [property: JsonPropertyName("thumb_original_url")] string? ThumbnailOriginalUrl,
+        [property: JsonPropertyName("thumb_256_url")] string? Thumbnail256Url)
+    {
+        public string? GetBestThumbnailUrl()
+        {
+            return FirstNonEmpty(Thumbnail1024Url, Thumbnail2048Url, ThumbnailOriginalUrl, Thumbnail256Url);
+        }
+
+        private static string? FirstNonEmpty(params string?[] values)
+        {
+            return values.FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
+        }
+    }
 }
 
 public sealed record MapillaryImageResult(
