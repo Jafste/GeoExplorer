@@ -7,7 +7,6 @@ COPY src/frontend/package-lock.json ./package-lock.json
 RUN npm ci
 
 COPY src/frontend ./
-COPY src/database ../database
 
 CMD ["sh", "-c", "npm ci && npm run dev -- --host 0.0.0.0 --port 5173"]
 
@@ -20,7 +19,6 @@ COPY src/frontend/package-lock.json ./package-lock.json
 RUN npm ci
 
 COPY src/frontend ./
-COPY src/database ../database
 
 ARG VITE_DATA_MODE=api
 ARG VITE_API_BASE_URL=/api

@@ -2,6 +2,7 @@ using GeoExplorer.Backend.Contracts;
 using GeoExplorer.Backend.Data;
 using GeoExplorer.Backend.Hubs;
 using GeoExplorer.Backend.Services;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,15 +22,32 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
-builder.Services.AddSingleton<SeedLocationCatalog>();
-builder.Services.AddSingleton<GameSessionService>();
 builder.Services.AddPooledDbContextFactory<GeoExplorerDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GeoExplorerDb")));
 builder.Services.AddSingleton<DatabaseUsageMetrics>();
 builder.Services.AddSingleton<LocationCatalogStore>();
+builder.Services.AddSingleton<SeedLocationCatalog>();
+builder.Services.AddSingleton<RoundLocationSelector>();
 builder.Services.AddSingleton<GamePersistenceStore>();
 builder.Services.AddSingleton<MultiplayerPersistenceStore>();
-builder.Services.AddSingleton<MultiplayerRoomService>();
+builder.Services.AddSingleton(serviceProvider => new GameSessionService(
+    serviceProvider.GetRequiredService<RoundLocationSelector>(),
+    serviceProvider.GetRequiredService<IConfiguration>(),
+    serviceProvider.GetRequiredService<ILogger<GameSessionService>>(),
+    serviceProvider.GetRequiredService<GamePersistenceStore>()));
+builder.Services.AddSingleton(serviceProvider => new MultiplayerRoomService(
+    serviceProvider.GetRequiredService<RoundLocationSelector>(),
+    serviceProvider.GetRequiredService<IConfiguration>(),
+    serviceProvider.GetRequiredService<IHubContext<MultiplayerHub>>(),
+    serviceProvider.GetRequiredService<ILogger<MultiplayerRoomService>>(),
+    serviceProvider.GetRequiredService<MultiplayerPersistenceStore>()));
+builder.Services.AddSingleton<ExternalMediaProxyService>();
+builder.Services.AddHttpClient(nameof(ExternalMediaProxyService), client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(10);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("GeoExplorerMediaProxy/1.0 (https://geoexplorer.firmwork.pt)");
+    client.DefaultRequestHeaders.Accept.ParseAdd("image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8");
+});
 builder.Services.AddHttpClient<MapillaryImageService>(client =>
 {
     client.Timeout = TimeSpan.FromSeconds(8);
@@ -58,6 +76,23 @@ api.MapGet("/media/mapillary/{imageId}", async (
     if (result.ThumbnailUrl is not null)
     {
         return Results.Redirect(result.ThumbnailUrl, permanent: false);
+    }
+
+    return Results.Problem(result.Message, statusCode: (int)result.StatusCode);
+});
+
+api.MapGet("/media/source/{imageId}", async (
+    string imageId,
+    ExternalMediaProxyService mediaProxy,
+    HttpContext httpContext,
+    CancellationToken cancellationToken) =>
+{
+    var result = await mediaProxy.GetImageAsync(imageId, cancellationToken);
+
+    if (result.Bytes is not null && result.ContentType is not null)
+    {
+        httpContext.Response.Headers.CacheControl = "public, max-age=86400";
+        return Results.File(result.Bytes, result.ContentType);
     }
 
     return Results.Problem(result.Message, statusCode: (int)result.StatusCode);

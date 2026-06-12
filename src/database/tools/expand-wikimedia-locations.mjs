@@ -8,52 +8,65 @@ import { fileURLToPath } from "node:url";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const defaultSeedPath = path.resolve(scriptDirectory, "..", "seed", "locations.json");
 const userAgent = "GeoExplorerDatasetBot/1.0 (student project; Wikimedia Commons metadata)";
-const verifiedAt = "2026-05-29";
+const verifiedAt = "2026-06-10";
 
 const countries = [
+  ["Q45", "Portugal"],
+  ["Q20", "Noruega"],
+  ["Q189", "Islândia"],
+  ["Q34", "Suécia"],
+  ["Q33", "Finlândia"],
+  ["Q184", "Bielorrússia"],
+  ["Q212", "Ucrânia"],
+  ["Q27", "Irlanda"],
+  ["Q35", "Dinamarca"],
+  ["Q191", "Estónia"],
+  ["Q37", "Lituânia"],
+  ["Q211", "Letónia"],
+  ["Q36", "Polónia"],
+  ["Q218", "Roménia"],
+  ["Q222", "Albânia"],
+  ["Q1246", "Kosovo"],
+  ["Q229", "Chipre"],
+  ["Q145", "Reino Unido"],
   ["Q142", "França"],
   ["Q183", "Alemanha"],
   ["Q38", "Itália"],
   ["Q29", "Espanha"],
-  ["Q45", "Portugal"],
-  ["Q145", "Reino Unido"],
   ["Q31", "Bélgica"],
   ["Q55", "Países Baixos"],
-  ["Q34", "Suécia"],
-  ["Q35", "Dinamarca"],
   ["Q40", "Áustria"],
-  ["Q36", "Polónia"],
   ["Q213", "Chéquia"],
   ["Q214", "Eslováquia"],
   ["Q28", "Hungria"],
-  ["Q211", "Letónia"],
-  ["Q33", "Finlândia"],
   ["Q224", "Croácia"],
   ["Q215", "Eslovénia"],
   ["Q219", "Bulgária"],
   ["Q41", "Grécia"],
-  ["Q191", "Estónia"],
-  ["Q37", "Lituânia"],
-  ["Q27", "Irlanda"],
-  ["Q189", "Islândia"],
   ["Q39", "Suíça"],
-  ["Q212", "Ucrânia"],
-  ["Q218", "Roménia"],
   ["Q403", "Sérvia"],
   ["Q225", "Bósnia e Herzegovina"],
   ["Q236", "Montenegro"],
   ["Q221", "Macedónia do Norte"],
-  ["Q222", "Albânia"],
-  ["Q1246", "Kosovo"],
   ["Q233", "Malta"],
   ["Q32", "Luxemburgo"],
-  ["Q20", "Noruega"],
-  ["Q229", "Chipre"],
   ["Q235", "Mónaco"],
   ["Q228", "Andorra"],
   ["Q238", "São Marino"],
   ["Q347", "Liechtenstein"],
   ["Q217", "Moldávia"],
+];
+
+const preferredItems = [
+  "Q233737", // Ponte Vasco da Gama
+  "Q593147", // Mosteiro de Alcobaça
+  "Q7875112", // Estádio da Luz
+  "Q287359", // Estádio José Alvalade
+  "Q271454", // Estádio do Dragão
+  "Q849239", // Estádio Municipal de Braga
+  "Q20059161", // Câmara Municipal de Lisboa
+  "Q10262921", // Câmara Municipal do Porto
+  "Q2034183", // Parque Eduardo VII
 ];
 
 const typeToCategory = new Map([
@@ -66,6 +79,15 @@ const typeToCategory = new Map([
   ["Q24354", "landmark"],
   ["Q839954", "landmark"],
   ["Q570116", "landmark"],
+  ["Q25550691", "civic-building"],
+  ["Q543654", "civic-building"],
+  ["Q483110", "stadium"],
+  ["Q1154710", "stadium"],
+  ["Q1076486", "stadium"],
+  ["Q22698", "urban-park"],
+  ["Q22746", "urban-park"],
+  ["Q46169", "natural-landscape"],
+  ["Q167346", "urban-park"],
   ["Q8502", "natural-landscape"],
   ["Q35509", "natural-landscape"],
 ]);
@@ -155,6 +177,42 @@ const categoryConfig = {
     notes: ["Fachada trabalhada, materiais duráveis e presença forte no espaço público.", "Volume destacado, detalhes ornamentais e envolvente urbana.", "Arquitetura de referência com leitura clara de património."],
     prompts: ["Observa materiais, proporções e envolvente urbana sem depender de texto visível.", "Procura pistas no estilo arquitetónico, na escala e no tipo de espaço público próximo.", "Compara a linguagem do monumento com o clima visual e a densidade urbana à volta."],
   },
+  "civic-building": {
+    sceneImage: "/mock-scenes/historic-core-street.svg",
+    gradients: [
+      ["#d6c09a", "#687987", "#202a31"],
+      ["#c7ad82", "#7f7a6a", "#1d2b33"],
+      ["#e0c795", "#6f8290", "#233039"],
+    ],
+    titles: ["Edifício cívico de presença urbana", "Câmara municipal em tecido histórico", "Arquitetura institucional de centro urbano"],
+    labels: ["Fachada cívica e espaço público", "Edifício administrativo de escala urbana", "Marco municipal em malha consolidada"],
+    notes: ["Arquitetura institucional, praça ou rua central e materiais duráveis.", "Fachada formal, contexto urbano e leitura de centro administrativo.", "Edifício público com presença marcada no espaço envolvente."],
+    prompts: ["Observa a escala institucional, os materiais e a relação com a praça ou rua central.", "Usa a linguagem da fachada e o desenho do espaço público para aproximares a região.", "Procura pistas no carácter municipal, no pavimento e no tipo de malha urbana."],
+  },
+  stadium: {
+    sceneImage: "/mock-scenes/historic-core-street.svg",
+    gradients: [
+      ["#c9d0c8", "#6b7f8d", "#1c2b32"],
+      ["#d5c38d", "#798a72", "#202d35"],
+      ["#bcc8d0", "#8a8173", "#24323a"],
+    ],
+    titles: ["Estádio urbano de grande escala", "Recinto desportivo em malha urbana", "Infraestrutura desportiva de referência"],
+    labels: ["Volume desportivo e acessos amplos", "Arquitetura de estádio em contexto urbano", "Recinto público de grande escala"],
+    notes: ["Estrutura ampla, acessos viários e sinal de equipamento desportivo.", "Volume grande, espaço aberto e envolvente urbana funcional.", "Infraestrutura de massas com pistas de cidade e mobilidade."],
+    prompts: ["Compara a escala do estádio, os acessos e a envolvente urbana antes de marcar.", "Procura pistas em materiais, sinalização, clima e desenho das avenidas próximas.", "Usa a relação entre recinto desportivo e cidade para estimar a localização."],
+  },
+  "urban-park": {
+    sceneImage: "/mock-scenes/riverfront-city.svg",
+    gradients: [
+      ["#b9cf9a", "#6f8f6e", "#1f3030"],
+      ["#c7d9a5", "#7c9672", "#243438"],
+      ["#a9c28f", "#5f8267", "#182c31"],
+    ],
+    titles: ["Parque urbano de leitura aberta", "Espaço verde em contexto europeu", "Jardim público junto à cidade"],
+    labels: ["Vegetação estruturada e uso público", "Parque ou jardim em malha urbana", "Espaço verde com pistas de cidade"],
+    notes: ["Árvores, caminhos e relação com edifícios ou vias próximas.", "Verde urbano, desenho de percurso e sinais de uso público.", "Paisagem cuidada com pistas de clima, relevo e cidade."],
+    prompts: ["Observa vegetação, desenho dos caminhos e elementos urbanos em redor.", "Usa o tipo de parque, a luz e a arquitetura próxima para orientar o palpite.", "Procura pistas no mobiliário, na vegetação e na relação com a cidade."],
+  },
   fortress: {
     sceneImage: "/mock-scenes/historic-core-street.svg",
     gradients: [
@@ -206,6 +264,25 @@ const aerialImagePatterns = [
   /panorama/i,
 ];
 
+const hardToGuessImagePatterns = [
+  /\bcommemorative[-_ ]?plaque\b/i,
+  /\bmemorial[-_ ]?(plaque|plate|tablet)\b/i,
+  /\bplaque\b/i,
+  /\bpl[aā]ksne\b/i,
+  /\bgedenktafel\b/i,
+  /\bpam[eě]tn[ií][-_ ]?deska\b/i,
+  /(runic[-_ ]?inscription|runestone|rune[-_ ]?stone)/i,
+  /(runsten|stenen)(?:\b|[_-])/i,
+  /\bDR[-_ ]?\d+\b/i,
+  /\b(inscription|epitaph|tombstone|headstone|grave[-_ ]?marker)\b/i,
+  /\b(signboard|notice[-_ ]?board|information[-_ ]?(board|panel|sign)|interpretation[-_ ]?panel)\b/i,
+  /\b(location[-_ ]?map|site[-_ ]?plan|floor[-_ ]?plan)\b/i,
+  /\b(map|kaart|karte|mapa)\.(png|jpe?g|svg)\b/i,
+  /(?:^|[\s/:_.-])(logo|diagram|schema|scheme|coin|banknote|seal|emblem)(?:[\s/:_.-]|\d*\.(?:png|svg|jpe?g)\b)/i,
+  /MTLogo\d*\.(?:png|svg|jpe?g)\b/i,
+  /\.svg(?:$|[?#])/i,
+];
+
 const options = parseArgs(process.argv.slice(2));
 const existingLocations = JSON.parse(await fs.readFile(options.seedPath, "utf8"));
 const existingIds = new Set(existingLocations.map((location) => location.id));
@@ -226,6 +303,7 @@ const stats = {
   tooClose: 0,
   noCommonsMetadata: 0,
   duplicateImageSource: 0,
+  blockedHardToGuessMedia: 0,
   blockedPlayableText: 0,
   missingLabels: 0,
   accepted: 0,
@@ -233,6 +311,41 @@ const stats = {
 
 const additions = [];
 const seenItems = new Set();
+
+if (preferredItems.length > 0 && existingLocations.length + additions.length < options.targetCount) {
+  const preferredCandidates = await fetchWikidataPreferredCandidates(preferredItems);
+  const labelMap = await fetchEntityLabels(preferredCandidates);
+  const commonsMap = await fetchCommonsMediaMap(preferredCandidates.map((candidate) => candidate.imageTitle));
+  const beforePreferred = additions.length;
+
+  for (const candidate of preferredCandidates) {
+    if (existingLocations.length + additions.length >= options.targetCount) {
+      break;
+    }
+
+    if (seenItems.has(candidate.itemId)) {
+      continue;
+    }
+
+    seenItems.add(candidate.itemId);
+    const location = buildLocation(candidate, labelMap, commonsMap, existingIds, existingImageSources, existingCoordinates, additions);
+    if (!location) {
+      continue;
+    }
+
+    additions.push(location);
+    stats.accepted += 1;
+    existingIds.add(location.id);
+    existingImageSources.add(location.media.imageSourceUrl);
+    existingCoordinates.push({
+      id: location.id,
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
+  }
+
+  console.error(`Preferidos: +${additions.length - beforePreferred} locais, total ${existingLocations.length + additions.length}`);
+}
 
 for (const [countryId, countryName] of countries) {
   if (existingLocations.length + additions.length >= options.targetCount) {
@@ -378,7 +491,7 @@ async function collectCandidateBindings({ perCountryLimit }) {
       const itemId = getEntityId(binding.item?.value);
       const imageTitle = getCommonsFileTitle(binding.image?.value);
 
-      if (!itemId || !imageTitle || seenItems.has(itemId) || hasAerialImageName(imageTitle)) {
+      if (!itemId || !imageTitle || seenItems.has(itemId) || hasBlockedImageName(imageTitle)) {
         continue;
       }
 
@@ -402,7 +515,7 @@ function normalizeCandidateBinding(binding, countryId, countryName) {
   const itemId = getEntityId(binding.item?.value);
   const imageTitle = getCommonsFileTitle(binding.image?.value);
 
-  if (!itemId || !imageTitle || hasAerialImageName(imageTitle)) {
+  if (!itemId || !imageTitle || hasBlockedImageName(imageTitle)) {
     return null;
   }
 
@@ -450,6 +563,68 @@ LIMIT ${limit}`;
 
   console.warn(`Wikidata ${countryId}: ${lastStatus}`);
   return [];
+}
+
+async function fetchWikidataPreferredCandidates(itemIds) {
+  const itemValues = itemIds.map((itemId) => `wd:${itemId}`).join(" ");
+  const typeValues = [...typeToCategory.keys()].map((typeId) => `wd:${typeId}`).join(" ");
+  const countryNameById = new Map(countries);
+  const query = `SELECT ?item ?coord ?image ?admin ?type ?country WHERE {
+  VALUES ?item { ${itemValues} }
+  VALUES ?knownType { ${typeValues} }
+  ?item wdt:P17 ?country;
+        wdt:P625 ?coord;
+        wdt:P18 ?image.
+  OPTIONAL { ?item wdt:P131 ?admin. }
+  OPTIONAL { ?item wdt:P31/wdt:P279* ?knownType. BIND(?knownType AS ?type) }
+}`;
+  const url = `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(query)}`;
+  const response = await fetchWithTimeout(url, {
+    headers: {
+      "User-Agent": userAgent,
+      Accept: "application/sparql-results+json",
+    },
+  }, 25000);
+
+  if (!response?.ok) {
+    return [];
+  }
+
+  const data = await response.json();
+  const byItem = new Map();
+
+  for (const binding of data.results?.bindings ?? []) {
+    const itemId = getEntityId(binding.item?.value);
+    const countryId = getEntityId(binding.country?.value);
+    const imageTitle = getCommonsFileTitle(binding.image?.value);
+    const countryName = countryNameById.get(countryId);
+
+    if (!itemId || !countryId || !countryName || !imageTitle || hasBlockedImageName(imageTitle)) {
+      continue;
+    }
+
+    if (byItem.has(itemId)) {
+      const existing = byItem.get(itemId);
+      if (!existing.typeId && getEntityId(binding.type?.value)) {
+        existing.typeId = getEntityId(binding.type?.value);
+      }
+      continue;
+    }
+
+    byItem.set(itemId, {
+      itemId,
+      countryId,
+      countryName,
+      adminId: getEntityId(binding.admin?.value),
+      typeId: getEntityId(binding.type?.value),
+      imageTitle,
+      coordinates: parseWktPoint(binding.coord?.value),
+    });
+  }
+
+  return itemIds
+    .map((itemId) => byItem.get(itemId))
+    .filter(Boolean);
 }
 
 async function fetchEntityLabels(candidates) {
@@ -519,6 +694,11 @@ function buildLocation(candidate, labelMap, commonsMap, existingIds, existingIma
   const city = cleanLabel(labelMap.get(candidate.adminId) ?? itemLabel);
   if (/^Q\d+$/i.test(itemLabel) || /^Q\d+$/i.test(city)) {
     stats.missingLabels += 1;
+    return null;
+  }
+
+  if (hasHardToGuessImageName([candidate.imageTitle, commons.imageSourceUrl, itemLabel, city].join(" "))) {
+    stats.blockedHardToGuessMedia += 1;
     return null;
   }
 
@@ -627,7 +807,7 @@ function parseCommonsPage(page) {
   }
 
   const sourceUrl = `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title).replace(/%3A/g, ":").replace(/%20/g, "_")}`;
-  if (hasAerialImageName(sourceUrl)) {
+  if (hasBlockedImageName(sourceUrl)) {
     return null;
   }
 
@@ -732,6 +912,12 @@ function getSignalHint(category) {
       return "Pavimento amplo e fachadas de enquadramento";
     case "bridge-view":
       return "Estrutura linear e atravessamento claro";
+    case "civic-building":
+      return "Fachada institucional e espaço público central";
+    case "stadium":
+      return "Recinto desportivo e acessos amplos";
+    case "urban-park":
+      return "Vegetação estruturada e desenho de parque";
     case "natural-landscape":
       return "Paisagem dominante e pouca malha urbana";
     case "waterfront":
@@ -759,6 +945,18 @@ function inferCategory(label) {
 
   if (/waterfall|mountain|cave|lago|lake|cascata|montanha/.test(normalized)) {
     return "natural-landscape";
+  }
+
+  if (/stadium|estádio|arena/.test(normalized)) {
+    return "stadium";
+  }
+
+  if (/city hall|town hall|municipal|câmara|rathaus/.test(normalized)) {
+    return "civic-building";
+  }
+
+  if (/park|parque|garden|jardim/.test(normalized)) {
+    return "urban-park";
   }
 
   return "landmark";
@@ -824,6 +1022,14 @@ function containsBlockedTerm(text, terms) {
 
 function hasAerialImageName(value) {
   return aerialImagePatterns.some((pattern) => pattern.test(value));
+}
+
+function hasHardToGuessImageName(value) {
+  return hardToGuessImagePatterns.some((pattern) => pattern.test(value));
+}
+
+function hasBlockedImageName(value) {
+  return hasAerialImageName(value) || hasHardToGuessImageName(value);
 }
 
 function createUniqueId(baseSlug, existingIds) {

@@ -26,7 +26,39 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
-    public void CreateSession_ReturnsMediaMetadataForVisualSourceContract()
+    public void CreateSession_AcceptsCustomRoundTimeInSeconds()
+    {
+        var service = CreateService();
+
+        var response = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 1,
+            Timed: true,
+            RoundTimeSeconds: 240));
+
+        Assert.AreEqual(240, response.CurrentRound.TimeLimitSeconds);
+    }
+
+    [TestMethod]
+    public void CreateSession_RejectsRoundTimeOutsideSupportedRange()
+    {
+        var service = CreateService();
+
+        foreach (var roundTimeSeconds in new[] { 0, 3601 })
+        {
+            var exception = Assert.ThrowsExactly<GameFlowException>(() =>
+                service.CreateSession(new CreateSessionRequest(
+                    "europe",
+                    RoundCount: 1,
+                    Timed: true,
+                    RoundTimeSeconds: roundTimeSeconds)));
+
+            Assert.AreEqual("O tempo por ronda deve estar entre 1 e 3600 segundos.", exception.Message);
+        }
+    }
+
+    [TestMethod]
+    public void CreateSession_ReturnsSafeMediaMetadataForActiveRound()
     {
         var service = CreateService();
 
@@ -39,7 +71,8 @@ public sealed class GameSessionServiceTests
         Assert.IsNotNull(response.CurrentRound.Challenge.Media);
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.SourceProvider));
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageUrl));
-        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageAttribution));
+        Assert.IsNull(response.CurrentRound.Challenge.Media.ImageAttribution);
+        Assert.IsNull(response.CurrentRound.Challenge.Media.ImageSourceUrl);
         Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageLicense));
         Assert.IsTrue(DateOnly.TryParse(response.CurrentRound.Challenge.Media.VerifiedAt, out _));
         Assert.IsNotNull(response.CurrentRound.Challenge.VisualSources);
@@ -66,7 +99,13 @@ public sealed class GameSessionServiceTests
 
         Assert.IsNotNull(response.CurrentRound.Challenge.Media);
         Assert.AreEqual("Panoramax", response.CurrentRound.Challenge.Media.SourceProvider);
-        Assert.AreEqual("https://example.test/panoramax.jpg", response.CurrentRound.Challenge.Media.ImageUrl);
+        StringAssert.StartsWith(response.CurrentRound.Challenge.Media.ImageUrl!, "/api/media/source/");
+        Assert.IsNull(response.CurrentRound.Challenge.Media.ImageSourceUrl);
+        Assert.IsNull(response.CurrentRound.Challenge.Media.StreetViewUrl);
+        Assert.AreEqual(response.CurrentRound.Id, response.CurrentRound.Challenge.Id);
+        Assert.AreEqual("Rua de teste", response.CurrentRound.Challenge.Title);
+        Assert.AreEqual(string.Empty, response.CurrentRound.Challenge.City);
+        Assert.AreEqual("Europa", response.CurrentRound.Challenge.Country);
         Assert.HasCount(2, response.CurrentRound.Challenge.VisualSources);
     }
 
@@ -84,7 +123,8 @@ public sealed class GameSessionServiceTests
 
         Assert.IsNotNull(response.CurrentRound.Challenge.Media);
         Assert.AreEqual("Wikimedia Commons", response.CurrentRound.Challenge.Media.SourceProvider);
-        Assert.AreEqual("https://example.test/wikimedia.jpg", response.CurrentRound.Challenge.Media.ImageUrl);
+        StringAssert.StartsWith(response.CurrentRound.Challenge.Media.ImageUrl!, "/api/media/source/");
+        Assert.IsNull(response.CurrentRound.Challenge.Media.ImageSourceUrl);
         Assert.IsTrue(response.CurrentRound.Challenge.VisualSources.Any(source => source.SourceProvider == "Mapillary"));
     }
 
@@ -123,13 +163,13 @@ public sealed class GameSessionServiceTests
             RoundCount: 10,
             Timed: false,
             RoundTimeSeconds: null));
-        var locationIds = new List<string>();
+        var selectedCoordinates = new List<string>();
         var currentRound = session.CurrentRound;
 
         for (var index = 0; index < 10; index++)
         {
-            locationIds.Add(currentRound.Challenge.Id);
             var response = service.TimeoutRound(session.SessionId, currentRound.Id, null);
+            selectedCoordinates.Add($"{response.Result.CorrectLatitude:F5},{response.Result.CorrectLongitude:F5}");
 
             if (!response.Progress.Completed)
             {
@@ -137,7 +177,7 @@ public sealed class GameSessionServiceTests
             }
         }
 
-        Assert.AreEqual(10, locationIds.Distinct().Count());
+        Assert.AreEqual(10, selectedCoordinates.Distinct().Count());
     }
 
     [TestMethod]
@@ -157,9 +197,13 @@ public sealed class GameSessionServiceTests
         Assert.IsFalse(firstResponse.Progress.Completed);
 
         var secondRound = service.GetCurrentRound(session.SessionId);
-        var selectedLocationIds = new[] { firstRound.Challenge.Id, secondRound.Challenge.Id };
+        service.TimeoutRound(session.SessionId, secondRound.Id, null);
+        var selectedLocationTitles = service.GetResults(session.SessionId)
+            .Rounds
+            .Select(round => round.Title)
+            .ToArray();
 
-        CollectionAssert.AreEquivalent(new[] { "nearby-a", "far-away" }, selectedLocationIds);
+        CollectionAssert.AreEquivalent(new[] { "Local próximo A", "Local afastado" }, selectedLocationTitles);
     }
 
     [TestMethod]

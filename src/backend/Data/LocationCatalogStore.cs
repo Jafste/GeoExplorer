@@ -27,6 +27,9 @@ public sealed class LocationCatalogStore
         CancellationToken cancellationToken = default)
     {
         await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        var seedLocationIds = seedLocations
+            .Select(location => location.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         var existingLocations = await db.Locations
             .ToDictionaryAsync(location => location.Id, cancellationToken);
@@ -65,7 +68,90 @@ public sealed class LocationCatalogStore
             .ToListAsync(cancellationToken);
         _metrics.RecordRead("catalog_import_load");
 
-        return entities.Select(ToSeedLocation).ToList();
+        return entities
+            .Where(location => seedLocationIds.Contains(location.Id))
+            .Select(ToSeedLocation)
+            .ToList();
+    }
+
+    public IReadOnlyList<SeedLocation> LoadRandomCandidates(string region, int count)
+    {
+        if (count < 1)
+        {
+            return [];
+        }
+
+        using var db = _contextFactory.CreateDbContext();
+        var entities = IsPostgres(db)
+            ? LoadPostgresRandomCandidates(db, region, count)
+            : LoadProviderFallbackRandomCandidates(db, region, count);
+
+        _metrics.RecordRead("catalog_random_candidates");
+
+        return entities
+            .Select(ToSeedLocation)
+            .ToList();
+    }
+
+    public SeedLocation? LoadById(string locationId)
+    {
+        using var db = _contextFactory.CreateDbContext();
+        var entity = db.Locations
+            .AsNoTracking()
+            .FirstOrDefault(location => location.Id == locationId);
+
+        _metrics.RecordRead("catalog_location_lookup");
+
+        return entity is null ? null : ToSeedLocation(entity);
+    }
+
+    private static List<LocationEntity> LoadPostgresRandomCandidates(
+        GeoExplorerDbContext db,
+        string region,
+        int count)
+    {
+        return db.Locations
+            .FromSqlInterpolated($"""
+                SELECT *
+                FROM locations
+                WHERE lower(region) = lower({region})
+                ORDER BY random()
+                LIMIT {count}
+                """)
+            .AsNoTracking()
+            .ToList();
+    }
+
+    private static List<LocationEntity> LoadProviderFallbackRandomCandidates(
+        GeoExplorerDbContext db,
+        string region,
+        int count)
+    {
+        var entities = db.Locations
+            .AsNoTracking()
+            .ToList()
+            .Where(location => string.Equals(location.Region, region, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        Shuffle(entities);
+        return entities.Take(count).ToList();
+    }
+
+    private static void Shuffle<T>(IList<T> values)
+    {
+        for (var index = 0; index < values.Count - 1; index++)
+        {
+            var swapIndex = Random.Shared.Next(index, values.Count);
+            (values[index], values[swapIndex]) = (values[swapIndex], values[index]);
+        }
+    }
+
+    private static bool IsPostgres(GeoExplorerDbContext db)
+    {
+        return string.Equals(
+            db.Database.ProviderName,
+            "Npgsql.EntityFrameworkCore.PostgreSQL",
+            StringComparison.Ordinal);
     }
 
     private static bool HasChanged(LocationEntity existing, LocationEntity next)

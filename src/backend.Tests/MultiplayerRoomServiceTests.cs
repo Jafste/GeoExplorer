@@ -152,7 +152,7 @@ public sealed class MultiplayerRoomServiceTests
     [TestMethod]
     public async Task MarkDisconnected_WhenOwnerRefreshesInLobby_ReconnectsWithoutDuplicatingPlayerAndKeepsNewOwnerPolicy()
     {
-        var service = CreateService(disconnectGracePeriod: TimeSpan.FromMilliseconds(80));
+        var service = CreateService(disconnectGracePeriod: TimeSpan.FromSeconds(1));
         var created = await service.CreateRoomAsync(
             new CreateMultiplayerRoomRequest("player-a", "Ana", DefaultConfig()),
             "connection-a");

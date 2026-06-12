@@ -148,7 +148,7 @@ public sealed partial class SeedLocationDatasetTests
             .Where(location => location.Media is not null && location.Media.SourceProvider != "mock")
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(1000, realMediaLocations.Count, "O dataset deve manter pelo menos 1000 locais com media real validada.");
+        Assert.IsGreaterThanOrEqualTo(6000, realMediaLocations.Count, "O dataset deve manter pelo menos 6000 locais com media real validada.");
 
         foreach (var location in realMediaLocations)
         {
@@ -162,7 +162,10 @@ public sealed partial class SeedLocationDatasetTests
             AssertRequired(location.Id, media.ImageLicenseUrl, "imageLicenseUrl");
             AssertRequired(location.Id, media.VerifiedAt, "verifiedAt");
             StringAssert.StartsWith(media.ImageUrl!, "https://");
-            StringAssert.StartsWith(media.ImageSourceUrl!, "https://commons.wikimedia.org/wiki/File:");
+            Assert.IsTrue(
+                media.ImageSourceUrl!.StartsWith("https://commons.wikimedia.org/wiki/File:", StringComparison.Ordinal) ||
+                media.ImageSourceUrl.StartsWith("https://api.panoramax.xyz/api/collections/", StringComparison.Ordinal),
+                $"{location.Id} deve manter imageSourceUrl como URL de fonte suportada.");
             Assert.IsTrue(
                 media.ImageLicenseUrl!.StartsWith("http://", StringComparison.Ordinal) ||
                 media.ImageLicenseUrl.StartsWith("https://", StringComparison.Ordinal),
@@ -209,13 +212,26 @@ public sealed partial class SeedLocationDatasetTests
     }
 
     [TestMethod]
+    public void SeedLocations_DoNotKeepTextOnlyOrNonPhotographicPrimaryImages()
+    {
+        var hardToGuessImages = LoadLocations()
+            .Where(HasTextOnlyOrNonPhotographicPrimaryImage)
+            .Select(location => $"{location.Id}: {location.Media!.ImageSourceUrl}")
+            .ToList();
+
+        Assert.IsEmpty(
+            hardToGuessImages,
+            $"Há imagens principais de placa, painel, mapa ou ficheiro não fotográfico: {string.Join(" | ", hardToGuessImages)}");
+    }
+
+    [TestMethod]
     public void SeedLocations_IncludeSelectedPanoramaxVisualSources()
     {
         var panoramaxLocations = LoadLocations()
             .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Panoramax"))
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(90, panoramaxLocations.Count, "O dataset deve manter pelo menos 90 locais com Panoramax validado.");
+        Assert.IsGreaterThanOrEqualTo(2000, panoramaxLocations.Count, "O dataset deve manter pelo menos 2000 locais com Panoramax/360 validado.");
 
         foreach (var location in panoramaxLocations)
         {
@@ -239,7 +255,7 @@ public sealed partial class SeedLocationDatasetTests
             .Where(location => location.GetVisualSources().Any(source => source.SourceProvider == "Mapillary"))
             .ToList();
 
-        Assert.IsGreaterThanOrEqualTo(150, mapillaryLocations.Count, "O dataset deve manter pelo menos 150 locais com Mapillary selecionado.");
+        Assert.IsGreaterThanOrEqualTo(1800, mapillaryLocations.Count, "O dataset deve manter pelo menos 1800 locais com Mapillary selecionado.");
 
         foreach (var location in mapillaryLocations)
         {
@@ -302,6 +318,11 @@ public sealed partial class SeedLocationDatasetTests
             return false;
         }
 
+        if (location.Media.SourceProvider == "Panoramax")
+        {
+            return false;
+        }
+
         var sourceText = string.Join(" ", location.Media.ImageUrl, location.Media.ImageSourceUrl);
         string[] aerialPatterns =
         [
@@ -318,6 +339,42 @@ public sealed partial class SeedLocationDatasetTests
         ];
 
         return aerialPatterns.Any(pattern => Regex.IsMatch(sourceText, pattern, RegexOptions.IgnoreCase));
+    }
+
+    private static bool HasTextOnlyOrNonPhotographicPrimaryImage(SeedLocation location)
+    {
+        if (location.Media is null)
+        {
+            return false;
+        }
+
+        var sourceText = Uri.UnescapeDataString(string.Join(
+            " ",
+            location.Id,
+            location.City,
+            location.Media.ImageUrl,
+            location.Media.ImageSourceUrl));
+        string[] hardToGuessPatterns =
+        [
+            @"\bcommemorative[-_ ]?plaque\b",
+            @"\bmemorial[-_ ]?(plaque|plate|tablet)\b",
+            @"\bplaque\b",
+            @"\bpl[aā]ksne\b",
+            @"\bgedenktafel\b",
+            @"\bpam[eě]tn[ií][-_ ]?deska\b",
+            @"(runic[-_ ]?inscription|runestone|rune[-_ ]?stone)",
+            @"(runsten|stenen)(?:\b|[_-])",
+            @"\bDR[-_ ]?\d+\b",
+            @"\b(inscription|epitaph|tombstone|headstone|grave[-_ ]?marker)\b",
+            @"\b(signboard|notice[-_ ]?board|information[-_ ]?(board|panel|sign)|interpretation[-_ ]?panel)\b",
+            @"\b(location[-_ ]?map|site[-_ ]?plan|floor[-_ ]?plan)\b",
+            @"\b(map|kaart|karte|mapa)\.(png|jpe?g|svg)\b",
+            @"(?:^|[\s/:_.-])(logo|diagram|schema|scheme|coin|banknote|seal|emblem)(?:[\s/:_.-]|\d*\.(?:png|svg|jpe?g)\b)",
+            @"MTLogo\d*\.(?:png|svg|jpe?g)\b",
+            @"\.svg(?:$|[?#])",
+        ];
+
+        return hardToGuessPatterns.Any(pattern => Regex.IsMatch(sourceText, pattern, RegexOptions.IgnoreCase));
     }
 
     [GeneratedRegex(@"\bQ\d+\b", RegexOptions.IgnoreCase)]

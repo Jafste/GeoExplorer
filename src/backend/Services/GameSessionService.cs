@@ -7,8 +7,7 @@ namespace GeoExplorer.Backend.Services;
 public sealed class GameSessionService
 {
     private readonly ConcurrentDictionary<string, SessionState> _sessions = new();
-    private readonly IReadOnlyList<SeedLocation> _locations;
-    private readonly IReadOnlyDictionary<string, SeedLocation> _locationsById;
+    private readonly RoundLocationSelector _locationSelector;
     private readonly IConfiguration _configuration;
     private readonly ILogger<GameSessionService> _logger;
     private readonly GamePersistenceStore? _persistenceStore;
@@ -16,7 +15,7 @@ public sealed class GameSessionService
 
     public GameSessionService(SeedLocationCatalog catalog, Func<int, int>? randomIndex = null)
         : this(
-            catalog,
+            new RoundLocationSelector(catalog),
             new ConfigurationBuilder().Build(),
             Microsoft.Extensions.Logging.Abstractions.NullLogger<GameSessionService>.Instance,
             null,
@@ -30,9 +29,26 @@ public sealed class GameSessionService
         ILogger<GameSessionService> logger,
         GamePersistenceStore? persistenceStore = null,
         Func<int, int>? randomIndex = null)
+        : this(
+            new RoundLocationSelector(
+                catalog,
+                configuration,
+                Microsoft.Extensions.Logging.Abstractions.NullLogger<RoundLocationSelector>.Instance),
+            configuration,
+            logger,
+            persistenceStore,
+            randomIndex)
     {
-        _locations = catalog.GetAll();
-        _locationsById = _locations.ToDictionary(location => location.Id, StringComparer.OrdinalIgnoreCase);
+    }
+
+    public GameSessionService(
+        RoundLocationSelector locationSelector,
+        IConfiguration configuration,
+        ILogger<GameSessionService> logger,
+        GamePersistenceStore? persistenceStore = null,
+        Func<int, int>? randomIndex = null)
+    {
+        _locationSelector = locationSelector;
         _configuration = configuration;
         _logger = logger;
         _persistenceStore = persistenceStore;
@@ -52,15 +68,10 @@ public sealed class GameSessionService
         }
 
         var timed = request.Timed;
-        int? roundTimeSeconds = timed ? request.RoundTimeSeconds ?? 60 : null;
-
-        if (timed && roundTimeSeconds is < 15 or > 180)
-        {
-            throw new GameFlowException("O tempo por ronda deve estar entre 15 e 180 segundos.", StatusCodes.Status400BadRequest);
-        }
+        var roundTimeSeconds = GameRoundRules.ValidateRoundTime(timed, request.RoundTimeSeconds);
 
         var sessionId = Guid.NewGuid().ToString();
-        var selectedLocations = SelectRandomLocations(request.RoundCount);
+        var selectedLocations = SelectRandomLocations(request.Region, request.RoundCount);
 
         var rounds = selectedLocations.Select((location, index) => new RoundState
         {
@@ -90,9 +101,9 @@ public sealed class GameSessionService
         return new CreateSessionResponse(sessionId, BuildRound(rounds[0], session));
     }
 
-    private List<SeedLocation> SelectRandomLocations(int count)
+    private List<SeedLocation> SelectRandomLocations(string region, int count)
     {
-        return GameRoundRules.SelectRandomLocations(_locations, count, _randomIndex);
+        return _locationSelector.SelectRandomLocations(region, count, _randomIndex);
     }
 
     private SeedMedia? SelectVisualSource(SeedLocation location)
@@ -314,7 +325,9 @@ public sealed class GameSessionService
 
         var rounds = snapshot.Rounds.Select(round =>
         {
-            if (!_locationsById.TryGetValue(round.LocationId, out var location))
+            var location = _locationSelector.FindById(round.LocationId);
+
+            if (location is null)
             {
                 throw new InvalidOperationException($"O local persistido '{round.LocationId}' não existe no catálogo carregado.");
             }

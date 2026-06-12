@@ -171,8 +171,10 @@ public sealed class GameApiIntegrationTests
 
         var diagnostics = await GetJson<DatabaseUsageSnapshotDto>(secondClient, "/api/diagnostics/database");
 
+        Assert.IsFalse(diagnostics.Operations.Any(operation =>
+            operation.Name == "catalog_import_load" && operation.Writes > 0));
         Assert.IsTrue(diagnostics.Operations.Any(operation =>
-            operation.Name == "catalog_import_load" && operation.Writes == 0));
+            operation.Name == "catalog_location_lookup" && operation.Reads >= 1));
         Assert.IsTrue(diagnostics.Operations.Any(operation =>
             operation.Name == "session_restore" && operation.Reads == 1));
     }

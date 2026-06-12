@@ -12,7 +12,6 @@ services:
       - "5173:5173"
     volumes:
       - ./src/frontend:/workspace/src/frontend
-      - ./src/database:/workspace/src/database
       - frontend-node-modules:/workspace/src/frontend/node_modules
 
   frontend-api:
@@ -31,7 +30,6 @@ services:
       - "${FRONTEND_PORT:-5173}:5173"
     volumes:
       - ./src/frontend:/workspace/src/frontend
-      - ./src/database:/workspace/src/database
       - frontend-node-modules:/workspace/src/frontend/node_modules
 
   backend:

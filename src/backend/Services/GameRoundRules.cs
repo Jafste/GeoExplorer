@@ -5,6 +5,10 @@ namespace GeoExplorer.Backend.Services;
 
 internal static class GameRoundRules
 {
+    public const int DefaultRoundTimeSeconds = 60;
+    public const int MinRoundTimeSeconds = 1;
+    public const int MaxRoundTimeSeconds = 3600;
+
     private const double MinimumRoundLocationDistanceKm = 1.0;
     private const double MinGuessLatitude = 34;
     private const double MaxGuessLatitude = 72;
@@ -68,6 +72,25 @@ internal static class GameRoundRules
             : visualSources[NextRandomIndex(visualSources.Count, randomIndex)];
     }
 
+    public static int? ValidateRoundTime(bool timed, int? requestedRoundTimeSeconds)
+    {
+        if (!timed)
+        {
+            return null;
+        }
+
+        var roundTimeSeconds = requestedRoundTimeSeconds ?? DefaultRoundTimeSeconds;
+
+        if (roundTimeSeconds is < MinRoundTimeSeconds or > MaxRoundTimeSeconds)
+        {
+            throw new GameFlowException(
+                $"O tempo por ronda deve estar entre {MinRoundTimeSeconds} e {MaxRoundTimeSeconds} segundos.",
+                StatusCodes.Status400BadRequest);
+        }
+
+        return roundTimeSeconds;
+    }
+
     public static ChallengeRoundDto BuildChallengeRound(
         string roundId,
         int roundNumber,
@@ -87,18 +110,18 @@ internal static class GameRoundRules
             timed ? roundTimeSeconds : null,
             timed ? endsAt : null,
             new ChallengeDto(
-                location.Id,
-                location.Title,
-                location.City,
-                location.Country,
+                roundId,
+                location.SceneLabel,
+                string.Empty,
+                "Europa",
                 location.Category,
                 location.SceneLabel,
                 location.SceneNote,
                 location.SceneImage,
                 location.Prompt,
                 location.VisualGradient,
-                BuildMedia(GetRoundMedia(location, selectedMedia, isMediaAvailable)),
-                BuildVisualSources(location),
+                BuildMedia(GetRoundMedia(location, selectedMedia, isMediaAvailable), includeSourceDetails: false),
+                BuildVisualSources(location, includeSourceDetails: false),
                 location.Clues
                     .Select(clue => new ChallengeClueDto(clue.Label, clue.Value, clue.Confidence))
                     .ToList()));
@@ -143,26 +166,28 @@ internal static class GameRoundRules
                 .ToList());
     }
 
-    public static ChallengeMediaDto? BuildMedia(SeedMedia? media)
+    public static ChallengeMediaDto? BuildMedia(SeedMedia? media, bool includeSourceDetails = true)
     {
         return media is null
             ? null
             : new ChallengeMediaDto(
                 media.SourceProvider,
-                media.ImageUrl,
-                media.ImageSourceUrl,
-                media.ImageAttribution,
+                ExternalMediaProxyService.ToPublicImageUrl(media.ImageUrl),
+                includeSourceDetails ? media.ImageSourceUrl : null,
+                includeSourceDetails ? media.ImageAttribution : null,
                 media.ImageLicense,
                 media.ImageLicenseUrl,
                 media.StreetViewProvider,
-                media.StreetViewUrl,
+                includeSourceDetails ? media.StreetViewUrl : null,
                 media.VerifiedAt);
     }
 
-    public static IReadOnlyList<ChallengeMediaDto> BuildVisualSources(SeedLocation location)
+    public static IReadOnlyList<ChallengeMediaDto> BuildVisualSources(
+        SeedLocation location,
+        bool includeSourceDetails = true)
     {
         return location.GetVisualSources()
-            .Select(BuildMedia)
+            .Select(media => BuildMedia(media, includeSourceDetails))
             .OfType<ChallengeMediaDto>()
             .ToList();
     }

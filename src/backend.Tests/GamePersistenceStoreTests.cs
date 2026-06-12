@@ -192,7 +192,7 @@ public sealed class GamePersistenceStoreTests
 
         Assert.HasCount(1, restoredResults.Rounds);
         Assert.AreEqual("Panoramax", restoredResults.Rounds[0].Media?.SourceProvider);
-        Assert.AreEqual("https://example.test/panoramax.jpg", restoredResults.Rounds[0].Media?.ImageUrl);
+        StringAssert.StartsWith(restoredResults.Rounds[0].Media?.ImageUrl!, "/api/media/source/");
     }
 
 

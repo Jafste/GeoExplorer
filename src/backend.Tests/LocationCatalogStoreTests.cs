@@ -72,6 +72,28 @@ public sealed class LocationCatalogStoreTests
     }
 
     [TestMethod]
+    public async Task ImportAndLoadAsync_OnlyReturnsLocationsPresentInCurrentSeed()
+    {
+        var factory = CreateFactory();
+        var metrics = new DatabaseUsageMetrics();
+        var store = new LocationCatalogStore(factory, metrics);
+
+        await store.ImportAndLoadAsync(new[]
+        {
+            CreateLocation("porto-ribeira"),
+            CreateLocation("old-location"),
+        });
+
+        var loaded = await store.ImportAndLoadAsync(new[] { CreateLocation("porto-ribeira") });
+
+        Assert.HasCount(1, loaded);
+        Assert.AreEqual("porto-ribeira", loaded.Single().Id);
+
+        await using var db = await factory.CreateDbContextAsync();
+        Assert.AreEqual(2, await db.Locations.CountAsync());
+    }
+
+    [TestMethod]
     public async Task ImportAndLoadAsync_WritesWhenClueChanges()
     {
         var factory = CreateFactory();

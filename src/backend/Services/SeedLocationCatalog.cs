@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using GeoExplorer.Backend.Data;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -6,7 +7,11 @@ namespace GeoExplorer.Backend.Services;
 
 public sealed class SeedLocationCatalog
 {
-    private readonly List<SeedLocation> _locations;
+    private readonly Lazy<IReadOnlyList<SeedLocation>> _locations;
+    private readonly IWebHostEnvironment _environment;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<SeedLocationCatalog> _logger;
+    private readonly LocationCatalogStore? _store;
 
     public SeedLocationCatalog(IWebHostEnvironment environment)
         : this(environment, new ConfigurationBuilder().Build(), NullLogger<SeedLocationCatalog>.Instance)
@@ -19,11 +24,20 @@ public sealed class SeedLocationCatalog
         ILogger<SeedLocationCatalog> logger,
         LocationCatalogStore? store = null)
     {
-        var fileLocations = LoadFromJson(environment);
-        _locations = LoadFromPostgresIfEnabled(fileLocations, configuration, logger, store).ToList();
+        _environment = environment;
+        _configuration = configuration;
+        _logger = logger;
+        _store = store;
+        _locations = new Lazy<IReadOnlyList<SeedLocation>>(LoadLocations, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
-    public IReadOnlyList<SeedLocation> GetAll() => _locations;
+    public IReadOnlyList<SeedLocation> GetAll() => _locations.Value;
+
+    private IReadOnlyList<SeedLocation> LoadLocations()
+    {
+        var fileLocations = LoadFromJson(_environment);
+        return LoadFromPostgresIfEnabled(fileLocations, _configuration, _logger, _store).ToList();
+    }
 
     private static IReadOnlyList<SeedLocation> LoadFromJson(IWebHostEnvironment environment)
     {

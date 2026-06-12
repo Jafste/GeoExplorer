@@ -22,7 +22,7 @@ public sealed class MultiplayerRoomService
     private const int DisconnectGraceSeconds = 60;
 
     private readonly ConcurrentDictionary<string, MultiplayerRoomState> _rooms = new(StringComparer.OrdinalIgnoreCase);
-    private readonly IReadOnlyList<SeedLocation> _locations;
+    private readonly RoundLocationSelector _locationSelector;
     private readonly MultiplayerPersistenceStore? _persistenceStore;
     private readonly IConfiguration _configuration;
     private readonly IHubContext<MultiplayerHub> _hubContext;
@@ -38,8 +38,30 @@ public sealed class MultiplayerRoomService
         MultiplayerPersistenceStore? persistenceStore = null,
         Func<int, int>? randomIndex = null,
         TimeSpan? disconnectGracePeriod = null)
+        : this(
+            new RoundLocationSelector(
+                catalog,
+                configuration,
+                Microsoft.Extensions.Logging.Abstractions.NullLogger<RoundLocationSelector>.Instance),
+            configuration,
+            hubContext,
+            logger,
+            persistenceStore,
+            randomIndex,
+            disconnectGracePeriod)
     {
-        _locations = catalog.GetAll();
+    }
+
+    public MultiplayerRoomService(
+        RoundLocationSelector locationSelector,
+        IConfiguration configuration,
+        IHubContext<MultiplayerHub> hubContext,
+        ILogger<MultiplayerRoomService> logger,
+        MultiplayerPersistenceStore? persistenceStore = null,
+        Func<int, int>? randomIndex = null,
+        TimeSpan? disconnectGracePeriod = null)
+    {
+        _locationSelector = locationSelector;
         _configuration = configuration;
         _hubContext = hubContext;
         _logger = logger;
@@ -243,8 +265,8 @@ public sealed class MultiplayerRoomService
             EnsureOwner(room, playerId);
             EnsureLobby(room);
 
-            var selectedLocations = GameRoundRules.SelectRandomLocations(
-                _locations,
+            var selectedLocations = _locationSelector.SelectRandomLocations(
+                room.Config.Region,
                 room.Config.RoundCount,
                 _randomIndex);
             room.Rounds = selectedLocations.Select((location, index) => new MultiplayerRoundState
@@ -1236,12 +1258,7 @@ public sealed class MultiplayerRoomService
         }
 
         var timed = config.Timed;
-        int? roundTimeSeconds = timed ? config.RoundTimeSeconds ?? 60 : null;
-
-        if (timed && roundTimeSeconds is < 15 or > 180)
-        {
-            throw new GameFlowException("O tempo por ronda deve estar entre 15 e 180 segundos.", StatusCodes.Status400BadRequest);
-        }
+        var roundTimeSeconds = GameRoundRules.ValidateRoundTime(timed, config.RoundTimeSeconds);
 
         return new CreateSessionRequest("europe", config.RoundCount, timed, roundTimeSeconds);
     }

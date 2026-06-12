@@ -1,8 +1,10 @@
 # Database
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial partilhado entre o frontend em `mock` e o backend em `api`. Nesta fase já inclui 1000 locais reais com dados de fonte/licença validados, 95 locais com Panoramax e 150 locais com Mapillary como fontes adicionais.
+- `seed/locations.json` é o conjunto de dados inicial do catálogo real e serve como seed/fallback do backend. O frontend em `mock` usa apenas uma amostra pequena de locais reais para não empacotar o dataset completo. Nesta fase o seed já inclui 6000 locais reais com dados de fonte/licença validados: 4000 com imagem principal Wikimedia Commons, 2000 com panorama 360 Panoramax como imagem principal jogável e 1844 com Mapillary como fonte visual adicional.
 - `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
+
+Usei o ChatGPT como apoio para pensar nesta parte do trabalho, sobretudo para recomendar a criação de ferramentas locais que me ajudassem a encontrar mais locais/fontes visuais e a perceber erros ou avisos durante as auditorias do dataset. As ferramentas não substituíram a revisão manual: serviram para acelerar a recolha, organizar candidatos e chamar a atenção para problemas como dados em falta, imagens repetidas, locais demasiado próximos ou fontes visuais fracas.
 
 Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A primeira versão multiplayer também guarda salas, jogadores, rondas e palpites em PostgreSQL. As salas podem ser privadas por link ou públicas na lista de salas abertas; se tiverem password, o backend guarda apenas o hash da password. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
 
@@ -19,7 +21,7 @@ ConnectionStrings__GeoExplorerDb=Host=localhost;Port=15432;Database=geoexplorer;
 
 Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string por variável de ambiente. A porta externa do PostgreSQL é `15432` por omissão para evitar conflito com uma instalação local na porta `5432`.
 
-Por omissão, a execução local continua a ler `seed/locations.json` e a manter sessões em memória, para facilitar testes rápidos sem base de dados. Quando `GeoExplorer__UsePostgresCatalog=true`, o backend importa o conteúdo do JSON para a tabela `locations` e passa a carregar o catálogo a partir do PostgreSQL. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas. No multiplayer, a mesma flag ativa a gravação de `multiplayer_rooms`, `multiplayer_players`, `multiplayer_rounds` e `multiplayer_guesses`.
+No perfil completo, `GeoExplorer__UsePostgresCatalog=true` faz o backend importar o conteúdo do JSON para a tabela `locations` quando precisa de semear a base de dados. Em runtime, as rondas solo e multiplayer passam a pedir candidatos aleatórios ao PostgreSQL, em vez de dependerem do dataset completo no bundle do frontend ou de uma seleção feita sempre sobre o catálogo inteiro em memória. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas. No multiplayer, a mesma flag ativa a gravação de `multiplayer_rooms`, `multiplayer_players`, `multiplayer_rounds` e `multiplayer_guesses`.
 
 ## Tabelas principais
 
@@ -48,7 +50,7 @@ Decidi manter PostgreSQL como base principal e não usar Supabase completo em Do
 
 O campo `sceneImage` continua a suportar as cenas SVG mock como alternativa. A secção opcional `media` mantém a fonte visual principal usada pela ronda, guardando URL da imagem, fonte, atribuição, licença, URL da licença, data de verificação e ligação futura a imagens ao nível da rua.
 
-Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais, como Panoramax e Mapillary. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. A próxima etapa será continuar a preencher Mapillary/Panoramax quando houver cobertura.
+Também adicionei `visualSources` para preparar várias fontes visuais por local. No JSON, `media` continua a ser a fonte principal e `visualSources` guarda fontes adicionais ou a mesma fonte jogável quando convém manter o contrato uniforme. Quando uma sessão é criada, o backend escolhe uma fonte disponível por ronda, guarda essa escolha em `session_rounds.visual_source` e mantém a mesma fonte se a sessão for recuperada da base de dados. Panoramax 360 já pode entrar como imagem principal jogável; Mapillary continua opcional porque depende de token no backend.
 
 ## Recolha de candidatos Mapillary
 
@@ -65,6 +67,48 @@ O script apenas gera candidatos. Não altera `seed/locations.json`. Antes de cop
 
 Quando um candidato Mapillary for aprovado, não devo guardar o `thumb_1024_url` devolvido pela API no dataset, porque é temporário. Por isso, o script já coloca em `imageUrl` um caminho estável do backend, como `/api/media/mapillary/<id-da-imagem>`. O backend usa o token local para resolver o thumbnail no momento certo e devolve um redirect para a imagem atual.
 
+## Expansão Panoramax 360
+
+Para acrescentar panoramas 360 reais a partir da API pública Panoramax, posso usar:
+
+```bash
+node src/database/tools/add-panoramax-locations.mjs --target 2000 --write
+```
+
+A ferramenta procura em grelhas de várias áreas europeias, filtra candidatos com metadados de panorama 360/equiretangular ou proporção aproximada 2:1, evita imagens repetidas e rejeita pontos demasiado próximos dos locais existentes. As entradas Panoramax usam licença `CC BY-SA 4.0`, guardam a imagem estável devolvida pela API e mantêm a ligação STAC original em `imageSourceUrl`.
+
+O expansor também lê, por omissão, `docs/scope/image-quality-audit.json` e `docs/scope/image-quality-blocklist.json` para não voltar a adicionar imagens já rejeitadas por baixa qualidade ou erro HTTP. Se for preciso repor poucos locais depois de uma limpeza, posso relaxar a distância mínima sem repetir imagens:
+
+```bash
+node src/database/tools/add-panoramax-locations.mjs \
+  --target 4 \
+  --min-distance-meters 40 \
+  --max-per-area 1 \
+  --write
+```
+
+## Auditoria de qualidade de imagem
+
+Para detetar imagens muito desfocadas, escuras, lavadas, com pouco contraste ou quebradas em Mapillary/Panoramax:
+
+```bash
+node src/database/tools/audit-image-quality.mjs \
+  --providers Mapillary,Panoramax \
+  --report docs/scope/image-quality-audit.json
+```
+
+Para aplicar apenas as remoções high-confidence e atualizar a blacklist persistente:
+
+```bash
+node src/database/tools/audit-image-quality.mjs \
+  --providers Mapillary,Panoramax \
+  --report docs/scope/image-quality-audit.json \
+  --write \
+  --remove-errors
+```
+
+O relatório separa `remove`, `error` e `review`. A lista `review` deve ser vista manualmente antes de apagar, porque panoramas 360 podem ter zonas distorcidas/menos nítidas mas continuar jogáveis quando o jogador roda a imagem.
+
 ## Verificação do dataset
 
 Para rever o dataset sem alterar ficheiros, posso correr:
@@ -73,7 +117,7 @@ Para rever o dataset sem alterar ficheiros, posso correr:
 node src/database/tools/audit-location-dataset.mjs --fail-on-errors
 ```
 
-Este script mostra contagens por país e fonte visual, deteta IDs duplicados, imagens principais repetidas, dados obrigatórios em falta, locais muito próximos, textos demasiado repetidos, pistas que revelam diretamente cidade ou país e imagens que parecem ser aéreas ou panorâmicas. Usei esta verificação para corrigir uma imagem repetida em Kotor, substituir pares demasiado próximos por novos locais reais, melhorar descrições demasiado parecidas e trocar imagens fracas em Cardiff, Ronda e San Gimignano. Neste momento, a verificação já não encontra pares abaixo de 75 metros, pistas diretas nos textos jogáveis, imagens aéreas por decidir, imagens principais repetidas nem metadados obrigatórios em falta. As imagens aéreas que ficaram estão registadas como revistas porque ajudam a ler melhor alguns locais no jogo.
+Este script mostra contagens por país e fonte visual, deteta IDs duplicados, imagens principais repetidas, dados obrigatórios em falta, locais muito próximos, textos demasiado repetidos, pistas que revelam diretamente cidade ou país e imagens que parecem ser aéreas ou panorâmicas. Usei esta verificação para corrigir uma imagem repetida em Kotor, substituir pares demasiado próximos por novos locais reais, melhorar descrições demasiado parecidas e trocar imagens fracas em Cardiff, Ronda e San Gimignano. Neste momento, a verificação já não encontra erros bloqueantes como pistas diretas nos textos jogáveis, imagens aéreas por decidir, imagens principais repetidas nem metadados obrigatórios em falta. Os avisos de proximidade/texto repetido ficam como apoio para revisão manual futura, sobretudo depois de reposições pontuais de panoramas 360.
 
 Além desta revisão do conjunto de locais, o backend tenta não escolher locais a menos de 1 km entre si dentro da mesma sessão quando existem alternativas suficientes no catálogo.
 
@@ -82,7 +126,7 @@ Além desta revisão do conjunto de locais, o backend tenta não escolher locais
 Para aumentar o conjunto de locais sem introduzir dados sem licença, posso usar a ferramenta local:
 
 ```bash
-node src/database/tools/expand-wikimedia-locations.mjs --target-count 1000
+node src/database/tools/expand-wikimedia-locations.mjs --target-count 4000
 ```
 
 A ferramenta procura candidatos no Wikidata, recolhe metadados de imagem no Wikimedia Commons, evita imagens principais repetidas, pontos demasiado próximos, labels técnicas visíveis e ficheiros que parecem ser imagens aéreas/panorâmicas por rever. Também limita quantos locais entram por país em cada passe, para evitar que o dataset fique concentrado num conjunto pequeno de países.

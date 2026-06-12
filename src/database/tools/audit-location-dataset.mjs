@@ -31,6 +31,25 @@ const reviewedAerialImages = [
   ["schwerin-schwerin-castle", "https://commons.wikimedia.org/wiki/File:Aerial_image_of_Schwerin_Castle_(view_from_the_east).jpg"],
 ].map(([id, imageSourceUrl]) => ({ id, imageSourceUrl }));
 
+const hardToGuessPrimaryImagePatterns = [
+  /\bcommemorative[-_ ]?plaque\b/i,
+  /\bmemorial[-_ ]?(plaque|plate|tablet)\b/i,
+  /\bplaque\b/i,
+  /\bpl[aā]ksne\b/i,
+  /\bgedenktafel\b/i,
+  /\bpam[eě]tn[ií][-_ ]?deska\b/i,
+  /(runic[-_ ]?inscription|runestone|rune[-_ ]?stone)/i,
+  /(runsten|stenen)(?:\b|[_-])/i,
+  /\bDR[-_ ]?\d+\b/i,
+  /\b(inscription|epitaph|tombstone|headstone|grave[-_ ]?marker)\b/i,
+  /\b(signboard|notice[-_ ]?board|information[-_ ]?(board|panel|sign)|interpretation[-_ ]?panel)\b/i,
+  /\b(location[-_ ]?map|site[-_ ]?plan|floor[-_ ]?plan)\b/i,
+  /\b(map|kaart|karte|mapa)\.(png|jpe?g|svg)\b/i,
+  /(?:^|[\s/:_.-])(logo|diagram|schema|scheme|coin|banknote|seal|emblem)(?:[\s/:_.-]|\d*\.(?:png|svg|jpe?g)\b)/i,
+  /MTLogo\d*\.(?:png|svg|jpe?g)\b/i,
+  /\.svg(?:$|[?#])/i,
+];
+
 function printHelp() {
   console.log(`Uso:
   node src/database/tools/audit-location-dataset.mjs [opções]
@@ -204,6 +223,10 @@ function findPossibleAerialImages(locations) {
 
   return locations
     .filter((location) => {
+      if (location.media?.sourceProvider === "Panoramax") {
+        return false;
+      }
+
       if (wasAerialImageReviewed(location)) {
         return false;
       }
@@ -219,6 +242,37 @@ function findPossibleAerialImages(locations) {
       title: location.title,
       imageSourceUrl: location.media?.imageSourceUrl,
     }));
+}
+
+function findHardToGuessPrimaryImages(locations) {
+  return locations
+    .filter((location) => {
+      const sourceText = decodeText([
+        location.id,
+        location.city,
+        location.media?.imageUrl,
+        location.media?.imageSourceUrl,
+      ]
+        .filter(Boolean)
+        .join(" "));
+
+      return hardToGuessPrimaryImagePatterns.some((pattern) => pattern.test(sourceText));
+    })
+    .map((location) => ({
+      id: location.id,
+      title: location.title,
+      city: location.city,
+      country: location.country,
+      imageSourceUrl: location.media?.imageSourceUrl,
+    }));
+}
+
+function decodeText(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
 }
 
 function wasAerialImageReviewed(location) {
@@ -348,6 +402,7 @@ async function main() {
   ];
   const tooDirectPlayableText = findTooDirectPlayableText(locations);
   const possibleAerialImages = findPossibleAerialImages(locations);
+  const hardToGuessPrimaryImages = findHardToGuessPrimaryImages(locations);
   const reviewedAerialImages = findReviewedAerialImages(locations);
 
   const report = {
@@ -360,6 +415,7 @@ async function main() {
       duplicateIds,
       duplicatePrimaryImages,
       missingMetadata,
+      hardToGuessPrimaryImages,
     },
     warnings: {
       nearbyPairs,
@@ -378,7 +434,8 @@ async function main() {
   const hasErrors =
     duplicateIds.length > 0 ||
     duplicatePrimaryImages.length > 0 ||
-    missingMetadata.length > 0;
+    missingMetadata.length > 0 ||
+    hardToGuessPrimaryImages.length > 0;
 
   if (options.failOnErrors && hasErrors) {
     process.exitCode = 1;
