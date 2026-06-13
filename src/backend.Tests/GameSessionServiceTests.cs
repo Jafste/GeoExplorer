@@ -11,7 +11,7 @@ namespace GeoExplorer.Backend.Tests;
 public sealed class GameSessionServiceTests
 {
     [TestMethod]
-    public void CreateSession_ReturnsSceneImageForFrontendContract()
+    public void CreateSession_DoesNotExposeMockSceneImageForFrontendContract()
     {
         var service = CreateService();
 
@@ -21,8 +21,9 @@ public sealed class GameSessionServiceTests
             Timed: true,
             RoundTimeSeconds: 60));
 
-        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.SceneImage));
-        StringAssert.StartsWith(response.CurrentRound.Challenge.SceneImage!, "/mock-scenes/");
+        Assert.IsNull(response.CurrentRound.Challenge.SceneImage);
+        Assert.IsNotNull(response.CurrentRound.Challenge.Media);
+        Assert.IsFalse(string.IsNullOrWhiteSpace(response.CurrentRound.Challenge.Media.ImageUrl));
     }
 
     [TestMethod]
@@ -372,7 +373,6 @@ public sealed class GameSessionServiceTests
                     "longitude": -8.611,
                     "sceneLabel": "Rua de teste",
                     "sceneNote": "Nota visual de teste.",
-                    "sceneImage": "/mock-scenes/test.svg",
                     "prompt": "Observa o local de teste.",
                     "visualGradient": ["#111111", "#222222", "#333333"],
                     "media": {
@@ -430,7 +430,6 @@ public sealed class GameSessionServiceTests
                     "longitude": -8.611,
                     "sceneLabel": "Rua de teste",
                     "sceneNote": "Nota visual de teste.",
-                    "sceneImage": "/mock-scenes/test.svg",
                     "prompt": "Observa o local de teste.",
                     "visualGradient": ["#111111", "#222222", "#333333"],
                     "media": {
@@ -488,7 +487,6 @@ public sealed class GameSessionServiceTests
                     "longitude": -8.611,
                     "sceneLabel": "Rua de teste",
                     "sceneNote": "Nota visual de teste.",
-                    "sceneImage": "/mock-scenes/test.svg",
                     "prompt": "Observa o local de teste.",
                     "visualGradient": ["#111111", "#222222", "#333333"],
                     "clues": [
@@ -510,7 +508,6 @@ public sealed class GameSessionServiceTests
                     "longitude": -8.61105,
                     "sceneLabel": "Rua de teste",
                     "sceneNote": "Nota visual de teste.",
-                    "sceneImage": "/mock-scenes/test.svg",
                     "prompt": "Observa o local de teste.",
                     "visualGradient": ["#111111", "#222222", "#333333"],
                     "clues": [
@@ -532,7 +529,6 @@ public sealed class GameSessionServiceTests
                     "longitude": -9.1399,
                     "sceneLabel": "Rua de teste",
                     "sceneNote": "Nota visual de teste.",
-                    "sceneImage": "/mock-scenes/test.svg",
                     "prompt": "Observa o local de teste.",
                     "visualGradient": ["#111111", "#222222", "#333333"],
                     "clues": [

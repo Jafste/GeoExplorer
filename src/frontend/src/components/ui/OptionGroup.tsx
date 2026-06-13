@@ -1,3 +1,5 @@
+import { SegmentedControl } from "./SegmentedControl";
+
 type OptionValue = string | number | boolean;
 
 export type OptionGroupOption<TValue extends OptionValue> = {
@@ -19,24 +21,11 @@ export function OptionGroup<TValue extends OptionValue>({
   onChange,
 }: OptionGroupProps<TValue>) {
   return (
-    <div className="setup-field">
-      <p className="field-label">{label}</p>
-      <div className="toggle-row">
-        {options.map((option) => {
-          const active = option.value === value;
-
-          return (
-            <button
-              className={`chip ${active ? "chip-highlight" : "chip-soft"}`}
-              key={String(option.value)}
-              onClick={() => onChange(option.value)}
-              type="button"
-            >
-              {option.label}
-            </button>
-          );
-        })}
-      </div>
-    </div>
+    <SegmentedControl
+      label={label}
+      options={options}
+      value={value}
+      onChange={onChange}
+    />
   );
 }

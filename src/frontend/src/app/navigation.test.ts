@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getAnalysisPhase } from "./navigation";
+import { buildRestorableViewUrl, getAnalysisPhase, getInitialRouteState } from "./navigation";
 import type { RoundResolutionResponse, SessionResult } from "../types/game";
 
 const roundResolution = {
@@ -59,5 +59,45 @@ describe("getAnalysisPhase", () => {
         sessionResult: null,
       })
     ).toBe("landing");
+  });
+});
+
+describe("getInitialRouteState", () => {
+  it("restores the setup view from the URL", () => {
+    expect(getInitialRouteState("?view=setup")).toEqual({
+      phase: "setup",
+      roomCode: null,
+    });
+  });
+
+  it("restores the multiplayer entry view from the URL", () => {
+    expect(getInitialRouteState("?view=multiplayer")).toEqual({
+      phase: "multiplayer",
+      roomCode: null,
+    });
+  });
+
+  it("prioritizes room links over generic view links", () => {
+    expect(getInitialRouteState("?view=setup&room=ab12cd")).toEqual({
+      phase: "multiplayer",
+      roomCode: "AB12CD",
+    });
+  });
+
+  it("falls back to the homepage for unknown views", () => {
+    expect(getInitialRouteState("?view=round")).toEqual({
+      phase: "landing",
+      roomCode: null,
+    });
+  });
+});
+
+describe("buildRestorableViewUrl", () => {
+  it("keeps the homepage clean", () => {
+    expect(buildRestorableViewUrl("/geo", "landing")).toBe("/geo");
+  });
+
+  it("writes a refreshable setup URL", () => {
+    expect(buildRestorableViewUrl("/geo", "setup")).toBe("/geo?view=setup");
   });
 });

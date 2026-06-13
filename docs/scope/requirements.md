@@ -1,7 +1,7 @@
 # Levantamento de Requisitos
 
 **Projeto:** GeoExplorer  
-**Versão:** 1.3 · 8 de junho de 2026
+**Versão:** 1.4 · 12 de junho de 2026
 **Referência MoSCoW:** https://www.productplan.com/glossary/moscow-prioritization/
 
 ---
@@ -32,22 +32,23 @@
 - RF07 — O sistema deve apresentar o resultado de cada ronda com localização correta, resposta submetida e pontuação obtida.
 - RF08 — O sistema deve apresentar um resultado final da sessão com pontuação acumulada e resumo das rondas jogadas.
 - RF09 — O sistema deve registar em base de dados os dados essenciais da sessão e das respetivas rondas, incluindo o modo de jogo com ou sem temporizador.
+- RF10 — O sistema deve usar a API e o catálogo PostgreSQL como fluxo real da aplicação, evitando carregar o catálogo completo no frontend.
 
 ### Should have
 
-- RF10 — O sistema deve permitir repetir a sessão com a mesma configuração após a apresentação do resultado final.
-- RF11 — A aplicação deve manter separação clara entre seleção de desafios, temporizador, cálculo de pontuação e gravação de dados para suportar evolução futura.
-- RF12 — O sistema deve suportar um modo multijogador simples, com sala partilhada por link, salas públicas listáveis, password opcional, dono da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
+- RF11 — O sistema deve permitir repetir a sessão com a mesma configuração após a apresentação do resultado final.
+- RF12 — A aplicação deve manter separação clara entre seleção de desafios, temporizador, cálculo de pontuação e gravação de dados para suportar evolução futura.
+- RF13 — O sistema deve suportar um modo multijogador simples, com sala partilhada por link, salas públicas listáveis, password opcional, dono da sala, rondas sincronizadas e comparação de pontuações entre jogadores.
 
 ### Could have
 
-- RF13 — O sistema poderá suportar filtros adicionais dentro do âmbito europeu, como país ou categoria de local, sem alterar o núcleo do jogo.
-- RF14 — O sistema poderá apresentar estatísticas básicas por sessão para apoio à análise do desempenho.
+- RF14 — O sistema poderá suportar filtros adicionais dentro do âmbito europeu, como país ou categoria de local, sem alterar o núcleo do jogo.
+- RF15 — O sistema poderá apresentar estatísticas básicas por sessão para apoio à análise do desempenho.
 
 ### Won't have (nesta versão)
 
-- RF15 — Cobertura geográfica global, por introduzir dependência excessiva de dados e maior risco para a demonstração.
-- RF16 — Autenticação e contas de utilizador, por não serem necessárias para o MVP individual definido na proposta.
+- RF16 — Cobertura geográfica global, por introduzir dependência excessiva de dados e maior risco para a demonstração.
+- RF17 — Autenticação e contas de utilizador, por não serem necessárias para o MVP individual definido na proposta.
 
 ---
 
@@ -57,7 +58,7 @@
 
 ### Must have
 
-- RNF01 — **Performance:** criação de nova sessão e carregamento de cada ronda em menos de 2 segundos em ambiente normal de desenvolvimento/demonstração.
+- RNF01 — **Performance:** criação de nova sessão e carregamento de cada ronda em menos de 2 segundos em ambiente normal de desenvolvimento/demonstração, sem obrigar o frontend a descarregar o catálogo completo de 6000 locais.
 - RNF02 — **Segurança:** validação server-side das submissões e ausência de segredos, credenciais ou chaves reais no repositório.
 - RNF03 — **Usabilidade:** interface utilizável sem formação prévia, com navegação clara entre início, ronda, resultado da ronda e resultado final.
 - RNF04 — **Integridade dos dados:** cada ronda aceita uma única submissão válida e cada sessão persiste dados coerentes de pontuação total e rondas jogadas.
@@ -82,3 +83,4 @@
 | 1.1 | 26 de março de 2026 | Clarificação do modo temporizado opcional e reposicionamento do multijogador como objetivo adicional não obrigatório | Ajuste do âmbito funcional |
 | 1.2 | 23 de maio de 2026 | Clarificação do modo multijogador implementado por salas partilhadas | Alinhamento com a primeira versão SignalR |
 | 1.3 | 8 de junho de 2026 | Reposicionamento do multiplayer como extensão implementada e atualização da portabilidade por Docker | Alinhamento com a validação final em Docker limpo e preparação do relatório final |
+| 1.4 | 12 de junho de 2026 | API/PostgreSQL assumidos como fluxo real, catálogo expandido para 6000 locais e `mock` reduzido a amostra de desenvolvimento | Alinhamento com os testes finais de interface, VPS e desempenho |

@@ -95,7 +95,6 @@ public sealed class RoundLocationSelectorTests
             Longitude = longitude,
             SceneLabel = "Frente ribeirinha",
             SceneNote = "Rio, ponte e centro histórico.",
-            SceneImage = "/mock-scenes/porto.svg",
             Prompt = "Observa a frente ribeirinha e marca o local aproximado.",
             VisualGradient = ["#0f172a", "#1e40af"],
             Media = new SeedMedia

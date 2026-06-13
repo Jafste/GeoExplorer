@@ -2,16 +2,17 @@ import { MoveRight } from "lucide-react";
 import { useDeferredValue } from "react";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
+import { Badge } from "../../components/ui/Badge";
 import { InfoGrid } from "../../components/ui/InfoCard";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig, SessionResult } from "../../types/game";
+import { getSessionMissionOutcome } from "./sessionMissionOutcome";
 
 interface SessionResultPageProps {
   busy: boolean;
   config: SessionConfig;
   result: SessionResult;
   onReplay: () => void;
-  onHome: () => void;
 }
 
 export function SessionResultPage({
@@ -19,7 +20,6 @@ export function SessionResultPage({
   config,
   result,
   onReplay,
-  onHome,
 }: SessionResultPageProps) {
   const deferredRounds = useDeferredValue(result.rounds);
   const roundsWithDistance = result.rounds.filter((round) => round.distanceKm !== null);
@@ -35,6 +35,11 @@ export function SessionResultPage({
     result.rounds.length > 0
       ? result.rounds.reduce((best, round) => (round.score > best.score ? round : best), result.rounds[0])
       : null;
+  const missionOutcome = getSessionMissionOutcome({
+    config,
+    totalRounds: result.totalRounds,
+    totalScore: result.totalScore,
+  });
   const sessionVerdict =
     averageScore >= 4500
       ? "Leitura excecional"
@@ -55,10 +60,15 @@ export function SessionResultPage({
       <div className="session-report-top">
         <div className="section-header session-report-heading">
           <div>
-            <div className="eyebrow">relatório final</div>
-            <h2 className="section-title">Sessão concluída.</h2>
+            <div className="session-outcome-kicker">
+              <div className="eyebrow">relatório final</div>
+              <Badge tone={missionOutcome.success ? "highlight" : "soft"}>
+                {missionOutcome.status}
+              </Badge>
+            </div>
+            <h2 className="section-title">{missionOutcome.title}</h2>
             <p className="section-support">
-              Missão europeia arquivada. O relatório consolida precisão, desvio e consistência por ronda.
+              {missionOutcome.summary}
             </p>
           </div>
         </div>
@@ -83,32 +93,20 @@ export function SessionResultPage({
         </div>
       </div>
 
-      <div className="session-status-strip">
-        <div className="session-status-item">
-          <span className="muted-eyebrow">Diagnóstico</span>
-          <strong>{sessionVerdict}</strong>
-        </div>
-        <div className="session-status-item">
-          <span className="muted-eyebrow">Melhor registo</span>
-          <strong>{bestRound ? `R${bestRound.roundNumber} · ${bestRound.city}` : "Sem dados"}</strong>
-        </div>
-        <div className="session-status-item">
-          <span className="muted-eyebrow">Tempos esgotados</span>
-          <strong>{timeoutRounds} ocorrência(s)</strong>
-        </div>
-      </div>
+      <InfoGrid
+        items={[
+          { label: "Diagnóstico", value: sessionVerdict },
+          { label: "Objetivo", value: `${missionOutcome.targetScore.toLocaleString("pt-PT")} pts` },
+          { label: "Tempos esgotados", value: `${timeoutRounds} ocorrência(s)` },
+        ]}
+      />
 
       <div className="session-report-grid">
         <Card as="article" variant="tacticalStack">
           <div className="session-map-card-head">
             <div>
-              <span className="muted-eyebrow">Mapa de dispersão</span>
-              <h3>Dispersão das rondas</h3>
-            </div>
-
-            <div className="result-chip-row">
-              <span className="chip chip-soft">Ligação tática ativa</span>
-              <span className="chip chip-highlight">OSINT nível 4</span>
+              <span className="muted-eyebrow">Mapa dos alvos</span>
+              <h3>Dispersão da missão</h3>
             </div>
           </div>
 
@@ -165,17 +163,14 @@ export function SessionResultPage({
                 </>
               )}
             </RoundedButton>
-            <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
-              Voltar à base
-            </RoundedButton>
           </div>
         </Card>
       </div>
 
       <Card as="article" variant="setupPanelStack" className="session-log-card">
         <div className="session-log-header">
-          <span className="muted-eyebrow">Registo da missão</span>
-          <span className="chip chip-soft">{result.totalRounds} fases registadas</span>
+          <span className="muted-eyebrow">Alvos analisados</span>
+          <Badge>{result.totalRounds} rondas</Badge>
         </div>
 
         <div className="summary-table">
@@ -188,7 +183,7 @@ export function SessionResultPage({
                   {round.city}, {round.country}
                 </strong>
                 <p>
-                  {round.guess ? round.guess.label : "Sem palpite"} ·{" "}
+                  {round.guess ? round.guess.label : "Sem posição"} ·{" "}
                   {round.distanceKm === null ? "Tempo esgotado" : `${round.distanceKm.toFixed(1)} km`}
                 </p>
                 {round.media ? (

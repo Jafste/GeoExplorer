@@ -38,4 +38,4 @@ flowchart LR
 
 ## Execução
 
-O perfil `full` do Docker Compose arranca frontend em modo `api`, backend e PostgreSQL. O perfil `frontend-mock` continua útil para demonstração rápida sem backend.
+O perfil `full` do Docker Compose arranca frontend em modo `api`, backend e PostgreSQL. O perfil `frontend-mock` continua útil para desenvolvimento rápido sem backend, mas já não representa o fluxo real da aplicação final.

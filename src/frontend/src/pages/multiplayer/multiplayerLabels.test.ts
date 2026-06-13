@@ -55,15 +55,15 @@ describe("getMultiplayerPlayerStatus", () => {
         isOwner: false,
         submitted: true,
       }, "playing")
-    ).toBe("Palpite enviado");
+    ).toBe("Posição enviada");
   });
 });
 
 describe("getMultiplayerRoundResolutionLabel", () => {
   it("maps multiplayer round result reasons to player-facing labels", () => {
-    expect(getMultiplayerRoundResolutionLabel("manual")).toBe("Palpite registado");
+    expect(getMultiplayerRoundResolutionLabel("manual")).toBe("Posição registada");
     expect(getMultiplayerRoundResolutionLabel("timeout")).toBe("Tempo esgotado");
-    expect(getMultiplayerRoundResolutionLabel("missing")).toBe("Sem palpite");
+    expect(getMultiplayerRoundResolutionLabel("missing")).toBe("Sem posição");
     expect(getMultiplayerRoundResolutionLabel("disconnect")).toBe("Vitória por abandono");
   });
 });

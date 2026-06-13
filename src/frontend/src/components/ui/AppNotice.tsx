@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle2, Info, X } from "lucide-react";
+import { IconButton } from "./Button";
 
 type AppNoticeTone = "danger" | "info" | "success";
 
@@ -17,8 +18,8 @@ const NOTICE_ICON = {
 
 const NOTICE_TITLE: Record<AppNoticeTone, string> = {
   danger: "Ação interrompida",
-  info: "Estado da missão",
-  success: "Operação concluída",
+  info: "Estado do jogo",
+  success: "Concluído",
 };
 
 export function AppNotice({
@@ -40,14 +41,13 @@ export function AppNotice({
       </div>
 
       {onDismiss ? (
-        <button
-          aria-label="Fechar aviso"
+        <IconButton
           className="app-notice-dismiss"
+          label="Fechar aviso"
           onClick={onDismiss}
-          type="button"
         >
           <X aria-hidden="true" size={16} strokeWidth={2.2} />
-        </button>
+        </IconButton>
       ) : null}
     </div>
   );

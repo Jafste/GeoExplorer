@@ -179,7 +179,6 @@ public sealed class LocationCatalogStoreTests
             Longitude = -8.611,
             SceneLabel = "Frente ribeirinha",
             SceneNote = "Rio, ponte e centro histórico.",
-            SceneImage = "/mock-scenes/porto.svg",
             Prompt = "Observa a frente ribeirinha e marca o local aproximado.",
             VisualGradient = new[] { "#0f172a", "#1e40af" },
             Media = new SeedMedia

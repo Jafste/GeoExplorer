@@ -64,7 +64,7 @@
 
 ## Sem. 8 · 5–6 mai · INTERCALAR
 
-**Feito:** realizei o relatório intercalar com base no modelo do relatório final, atualizei o estado do projeto e registei evidências de frontend, backend, base de dados e testes. Também deixei documentado que o código completo fica no repositório e que o relatório inclui apenas excertos técnicos curtos.
+**Feito:** realizei o relatório intercalar com base no template do relatório final, atualizei o estado do projeto e registei evidências de frontend, backend, base de dados e testes. Também deixei documentado que o código completo fica no repositório e que o relatório inclui apenas excertos técnicos curtos.
 **Bloqueou:** o relatório mostrou que ainda falta testar melhor o fluxo completo com frontend ligado ao backend e PostgreSQL ativo.
 **Próxima semana:** rever os textos do repositório, fechar a ligação frontend + API e preparar mais validação técnica.
 
@@ -112,9 +112,9 @@
 
 ## Sem. 14 · 9–13 jun
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** usei feedback de testes e da versão na VPS para corrigir problemas de navegação, sidebar, topbar, botões, estados de erro, loading e multiplayer. Também revi a criação/listagem de salas, simplifiquei a configuração inicial, tornei as salas públicas com password mais claras e alinhei a interface com componentes reutilizáveis. Identifiquei ainda o risco de carregar o catálogo completo no frontend e consolidei o modo `api` com PostgreSQL como fluxo real, deixando o `mock` como amostra pequena de desenvolvimento. No fim validei a versão pública em `https://geoexplorer.firmwork.pt/`, com `/api/health`, diagnóstico da base de dados e criação de sala multiplayer.
+**Bloqueou:** nada bloqueado, fica apenas o cuidado de manter o acesso ao servidor.
+**Próxima semana:** fechar o relatório final.
 
 ---
 

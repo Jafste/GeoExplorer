@@ -126,8 +126,8 @@ const CHIP_STATE: Record<"active" | "inactive", string> = {
 
 const RADIUS: Record<Radius, string> = {
   full: "rounded-full",
-  md: "rounded-md",
-  none: "rounded-none",
+  md: "rounded-lg",
+  none: "rounded-lg",
 };
 
 export type RoundedButtonProps =

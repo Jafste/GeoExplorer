@@ -2,6 +2,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
 import type { GuessCoordinates } from "../types/game";
+import { getComparisonFitPadding, getComparisonLabelSides, getComparisonMaxZoom } from "./europeGuessMapFit";
 
 export interface MapHotspot {
   label: string;
@@ -54,29 +55,6 @@ function createPinIcon(className: string, label?: string) {
   });
 }
 
-function getComparisonMaxZoom(distanceKm: number | null) {
-  if (distanceKm === null) {
-    return 11;
-  }
-
-  const clampedDistance = Math.max(1, Math.min(distanceKm, 420));
-  const zoom = 20 - Math.log2(clampedDistance + 1) * 1.55;
-
-  return Math.max(7, Math.min(18, Math.round(zoom)));
-}
-
-function getComparisonFitPadding(distanceKm: number | null): L.PointExpression {
-  if (distanceKm === null) {
-    return [72, 72];
-  }
-
-  const clampedDistance = Math.max(1, Math.min(distanceKm, 420));
-  const padding = 42 + Math.log2(clampedDistance + 1) * 7;
-  const clampedPadding = Math.max(48, Math.min(96, Math.round(padding)));
-
-  return [clampedPadding, clampedPadding];
-}
-
 function setMapInteractions(map: L.Map, enabled: boolean) {
   if (enabled) {
     map.dragging.enable();
@@ -118,6 +96,7 @@ export function EuropeGuessMap({
   const showDisabledState = disabled && !allowExploration;
   const isCloseComparison = comparisonDistanceKm !== null && comparisonDistanceKm <= 140;
   const shouldShowMarkerLabels = showMarkerLabels && !isCloseComparison;
+  const { actualLabelSide, guessLabelSide } = getComparisonLabelSides(guess, actual);
 
   useEffect(() => {
     if (!mapElementRef.current || mapRef.current) {
@@ -127,15 +106,17 @@ export function EuropeGuessMap({
     const map = L.map(mapElementRef.current, {
       attributionControl: true,
       center: EUROPE_CENTER,
-      fadeAnimation: false,
-      markerZoomAnimation: false,
+      fadeAnimation: true,
+      markerZoomAnimation: true,
       maxBounds: EUROPE_BOUNDS.pad(0.18),
       maxBoundsViscosity: 0.85,
       maxZoom: 18,
       minZoom: 3,
       zoom: 4,
-      zoomAnimation: false,
+      zoomAnimation: true,
       zoomControl: false,
+      zoomDelta: 0.5,
+      zoomSnap: 0.1,
     });
 
     map.attributionControl.setPrefix("");
@@ -257,7 +238,10 @@ export function EuropeGuessMap({
 
     if (actual) {
       L.marker([actual.latitude, actual.longitude], {
-        icon: createPinIcon("map-leaflet-actual", shouldShowMarkerLabels ? "Local correto" : undefined),
+        icon: createPinIcon(
+          `map-leaflet-actual map-leaflet-pin-label--${actualLabelSide}`,
+          shouldShowMarkerLabels ? "Local correto" : undefined
+        ),
         keyboard: false,
         title: actual.label,
       }).addTo(layer);
@@ -265,7 +249,10 @@ export function EuropeGuessMap({
 
     if (guess) {
       L.marker([guess.latitude, guess.longitude], {
-        icon: createPinIcon("map-leaflet-guess", shouldShowMarkerLabels ? "Teu pino" : undefined),
+        icon: createPinIcon(
+          `map-leaflet-guess map-leaflet-pin-label--${guessLabelSide}`,
+          shouldShowMarkerLabels ? "Teu pino" : undefined
+        ),
         keyboard: false,
         title: guess.label,
       }).addTo(layer);
@@ -281,7 +268,7 @@ export function EuropeGuessMap({
           return;
         }
 
-        map.invalidateSize();
+        map.invalidateSize({ pan: false });
 
         if (markerPoints.length >= 2) {
           map.fitBounds(L.latLngBounds(markerPoints), {
@@ -298,14 +285,31 @@ export function EuropeGuessMap({
       };
 
       fitMarkers(false);
-      const fitTimer = window.setTimeout(() => fitMarkers(false), 180);
+      const fitFrame = window.requestAnimationFrame(() => fitMarkers(false));
+      const fitTimers = [80, 240, 640].map((delay) => window.setTimeout(() => fitMarkers(false), delay));
+      const fitObserver =
+        "ResizeObserver" in window ? new ResizeObserver(() => fitMarkers(false)) : null;
+
+      fitObserver?.observe(map.getContainer());
 
       return () => {
         cancelled = true;
-        window.clearTimeout(fitTimer);
+        window.cancelAnimationFrame(fitFrame);
+        fitTimers.forEach((timer) => window.clearTimeout(timer));
+        fitObserver?.disconnect();
       };
     }
-  }, [actual, comparisonDistanceKm, fitToMarkers, guess, hotspots, showComparisonLine, showMarkerLabels]);
+  }, [
+    actual,
+    actualLabelSide,
+    comparisonDistanceKm,
+    fitToMarkers,
+    guess,
+    guessLabelSide,
+    hotspots,
+    showComparisonLine,
+    showMarkerLabels,
+  ]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -332,7 +336,7 @@ export function EuropeGuessMap({
     <div className={`guess-map-card${compact ? " is-compact" : ""}`}>
       <div
         className={`guess-map-surface guess-map-surface--leaflet${showDisabledState ? " is-disabled" : ""}${compact ? " is-compact" : ""}`}
-        aria-label="Mapa real da Europa para escolha do palpite"
+        aria-label="Mapa real da Europa para marcar a posição"
       >
         <div className="guess-map-leaflet" ref={mapElementRef} />
 
@@ -353,8 +357,8 @@ export function EuropeGuessMap({
               </>
             ) : (
               <>
-                <strong>Sem palpite ainda</strong>
-                <span>{canInteract ? "Clica no mapa real para definir o teu pino." : "Mapa real da Europa."}</span>
+                <strong>Sem posição ainda</strong>
+                <span>{canInteract ? "Clica no mapa real para definir a tua posição." : "Mapa real da Europa."}</span>
               </>
             )}
           </div>

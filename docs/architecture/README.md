@@ -22,8 +22,8 @@ O estado atual do projeto é:
 - Frontend React/Vite em modo `mock` ou `api`.
 - Backend ASP.NET Core .NET 8 com Minimal API e SignalR.
 - PostgreSQL em Docker, criado por migrations do Entity Framework.
-- Dataset local com 1000 locais reais, imagem, licença, atribuição e coordenadas.
-- Fontes visuais adicionais com Panoramax e Mapillary quando há cobertura útil.
+- Dataset local com 6000 locais reais, imagem, licença, atribuição e coordenadas.
+- Fontes visuais com Wikimedia Commons, Panoramax e Mapillary quando há cobertura útil.
 - Multiplayer por link, salas públicas, password opcional, dono da sala e rondas sincronizadas.
 
 ## Notas sobre o modelo de dados

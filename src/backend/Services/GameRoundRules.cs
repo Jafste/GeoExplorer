@@ -117,7 +117,7 @@ internal static class GameRoundRules
                 location.Category,
                 location.SceneLabel,
                 location.SceneNote,
-                location.SceneImage,
+                null,
                 location.Prompt,
                 location.VisualGradient,
                 BuildMedia(GetRoundMedia(location, selectedMedia, isMediaAvailable), includeSourceDetails: false),

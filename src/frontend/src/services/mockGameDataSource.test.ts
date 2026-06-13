@@ -134,7 +134,7 @@ function createLocation(overrides: Partial<SeedLocation>): SeedLocation {
     longitude: -8.611,
     sceneLabel: "Rua de teste",
     sceneNote: "Nota visual de teste.",
-    sceneImage: "/mock-scenes/test.svg",
+    sceneImage: "/legacy-scenes/ignored.svg",
     prompt: "Observa o local de teste.",
     visualGradient: ["#111111", "#222222", "#333333"],
     media: {

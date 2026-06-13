@@ -9,6 +9,7 @@ export function formatSeconds(value: number) {
 const CATEGORY_LABELS: Record<string, string> = {
   "bridge-view": "Vista de ponte",
   "canal-city": "Cidade de canais",
+  "civic-building": "Edifício cívico",
   fortress: "Fortificação",
   "historic-core": "Centro histórico",
   landmark: "Marco urbano",
@@ -16,6 +17,9 @@ const CATEGORY_LABELS: Record<string, string> = {
   "natural-landscape": "Paisagem natural",
   plaza: "Praça urbana",
   riverfront: "Frente ribeirinha",
+  stadium: "Estádio",
+  "street-level-panorama": "Panorama 360",
+  "urban-park": "Parque urbano",
   waterfront: "Margem marítima",
 };
 

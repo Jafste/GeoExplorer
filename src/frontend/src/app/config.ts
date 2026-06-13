@@ -1,7 +1,7 @@
 import type { DataMode, SessionConfig } from "../types/game";
 
 export const appConfig = {
-  dataMode: (import.meta.env.VITE_DATA_MODE ?? "mock") as DataMode,
+  dataMode: (import.meta.env.VITE_DATA_MODE ?? "api") as DataMode,
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? "/api",
 };
 

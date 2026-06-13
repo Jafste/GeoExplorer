@@ -10,15 +10,15 @@ interface RoundCornerHudProps {
 export function RoundCornerHud({ guess, mapOpen, timed }: RoundCornerHudProps) {
   return (
     <div className="round-corner-hud">
-      <span className="muted-eyebrow round-corner-hud-kicker">Telemetria tática</span>
+      <span className="muted-eyebrow round-corner-hud-kicker">Estado da missão</span>
 
       <div className="round-corner-hud-track">
         <div className="round-corner-hud-item">
           <div className="round-corner-hud-item-head">
             <Crosshair size={15} strokeWidth={2.1} />
-            <span>Pino</span>
+            <span>Alvo</span>
           </div>
-          <strong>{guess ? "Pino fixado" : "Um ponto livre"}</strong>
+          <strong>{guess ? "Posição definida" : "Por localizar"}</strong>
         </div>
 
         <div className="round-corner-hud-item">

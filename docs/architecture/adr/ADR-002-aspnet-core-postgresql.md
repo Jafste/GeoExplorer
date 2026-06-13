@@ -73,3 +73,7 @@ Depois acrescentei a opção de sala pública listável e password opcional. Par
 Validei o perfil `full` em Docker com PostgreSQL limpo, frontend em modo `api`, backend e migrations do Entity Framework. A validação passou por uma sessão solo curta, uma sala multiplayer curta, consulta ao diagnóstico da base de dados e confirmação das tabelas principais em PostgreSQL.
 
 Com isto, PostgreSQL em Docker fica confirmado como base principal para desenvolvimento e demonstração local. Supabase hosted e Turso/libSQL continuam apenas como hipóteses futuras, a rever se os dados reais de uso justificarem outra solução.
+
+## Atualização de 12 de junho de 2026
+
+Depois da expansão do catálogo para 6000 locais, confirmei que o fluxo final deve depender da API e de PostgreSQL para escolher apenas as rondas necessárias. O modo `mock` continua útil para desenvolvimento rápido, mas deixou de representar o caminho principal da aplicação. Esta alteração evita carregar o catálogo completo no browser e torna a arquitetura mais coerente com o volume real de dados.

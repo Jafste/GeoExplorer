@@ -32,7 +32,7 @@ const challengeRound: ChallengeRound = {
     category: "Centro histórico",
     sceneLabel: "Frente ribeirinha",
     sceneNote: "Casas compactas junto ao rio.",
-    sceneImage: "/mock-scenes/porto.svg",
+    sceneImage: "/legacy-scenes/ignored.svg",
     prompt: "Observa a frente urbana junto ao rio.",
     visualGradient: ["#111827", "#1f2937", "#84cc16"],
     media: {

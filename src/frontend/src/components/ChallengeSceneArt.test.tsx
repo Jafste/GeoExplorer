@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { getScenePhotoCandidates } from "./ChallengeSceneArt";
+import {
+  getInteractivePanoramaMode,
+  getScenePhotoCandidates,
+  isInteractivePanoramaMedia,
+  isPanoramicImageDimensions,
+  shouldContainScenePhoto,
+} from "./ChallengeSceneArt";
 import type { ChallengeRound } from "../types/game";
 
 function createChallenge(): ChallengeRound["challenge"] {
@@ -11,7 +17,7 @@ function createChallenge(): ChallengeRound["challenge"] {
     category: "historic-core",
     sceneLabel: "Rua histórica",
     sceneNote: "Fachadas e rua estreita.",
-    sceneImage: "/mock-scenes/historic-core-street.svg",
+    sceneImage: "/legacy-scenes/ignored.svg",
     prompt: "Observa a rua.",
     visualGradient: ["#111111", "#222222", "#333333"],
     media: {
@@ -36,16 +42,93 @@ function createChallenge(): ChallengeRound["challenge"] {
 }
 
 describe("getScenePhotoCandidates", () => {
-  it("orders selected media, alternate visual sources and local scene image without duplicates", () => {
+  it("orders selected media and alternate visual sources without using mock scene images", () => {
     const candidates = getScenePhotoCandidates(createChallenge());
 
     expect(candidates.map((candidate) => candidate.imageUrl)).toEqual([
       "/api/media/mapillary/1117445272087508",
       "https://example.test/wikimedia.jpg",
-      "/mock-scenes/historic-core-street.svg",
     ]);
     expect(candidates[0].media?.sourceProvider).toBe("Mapillary");
     expect(candidates[1].media?.sourceProvider).toBe("Wikimedia Commons");
-    expect(candidates[2].media).toBeUndefined();
+  });
+});
+
+describe("isInteractivePanoramaMedia", () => {
+  it("enables the interactive viewer for Panoramax street-level sources", () => {
+    expect(
+      isInteractivePanoramaMedia({
+        sourceProvider: "Panoramax",
+        imageUrl: "https://panoramax.example.test/sd.jpg",
+        streetViewProvider: "Panoramax",
+      }),
+    ).toBe(true);
+    expect(
+      getInteractivePanoramaMode({
+        sourceProvider: "Panoramax",
+        imageUrl: "https://panoramax.example.test/sd.jpg",
+        streetViewProvider: "Panoramax",
+      }),
+    ).toBe("360");
+  });
+
+  it("keeps regular photo providers in the static image path before dimensions are known", () => {
+    expect(
+      isInteractivePanoramaMedia({
+        sourceProvider: "Wikimedia Commons",
+        imageUrl: "https://example.test/photo.jpg",
+      }),
+    ).toBe(false);
+    expect(
+      isInteractivePanoramaMedia({
+        sourceProvider: "Mapillary",
+        imageUrl: "/api/media/mapillary/123",
+        streetViewProvider: "Mapillary",
+      }),
+    ).toBe(false);
+  });
+
+  it("enables a 360 viewer for panoramic Mapillary images after loading dimensions", () => {
+    expect(
+      getInteractivePanoramaMode(
+        {
+          sourceProvider: "Mapillary",
+          imageUrl: "/api/media/mapillary/123",
+          streetViewProvider: "Mapillary",
+        },
+        { width: 2048, height: 1024 },
+      ),
+    ).toBe("360");
+  });
+
+  it("enables partial panorama interaction for other very wide images", () => {
+    expect(
+      getInteractivePanoramaMode(
+        {
+          sourceProvider: "Wikimedia Commons",
+          imageUrl: "https://example.test/panorama.jpg",
+        },
+        { width: 2400, height: 900 },
+      ),
+    ).toBe("panorama");
+  });
+
+  it("does not treat normal landscape photos as panoramic", () => {
+    expect(isPanoramicImageDimensions({ width: 1600, height: 900 })).toBe(false);
+    expect(
+      getInteractivePanoramaMode(
+        {
+          sourceProvider: "Mapillary",
+          imageUrl: "/api/media/mapillary/123",
+          streetViewProvider: "Mapillary",
+        },
+        { width: 1600, height: 900 },
+      ),
+    ).toBeNull();
+  });
+
+  it("keeps portrait and narrow photos fully visible instead of cover-cropping them", () => {
+    expect(shouldContainScenePhoto({ width: 1536, height: 2048 })).toBe(true);
+    expect(shouldContainScenePhoto({ width: 1600, height: 900 })).toBe(false);
   });
 });

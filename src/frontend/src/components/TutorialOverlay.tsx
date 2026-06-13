@@ -8,7 +8,8 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { EuropeGuessMap, type MapHotspot } from "./EuropeGuessMap";
+import { EuropeGuessMap } from "./EuropeGuessMap";
+import { ButtonBase, IconButton } from "./ui/Button";
 import { RoundedButton } from "./ui/roundedButton";
 
 interface TutorialOverlayProps {
@@ -18,73 +19,47 @@ interface TutorialOverlayProps {
 const TUTORIAL_STEPS = [
   {
     badge: "Passo 1",
-    title: "Configura a sessão",
-    text: "Escolhe quantas rondas queres jogar, define se há cronómetro e decide se vais jogar a solo ou numa sala.",
+    title: "Prepara a missão",
+    text: "Escolhe quantos alvos vais localizar, define se há cronómetro e decide se jogas a solo ou numa sala.",
     accent: "3 / 5 / 7 rondas",
-    helper: "No modo multiplayer, o dono da sala escolhe a configuração antes de iniciar a partida.",
-    telemetry: [
-      { label: "Âmbito", value: "Europa" },
-      { label: "Perfil", value: "Solo ou sala" },
-      { label: "Ritmo", value: "Opcional" },
-    ],
+    helper: "No modo multiplayer, o líder da sala fecha o briefing antes de lançar a missão.",
     icon: Flag,
   },
   {
     badge: "Passo 2",
-    title: "Observa a imagem real",
+    title: "Analisa a imagem",
     text: "Cada ronda mostra uma fotografia de um local europeu. Procura pistas na arquitetura, relevo, luz e contexto urbano.",
     accent: "Imagem + pistas",
-    helper: "As pistas ajudam a orientar a leitura, mas evitam revelar diretamente a cidade ou o país.",
-    telemetry: [
-      { label: "Fonte", value: "Wikimedia / rua" },
-      { label: "Leitura", value: "Visual" },
-      { label: "Pistas", value: "Contextuais" },
-    ],
+    helper: "A imagem pode vir de Wikimedia Commons, Panoramax ou Mapillary. A fonte exata aparece no resultado.",
     icon: Camera,
   },
   {
     badge: "Passo 3",
-    title: "Marca no mapa real",
+    title: "Marca a posição",
     text: "Abre o mapa, aproxima a zona que achas correta e coloca o pino no ponto mais provável.",
     accent: "Mapa real",
-    helper: "Só existe uma submissão por ronda. No multiplayer, cada jogador marca o seu próprio ponto.",
-    telemetry: [
-      { label: "Mapa", value: "OpenStreetMap" },
-      { label: "Pino", value: "Uma submissão" },
-      { label: "Tempo", value: "Opcional" },
-    ],
+    helper: "Só podes enviar uma posição por ronda. No multiplayer, cada jogador marca o seu próprio ponto.",
     icon: MapPinned,
   },
   {
     badge: "Passo 4",
-    title: "Compara o resultado",
-    text: "No fim da ronda vês a distância ao local correto, a pontuação, as pistas e a fonte/licença da imagem.",
+    title: "Confirma o alvo",
+    text: "No fim da ronda vês a distância ao local correto, a pontuação, as pistas e a fonte usada pela imagem.",
     accent: "Distância → pontos",
-    helper: "Numa sala, o resultado aparece quando todos submetem ou quando o tempo termina.",
-    telemetry: [
-      { label: "Pontuação", value: "Imediata" },
-      { label: "Fonte", value: "Visível" },
-      { label: "Resumo", value: "Final" },
-    ],
+    helper: "Numa sala, o resultado aparece quando todos enviam a posição ou quando o tempo termina.",
     icon: Trophy,
   },
 ] as const;
 
-const tutorialHotspots: MapHotspot[] = [
-  { label: "Porto", latitude: 41.1402, longitude: -8.611, tone: "primary", value: "exemplo" },
-  { label: "Innsbruck", latitude: 47.2692, longitude: 11.4041, tone: "neutral", value: "alpes" },
-  { label: "Tallinn", latitude: 59.437, longitude: 24.7536, tone: "neutral", value: "báltico" },
-];
-
 const tutorialGuess = {
-  latitude: 45.4642,
-  longitude: 9.19,
-  label: "Palpite exemplo",
+  latitude: 48.8566,
+  longitude: 2.3522,
+  label: "Posição exemplo",
 };
 
 const tutorialActual = {
-  latitude: 47.2692,
-  longitude: 11.4041,
+  latitude: 48.2082,
+  longitude: 16.3738,
   label: "Local correto",
 };
 
@@ -137,16 +112,16 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
           <div className="tutorial-header-copy">
             <span className="eyebrow">primeiro acesso</span>
             <h2 id="tutorial-title" className="tutorial-title">
-              Aprende o fluxo do jogo em quatro passos.
+              Segue o briefing da missão em quatro passos.
             </h2>
             <p className="tutorial-intro">
-              O tutorial segue o mesmo ritmo do jogo: configurar, observar, marcar no mapa e comparar o resultado.
+              O tutorial segue o mesmo ritmo do jogo: preparar, analisar, marcar no mapa e confirmar o alvo.
             </p>
           </div>
 
-          <button aria-label="Fechar tutorial" className="tutorial-close" onClick={onDismiss} type="button">
+          <IconButton label="Fechar tutorial" className="tutorial-close" onClick={onDismiss}>
             <X size={18} strokeWidth={2.4} />
-          </button>
+          </IconButton>
         </div>
 
         <div className="tutorial-layout">
@@ -160,12 +135,11 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
               {TUTORIAL_STEPS.map((item, index) => {
                 const RailIcon = item.icon;
                 return (
-                  <button
+                  <ButtonBase
                     aria-current={activeStep === index ? "step" : undefined}
                     className={`tutorial-progress-dot${activeStep === index ? " is-active" : ""}`}
                     key={item.title}
                     onClick={() => setActiveStep(index)}
-                    type="button"
                   >
                     <span className="tutorial-progress-index">{String(index + 1).padStart(2, "0")}</span>
                     <span className="tutorial-progress-copy">
@@ -175,18 +149,9 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
                         <small>{item.accent}</small>
                       </span>
                     </span>
-                  </button>
+                  </ButtonBase>
                 );
               })}
-            </div>
-
-            <div className="tutorial-rail-card">
-              <span className="muted-eyebrow">Protocolo</span>
-              <strong>Uma imagem, um pino, uma pontuação.</strong>
-              <p>
-                O jogo usa imagens reais, mapa real e salas por link. O cronómetro só muda o ritmo da decisão.
-              </p>
-              <span className="tutorial-rail-hint">Esc fecha. Setas esquerda/direita navegam os passos.</span>
             </div>
           </aside>
 
@@ -215,10 +180,10 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
                 <div className="tutorial-visual-map">
                   <EuropeGuessMap
                     actual={tutorialActual}
-                    comparisonDistanceKm={284}
+                    comparisonDistanceKm={1034}
                     disabled
+                    fitToMarkers
                     guess={tutorialGuess}
-                    hotspots={tutorialHotspots}
                     showComparisonLine
                     showFooter={false}
                     showMarkerLabels
@@ -231,14 +196,6 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
                   <p id="tutorial-description">{step.text}</p>
                 </div>
 
-                <div className="tutorial-data-grid">
-                  {step.telemetry.map((item) => (
-                    <div className="tutorial-data-card" key={item.label}>
-                      <span className="muted-eyebrow">{item.label}</span>
-                      <strong>{item.value}</strong>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

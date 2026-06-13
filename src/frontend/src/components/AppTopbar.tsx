@@ -1,10 +1,10 @@
-import { House, Menu, Play, Radar, ScrollText } from "lucide-react";
+import { House, Menu, Play, ScrollText } from "lucide-react";
 import type { SurfacePhase } from "../app/navigation";
-import type { SessionConfig } from "../types/game";
+import logoMark from "../assets/branding/logo_geoExplorer.png";
+import { ButtonBase, IconButton } from "./ui/Button";
 import { RoundedButton } from "./ui/roundedButton";
 
 interface AppTopbarProps {
-  config: SessionConfig;
   phase: SurfacePhase;
   showSidebarToggle: boolean;
   sidebarOpen: boolean;
@@ -14,29 +14,7 @@ interface AppTopbarProps {
   onToggleSidebar: () => void;
 }
 
-function getModeLabel(config: SessionConfig) {
-  return config.timed ? `${config.roundTimeSeconds ?? 0}s` : "Livre";
-}
-
-function getPhaseLabel(phase: SurfacePhase) {
-  switch (phase) {
-    case "landing":
-      return "Centro de missão";
-    case "setup":
-      return "Configuração";
-    case "round":
-      return "Missão ativa";
-    case "round-result":
-      return "Resumo da ronda";
-    case "session-result":
-      return "Relatório final";
-    case "multiplayer":
-      return "Sala multiplayer";
-  }
-}
-
 export function AppTopbar({
-  config,
   phase,
   showSidebarToggle,
   sidebarOpen,
@@ -51,58 +29,70 @@ export function AppTopbar({
   return (
     <header className={`topbar${isRound ? " topbar--play" : ""}`}>
       {showSidebarToggle ? (
-        <button
+        <IconButton
           aria-expanded={sidebarOpen}
-          aria-label={sidebarOpen ? "Fechar menu" : "Abrir menu"}
           className="topbar-menu-button"
+          label={sidebarOpen ? "Fechar menu" : "Abrir menu"}
           onClick={onToggleSidebar}
           title={sidebarOpen ? "Fechar menu" : "Abrir menu"}
-          type="button"
         >
           <Menu size={19} strokeWidth={2.2} />
-        </button>
+        </IconButton>
       ) : null}
 
-      <button
-        aria-label="Voltar ao início"
+      <ButtonBase
+        aria-label="Ir para o início"
         className={`brand brand-button${isRound ? " brand-button--play" : ""}`}
         onClick={onHome}
-        type="button"
       >
-        <span className="brand-mark" />
+        <img alt="" aria-hidden="true" className="brand-mark" src={logoMark} />
         <span className="brand-copy">
-          <span className="brand-title">GeoExplorer // TAC-OPS</span>
-          <span className="brand-subtitle">Treino geográfico europeu</span>
+          <span className="brand-title">GeoExplorer</span>
         </span>
-      </button>
-
-      {!isRound ? (
-        <div className="topbar-center" aria-label="Modo atual">
-          <span className="hud-pill hud-pill-active">
-            <Radar size={14} strokeWidth={2.1} />
-            {getPhaseLabel(phase)}
-          </span>
-          <span className="hud-pill hud-pill-quiet">Europa</span>
-          <span className="hud-pill hud-pill-quiet">
-            {isLanding ? "Com ou sem cronómetro" : getModeLabel(config)}
-          </span>
-        </div>
-      ) : null}
+      </ButtonBase>
 
       <div className={`topbar-actions`}>
-        <RoundedButton color="neon" tone="ghost" radius="none" size="sm" onClick={onOpenTutorial} type="button">
+        <RoundedButton
+          aria-label="Abrir tutorial"
+          color="neon"
+          onClick={onOpenTutorial}
+          radius="none"
+          size="sm"
+          title="Abrir tutorial"
+          tone="ghost"
+          type="button"
+        >
           <ScrollText size={16} strokeWidth={2.2} />
           Tutorial
         </RoundedButton>
         {isLanding ? (
-          <RoundedButton intent="primary" tone="soft" size="md" radius="none" onClick={onStart} type="button" className="gap-2">
+          <RoundedButton
+            aria-label="Começar missão"
+            className="gap-2"
+            intent="primary"
+            onClick={onStart}
+            radius="none"
+            size="md"
+            title="Começar missão"
+            tone="soft"
+            type="button"
+          >
             <Play size={16} strokeWidth={2.2} />
-            Iniciar
+            Começar
           </RoundedButton>
         ) : (
-          <RoundedButton intent="primary" tone="solid" size="md" radius="none" onClick={onHome} type="button">
+          <RoundedButton
+            aria-label="Ir para o início"
+            intent="primary"
+            onClick={onHome}
+            radius="none"
+            size="md"
+            title="Ir para o início"
+            tone="solid"
+            type="button"
+          >
             <House size={16} strokeWidth={2.2} />
-            Base
+            Início
           </RoundedButton>
         )}
       </div>

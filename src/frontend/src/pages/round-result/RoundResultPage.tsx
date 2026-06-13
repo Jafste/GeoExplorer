@@ -1,4 +1,4 @@
-import { ExternalLink, MapPinned, MoveRight, Radar, ScanLine, Waypoints } from "lucide-react";
+import { ExternalLink, MapPinned, MoveRight, Radar, Waypoints } from "lucide-react";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { InfoGrid } from "../../components/ui/InfoCard";
@@ -10,7 +10,6 @@ interface RoundResultPageProps {
   progress: RoundProgress;
   result: RoundResult;
   onContinue: () => void;
-  onHome: () => void;
 }
 
 export function RoundResultPage({
@@ -18,18 +17,17 @@ export function RoundResultPage({
   progress,
   result,
   onContinue,
-  onHome,
 }: RoundResultPageProps) {
   const accuracy =
     result.distanceKm === null ? 0 : Math.max(0, Math.min(100, Math.round((result.score / 5000) * 1000) / 10));
   const verdict =
     result.resolution === "timeout"
-      ? "Janela perdida"
+      ? "Tempo esgotado"
       : result.score >= 4500
-        ? "Leitura cirúrgica"
+        ? "Muito perto"
         : result.score >= 3000
-          ? "Contacto sólido"
-          : "Desvio registado";
+          ? "Boa leitura"
+          : "Longe do alvo";
   const actualLocation = {
     latitude: result.correctLatitude,
     longitude: result.correctLongitude,
@@ -40,15 +38,12 @@ export function RoundResultPage({
 
   return (
     <section className="screen-shell screen-shell-debrief">
-      <div className="section-header">
+      <div className="section-header debrief-page-header">
         <div>
-          <div className="eyebrow">resumo da ronda</div>
-          <h2 className="section-title">Resultado confirmado.</h2>
+          <div className="eyebrow">debrief da ronda</div>
+          <h2 className="section-title">Alvo confirmado.</h2>
         </div>
         <div className="debrief-header-actions">
-          <RoundedButton color="neon" tone="ghost" radius="none" onClick={onHome} type="button">
-            Terminar sessão
-          </RoundedButton>
           <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onContinue} type="button">
             {busy
               ? "A carregar..."
@@ -73,7 +68,6 @@ export function RoundResultPage({
             </div>
 
             <div className="result-chip-row">
-              <span className="chip chip-soft">Setor europeu</span>
               <span className="chip chip-highlight">{result.resolution === "timeout" ? "Tempo esgotado" : "Marcação confirmada"}</span>
             </div>
           </div>
@@ -115,16 +109,8 @@ export function RoundResultPage({
             <div className="debrief-map-ticker-item">
               <Waypoints size={16} strokeWidth={2} />
               <div>
-                <span className="muted-eyebrow">Vetor do teu pino</span>
-                <strong>{result.guess ? `${result.guess.latitude.toFixed(2)} / ${result.guess.longitude.toFixed(2)}` : "Sem vetor registado"}</strong>
-              </div>
-            </div>
-
-            <div className="debrief-map-ticker-item">
-              <ScanLine size={16} strokeWidth={2} />
-              <div>
-                <span className="muted-eyebrow">Resolução</span>
-                <strong>{result.resolution === "timeout" ? "Fecho automático" : "Submissão manual"}</strong>
+                <span className="muted-eyebrow">Posição enviada</span>
+                <strong>{result.guess ? `${result.guess.latitude.toFixed(2)} / ${result.guess.longitude.toFixed(2)}` : "Sem ponto registado"}</strong>
               </div>
             </div>
           </div>
@@ -133,16 +119,13 @@ export function RoundResultPage({
         <Card as="article" variant="tacticalStack">
           <div className="debrief-summary-head">
             <div>
-              <span className="muted-eyebrow">Resultado da missão</span>
+              <span className="muted-eyebrow">Resultado da ronda</span>
               <h3>{verdict}</h3>
             </div>
-            <span className="chip chip-highlight">
-              {result.resolution === "timeout" ? "Resolvida por tempo" : "Submissão manual"}
-            </span>
           </div>
 
           <div className="debrief-score-block">
-            <span className="muted-eyebrow">Pontuação adquirida</span>
+            <span className="muted-eyebrow">Pontuação</span>
             <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
           </div>
 
@@ -165,11 +148,11 @@ export function RoundResultPage({
               </p>
             </div>
             <div>
-              <strong>O teu palpite</strong>
-              <p>{result.guess ? result.guess.label : "Sem palpite"}</p>
+              <strong>Posição enviada</strong>
+              <p>{result.guess ? result.guess.label : "Sem posição"}</p>
             </div>
             <div>
-              <strong>Leitura da ronda</strong>
+              <strong>Leitura da missão</strong>
               <p>
                 {result.distanceKm === null
                   ? "O cronómetro terminou antes da marcação."
@@ -181,12 +164,12 @@ export function RoundResultPage({
           {result.media ? (
             <Card variant="tacticalHighlight" className="debrief-source-card">
               <div>
-                <span className="muted-eyebrow">Fonte visual</span>
+                <span className="muted-eyebrow">Fonte usada nesta ronda</span>
                 <strong>{result.media.sourceProvider}</strong>
                 <p>
                   {result.media.imageAttribution
-                    ? `Imagem: ${result.media.imageAttribution}`
-                    : "Metadata da imagem disponível no dataset."}
+                    ? `Atribuição: ${result.media.imageAttribution}`
+                    : "Atribuição detalhada não disponível para esta fonte."}
                 </p>
               </div>
 
@@ -204,7 +187,7 @@ export function RoundResultPage({
                     target="_blank"
                     title="Abrir fonte visual numa nova aba"
                   >
-                    Ver fonte
+                    Abrir fonte
                     <ExternalLink size={13} strokeWidth={2.4} />
                   </a>
                 ) : (
@@ -234,8 +217,8 @@ export function RoundResultPage({
 
           <div className="debrief-intel-log">
             <div className="debrief-intel-log-head">
-              <span className="muted-eyebrow">Intel da ronda</span>
-              <span className="chip chip-soft">{result.clues.length} sinais</span>
+              <span className="muted-eyebrow">Pistas da ronda</span>
+              <span className="chip chip-soft">{result.clues.length} pistas</span>
             </div>
 
             <div className="debrief-intel-list">

@@ -22,3 +22,9 @@ Os wireframes não são design final. O que importa é:
 - [Figma](https://figma.com) — gratuito para uso individual, exporta PDF
 - [Balsamiq](https://balsamiq.com) — específico para wireframes de baixa fidelidade
 - [draw.io](https://draw.io) — para fluxos de navegação simples
+
+## Direção visual final
+
+A interface final afastou-se dos wireframes iniciais e passou para uma direção mais tática. A inspiração veio de jogos como Call of Duty e 007, sobretudo menus/HUDs com verde forte, contraste alto e sensação de missão. Mantive o verde como cor de destaque principal e usei apontamentos neon para ações importantes, como começar missão, criar sala ou confirmar decisões.
+
+Esta escolha ajudou a ligar o tema OSINT/geolocalização a uma experiência mais focada em briefing, missão, mapa e leitura rápida de informação. O logótipo também foi explorado com apoio do Gemini, antes de ser integrado e ajustado à interface do projeto.

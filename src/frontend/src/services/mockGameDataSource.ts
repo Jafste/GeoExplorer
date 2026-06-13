@@ -34,6 +34,8 @@ interface MockGameDataSourceOptions {
 const sessions = new Map<string, StoredSession>();
 let sessionCounter = 0;
 const MINIMUM_ROUND_LOCATION_DISTANCE_KM = 1;
+const MIN_ROUND_TIME_SECONDS = 1;
+const MAX_ROUND_TIME_SECONDS = 3600;
 
 const EUROPE_BOUNDS = {
   minLat: 34,
@@ -264,10 +266,12 @@ function validateConfig(config: SessionConfig) {
   if (
     config.timed &&
     (config.roundTimeSeconds === null ||
-      config.roundTimeSeconds < 15 ||
-      config.roundTimeSeconds > 180)
+      config.roundTimeSeconds < MIN_ROUND_TIME_SECONDS ||
+      config.roundTimeSeconds > MAX_ROUND_TIME_SECONDS)
   ) {
-    throw new Error("O tempo por ronda deve estar entre 15 e 180 segundos.");
+    throw new Error(
+      `O tempo por ronda deve estar entre ${MIN_ROUND_TIME_SECONDS} e ${MAX_ROUND_TIME_SECONDS} segundos.`
+    );
   }
 }
 

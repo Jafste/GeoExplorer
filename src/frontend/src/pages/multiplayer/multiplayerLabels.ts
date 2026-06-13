@@ -19,7 +19,7 @@ export function getMultiplayerPlayerStatus(
     return player.isOwner ? "Dono da sala" : "Ligado";
   }
 
-  return player.submitted ? "Palpite enviado" : "A jogar";
+  return player.submitted ? "Posição enviada" : "A jogar";
 }
 
 export function getMultiplayerRoundResolutionLabel(
@@ -27,13 +27,13 @@ export function getMultiplayerRoundResolutionLabel(
 ): string {
   switch (resolution) {
     case "manual":
-      return "Palpite registado";
+      return "Posição registada";
     case "timeout":
       return "Tempo esgotado";
     case "disconnect":
       return "Vitória por abandono";
     case "missing":
     default:
-      return "Sem palpite";
+      return "Sem posição";
   }
 }
