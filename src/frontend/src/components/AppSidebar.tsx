@@ -280,9 +280,8 @@ export function AppSidebar({
   const setupDisabledReason = inMultiplayerRoom
     ? "Sai da sala para mudares a configuração do jogo solo."
     : null;
-  const analysisDisabledReason = analysisEnabled
-    ? null
-    : "Termina uma ronda ou jogo para abrir o relatório.";
+  const hasAnalysis = analysisEnabled && Boolean(roundResolution || sessionResult);
+  const analysisLabel = sessionResult ? "Relatório final" : "Relatório da ronda";
   const showQuickStart = !inMultiplayerRoom;
 
   return (
@@ -328,15 +327,16 @@ export function AppSidebar({
           Salas multiplayer
         </SidebarAction>
 
-        <SidebarAction
-          active={phase === "round-result" || phase === "session-result"}
-          disabledReason={analysisDisabledReason}
-          icon={<Gauge size={16} strokeWidth={2} />}
-          id="sidebar-report"
-          onClick={onOpenAnalysis}
-        >
-          Último relatório
-        </SidebarAction>
+        {hasAnalysis ? (
+          <SidebarAction
+            active={phase === "round-result" || phase === "session-result"}
+            icon={<Gauge size={16} strokeWidth={2} />}
+            id="sidebar-report"
+            onClick={onOpenAnalysis}
+          >
+            {analysisLabel}
+          </SidebarAction>
+        ) : null}
       </nav>
 
       {metrics.length > 0 ? (

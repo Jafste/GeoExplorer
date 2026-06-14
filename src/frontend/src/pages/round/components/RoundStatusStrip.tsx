@@ -26,7 +26,7 @@ export function RoundStatusStrip({
     <div className="round-floating-strip">
       <span className="chip chip-soft">Ronda {roundNumber}/{totalRounds}</span>
       <span className={`chip ${timed ? "chip-highlight" : "chip-soft"}`}>
-        <Clock3 size={14} strokeWidth={2.1} />
+        <Clock3 size={14} strokeWidth={2.1} className="mr-1"/>
         {timed ? formatSeconds(remainingSeconds ?? 0) : "Livre"}
       </span>
       {panoramaMode ? (

@@ -46,6 +46,7 @@ services:
       GeoExplorer__AllowedOrigins: ${GeoExplorer__AllowedOrigins:-http://localhost:5173;http://127.0.0.1:5173}
       ConnectionStrings__GeoExplorerDb: Host=db;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:-geoexplorer_dev}
       MAPILLARY_ACCESS_TOKEN: ${MAPILLARY_ACCESS_TOKEN:-}
+      Serilog__WriteTo__1__Args__path: /workspace/logs/geoexplorer-.log
     depends_on:
       - db
     ports:
@@ -53,6 +54,7 @@ services:
     volumes:
       - ./src/backend:/workspace/src/backend
       - ./src/database:/workspace/src/database
+      - ./logs/backend:/workspace/logs
 
   db:
     profiles: ["database", "full"]

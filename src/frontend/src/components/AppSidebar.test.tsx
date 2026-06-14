@@ -1,5 +1,6 @@
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
+import type { RoundResolutionResponse, SessionResult } from "../types/game";
 import { AppSidebar } from "./AppSidebar";
 
 type FunctionComponentForTest = (props: Record<string, unknown>) => ReactNode;
@@ -84,8 +85,44 @@ function findButtonByLabel(
   return null;
 }
 
+function createRoundResolutionForTest(): RoundResolutionResponse {
+  return {
+    progress: {
+      completed: false,
+      nextRoundNumber: 2,
+    },
+    result: {
+      city: "Lisboa",
+      clues: [],
+      correctLatitude: 38.7223,
+      correctLongitude: -9.1393,
+      country: "Portugal",
+      distanceKm: 12.4,
+      guess: null,
+      resolution: "manual",
+      roundId: "round-1",
+      roundNumber: 1,
+      score: 4300,
+      timed: true,
+      title: "Lisboa",
+      visualSources: [],
+    },
+  };
+}
+
+function createSessionResultForTest(): SessionResult {
+  return {
+    roundTimeSeconds: 60,
+    rounds: [],
+    sessionId: "session-1",
+    timed: true,
+    totalRounds: 5,
+    totalScore: 18500,
+  };
+}
+
 describe("AppSidebar", () => {
-  it("disables the report button with a tooltip when there is no last result to open", () => {
+  it("hides the report button when there is no last result to open", () => {
     const sidebar = AppSidebar({
       config: {
         region: "europe",
@@ -104,9 +141,8 @@ describe("AppSidebar", () => {
 
     const analysisButton = findButtonByLabel(sidebar, "Último relatório");
 
-    expect(analysisButton).not.toBeNull();
-    expect(analysisButton?.props.disabled).toBe(true);
-    expect(getTextContent(sidebar)).toContain("Termina uma ronda ou jogo para abrir o relatório.");
+    expect(analysisButton).toBeNull();
+    expect(getTextContent(sidebar)).not.toContain("Termina uma ronda ou jogo para abrir o relatório.");
   });
 
   it("does not show game mode metrics on the homepage", () => {
@@ -170,7 +206,7 @@ describe("AppSidebar", () => {
     expect(text).not.toContain("5 rondas · 60s");
   });
 
-  it("routes the analysis button through a dedicated callback", () => {
+  it("routes the round report button through a dedicated callback", () => {
     const onHome = vi.fn();
     const onOpenAnalysis = vi.fn();
 
@@ -188,9 +224,10 @@ describe("AppSidebar", () => {
       analysisEnabled: true,
       onOpenAnalysis,
       onQuickStart: vi.fn(),
+      roundResolution: createRoundResolutionForTest(),
     });
 
-    const analysisButton = findButtonByLabel(sidebar, "Último relatório");
+    const analysisButton = findButtonByLabel(sidebar, "Relatório da ronda");
 
     expect(analysisButton).not.toBeNull();
     expect(analysisButton?.props.onClick).toBeTypeOf("function");
@@ -199,6 +236,28 @@ describe("AppSidebar", () => {
 
     expect(onOpenAnalysis).toHaveBeenCalledOnce();
     expect(onHome).not.toHaveBeenCalled();
+  });
+
+  it("labels the session analysis action as the final report", () => {
+    const sidebar = AppSidebar({
+      config: {
+        region: "europe",
+        roundCount: 5,
+        timed: true,
+        roundTimeSeconds: 60,
+      },
+      phase: "session-result",
+      onHome: vi.fn(),
+      onOpenMultiplayer: vi.fn(),
+      onStart: vi.fn(),
+      analysisEnabled: true,
+      onOpenAnalysis: vi.fn(),
+      onQuickStart: vi.fn(),
+      sessionResult: createSessionResultForTest(),
+    });
+
+    expect(findButtonByLabel(sidebar, "Relatório final")).not.toBeNull();
+    expect(findButtonByLabel(sidebar, "Último relatório")).toBeNull();
   });
 
   it("routes the multiplayer rooms button through a dedicated callback", () => {

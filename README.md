@@ -133,6 +133,29 @@ Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
 ```
 
+### Logs técnicos
+
+Inicialmente ainda não tinha uma solução de logs em ficheiro, porque durante os testes locais conseguia acompanhar erros e warnings diretamente pela consola do backend. Quando passei a validar a aplicação na VPS, esse método deixou de ser suficiente: era mais difícil perceber que erros aconteciam em produção, sobretudo em fluxos multiplayer, SignalR e pedidos feitos por outros utilizadores.
+
+Por isso adicionei Serilog para manter logs técnicos do ASP.NET Core, dos serviços internos e do SignalR. Os logs continuam a aparecer na consola, por isso em Docker posso usar:
+
+```bash
+docker compose --profile full logs backend
+```
+
+Além da consola, o backend escreve ficheiros `.log` rotativos e legíveis:
+
+```text
+Execução local: src/backend/logs/geoexplorer-YYYYMMDD.log
+Docker Compose: logs/backend/geoexplorer-YYYYMMDD.log
+```
+
+Os ficheiros rodam por dia, têm limite de 10 MB por ficheiro e ficam retidos até 14 ficheiros. As pastas de logs estão excluídas do Git. Estes logs são apenas para diagnóstico técnico; métricas de cliques, movimentos e comportamento de utilizadores devem ficar num desenho separado, com atenção a RGPD, finalidade, consentimento e retenção.
+
+### Privacidade e armazenamento local
+
+O projeto não usa cookies próprios, analytics externo ou recolha genérica de cliques/movimentos. Cheguei a considerar uma análise de cliques e comportamento para perceber melhor a utilização, mas antes de implementar essa ideia decidi separar a questão de privacidade. Com apoio do ChatGPT, transformei essa dúvida num documento técnico de privacidade que clarifica o que existe agora e o que teria de ser desenhado antes de recolher métricas futuras. A aplicação usa `localStorage` apenas para funcionalidades do jogo, como tutorial concluído, identificação local do jogador multiplayer e retoma de sala. O detalhe técnico está em [`docs/privacy.md`](docs/privacy.md).
+
 O frontend corre em modo `api` por omissão; para desenvolvimento isolado posso usar `npm run dev:mock`, que usa uma amostra pequena de locais reais. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. Com o catálogo PostgreSQL ativo, as rondas pedem candidatos aleatórios à tabela `locations`. Validei o perfil `full` com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo e uma sala multiplayer curta. Também validei a versão pública em `https://geoexplorer.firmwork.pt/`, com `/api/health` ativo, diagnóstico da base de dados a responder e criação de sala multiplayer. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
 
 ---

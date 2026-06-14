@@ -238,7 +238,6 @@
   display: grid;
   gap: 10px;
   padding: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(209, 255, 38, 0.06);
 }
 
@@ -316,7 +315,6 @@
   gap: 16px;
   padding: 18px;
   overflow: auto;
-  border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(13, 17, 24, 0.96);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
@@ -748,7 +746,8 @@
   }
 
   .multiplayer-immersive-strip {
-    gap: 8px;
+    column-gap: 8px;
+    row-gap: 14px;
   }
 
   .multiplayer-immersive-strip .chip {
@@ -1084,7 +1083,6 @@
 .card-setup-panel,
 .guess-map-card,
 .tutorial-shell {
-  border: 1px solid var(--line);
   box-shadow: var(--shadow-xl);
 }
 
@@ -1183,7 +1181,6 @@
 .summary-row,
 .metric-card {
   padding: 16px 18px;
-  border: 1px solid var(--line);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.045);
 }
@@ -1216,7 +1213,6 @@
   min-height: 100%;
   border-radius: 34px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   background:
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.12), transparent 22%),
     linear-gradient(180deg, #88bfff 0%, #5f88de 34%, #16213f 68%, #07090f 100%);
@@ -1785,9 +1781,8 @@
   left: 24px;
   width: min(320px, calc(100% - 48px));
   padding: 18px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 24px;
-  background: rgba(7, 10, 18, 0.74);
+  background: rgb(7, 10, 18);
   backdrop-filter: blur(16px);
   box-shadow: 0 28px 60px rgba(2, 5, 14, 0.28);
   color: #f3f6ff;
@@ -1877,9 +1872,8 @@
   bottom: 24px;
   width: 196px;
   padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 28px;
-  background: rgba(7, 10, 18, 0.74);
+  background: rgba(7, 10, 18, 0);
   backdrop-filter: blur(16px);
   box-shadow: 0 28px 70px rgba(2, 5, 14, 0.34);
   transition:
@@ -2728,7 +2722,6 @@ body::after {
   display: grid;
   gap: 4px;
   padding: 9px 10px;
-  border: 1px solid rgba(240, 242, 245, 0.08);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.045);
 }
@@ -2893,7 +2886,6 @@ body::after {
 }
 
 .chip-highlight {
-  border-color: rgba(209, 255, 38, 0.42);
   background: rgba(209, 255, 38, 0.1);
   color: #d1ff26;
 }
@@ -3144,7 +3136,6 @@ body::after {
 .round-briefing-meta-item {
   position: relative;
   border-radius: var(--radius-ui);
-  border: 1px solid rgba(240, 242, 245, 0.1);
   background: rgba(16, 20, 22, 0.78);
   backdrop-filter: blur(14px);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
@@ -3204,7 +3195,6 @@ body::after {
 
 .scene-window {
   border-radius: var(--radius-ui);
-  border: 1px solid rgba(240, 242, 245, 0.12);
   background:
     linear-gradient(180deg, rgba(7, 11, 14, 0.28), rgba(7, 11, 14, 0.66)),
     linear-gradient(180deg, #4d6b92 0%, #1e2a36 52%, #0f1316 100%);
@@ -3425,7 +3415,7 @@ body::after {
 
 .round-minimap-dock.is-expanded {
   width: min(520px, calc(100vw - 64px));
-  background: rgba(11, 15, 17, 0.88);
+  background: rgba(11, 15, 17, 0.071);
 }
 
 .round-minimap-toggle {
@@ -4117,7 +4107,6 @@ body::after {
 
 .debrief-score-block {
   padding: 20px;
-  border: 1px solid rgba(209, 255, 38, 0.18);
   background:
     linear-gradient(180deg, rgba(209, 255, 38, 0.08), transparent),
     rgba(255, 255, 255, 0.03);
@@ -4369,7 +4358,6 @@ body::after {
 }
 
 .card-tactical-highlight {
-  border-color: rgba(209, 255, 38, 0.24);
   background:
     linear-gradient(180deg, rgba(209, 255, 38, 0.06), transparent),
     rgba(16, 20, 22, 0.78);
@@ -4487,14 +4475,13 @@ body::after {
   overflow: hidden;
   border: 1px solid rgba(240, 242, 245, 0.16);
   border-radius: var(--radius-ui);
-  background: rgba(11, 16, 20, 0.82);
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
 }
 
-.guess-map-leaflet .leaflet-control-zoom a {
+.guess-map-leaflet {
   border: 0;
   background: rgba(11, 16, 20, 0.86);
-  color: #d1ff26;
+  color: #ffffff;
   font-weight: 900;
 }
 
@@ -4505,12 +4492,13 @@ body::after {
 
 .guess-map-leaflet .leaflet-control-attribution {
   background: rgba(11, 16, 20, 0.74);
-  color: rgba(244, 246, 247, 0.72);
+  color: #000000;
   font-size: 0.62rem;
 }
 
 .guess-map-leaflet .leaflet-control-attribution a {
-  color: #d1ff26;
+  color: rgb(67, 85, 4);
+  text-decoration-line: underline;
 }
 
 .guess-map-leaflet .leaflet-tooltip {
@@ -4760,7 +4748,6 @@ body::after {
   display: grid;
   gap: 12px;
   padding: 16px;
-  border: 1px solid rgba(209, 255, 38, 0.16);
   background:
     linear-gradient(135deg, rgba(209, 255, 38, 0.08), transparent 54%),
     rgba(255, 255, 255, 0.03);
@@ -5282,6 +5269,19 @@ body::after {
 
   .round-minimap-dock.is-expanded {
     width: auto;
+  }
+
+  .round-canvas-scene .scene-panorama-controls,
+  .multiplayer-immersive-canvas .scene-panorama-controls {
+    left: 10px;
+    bottom: 5.9rem;
+  }
+
+  .round-canvas-scene .scene-source-pill,
+  .multiplayer-immersive-canvas .scene-source-pill {
+    right: 10px;
+    bottom: 5.9rem;
+    max-width: min(13rem, 48vw);
   }
 
   .round-corner-hud {

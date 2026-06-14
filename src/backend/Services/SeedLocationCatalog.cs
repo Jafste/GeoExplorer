@@ -35,8 +35,12 @@ public sealed class SeedLocationCatalog
 
     private IReadOnlyList<SeedLocation> LoadLocations()
     {
-        var fileLocations = LoadFromJson(_environment);
-        return LoadFromPostgresIfEnabled(fileLocations, _configuration, _logger, _store).ToList();
+        if (_configuration.GetValue<bool>("GeoExplorer:UsePostgresCatalog"))
+        {
+            return LoadFromPostgresOrSeed(_environment, _logger, _store).ToList();
+        }
+
+        return LoadFromJson(_environment).ToList();
     }
 
     private static IReadOnlyList<SeedLocation> LoadFromJson(IWebHostEnvironment environment)
@@ -63,32 +67,36 @@ public sealed class SeedLocationCatalog
                throw new InvalidOperationException("Não foi possível carregar o dataset inicial.");
     }
 
-    private static IReadOnlyList<SeedLocation> LoadFromPostgresIfEnabled(
-        IReadOnlyList<SeedLocation> fileLocations,
-        IConfiguration configuration,
+    private static IReadOnlyList<SeedLocation> LoadFromPostgresOrSeed(
+        IWebHostEnvironment environment,
         ILogger logger,
         LocationCatalogStore? store)
     {
-        if (!configuration.GetValue<bool>("GeoExplorer:UsePostgresCatalog"))
-        {
-            return fileLocations;
-        }
-
         if (store is null)
         {
             logger.LogWarning("PostgreSQL catalog enabled, but no LocationCatalogStore was configured.");
-            return fileLocations;
+            return LoadFromJson(environment);
         }
+
+        var databaseLocations = TryLoadAllFromPostgres(logger, store);
+
+        if (databaseLocations.Count > 0)
+        {
+            logger.LogInformation("Loaded {LocationCount} locations from PostgreSQL.", databaseLocations.Count);
+            return databaseLocations;
+        }
+
+        var fileLocations = LoadFromJson(environment);
 
         try
         {
-            var databaseLocations = store
+            var importedLocations = store
                 .ImportAndLoadAsync(fileLocations)
                 .GetAwaiter()
                 .GetResult();
 
-            logger.LogInformation("Loaded {LocationCount} locations from PostgreSQL.", databaseLocations.Count);
-            return databaseLocations;
+            logger.LogInformation("Seeded and loaded {LocationCount} locations from PostgreSQL.", importedLocations.Count);
+            return importedLocations;
         }
         catch (Exception exception) when (exception is not InvalidOperationException)
         {
@@ -96,6 +104,26 @@ public sealed class SeedLocationCatalog
                 exception,
                 "Could not load locations from PostgreSQL. Falling back to locations.json.");
             return fileLocations;
+        }
+    }
+
+    private static IReadOnlyList<SeedLocation> TryLoadAllFromPostgres(
+        ILogger logger,
+        LocationCatalogStore store)
+    {
+        try
+        {
+            return store
+                .LoadAllAsync()
+                .GetAwaiter()
+                .GetResult();
+        }
+        catch (Exception exception) when (exception is not InvalidOperationException)
+        {
+            logger.LogWarning(
+                exception,
+                "Could not load locations from PostgreSQL before reading locations.json.");
+            return [];
         }
     }
 }

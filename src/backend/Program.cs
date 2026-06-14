@@ -4,8 +4,14 @@ using GeoExplorer.Backend.Hubs;
 using GeoExplorer.Backend.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 builder.Services.AddProblemDetails();
 builder.Services.AddMemoryCache();
@@ -58,6 +64,10 @@ var app = builder.Build();
 await DatabaseMigrationRunner.ApplyAsync(app.Services, app.Configuration);
 
 app.UseExceptionHandler();
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+});
 app.UseCors();
 
 var api = app.MapGroup("/api");

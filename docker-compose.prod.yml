@@ -33,8 +33,11 @@ services:
       GeoExplorer__AllowedOrigins: ${GEOEXPLORER_PUBLIC_ORIGIN:-https://geoexplorer.firmwork.pt}
       ConnectionStrings__GeoExplorerDb: Host=geoexplorer-postgres;Port=5432;Database=${POSTGRES_DB:-geoexplorer};Username=${POSTGRES_USER:-geoexplorer};Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the VPS environment}
       MAPILLARY_ACCESS_TOKEN: ${MAPILLARY_ACCESS_TOKEN:-}
+      Serilog__WriteTo__1__Args__path: /workspace/logs/geoexplorer-.log
     expose:
       - "8080"
+    volumes:
+      - ./logs/backend:/workspace/logs
     networks:
       - default
       - caddy

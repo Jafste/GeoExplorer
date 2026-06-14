@@ -219,13 +219,25 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
         ) : null}
 
         {waitingToRetry ? null : isInteractivePanorama ? (
-          <InteractivePanoramaImage
-            imageUrl={activeImageUrl}
-            loaded={photoLoaded}
-            mode={interactivePanoramaMode}
-            onError={handlePhotoError}
-            onLoad={markPhotoLoaded}
-          />
+          <>
+            <img
+              ref={photoElementRef}
+              alt=""
+              aria-hidden="true"
+              className="scene-panorama-preload"
+              decoding="async"
+              draggable={false}
+              loading="eager"
+              onError={handlePhotoError}
+              onLoad={(event) => markPhotoLoaded(event.currentTarget)}
+              src={activeImageUrl}
+            />
+            <InteractivePanoramaImage
+              imageUrl={activeImageUrl}
+              loaded={photoLoaded}
+              mode={interactivePanoramaMode}
+            />
+          </>
         ) : (
           <>
             {shouldContainPhoto ? (
@@ -272,8 +284,6 @@ interface InteractivePanoramaImageProps {
   imageUrl: string;
   loaded: boolean;
   mode: InteractivePanoramaMode;
-  onError: () => void;
-  onLoad: (image: HTMLImageElement) => void;
 }
 
 interface PanoramaViewState {
@@ -290,9 +300,8 @@ function getInitialPanoramaView(mode: InteractivePanoramaMode): PanoramaViewStat
   };
 }
 
-function InteractivePanoramaImage({ imageUrl, loaded, mode, onError, onLoad }: InteractivePanoramaImageProps) {
+function InteractivePanoramaImage({ imageUrl, loaded, mode }: InteractivePanoramaImageProps) {
   const [view, setView] = useState<PanoramaViewState>(() => getInitialPanoramaView(mode));
-  const imageRef = useRef<HTMLImageElement | null>(null);
   const dragState = useRef<{
     pointerId: number;
     startClientX: number;
@@ -304,14 +313,6 @@ function InteractivePanoramaImage({ imageUrl, loaded, mode, onError, onLoad }: I
     setView(getInitialPanoramaView(mode));
     dragState.current = null;
   }, [imageUrl, mode]);
-
-  useEffect(() => {
-    const image = imageRef.current;
-
-    if (image?.complete && image.naturalWidth > 0) {
-      onLoad(image);
-    }
-  }, [imageUrl]);
 
   function updateZoom(delta: number) {
     setView((current) => ({
@@ -369,18 +370,6 @@ function InteractivePanoramaImage({ imageUrl, loaded, mode, onError, onLoad }: I
 
   return (
     <>
-      <img
-        ref={imageRef}
-        alt=""
-        aria-hidden="true"
-        className="scene-panorama-preload"
-        decoding="async"
-        draggable={false}
-        loading="eager"
-        onError={onError}
-        onLoad={(event) => onLoad(event.currentTarget)}
-        src={imageUrl}
-      />
       <div
         aria-hidden="true"
         className={`scene-panorama-viewport${loaded ? " is-loaded" : " is-loading"}`}

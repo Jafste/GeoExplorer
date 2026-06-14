@@ -11,6 +11,7 @@ Esta pasta contém os documentos de arquitetura do projeto.
 | `data-model.md` | Modelo ER/PostgreSQL baseado nas entidades e migrations do Entity Framework. |
 | `game-flows.md` | Fluxo solo e fluxo multiplayer com API, SignalR e base de dados. |
 | `visual-sources.md` | Fluxo de fontes visuais: Wikimedia, Panoramax, Mapillary e dataset local. |
+| `../privacy.md` | Nota de privacidade, armazenamento local, logs técnicos e posição sobre cookies/analytics. |
 | `adr/` | Decisões de arquitetura registadas ao longo do projeto. |
 
 ## Estado atual

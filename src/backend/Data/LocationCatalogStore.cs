@@ -74,6 +74,20 @@ public sealed class LocationCatalogStore
             .ToList();
     }
 
+    public async Task<IReadOnlyList<SeedLocation>> LoadAllAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        var entities = await db.Locations
+            .AsNoTracking()
+            .OrderBy(location => location.Id)
+            .ToListAsync(cancellationToken);
+        _metrics.RecordRead("catalog_load_all");
+
+        return entities
+            .Select(ToSeedLocation)
+            .ToList();
+    }
+
     public IReadOnlyList<SeedLocation> LoadRandomCandidates(string region, int count)
     {
         if (count < 1)

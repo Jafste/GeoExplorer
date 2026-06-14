@@ -43,29 +43,60 @@ public sealed class RoundLocationSelectorTests
         Assert.AreEqual("db-location-a", location.Id);
     }
 
+    [TestMethod]
+    public async Task GetAll_WithPostgresCatalog_UsesDatabaseWithoutSeedJson()
+    {
+        var factory = CreateFactory();
+        var store = new LocationCatalogStore(factory, new DatabaseUsageMetrics());
+        await store.ImportAndLoadAsync(new[]
+        {
+            CreateLocation("db-location-a"),
+            CreateLocation("db-location-b", latitude: 38.7169, longitude: -9.1399),
+        });
+        var catalog = CreatePostgresCatalog(store);
+
+        var locations = catalog.GetAll();
+
+        Assert.HasCount(2, locations);
+        Assert.IsTrue(locations.All(location => location.Id.StartsWith("db-location-", StringComparison.Ordinal)));
+    }
+
     private static RoundLocationSelector CreatePostgresSelector(LocationCatalogStore store)
     {
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["GeoExplorer:UsePostgresCatalog"] = "true",
-            })
-            .Build();
-        var environment = new TestWebHostEnvironment
-        {
-            ContentRootPath = Path.Combine(Path.GetTempPath(), $"geoexplorer-no-seed-{Guid.NewGuid()}", "backend"),
-        };
-        var catalog = new SeedLocationCatalog(
-            environment,
-            configuration,
-            NullLogger<SeedLocationCatalog>.Instance,
-            store);
+        var configuration = CreatePostgresConfiguration();
+        var catalog = CreatePostgresCatalog(store, configuration);
 
         return new RoundLocationSelector(
             catalog,
             configuration,
             NullLogger<RoundLocationSelector>.Instance,
             store);
+    }
+
+    private static SeedLocationCatalog CreatePostgresCatalog(
+        LocationCatalogStore store,
+        IConfiguration? configuration = null)
+    {
+        var environment = new TestWebHostEnvironment
+        {
+            ContentRootPath = Path.Combine(Path.GetTempPath(), $"geoexplorer-no-seed-{Guid.NewGuid()}", "backend"),
+        };
+
+        return new SeedLocationCatalog(
+            environment,
+            configuration ?? CreatePostgresConfiguration(),
+            NullLogger<SeedLocationCatalog>.Instance,
+            store);
+    }
+
+    private static IConfiguration CreatePostgresConfiguration()
+    {
+        return new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["GeoExplorer:UsePostgresCatalog"] = "true",
+            })
+            .Build();
     }
 
     private static TestDbContextFactory CreateFactory()

@@ -74,7 +74,7 @@ export function SessionResultPage({
         </div>
 
         <div className="summary-hero session-report-summary">
-          <div className="metric-card metric-card-large">
+          <div className="metric-card">
             <span>Pontuação total</span>
             <strong>{result.totalScore.toLocaleString("pt-PT")} pts</strong>
           </div>
