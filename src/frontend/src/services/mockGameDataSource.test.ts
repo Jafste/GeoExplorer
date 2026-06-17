@@ -108,6 +108,28 @@ describe("createMockGameDataSource", () => {
     expect(results.totalScore).toBe(firstResolution.result.score + secondResolution.result.score);
   });
 
+  it("keeps Atlantic island guesses inside the supported mock map bounds", async () => {
+    const dataSource = createMockGameDataSource({ randomIndex: () => 0 });
+    const session = await dataSource.createSession({
+      region: "europe",
+      roundCount: 1,
+      timed: false,
+      roundTimeSeconds: null,
+    });
+
+    const resolution = await dataSource.submitGuess(session.sessionId, session.currentRound.id, {
+      latitude: 28.2916,
+      longitude: -16.6291,
+      label: "Tenerife",
+    });
+
+    expect(resolution.result.guess).toEqual({
+      latitude: 28.2916,
+      longitude: -16.6291,
+      label: "Tenerife",
+    });
+  });
+
   it("uses the same basic session validation as the API", async () => {
     const dataSource = createMockGameDataSource();
 

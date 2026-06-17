@@ -1,9 +1,4 @@
 import * as React from "react";
-import { RoundedButton, type RoundedButtonProps } from "./roundedButton";
-
-export type ButtonProps = RoundedButtonProps;
-
-export const Button = RoundedButton;
 
 export type ButtonBaseProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 

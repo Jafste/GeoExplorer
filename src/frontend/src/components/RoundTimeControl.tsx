@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NumberField } from "./ui/TextField";
-import { OptionGroup } from "./ui/OptionGroup";
+import { SegmentedControl } from "./ui/SegmentedControl";
 
 export const DEFAULT_ROUND_TIME_SECONDS = 60;
 export const MIN_ROUND_TIME_SECONDS = 1;
@@ -46,7 +46,7 @@ export function RoundTimeControl({ value, onChange }: RoundTimeControlProps) {
 
   return (
     <div className="round-time-control">
-      <OptionGroup
+      <SegmentedControl
         label="Tempo por ronda"
         options={QUICK_ROUND_TIME_SECONDS.map((seconds) => ({
           label: `${seconds}s`,

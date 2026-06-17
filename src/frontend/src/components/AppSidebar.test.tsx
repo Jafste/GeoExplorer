@@ -238,6 +238,27 @@ describe("AppSidebar", () => {
     expect(onHome).not.toHaveBeenCalled();
   });
 
+  it("hides the report button away from result screens", () => {
+    const sidebar = AppSidebar({
+      config: {
+        region: "europe",
+        roundCount: 5,
+        timed: true,
+        roundTimeSeconds: 60,
+      },
+      phase: "setup",
+      onHome: vi.fn(),
+      onOpenMultiplayer: vi.fn(),
+      onStart: vi.fn(),
+      analysisEnabled: true,
+      onOpenAnalysis: vi.fn(),
+      onQuickStart: vi.fn(),
+      roundResolution: createRoundResolutionForTest(),
+    });
+
+    expect(findButtonByLabel(sidebar, "Relatório da ronda")).toBeNull();
+  });
+
   it("labels the session analysis action as the final report", () => {
     const sidebar = AppSidebar({
       config: {

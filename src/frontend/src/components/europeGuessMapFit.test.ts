@@ -7,11 +7,11 @@ const sampledDistancesKm = [
 ];
 
 describe("EuropeGuessMap comparison fit", () => {
-  it("keeps fit padding tight or tighter as comparison distance grows", () => {
+  it("keeps enough fit padding for markers at every sampled distance", () => {
     const paddings = sampledDistancesKm.map((distance) => getComparisonFitPadding(distance)[0]);
 
     expect(sampledDistancesKm).toHaveLength(32);
-    expect(paddings).toEqual([...paddings].sort((a, b) => b - a));
+    expect(Math.min(...paddings)).toBeGreaterThanOrEqual(32);
   });
 
   it("keeps the zoom cap tight or tighter as comparison distance grows", () => {
@@ -23,15 +23,16 @@ describe("EuropeGuessMap comparison fit", () => {
   });
 
   it("uses aggressive fit bands across close, medium and long distances", () => {
-    expect(getComparisonFitPadding(null)).toEqual([40, 40]);
-    expect(getComparisonFitPadding(80)).toEqual([44, 44]);
-    expect(getComparisonFitPadding(81)).toEqual([30, 30]);
-    expect(getComparisonFitPadding(300)).toEqual([30, 30]);
-    expect(getComparisonFitPadding(301)).toEqual([22, 22]);
-    expect(getComparisonFitPadding(700)).toEqual([22, 22]);
-    expect(getComparisonFitPadding(701)).toEqual([8, 8]);
-    expect(getComparisonFitPadding(1500)).toEqual([8, 8]);
-    expect(getComparisonFitPadding(1501)).toEqual([0, 0]);
+    expect(getComparisonFitPadding(null)).toEqual([48, 48]);
+    expect(getComparisonFitPadding(80)).toEqual([56, 56]);
+    expect(getComparisonFitPadding(81)).toEqual([44, 44]);
+    expect(getComparisonFitPadding(300)).toEqual([44, 44]);
+    expect(getComparisonFitPadding(301)).toEqual([36, 36]);
+    expect(getComparisonFitPadding(700)).toEqual([36, 36]);
+    expect(getComparisonFitPadding(701)).toEqual([32, 32]);
+    expect(getComparisonFitPadding(1500)).toEqual([32, 32]);
+    expect(getComparisonFitPadding(1501)).toEqual([56, 56]);
+    expect(getComparisonFitPadding(3087.5)).toEqual([56, 56]);
   });
 
   it("places comparison labels toward the inside of the two-marker span", () => {

@@ -1,4 +1,5 @@
 import { mockLocations } from "../data/mockLocations";
+import { EUROPE_PLAYABLE_BOUNDS } from "../app/guessMapBounds";
 import type {
   ChallengeRound,
   CreateSessionResponse,
@@ -36,13 +37,6 @@ let sessionCounter = 0;
 const MINIMUM_ROUND_LOCATION_DISTANCE_KM = 1;
 const MIN_ROUND_TIME_SECONDS = 1;
 const MAX_ROUND_TIME_SECONDS = 3600;
-
-const EUROPE_BOUNDS = {
-  minLat: 34,
-  maxLat: 72,
-  minLng: -25,
-  maxLng: 45,
-};
 
 function randomIndex(maxExclusive: number): number {
   const cryptoObject = globalThis.crypto;
@@ -175,8 +169,14 @@ function scoreFromDistance(distanceKm: number): number {
 function clampGuess(guess: GuessCoordinates): GuessCoordinates {
   return {
     ...guess,
-    latitude: Math.min(EUROPE_BOUNDS.maxLat, Math.max(EUROPE_BOUNDS.minLat, guess.latitude)),
-    longitude: Math.min(EUROPE_BOUNDS.maxLng, Math.max(EUROPE_BOUNDS.minLng, guess.longitude)),
+    latitude: Math.min(
+      EUROPE_PLAYABLE_BOUNDS.maxLatitude,
+      Math.max(EUROPE_PLAYABLE_BOUNDS.minLatitude, guess.latitude)
+    ),
+    longitude: Math.min(
+      EUROPE_PLAYABLE_BOUNDS.maxLongitude,
+      Math.max(EUROPE_PLAYABLE_BOUNDS.minLongitude, guess.longitude)
+    ),
   };
 }
 

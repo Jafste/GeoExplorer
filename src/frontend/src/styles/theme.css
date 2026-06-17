@@ -1,0 +1,19 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+
+  --color-background: #090b12;
+  --color-surface: #111522;
+  --color-surface-strong: #181e30;
+  --color-content: #f5f7ff;
+  --color-muted: #a7afcb;
+  --color-border: rgba(184, 194, 227, 0.16);
+  --color-border-strong: rgba(237, 240, 255, 0.28);
+  --color-primary: #9ae85d;
+  --color-primary-strong: #77cb36;
+  --color-secondary: #ffcf33;
+  --color-accent: #7950e5;
+  --color-danger: #ff5f74;
+}

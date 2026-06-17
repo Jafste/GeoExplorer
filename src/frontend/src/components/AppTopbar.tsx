@@ -1,6 +1,5 @@
 import { House, Menu, Play, ScrollText } from "lucide-react";
 import type { SurfacePhase } from "../app/navigation";
-import logoMark from "../assets/branding/logo_geoExplorer.png";
 import { ButtonBase, IconButton } from "./ui/Button";
 import { RoundedButton } from "./ui/roundedButton";
 
@@ -45,7 +44,7 @@ export function AppTopbar({
         className={`brand brand-button${isRound ? " brand-button--play" : ""}`}
         onClick={onHome}
       >
-        <img alt="" aria-hidden="true" className="brand-mark" src={logoMark} />
+        <img alt="" aria-hidden="true" className="brand-mark" src="/favicon.png" />
         <span className="brand-copy">
           <span className="brand-title">GeoExplorer</span>
         </span>

@@ -1,5 +1,4 @@
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
-import { NumberDictionary, uniqueNamesGenerator } from "unique-names-generator";
 import type {
   ChallengeRound,
   GuessCoordinates,
@@ -12,8 +11,6 @@ import type {
 } from "../types/game";
 
 const PLAYER_ID_STORAGE_KEY = "geoexplorer.multiplayer.playerId";
-const RANDOM_DISPLAY_NAME_MAX_LENGTH = 24;
-const RANDOM_DISPLAY_NAME_NUMBERS = NumberDictionary.generate({ min: 100, max: 999 });
 const RANDOM_DISPLAY_NAME_MOODS = [
   "Arcade",
   "Bright",
@@ -29,7 +26,7 @@ const RANDOM_DISPLAY_NAME_MOODS = [
   "Solar",
   "Turbo",
   "Witty",
-];
+] as const;
 const RANDOM_DISPLAY_NAME_HANDLES = [
   "Atlas",
   "Beacon",
@@ -51,30 +48,27 @@ const RANDOM_DISPLAY_NAME_HANDLES = [
   "Vertex",
   "Waypoint",
   "Zoom",
-];
+] as const;
 
-export function createRandomMultiplayerDisplayName(): string {
-  for (let attempt = 0; attempt < 10; attempt++) {
-    const displayName = uniqueNamesGenerator({
-      dictionaries: [
-        RANDOM_DISPLAY_NAME_MOODS,
-        RANDOM_DISPLAY_NAME_HANDLES,
-        RANDOM_DISPLAY_NAME_NUMBERS,
-      ],
-      separator: " ",
-      style: "capital",
-    });
+function randomIndex(maxExclusive: number) {
+  const cryptoObject = globalThis.crypto;
 
-    if (displayName.length <= RANDOM_DISPLAY_NAME_MAX_LENGTH) {
-      return displayName;
-    }
+  if (cryptoObject?.getRandomValues) {
+    const values = new Uint32Array(1);
+    cryptoObject.getRandomValues(values);
+    return values[0] % maxExclusive;
   }
 
-  return uniqueNamesGenerator({
-    dictionaries: [["Geo"], RANDOM_DISPLAY_NAME_HANDLES, RANDOM_DISPLAY_NAME_NUMBERS],
-    separator: " ",
-    style: "capital",
-  });
+  return Math.floor(Math.random() * maxExclusive);
+}
+
+function pickRandom<TValue>(values: readonly TValue[]) {
+  return values[randomIndex(values.length)];
+}
+
+export function createRandomMultiplayerDisplayName(): string {
+  const number = 100 + randomIndex(900);
+  return `${pickRandom(RANDOM_DISPLAY_NAME_MOODS)} ${pickRandom(RANDOM_DISPLAY_NAME_HANDLES)} ${number}`;
 }
 
 export function getOrCreateMultiplayerPlayerId(): string {

@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useEffect, useRef, useState } from "react";
+import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import {
   buildRestorableViewUrl,
   getAnalysisPhase,
@@ -7,7 +7,20 @@ import {
   type SurfacePhase,
 } from "./app/navigation";
 import { appConfig, defaultSessionConfig } from "./app/config";
+import {
+  getOperationLoadingTitle,
+  getPhaseLoadingTitle,
+  MultiplayerPage,
+  prefetchPhaseModules,
+  RoundPage,
+  RoundResultPage,
+  SessionResultPage,
+  SetupPage,
+  StartPage,
+  TutorialOverlay,
+} from "./app/pageModules";
 import { createQuickSessionConfig } from "./app/quickSessionConfig";
+import { preloadFirstAvailableRoundImage } from "./app/roundImagePreload";
 import type { MultiplayerSidebarContext } from "./app/sidebarContext";
 import { AppSidebar } from "./components/AppSidebar";
 import { AppTopbar } from "./components/AppTopbar";
@@ -24,163 +37,6 @@ import type {
 } from "./types/game";
 
 const TUTORIAL_STORAGE_KEY = "geoexplorer.tutorial.completed";
-const loadStartPage = () =>
-  import("./pages/start/StartPage").then((module) => ({
-    default: module.StartPage,
-  }));
-const loadSetupPage = () =>
-  import("./pages/setup/SetupPage").then((module) => ({
-    default: module.SetupPage,
-  }));
-const loadRoundPage = () =>
-  import("./pages/round/RoundPage").then((module) => ({
-    default: module.RoundPage,
-  }));
-const loadRoundResultPage = () =>
-  import("./pages/round-result/RoundResultPage").then((module) => ({
-    default: module.RoundResultPage,
-  }));
-const loadSessionResultPage = () =>
-  import("./pages/session-result/SessionResultPage").then((module) => ({
-    default: module.SessionResultPage,
-  }));
-const loadMultiplayerPage = () =>
-  import("./pages/multiplayer/MultiplayerPage").then((module) => ({
-    default: module.MultiplayerPage,
-  }));
-const loadTutorialOverlay = () =>
-  import("./components/TutorialOverlay").then((module) => ({
-    default: module.TutorialOverlay,
-  }));
-
-const StartPage = lazy(loadStartPage);
-const SetupPage = lazy(loadSetupPage);
-const RoundPage = lazy(loadRoundPage);
-const RoundResultPage = lazy(loadRoundResultPage);
-const SessionResultPage = lazy(loadSessionResultPage);
-const MultiplayerPage = lazy(loadMultiplayerPage);
-const TutorialOverlay = lazy(loadTutorialOverlay);
-
-function prefetchPhaseModules(phase: SurfacePhase) {
-  switch (phase) {
-    case "landing":
-      void loadSetupPage();
-      void loadMultiplayerPage();
-      void loadTutorialOverlay();
-      break;
-    case "setup":
-      void loadRoundPage();
-      void loadTutorialOverlay();
-      break;
-    case "round":
-      void loadRoundResultPage();
-      break;
-    case "round-result":
-      void loadRoundPage();
-      void loadSessionResultPage();
-      break;
-    case "session-result":
-      void loadSetupPage();
-      void loadRoundPage();
-      break;
-    case "multiplayer":
-      void loadTutorialOverlay();
-      break;
-  }
-}
-
-function getPhaseLoadingTitle(phase: SurfacePhase) {
-  switch (phase) {
-    case "landing":
-      return "A preparar início";
-    case "setup":
-      return "A carregar configuração";
-    case "round":
-      return "A preparar ronda";
-    case "round-result":
-      return "A carregar relatório da ronda";
-    case "session-result":
-      return "A consolidar relatório final";
-    case "multiplayer":
-      return "A preparar sala multiplayer";
-  }
-}
-
-function getOperationLoadingTitle(
-  phase: SurfacePhase,
-  roundResolution: RoundResolutionResponse | null
-) {
-  switch (phase) {
-    case "setup":
-      return "A iniciar missão";
-    case "round":
-      return "A confirmar posição";
-    case "round-result":
-      return roundResolution?.progress.completed
-        ? "A consolidar relatório final"
-        : "A preparar próxima ronda";
-    case "session-result":
-      return "A preparar nova missão";
-    default:
-      return "A sincronizar dados";
-  }
-}
-
-function getRoundImageUrls(round: ChallengeRound) {
-  const urls = new Set<string>();
-
-  const selectedImageUrl = round.challenge.media?.imageUrl?.trim();
-  if (selectedImageUrl) {
-    urls.add(selectedImageUrl);
-  }
-
-  for (const source of round.challenge.visualSources ?? []) {
-    const imageUrl = source.imageUrl?.trim();
-    if (imageUrl) {
-      urls.add(imageUrl);
-    }
-  }
-
-  return [...urls];
-}
-
-function preloadImage(imageUrl: string, timeoutMs: number) {
-  return new Promise<boolean>((resolve) => {
-    const image = new Image();
-    const timeoutId = window.setTimeout(() => {
-      cleanup();
-      resolve(false);
-    }, timeoutMs);
-
-    function cleanup() {
-      window.clearTimeout(timeoutId);
-      image.onload = null;
-      image.onerror = null;
-    }
-
-    image.onload = () => {
-      cleanup();
-      resolve(true);
-    };
-    image.onerror = () => {
-      cleanup();
-      resolve(false);
-    };
-    image.decoding = "async";
-    image.src = imageUrl;
-  });
-}
-
-async function preloadFirstAvailableRoundImage(round: ChallengeRound) {
-  const imageUrls = getRoundImageUrls(round);
-
-  for (const imageUrl of imageUrls) {
-    if (await preloadImage(imageUrl, 9000)) {
-      return;
-    }
-  }
-}
-
 export default function App() {
   const [initialRoute] = useState(() => getInitialRouteState(window.location.search));
   const [dataSource, setDataSource] = useState<GameDataSource | null>(null);
@@ -350,7 +206,7 @@ export default function App() {
     try {
       const activeDataSource = await prepareDataSource();
       const created = await activeDataSource.createSession(nextConfig);
-      await preloadFirstAvailableRoundImage(created.currentRound);
+      void preloadFirstAvailableRoundImage(created.currentRound);
       setConfig(nextConfig);
       setSessionId(created.sessionId);
       setCurrentRound(created.currentRound);
@@ -405,7 +261,7 @@ export default function App() {
         });
       } else {
         const nextRound = await activeDataSource.getCurrentRound(sessionId);
-        await preloadFirstAvailableRoundImage(nextRound);
+        void preloadFirstAvailableRoundImage(nextRound);
         setCurrentRound(nextRound);
         startTransition(() => {
           setPhase("round");

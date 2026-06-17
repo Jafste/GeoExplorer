@@ -42,28 +42,28 @@ export function getComparisonMaxZoom(distanceKm: number | null) {
 
 export function getComparisonFitPadding(distanceKm: number | null): [number, number] {
   if (distanceKm === null) {
-    return [40, 40];
+    return [48, 48];
   }
 
   const distance = Math.max(1, distanceKm);
 
   if (distance <= 80) {
-    return [44, 44];
+    return [56, 56];
   }
 
   if (distance <= 300) {
-    return [30, 30];
+    return [44, 44];
   }
 
   if (distance <= 700) {
-    return [22, 22];
+    return [36, 36];
   }
 
   if (distance <= 1500) {
-    return [8, 8];
+    return [32, 32];
   }
 
-  return [0, 0];
+  return [56, 56];
 }
 
 export function getComparisonLabelSides(

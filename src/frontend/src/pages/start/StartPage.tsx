@@ -1,7 +1,6 @@
 import { RoundedButton } from "../../components/ui/roundedButton";
 import { Card } from "../../components/layout/card/card";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
-import logoMark from "../../assets/branding/logo_geoExplorer.png";
 
 interface StartPageProps {
   onMultiplayer: () => void;
@@ -20,7 +19,7 @@ export function StartPage({ onMultiplayer, onStart }: StartPageProps) {
       <Card as="article" variant="homeHero">
         <div className="home-copy-column">
           <div className="home-brand-lockup" aria-label="GeoExplorer">
-            <img alt="" aria-hidden="true" src={logoMark} />
+            <img alt="" aria-hidden="true" src="/favicon.png" />
             <span>GeoExplorer</span>
           </div>
 

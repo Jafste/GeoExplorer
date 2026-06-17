@@ -2,7 +2,7 @@ import { useState } from "react";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { RoundTimeControl } from "../../components/RoundTimeControl";
-import { OptionGroup } from "../../components/ui/OptionGroup";
+import { SegmentedControl } from "../../components/ui/SegmentedControl";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig } from "../../types/game";
 
@@ -37,7 +37,7 @@ export function SetupPage({
 
       <div className="setup-stage">
         <Card as="article" className="setup-config-card" variant="setupPanelStack">
-          <OptionGroup
+          <SegmentedControl
             label="Número de rondas"
             options={[
               { label: "3 rondas", value: 3 },
@@ -48,7 +48,7 @@ export function SetupPage({
             onChange={(roundCount) => setConfig((current) => ({ ...current, roundCount }))}
           />
 
-          <OptionGroup
+          <SegmentedControl
             label="Modo de tempo"
             options={[
               { label: "Livre", value: false },

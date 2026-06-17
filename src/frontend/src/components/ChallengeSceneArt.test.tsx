@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   getInteractivePanoramaMode,
   getScenePhotoCandidates,
-  isInteractivePanoramaMedia,
   isPanoramicImageDimensions,
   shouldContainScenePhoto,
 } from "./ChallengeSceneArt";
@@ -54,15 +53,15 @@ describe("getScenePhotoCandidates", () => {
   });
 });
 
-describe("isInteractivePanoramaMedia", () => {
+describe("getInteractivePanoramaMode", () => {
   it("enables the interactive viewer for Panoramax street-level sources", () => {
     expect(
-      isInteractivePanoramaMedia({
+      getInteractivePanoramaMode({
         sourceProvider: "Panoramax",
         imageUrl: "https://panoramax.example.test/sd.jpg",
         streetViewProvider: "Panoramax",
       }),
-    ).toBe(true);
+    ).not.toBeNull();
     expect(
       getInteractivePanoramaMode({
         sourceProvider: "Panoramax",
@@ -74,18 +73,18 @@ describe("isInteractivePanoramaMedia", () => {
 
   it("keeps regular photo providers in the static image path before dimensions are known", () => {
     expect(
-      isInteractivePanoramaMedia({
+      getInteractivePanoramaMode({
         sourceProvider: "Wikimedia Commons",
         imageUrl: "https://example.test/photo.jpg",
       }),
-    ).toBe(false);
+    ).toBeNull();
     expect(
-      isInteractivePanoramaMedia({
+      getInteractivePanoramaMode({
         sourceProvider: "Mapillary",
         imageUrl: "/api/media/mapillary/123",
         streetViewProvider: "Mapillary",
       }),
-    ).toBe(false);
+    ).toBeNull();
   });
 
   it("enables a 360 viewer for panoramic Mapillary images after loading dimensions", () => {

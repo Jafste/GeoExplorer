@@ -2,7 +2,6 @@ import { MoveRight } from "lucide-react";
 import { useDeferredValue } from "react";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
-import { Badge } from "../../components/ui/Badge";
 import { InfoGrid } from "../../components/ui/InfoCard";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig, SessionResult } from "../../types/game";
@@ -62,9 +61,9 @@ export function SessionResultPage({
           <div>
             <div className="session-outcome-kicker">
               <div className="eyebrow">relatório final</div>
-              <Badge tone={missionOutcome.success ? "highlight" : "soft"}>
+              <span className={`chip ${missionOutcome.success ? "chip-highlight" : "chip-soft"}`}>
                 {missionOutcome.status}
-              </Badge>
+              </span>
             </div>
             <h2 className="section-title">{missionOutcome.title}</h2>
             <p className="section-support">
@@ -170,7 +169,7 @@ export function SessionResultPage({
       <Card as="article" variant="setupPanelStack" className="session-log-card">
         <div className="session-log-header">
           <span className="muted-eyebrow">Alvos analisados</span>
-          <Badge>{result.totalRounds} rondas</Badge>
+          <span className="chip chip-soft">{result.totalRounds} rondas</span>
         </div>
 
         <div className="summary-table">

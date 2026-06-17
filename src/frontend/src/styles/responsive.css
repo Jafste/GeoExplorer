@@ -1,0 +1,582 @@
+@media (max-width: 1180px) {
+  .session-report-top {
+    grid-template-columns: 1fr;
+  }
+
+  .debrief-layout,
+  .session-report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid-column {
+    grid-column: auto !important;
+  }
+
+  .home-scene-column,
+  .scene-window {
+    min-height: auto;
+  }
+
+  .scene-window-map {
+    min-height: 360px;
+  }
+
+  .card-home-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar,
+  .app-shell--multiplayer .topbar {
+    padding-left: 24px;
+  }
+
+  .topbar-menu-button,
+  .app-shell--multiplayer .topbar-menu-button {
+    display: inline-grid;
+  }
+
+  .app-sidebar-backdrop,
+  .app-shell--multiplayer .app-sidebar-backdrop {
+    display: block;
+  }
+
+  .app-sidebar,
+  .app-shell--multiplayer .app-sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 180ms ease,
+      visibility 180ms ease;
+  }
+
+  .app-sidebar.is-open,
+  .app-shell--multiplayer .app-sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .app-main-stage--hud,
+  .app-shell--multiplayer .app-main-stage--hud {
+    padding-left: 24px;
+  }
+
+  .round-telemetry-footer {
+    left: 236px;
+    right: 364px;
+    bottom: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .round-corner-hud {
+    width: min(332px, calc(100% - 32px));
+    padding: 10px 12px 12px;
+  }
+
+  .round-corner-hud-item {
+    padding: 8px 9px;
+  }
+
+  .tutorial-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-progress {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1440px) {
+  .app-shell--multiplayer .topbar {
+    padding-left: 24px;
+  }
+
+  .app-shell--multiplayer .topbar-menu-button {
+    display: inline-grid;
+  }
+
+  .app-shell--multiplayer .app-sidebar-backdrop {
+    display: block;
+  }
+
+  .app-shell--multiplayer .app-sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 180ms ease,
+      visibility 180ms ease;
+  }
+
+  .app-shell--multiplayer .app-sidebar.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .app-shell--multiplayer .app-main-stage--hud {
+    padding-left: 24px;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 821px), (max-width: 1800px) {
+
+  .round-corner-hud {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .topbar,
+  .topbar--play {
+    height: auto;
+    min-height: 64px;
+    padding: 10px 14px;
+    align-items: flex-start;
+  }
+
+  .app-main-stage--hud {
+    padding: 88px 14px 28px;
+  }
+
+  .loading-state--compact {
+    top: 74px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+  }
+
+  .card-home-hero,
+  .card-setup-panel,
+  .guess-map-card,
+  .tutorial-shell {
+    padding: 20px;
+  }
+
+  .scene-window {
+    grid-template-rows: auto auto;
+  }
+
+  .scene-window-map {
+    min-height: 320px;
+  }
+
+  .scene-window-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .multiplayer-lobby-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .multiplayer-lobby-header .section-title {
+    font-size: clamp(2.25rem, 9vw, 3.25rem);
+    line-height: 0.96;
+  }
+
+  .multiplayer-lobby-header-actions {
+    justify-content: flex-start;
+  }
+
+  .multiplayer-lobby-card {
+    padding: 22px;
+  }
+
+  .multiplayer-lobby-players-card {
+    gap: 16px;
+  }
+
+  .round-floating-strip {
+    left: 16px;
+  }
+
+  .round-scene-callout {
+    left: 16px;
+  }
+
+  .round-telemetry-footer {
+    display: none;
+  }
+
+  .round-minimap-dock {
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .round-minimap-dock.is-expanded {
+    width: min(380px, calc(100vw - 32px));
+  }
+
+  .round-minimap-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .round-corner-hud {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .debrief-map-ticker {
+    grid-template-columns: 1fr;
+  }
+
+  .debrief-map-head,
+  .tutorial-stage-head,
+  .debrief-intel-log-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tutorial-progress {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary-row-report {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .summary-row-metric {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .session-report-summary.summary-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .app-main-stage--hud {
+    padding: 80px 10px 24px;
+  }
+
+  .topbar,
+  .topbar--play {
+    padding: 10px;
+  }
+
+  .brand-title {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+
+  .topbar {
+    gap: 12px;
+  }
+
+  .brand {
+    gap: 9px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .topbar .brand-copy {
+    display: flex;
+    min-width: 0;
+    max-width: 118px;
+  }
+
+  .home-brand-lockup {
+    display: inline-flex;
+  }
+
+  .button,
+  .button-compact {
+    width: 100%;
+  }
+
+  .topbar-actions {
+    width: auto;
+    margin-left: auto;
+    flex: 0 0 auto;
+  }
+
+  .topbar-actions > * {
+    flex: 0 0 auto;
+  }
+
+  .topbar-actions .button {
+    width: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0;
+    gap: 0;
+    font-size: 0;
+    letter-spacing: 0;
+  }
+
+  .topbar-actions .button svg {
+    flex: 0 0 auto;
+  }
+
+  .card-home-hero {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .home-copy-column {
+    gap: 16px;
+  }
+
+  .home-title {
+    font-size: clamp(2.1rem, 10.5vw, 2.7rem);
+    line-height: 1.03;
+    letter-spacing: -0.025em;
+    text-transform: none;
+  }
+
+  .home-copy {
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .home-step-strip {
+    gap: 10px;
+  }
+
+  .home-step-card {
+    padding: 14px 16px;
+  }
+
+  .home-step-card strong {
+    margin-top: 4px;
+    font-size: 0.96rem;
+  }
+
+  .home-step-card p {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.42;
+  }
+
+  .setup-header-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .section-title,
+  .card-home-cta h2,
+  .screen-shell-session-report .section-title {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-transform: none;
+  }
+
+  .card-setup-panel,
+  .guess-map-card {
+    padding: 18px;
+  }
+
+  .round-minimap-dock {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+  }
+
+  .round-minimap-dock.is-expanded {
+    width: auto;
+  }
+
+  .round-canvas-scene .scene-panorama-controls,
+  .multiplayer-immersive-canvas .scene-panorama-controls {
+    left: 10px;
+    bottom: 5.9rem;
+  }
+
+  .round-canvas-scene .scene-source-pill,
+  .multiplayer-immersive-canvas .scene-source-pill {
+    right: 10px;
+    bottom: 5.9rem;
+    max-width: min(13rem, 48vw);
+  }
+
+  .round-corner-hud {
+    display: none;
+  }
+
+  .tutorial-backdrop {
+    align-items: start;
+    overflow-x: hidden;
+    padding: 10px;
+  }
+
+  .tutorial-shell {
+    position: relative;
+    width: min(100%, calc(100vw - 20px));
+    max-width: calc(100vw - 20px);
+    max-height: calc(100svh - 20px);
+    padding: 18px 14px;
+    overflow-x: hidden;
+  }
+
+  .tutorial-header {
+    display: block;
+    padding-right: 46px;
+  }
+
+  .tutorial-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .tutorial-header-copy,
+  .tutorial-rail,
+  .tutorial-stage,
+  .tutorial-progress-copy {
+    min-width: 0;
+  }
+
+  .tutorial-title {
+    max-width: 100%;
+    font-size: clamp(1.3rem, 6.4vw, 1.65rem);
+    line-height: 1.04;
+    letter-spacing: 0;
+  }
+
+  .tutorial-intro {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .tutorial-title,
+  .tutorial-intro {
+    overflow-wrap: anywhere;
+  }
+
+  .tutorial-progress {
+    grid-template-columns: 1fr;
+  }
+
+  .session-report-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .scene-window {
+    padding: 12px;
+  }
+
+  .scene-window-map {
+    min-height: 270px;
+  }
+}
+
+.card-home-hero,
+.card-setup-panel,
+.card-tactical,
+.card-home-cta,
+.tutorial-shell,
+.home-step-card,
+.card-inset,
+.card-preview-overlay,
+.comparison-table > div,
+.summary-row,
+.summary-row-report,
+.summary-row-index,
+.summary-row-badge,
+.metric-card,
+.debrief-map-ticker-item,
+.debrief-score-block,
+.debrief-intel-item,
+.round-telemetry-segment,
+.scene-floating-card,
+.scene-window,
+.scene-window-map,
+.setup-preview-window,
+.multiplayer-open-room,
+.multiplayer-empty-state,
+.multiplayer-player-row,
+.multiplayer-leaderboard-row,
+.multiplayer-clue-item,
+.round-clue-modal-summary,
+.multiplayer-lobby-card,
+.round-scene-callout,
+.round-corner-hud-item,
+.round-minimap-dock,
+.tutorial-visual,
+.tutorial-copy,
+.tutorial-icon-ring,
+.tutorial-visual-card,
+.tutorial-visual-map,
+.session-map-legend-item {
+  border-radius: var(--radius-ui);
+}
+
+.card-home-hero::after,
+.card-setup-panel::after,
+.card-tactical::after,
+.card-home-cta::after,
+.guess-map-card::after,
+.tutorial-shell::after,
+.round-minimap-dock::after {
+  display: none;
+}
+
+.multiplayer-field input,
+.multiplayer-search-shell input,
+.round-time-input-shell input,
+.guess-map-card,
+.guess-map-surface,
+.round-minimap-panel .guess-map-card,
+.round-minimap-panel .guess-map-surface,
+.scene-window-map .guess-map-card,
+.scene-window-map .guess-map-surface,
+.setup-preview-window .guess-map-card,
+.setup-preview-window .guess-map-surface,
+.debrief-map-stage .guess-map-card,
+.debrief-map-stage .guess-map-surface,
+.session-map-stage .guess-map-card,
+.session-map-stage .guess-map-surface,
+.tutorial-visual-map .guess-map-card,
+.tutorial-visual-map .guess-map-surface {
+  border-radius: var(--radius-ui);
+}
+
+.multiplayer-name-random,
+.app-sidebar-tooltip-bubble,
+.multiplayer-open-room-summary span,
+.multiplayer-open-room-stat,
+.multiplayer-open-room-action,
+.multiplayer-open-room-protected,
+.multiplayer-open-room-modal-summary span,
+.multiplayer-players-overlay,
+.multiplayer-immersive-notice,
+.multiplayer-immersive-disconnect,
+.app-notice,
+.app-notice-dismiss,
+.loading-state,
+.loading-state-icon,
+.modal-dialog,
+.debrief-source-card,
+.debrief-source-links a,
+.debrief-source-link-disabled,
+.guess-map-leaflet .leaflet-control-zoom,
+.guess-map-leaflet .leaflet-control-zoom a,
+.guess-map-leaflet .leaflet-tooltip,
+.guess-map-leaflet .map-distance-tooltip {
+  border-radius: var(--radius-ui);
+}
+
+@media (max-width: 1180px) {
+  .tutorial-body {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-visual-map {
+    height: min(260px, 42vh);
+  }
+}
