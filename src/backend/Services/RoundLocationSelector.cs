@@ -8,6 +8,7 @@ public sealed class RoundLocationSelector
     private const int CandidateMultiplier = 25;
     private const int MinimumCandidatePool = 50;
     private const int MaximumCandidatePool = 300;
+    private const int MaxCountryFilters = 5;
 
     private readonly SeedLocationCatalog _fallbackCatalog;
     private readonly IConfiguration _configuration;
@@ -37,12 +38,13 @@ public sealed class RoundLocationSelector
 
     public List<SeedLocation> SelectRandomLocations(
         string region,
+        IReadOnlyList<string>? countries,
         int count,
         Func<int, int> randomIndex)
     {
         if (ShouldUsePostgresCatalog)
         {
-            var databaseSelection = TrySelectFromPostgres(region, count, randomIndex);
+            var databaseSelection = TrySelectFromPostgres(region, countries, count, randomIndex);
 
             if (databaseSelection is not null)
             {
@@ -50,7 +52,7 @@ public sealed class RoundLocationSelector
             }
         }
 
-        return SelectFromFallback(region, count, randomIndex);
+        return SelectFromFallback(region, countries, count, randomIndex);
     }
 
     public SeedLocation? FindById(string locationId)
@@ -75,8 +77,57 @@ public sealed class RoundLocationSelector
         return GetFallbackLocationsById().GetValueOrDefault(locationId);
     }
 
+    public IReadOnlyList<string>? NormalizeCountries(
+        string region,
+        string? country,
+        IReadOnlyList<string>? countries)
+    {
+        var requestedCountries = (countries ?? [])
+            .Append(country)
+            .Select(candidate => candidate?.Trim())
+            .Where(candidate => !string.IsNullOrWhiteSpace(candidate))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        if (requestedCountries.Count == 0)
+        {
+            return null;
+        }
+
+        if (requestedCountries.Count > MaxCountryFilters)
+        {
+            throw new GameFlowException(
+                $"Escolhe no máximo {MaxCountryFilters} países.",
+                StatusCodes.Status400BadRequest);
+        }
+
+        var availableCountries = _fallbackCatalog
+            .GetAll()
+            .Where(location => string.Equals(location.Region, region, StringComparison.OrdinalIgnoreCase))
+            .Select(location => location.Country)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(candidate => candidate, StringComparer.OrdinalIgnoreCase);
+
+        var normalizedCountries = new List<string>();
+
+        foreach (var requestedCountry in requestedCountries)
+        {
+            if (!availableCountries.TryGetValue(requestedCountry!, out var match))
+            {
+                throw new GameFlowException(
+                    "O país selecionado não está disponível neste catálogo.",
+                    StatusCodes.Status400BadRequest);
+            }
+
+            normalizedCountries.Add(match);
+        }
+
+        return normalizedCountries;
+    }
+
     private List<SeedLocation>? TrySelectFromPostgres(
         string region,
+        IReadOnlyList<string>? countries,
         int count,
         Func<int, int> randomIndex)
     {
@@ -88,17 +139,16 @@ public sealed class RoundLocationSelector
 
         try
         {
-            var candidates = _store.LoadRandomCandidates(region, GetCandidateLimit(count));
+            var candidates = _store.LoadRandomCandidates(region, GetCandidateLimit(count), countries);
 
             if (candidates.Count == 0)
             {
                 // Trigger the seed import path once, then retry the runtime query.
                 _fallbackCatalog.GetAll();
-                candidates = _store.LoadRandomCandidates(region, GetCandidateLimit(count));
+                candidates = _store.LoadRandomCandidates(region, GetCandidateLimit(count), countries);
             }
 
-            var selected = GameRoundRules.SelectRandomLocations(candidates, count, randomIndex);
-            return selected.Count == count ? selected : null;
+            return GameRoundRules.SelectRandomLocations(candidates, count, randomIndex);
         }
         catch (Exception exception)
         {
@@ -109,12 +159,15 @@ public sealed class RoundLocationSelector
 
     private List<SeedLocation> SelectFromFallback(
         string region,
+        IReadOnlyList<string>? countries,
         int count,
         Func<int, int> randomIndex)
     {
+        var countryFilter = countries?.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var locations = _fallbackCatalog
             .GetAll()
             .Where(location => string.Equals(location.Region, region, StringComparison.OrdinalIgnoreCase))
+            .Where(location => countryFilter is null || countryFilter.Contains(location.Country))
             .ToList();
 
         return GameRoundRules.SelectRandomLocations(locations, count, randomIndex);

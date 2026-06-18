@@ -1,3 +1,4 @@
+using System.Text.Json;
 using GeoExplorer.Backend.Data;
 using GeoExplorer.Backend.Services;
 using Microsoft.AspNetCore.Hosting;
@@ -23,10 +24,28 @@ public sealed class RoundLocationSelectorTests
         });
         var selector = CreatePostgresSelector(store);
 
-        var selected = selector.SelectRandomLocations("europe", 1, _ => 0);
+        var selected = selector.SelectRandomLocations("europe", null, 1, _ => 0);
 
         Assert.HasCount(1, selected);
         Assert.IsTrue(selected[0].Id.StartsWith("db-location-", StringComparison.Ordinal));
+    }
+
+    [TestMethod]
+    public async Task SelectRandomLocations_WithPostgresCatalog_FiltersByCountry()
+    {
+        var factory = CreateFactory();
+        var store = new LocationCatalogStore(factory, new DatabaseUsageMetrics());
+        await store.ImportAndLoadAsync(new[]
+        {
+            CreateLocation("db-location-pt", country: "Portugal"),
+            CreateLocation("db-location-es", country: "Espanha"),
+        });
+        var selector = CreatePostgresSelector(store);
+
+        var selected = selector.SelectRandomLocations("europe", ["Portugal", "Espanha"], 2, _ => 0);
+
+        Assert.HasCount(2, selected);
+        Assert.IsTrue(selected.All(location => location.Country is "Portugal" or "Espanha"));
     }
 
     [TestMethod]
@@ -61,6 +80,34 @@ public sealed class RoundLocationSelectorTests
         Assert.IsTrue(locations.All(location => location.Id.StartsWith("db-location-", StringComparison.Ordinal)));
     }
 
+    [TestMethod]
+    public async Task GetAll_WithPostgresCatalog_UpsertsSeedJsonIntoExistingDatabase()
+    {
+        var factory = CreateFactory();
+        var store = new LocationCatalogStore(factory, new DatabaseUsageMetrics());
+        await store.ImportAndLoadAsync(new[]
+        {
+            CreateLocation("existing-location", city: "Cidade antiga"),
+            CreateLocation("db-only-location", latitude: 38.7169, longitude: -9.1399),
+        });
+        var contentRootPath = CreateSeedContentRoot(new[]
+        {
+            CreateLocation("existing-location", city: "Cidade atualizada"),
+            CreateLocation("new-location", latitude: 40.2115, longitude: -8.4292),
+        });
+        var catalog = CreatePostgresCatalog(store, contentRootPath: contentRootPath);
+
+        var locations = catalog.GetAll();
+
+        Assert.HasCount(2, locations);
+        Assert.AreEqual("Cidade atualizada", locations.Single(location => location.Id == "existing-location").City);
+        Assert.IsTrue(locations.Any(location => location.Id == "new-location"));
+
+        await using var db = await factory.CreateDbContextAsync();
+        Assert.AreEqual(3, await db.Locations.CountAsync());
+        Assert.AreEqual("Cidade atualizada", (await db.Locations.FindAsync("existing-location"))?.City);
+    }
+
     private static RoundLocationSelector CreatePostgresSelector(LocationCatalogStore store)
     {
         var configuration = CreatePostgresConfiguration();
@@ -75,11 +122,13 @@ public sealed class RoundLocationSelectorTests
 
     private static SeedLocationCatalog CreatePostgresCatalog(
         LocationCatalogStore store,
-        IConfiguration? configuration = null)
+        IConfiguration? configuration = null,
+        string? contentRootPath = null)
     {
         var environment = new TestWebHostEnvironment
         {
-            ContentRootPath = Path.Combine(Path.GetTempPath(), $"geoexplorer-no-seed-{Guid.NewGuid()}", "backend"),
+            ContentRootPath = contentRootPath ??
+                Path.Combine(Path.GetTempPath(), $"geoexplorer-no-seed-{Guid.NewGuid()}", "backend"),
         };
 
         return new SeedLocationCatalog(
@@ -99,6 +148,19 @@ public sealed class RoundLocationSelectorTests
             .Build();
     }
 
+    private static string CreateSeedContentRoot(IReadOnlyList<SeedLocation> locations)
+    {
+        var root = Path.Combine(Path.GetTempPath(), $"geoexplorer-seed-{Guid.NewGuid()}");
+        var contentRootPath = Path.Combine(root, "backend");
+        var seedDirectory = Path.Combine(root, "database", "seed");
+        Directory.CreateDirectory(seedDirectory);
+        File.WriteAllText(
+            Path.Combine(seedDirectory, "locations.json"),
+            JsonSerializer.Serialize(locations));
+
+        return contentRootPath;
+    }
+
     private static TestDbContextFactory CreateFactory()
     {
         var databaseName = $"geoexplorer-selector-test-{Guid.NewGuid()}";
@@ -111,6 +173,8 @@ public sealed class RoundLocationSelectorTests
 
     private static SeedLocation CreateLocation(
         string id,
+        string city = "Porto",
+        string country = "Portugal",
         double latitude = 41.1406,
         double longitude = -8.611)
     {
@@ -118,8 +182,8 @@ public sealed class RoundLocationSelectorTests
         {
             Id = id,
             Title = "Ribeira do Porto",
-            City = "Porto",
-            Country = "Portugal",
+            City = city,
+            Country = country,
             Region = "europe",
             Category = "urban",
             Latitude = latitude,

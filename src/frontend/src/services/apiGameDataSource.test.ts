@@ -13,6 +13,8 @@ const apiBaseUrl = "http://api.test/api";
 
 const sessionConfig: SessionConfig = {
   region: "europe",
+  country: null,
+  countries: ["Espanha", "Portugal"],
   roundCount: 2,
   timed: true,
   roundTimeSeconds: 60,

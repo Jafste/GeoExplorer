@@ -88,7 +88,10 @@ public sealed class LocationCatalogStore
             .ToList();
     }
 
-    public IReadOnlyList<SeedLocation> LoadRandomCandidates(string region, int count)
+    public IReadOnlyList<SeedLocation> LoadRandomCandidates(
+        string region,
+        int count,
+        IReadOnlyList<string>? countries = null)
     {
         if (count < 1)
         {
@@ -96,9 +99,15 @@ public sealed class LocationCatalogStore
         }
 
         using var db = _contextFactory.CreateDbContext();
+        var countryFilter = countries?
+            .Select(country => country.Trim())
+            .Where(country => !string.IsNullOrWhiteSpace(country))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        countryFilter = countryFilter is { Count: > 0 } ? countryFilter : null;
         var entities = IsPostgres(db)
-            ? LoadPostgresRandomCandidates(db, region, count)
-            : LoadProviderFallbackRandomCandidates(db, region, count);
+            ? LoadPostgresRandomCandidates(db, region, countryFilter, count)
+            : LoadProviderFallbackRandomCandidates(db, region, countryFilter, count);
 
         _metrics.RecordRead("catalog_random_candidates");
 
@@ -122,13 +131,31 @@ public sealed class LocationCatalogStore
     private static List<LocationEntity> LoadPostgresRandomCandidates(
         GeoExplorerDbContext db,
         string region,
+        IReadOnlyList<string>? countries,
         int count)
     {
+        if (countries is not { Count: > 0 })
+        {
+            return db.Locations
+                .FromSqlInterpolated($"""
+                    SELECT *
+                    FROM locations
+                    WHERE lower(region) = lower({region})
+                    ORDER BY random()
+                    LIMIT {count}
+                    """)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        var countryFilter = countries.Select(country => country.ToLowerInvariant()).ToArray();
+
         return db.Locations
             .FromSqlInterpolated($"""
                 SELECT *
                 FROM locations
                 WHERE lower(region) = lower({region})
+                  AND lower(country) = ANY({countryFilter})
                 ORDER BY random()
                 LIMIT {count}
                 """)
@@ -139,12 +166,15 @@ public sealed class LocationCatalogStore
     private static List<LocationEntity> LoadProviderFallbackRandomCandidates(
         GeoExplorerDbContext db,
         string region,
+        IReadOnlyList<string>? countries,
         int count)
     {
+        var countryFilter = countries?.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var entities = db.Locations
             .AsNoTracking()
             .ToList()
             .Where(location => string.Equals(location.Region, region, StringComparison.OrdinalIgnoreCase))
+            .Where(location => countryFilter is null || countryFilter.Contains(location.Country))
             .ToList();
 
         Shuffle(entities);

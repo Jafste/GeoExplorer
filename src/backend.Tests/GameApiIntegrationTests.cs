@@ -77,6 +77,26 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task DatabaseDiagnostics_WhenDisabled_ReturnsNotFound()
+    {
+        using var factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureAppConfiguration((_, configuration) =>
+            {
+                configuration.AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    ["GeoExplorer:ExposeDatabaseDiagnostics"] = "false",
+                });
+            });
+        });
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync("/api/diagnostics/database");
+
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [TestMethod]
     public async Task SessionFlow_CompletesThroughHttpApi()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -235,6 +255,22 @@ public sealed class GameApiIntegrationTests
 
         using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.AreEqual("Apenas a região europeia está disponível neste MVP.", document.RootElement.GetProperty("detail").GetString());
+    }
+
+    [TestMethod]
+    public async Task CreateSession_WithUnknownCountry_ReturnsProblemDetails()
+    {
+        using var factory = new WebApplicationFactory<Program>();
+        using var client = factory.CreateClient();
+
+        using var response = await client.PostAsJsonAsync(
+            "/api/sessions",
+            new CreateSessionRequest("europe", RoundCount: 1, Timed: false, RoundTimeSeconds: null, Countries: ["Brasil"]));
+
+        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+
+        using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        Assert.AreEqual("O país selecionado não está disponível neste catálogo.", document.RootElement.GetProperty("detail").GetString());
     }
 
     [TestMethod]

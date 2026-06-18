@@ -58,7 +58,7 @@ Supabase completo fica como alternativa futura se forem necessárias funcionalid
 
 ## Atualização de 15 de maio de 2026
 
-Formalizei o schema principal com migrations do Entity Framework. Com isto, o backend passa a criar e evoluir a base de dados através do próprio modelo EF, em vez de depender do ficheiro SQL inicial montado no Docker. O ficheiro SQL fica apenas como apoio documental, e as migrations passam a ser a referência técnica para `locations`, `game_sessions` e `session_rounds`.
+Formalizei o schema principal com migrations do Entity Framework. Com isto, o backend passa a criar e evoluir a base de dados através do próprio modelo EF, em vez de depender do ficheiro SQL inicial montado no Docker. As migrations passam a ser a referência técnica para `locations`, `game_sessions` e `session_rounds`.
 
 ## Atualização de 23 de maio de 2026
 
@@ -70,7 +70,7 @@ Depois acrescentei a opção de sala pública listável e password opcional. Par
 
 ## Atualização de 2 de junho de 2026
 
-Validei o perfil `full` em Docker com PostgreSQL limpo, frontend em modo `api`, backend e migrations do Entity Framework. A validação passou por uma sessão solo curta, uma sala multiplayer curta, consulta ao diagnóstico da base de dados e confirmação das tabelas principais em PostgreSQL.
+Validei o perfil `full` em Docker com PostgreSQL limpo, frontend em modo `api`, backend e migrations do Entity Framework. A validação passou por uma sessão solo curta, uma sala multiplayer curta, consulta ao diagnóstico da base de dados com a flag própria ativa e confirmação das tabelas principais em PostgreSQL.
 
 Com isto, PostgreSQL em Docker fica confirmado como base principal para desenvolvimento e demonstração local. Supabase hosted e Turso/libSQL continuam apenas como hipóteses futuras, a rever se os dados reais de uso justificarem outra solução.
 

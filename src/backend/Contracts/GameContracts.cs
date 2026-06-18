@@ -4,7 +4,9 @@ public sealed record CreateSessionRequest(
     string Region,
     int RoundCount,
     bool Timed,
-    int? RoundTimeSeconds);
+    int? RoundTimeSeconds,
+    string? Country = null,
+    IReadOnlyList<string>? Countries = null);
 
 public sealed record GuessCoordinatesDto(
     double Latitude,

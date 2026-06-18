@@ -213,7 +213,7 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
   if (activePhotoCandidate && activeImageUrl) {
     return (
       <div
-        className={`scene-art scene-art--photo${isInteractivePanorama ? " scene-art--panorama" : ""} scene-art--${challenge.category}`}
+        className={`scene-art scene-art--photo scene-art--panorama scene-art--${challenge.category}`}
         style={style}
       >
         {!photoLoaded ? (
@@ -222,7 +222,7 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
           </span>
         ) : null}
 
-        {waitingToRetry || retryExhausted ? null : isInteractivePanorama ? (
+        {waitingToRetry || retryExhausted ? null : (
           <>
             <img
               ref={photoElementRef}
@@ -236,32 +236,17 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
               onLoad={(event) => markPhotoLoaded(event.currentTarget)}
               src={activeImageUrl}
             />
-            <InteractivePanoramaImage
-              imageUrl={activeImageUrl}
-              loaded={photoLoaded}
-              mode={interactivePanoramaMode}
-            />
-          </>
-        ) : (
-          <>
-            {shouldContainPhoto ? (
+            {!isInteractivePanorama && shouldContainPhoto ? (
               <span
                 aria-hidden="true"
                 className="scene-photo-backdrop"
                 style={{ backgroundImage: `url("${activeImageUrl}")` }}
               />
             ) : null}
-            <img
-              ref={photoElementRef}
-              alt=""
-              aria-hidden="true"
-              className={`scene-photo${shouldContainPhoto ? " scene-photo--contain" : ""}${photoLoaded ? " is-loaded" : " is-loading"}`}
-              decoding="async"
-              draggable={false}
-              loading="eager"
-              onError={handlePhotoError}
-              onLoad={(event) => markPhotoLoaded(event.currentTarget)}
-              src={activeImageUrl}
+            <InteractivePanoramaImage
+              imageUrl={activeImageUrl}
+              loaded={photoLoaded}
+              mode={interactivePanoramaMode ?? "photo"}
             />
           </>
         )}

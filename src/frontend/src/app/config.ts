@@ -7,6 +7,8 @@ export const appConfig = {
 
 export const defaultSessionConfig: SessionConfig = {
   region: "europe",
+  country: null,
+  countries: [],
   roundCount: 5,
   timed: true,
   roundTimeSeconds: 60,

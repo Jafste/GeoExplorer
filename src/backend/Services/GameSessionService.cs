@@ -69,9 +69,15 @@ public sealed class GameSessionService
 
         var timed = request.Timed;
         var roundTimeSeconds = GameRoundRules.ValidateRoundTime(timed, request.RoundTimeSeconds);
+        var countries = _locationSelector.NormalizeCountries(request.Region, request.Country, request.Countries);
 
         var sessionId = Guid.NewGuid().ToString();
-        var selectedLocations = SelectRandomLocations(request.Region, request.RoundCount);
+        var selectedLocations = SelectRandomLocations(request.Region, countries, request.RoundCount);
+
+        if (selectedLocations.Count < request.RoundCount)
+        {
+            throw new GameFlowException("Não há locais suficientes para as rondas pedidas neste âmbito.", StatusCodes.Status400BadRequest);
+        }
 
         var rounds = selectedLocations.Select((location, index) => new RoundState
         {
@@ -87,6 +93,8 @@ public sealed class GameSessionService
             Config = new SessionConfiguration
             {
                 Region = "europe",
+                Country = countries is { Count: 1 } ? countries[0] : null,
+                Countries = countries,
                 RoundCount = request.RoundCount,
                 Timed = timed,
                 RoundTimeSeconds = roundTimeSeconds,
@@ -101,9 +109,9 @@ public sealed class GameSessionService
         return new CreateSessionResponse(sessionId, BuildRound(rounds[0], session));
     }
 
-    private List<SeedLocation> SelectRandomLocations(string region, int count)
+    private List<SeedLocation> SelectRandomLocations(string region, IReadOnlyList<string>? countries, int count)
     {
-        return _locationSelector.SelectRandomLocations(region, count, _randomIndex);
+        return _locationSelector.SelectRandomLocations(region, countries, count, _randomIndex);
     }
 
     private SeedMedia? SelectVisualSource(SeedLocation location)
@@ -318,6 +326,8 @@ public sealed class GameSessionService
         var config = new SessionConfiguration
         {
             Region = snapshot.Region,
+            Country = null,
+            Countries = null,
             RoundCount = snapshot.RoundCount,
             Timed = snapshot.Timed,
             RoundTimeSeconds = snapshot.RoundTimeSeconds,
@@ -414,6 +424,8 @@ internal sealed class SessionState
 internal sealed class SessionConfiguration
 {
     public required string Region { get; init; }
+    public string? Country { get; init; }
+    public IReadOnlyList<string>? Countries { get; init; }
     public required int RoundCount { get; init; }
     public required bool Timed { get; init; }
     public required int? RoundTimeSeconds { get; init; }

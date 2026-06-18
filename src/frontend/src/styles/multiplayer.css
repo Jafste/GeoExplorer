@@ -54,6 +54,14 @@
   flex-wrap: wrap;
 }
 
+.multiplayer-immersive-strip .chip {
+  gap: 8px;
+  border-color: rgba(244, 248, 252, 0.18);
+  background: rgba(23, 36, 29, 0.72);
+  color: rgba(244, 248, 252, 0.94);
+  backdrop-filter: blur(14px);
+}
+
 .multiplayer-immersive-actions {
   justify-content: flex-end;
 }
@@ -342,6 +350,11 @@
   gap: 10px;
 }
 
+.multiplayer-result-ranking-anchor {
+  display: grid;
+  min-width: 0;
+}
+
 .multiplayer-player-row,
 .multiplayer-leaderboard-row {
   padding: 14px;
@@ -622,6 +635,65 @@
   background: rgba(154, 232, 93, 0.12);
 }
 
+.multiplayer-result-jump {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 38px;
+  margin-inline: auto;
+  padding: 0 14px;
+  border: 1px solid rgba(209, 255, 38, 0.22);
+  border-radius: var(--radius-ui);
+  background: rgba(209, 255, 38, 0.1);
+  color: rgba(209, 255, 38, 0.92);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.multiplayer-result-jump:focus-visible {
+  outline: 2px solid rgba(209, 255, 38, 0.82);
+  outline-offset: 2px;
+}
+
+.multiplayer-leaderboard-pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.multiplayer-leaderboard-pager span {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.multiplayer-pager-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(240, 242, 245, 0.14);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-main);
+}
+
+.multiplayer-pager-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.multiplayer-pager-button:not(:disabled):hover {
+  border-color: rgba(209, 255, 38, 0.34);
+  color: #d1ff26;
+}
+
 @media (max-width: 900px) {
   .multiplayer-entry-grid,
   .multiplayer-lobby-grid,
@@ -671,6 +743,10 @@
 }
 
 @media (max-width: 640px) {
+  .multiplayer-result-jump {
+    display: inline-flex;
+  }
+
   .multiplayer-player-row,
   .multiplayer-leaderboard-row {
     align-items: stretch;

@@ -58,7 +58,7 @@
 
 ### Must have
 
-- RNF01 — **Performance:** criação de nova sessão e carregamento de cada ronda em menos de 2 segundos em ambiente normal de desenvolvimento/demonstração, sem obrigar o frontend a descarregar o catálogo completo de 6000 locais.
+- RNF01 — **Performance:** criação de nova sessão e carregamento de cada ronda em menos de 2 segundos em ambiente normal de desenvolvimento/demonstração, sem obrigar o frontend a descarregar o catálogo completo.
 - RNF02 — **Segurança:** validação server-side das submissões e ausência de segredos, credenciais ou chaves reais no repositório.
 - RNF03 — **Usabilidade:** interface utilizável sem formação prévia, com navegação clara entre início, ronda, resultado da ronda e resultado final.
 - RNF04 — **Integridade dos dados:** cada ronda aceita uma única submissão válida e cada sessão persiste dados coerentes de pontuação total e rondas jogadas.

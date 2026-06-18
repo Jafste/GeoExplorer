@@ -192,6 +192,8 @@
 
   .round-floating-strip {
     left: 16px;
+    right: auto;
+    max-width: calc(100vw - 32px);
   }
 
   .round-scene-callout {

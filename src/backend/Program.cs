@@ -62,6 +62,10 @@ builder.Services.AddHttpClient<MapillaryImageService>(client =>
 var app = builder.Build();
 
 await DatabaseMigrationRunner.ApplyAsync(app.Services, app.Configuration);
+if (app.Configuration.GetValue<bool>("GeoExplorer:UsePostgresCatalog"))
+{
+    app.Services.GetRequiredService<SeedLocationCatalog>().GetAll();
+}
 
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging(options =>
@@ -74,7 +78,10 @@ var api = app.MapGroup("/api");
 
 api.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
-api.MapGet("/diagnostics/database", (DatabaseUsageMetrics metrics) => Results.Ok(metrics.GetSnapshot()));
+if (builder.Configuration.GetValue<bool>("GeoExplorer:ExposeDatabaseDiagnostics"))
+{
+    api.MapGet("/diagnostics/database", (DatabaseUsageMetrics metrics) => Results.Ok(metrics.GetSnapshot()));
+}
 
 api.MapGet("/media/mapillary/{imageId}", async (
     string imageId,

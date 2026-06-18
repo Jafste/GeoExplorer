@@ -311,15 +311,17 @@ const stats = {
 
 const additions = [];
 const seenItems = new Set();
+const existingCountryCounts = countCountries(existingLocations);
+const addedCountryCounts = new Map();
 
-if (preferredItems.length > 0 && existingLocations.length + additions.length < options.targetCount) {
+if (preferredItems.length > 0 && !options.fillCountryCount && !hasReachedTarget()) {
   const preferredCandidates = await fetchWikidataPreferredCandidates(preferredItems);
   const labelMap = await fetchEntityLabels(preferredCandidates);
   const commonsMap = await fetchCommonsMediaMap(preferredCandidates.map((candidate) => candidate.imageTitle));
   const beforePreferred = additions.length;
 
   for (const candidate of preferredCandidates) {
-    if (existingLocations.length + additions.length >= options.targetCount) {
+    if (hasReachedTarget()) {
       break;
     }
 
@@ -335,6 +337,7 @@ if (preferredItems.length > 0 && existingLocations.length + additions.length < o
 
     additions.push(location);
     stats.accepted += 1;
+    addedCountryCounts.set(location.country, (addedCountryCounts.get(location.country) ?? 0) + 1);
     existingIds.add(location.id);
     existingImageSources.add(location.media.imageSourceUrl);
     existingCoordinates.push({
@@ -347,9 +350,14 @@ if (preferredItems.length > 0 && existingLocations.length + additions.length < o
   console.error(`Preferidos: +${additions.length - beforePreferred} locais, total ${existingLocations.length + additions.length}`);
 }
 
-for (const [countryId, countryName] of countries) {
-  if (existingLocations.length + additions.length >= options.targetCount) {
+for (const [countryId, countryName] of getSelectedCountries()) {
+  if (hasReachedTarget()) {
     break;
+  }
+
+  if (hasReachedCountryTarget(countryName)) {
+    console.error(`${countryName}: +0 locais, total ${existingLocations.length + additions.length}`);
+    continue;
   }
 
   const beforeCountry = additions.length;
@@ -370,7 +378,7 @@ for (const [countryId, countryName] of countries) {
   const commonsMap = await fetchCommonsMediaMap(candidates.map((candidate) => candidate.imageTitle));
 
   for (const candidate of candidates) {
-    if (existingLocations.length + additions.length >= options.targetCount) {
+    if (hasReachedTarget() || hasReachedCountryTarget(countryName)) {
       break;
     }
 
@@ -385,6 +393,7 @@ for (const [countryId, countryName] of countries) {
 
     additions.push(location);
     stats.accepted += 1;
+    addedCountryCounts.set(location.country, (addedCountryCounts.get(location.country) ?? 0) + 1);
     existingIds.add(location.id);
     existingImageSources.add(location.media.imageSourceUrl);
     existingCoordinates.push({
@@ -395,6 +404,53 @@ for (const [countryId, countryName] of countries) {
   }
 
   console.error(`${countryName}: +${additions.length - beforeCountry} locais, total ${existingLocations.length + additions.length}`);
+}
+
+for (const area of options.commonsAreas) {
+  if (hasReachedTarget() || hasReachedCountryTarget(area.country)) {
+    continue;
+  }
+
+  const beforeArea = additions.length;
+  const candidates = (await fetchCommonsAreaCandidates(area, options.perCountryLimit))
+    .filter((candidate) => {
+      if (seenItems.has(candidate.itemId)) {
+        return false;
+      }
+
+      seenItems.add(candidate.itemId);
+      return true;
+    });
+  stats.candidates += candidates.length;
+  const labelMap = new Map(candidates.flatMap((candidate) => [
+    [candidate.itemId, candidate.itemLabel],
+    [candidate.adminId, candidate.adminLabel],
+  ]));
+  const commonsMap = await fetchCommonsMediaMap(candidates.map((candidate) => candidate.imageTitle));
+
+  for (const candidate of candidates) {
+    if (hasReachedTarget() || hasReachedCountryTarget(area.country)) {
+      break;
+    }
+
+    const location = buildLocation(candidate, labelMap, commonsMap, existingIds, existingImageSources, existingCoordinates, additions);
+    if (!location) {
+      continue;
+    }
+
+    additions.push(location);
+    stats.accepted += 1;
+    addedCountryCounts.set(location.country, (addedCountryCounts.get(location.country) ?? 0) + 1);
+    existingIds.add(location.id);
+    existingImageSources.add(location.media.imageSourceUrl);
+    existingCoordinates.push({
+      id: location.id,
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
+  }
+
+  console.error(`${area.city}, ${area.country}: +${additions.length - beforeArea} locais, total ${existingLocations.length + additions.length}`);
 }
 
 if (!options.dryRun) {
@@ -417,6 +473,12 @@ function parseArgs(args) {
   const parsed = {
     seedPath: defaultSeedPath,
     targetCount: 1000,
+    targetCountActive: true,
+    targetCountProvided: false,
+    fillCountryCount: null,
+    countries: null,
+    commonsAreas: [],
+    broadCandidates: false,
     perCountryLimit: 260,
     acceptedPerCountryLimit: 40,
     minimumDistanceMeters: 75,
@@ -428,6 +490,11 @@ function parseArgs(args) {
 
     if (arg === "--dry-run") {
       parsed.dryRun = true;
+      continue;
+    }
+
+    if (arg === "--broad-candidates") {
+      parsed.broadCandidates = true;
       continue;
     }
 
@@ -444,6 +511,16 @@ function parseArgs(args) {
         break;
       case "--target-count":
         parsed.targetCount = parsePositiveInteger(arg, value);
+        parsed.targetCountProvided = true;
+        break;
+      case "--fill-country-count":
+        parsed.fillCountryCount = parsePositiveInteger(arg, value);
+        break;
+      case "--countries":
+        parsed.countries = new Set(value.split(",").map(normalizeCountryName).filter(Boolean));
+        break;
+      case "--commons-areas":
+        parsed.commonsAreas = parseCommonsAreas(value);
         break;
       case "--per-country-limit":
         parsed.perCountryLimit = parsePositiveInteger(arg, value);
@@ -457,6 +534,10 @@ function parseArgs(args) {
       default:
         throw new Error(`Opção desconhecida: ${arg}`);
     }
+  }
+
+  if (parsed.fillCountryCount && !parsed.targetCountProvided) {
+    parsed.targetCountActive = false;
   }
 
   return parsed;
@@ -480,11 +561,75 @@ function parsePositiveNumber(name, value) {
   return parsed;
 }
 
+function parseCommonsAreas(value) {
+  return value.split(";").map((entry) => {
+    const [city, country, latitude, longitude, radiusMeters = "10000"] = entry.split("|");
+    if (!city || !country) {
+      throw new Error(`Área Commons inválida: ${entry}`);
+    }
+
+    return {
+      city,
+      country,
+      latitude: parseFiniteNumber("latitude", latitude),
+      longitude: parseFiniteNumber("longitude", longitude),
+      radiusMeters: parsePositiveNumber("radiusMeters", radiusMeters),
+    };
+  });
+}
+
+function parseFiniteNumber(name, value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`${name} deve ser um número.`);
+  }
+
+  return parsed;
+}
+
+function countCountries(locations) {
+  const counts = new Map();
+
+  for (const location of locations) {
+    counts.set(location.country, (counts.get(location.country) ?? 0) + 1);
+  }
+
+  return counts;
+}
+
+function getCountryCount(countryName) {
+  return (existingCountryCounts.get(countryName) ?? 0) + (addedCountryCounts.get(countryName) ?? 0);
+}
+
+function hasReachedCountryTarget(countryName) {
+  return options.fillCountryCount && getCountryCount(countryName) >= options.fillCountryCount;
+}
+
+function hasReachedTarget() {
+  return options.targetCountActive && existingLocations.length + additions.length >= options.targetCount;
+}
+
+function getSelectedCountries() {
+  if (!options.countries) {
+    return countries;
+  }
+
+  return countries.filter(([, countryName]) => options.countries.has(normalizeCountryName(countryName)));
+}
+
+function normalizeCountryName(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 async function collectCandidateBindings({ perCountryLimit }) {
   const candidates = [];
   const seenItems = new Set();
 
-  for (const [countryId, countryName] of countries) {
+  for (const [countryId, countryName] of getSelectedCountries()) {
     const bindings = await fetchWikidataCountryCandidates(countryId, perCountryLimit);
 
     for (const binding of bindings) {
@@ -502,6 +647,8 @@ async function collectCandidateBindings({ perCountryLimit }) {
         countryName,
         adminId: getEntityId(binding.admin?.value),
         typeId: getEntityId(binding.type?.value),
+        itemLabel: binding.itemLabel?.value,
+        adminLabel: binding.adminLabel?.value,
         imageTitle,
         coordinates: parseWktPoint(binding.coord?.value),
       });
@@ -525,6 +672,8 @@ function normalizeCandidateBinding(binding, countryId, countryName) {
     countryName,
     adminId: getEntityId(binding.admin?.value),
     typeId: getEntityId(binding.type?.value),
+    itemLabel: binding.itemLabel?.value,
+    adminLabel: binding.adminLabel?.value,
     imageTitle,
     coordinates: parseWktPoint(binding.coord?.value),
   };
@@ -532,13 +681,16 @@ function normalizeCandidateBinding(binding, countryId, countryName) {
 
 async function fetchWikidataCountryCandidates(countryId, limit) {
   const typeValues = [...typeToCategory.keys()].map((typeId) => `wd:${typeId}`).join(" ");
-  const query = `SELECT ?item ?coord ?image ?admin ?type WHERE {
-  VALUES ?type { ${typeValues} }
+  const typeClause = options.broadCandidates
+    ? ""
+    : `VALUES ?type { ${typeValues} }\n  ?item wdt:P31/wdt:P279* ?type.`;
+  const query = `SELECT ?item ?coord ?image ?admin ?type ?itemLabel ?adminLabel WHERE {
   ?item wdt:P17 wd:${countryId};
         wdt:P625 ?coord;
-        wdt:P18 ?image;
-        wdt:P31/wdt:P279* ?type.
+        wdt:P18 ?image.
+  ${typeClause}
   OPTIONAL { ?item wdt:P131 ?admin. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "pt,en". }
 }
 LIMIT ${limit}`;
   const url = `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(query)}`;
@@ -553,16 +705,61 @@ LIMIT ${limit}`;
     }, 15000 + attempt * 5000);
 
     if (response?.ok) {
-      const data = await response.json();
-      return data.results?.bindings ?? [];
+      try {
+        const data = await response.json();
+        return data.results?.bindings ?? [];
+      } catch {
+        lastStatus = "invalid json";
+      }
     }
 
-    lastStatus = response ? `${response.status} ${response.statusText}` : "timeout";
+    lastStatus = response && lastStatus !== "invalid json" ? `${response.status} ${response.statusText}` : lastStatus;
     await delay(750 * attempt);
   }
 
   console.warn(`Wikidata ${countryId}: ${lastStatus}`);
   return [];
+}
+
+async function fetchCommonsAreaCandidates(area, limit) {
+  const url = new URL("https://commons.wikimedia.org/w/api.php");
+  url.searchParams.set("action", "query");
+  url.searchParams.set("format", "json");
+  url.searchParams.set("origin", "*");
+  url.searchParams.set("list", "geosearch");
+  url.searchParams.set("gscoord", `${area.latitude}|${area.longitude}`);
+  url.searchParams.set("gsradius", String(Math.min(area.radiusMeters, 10000)));
+  url.searchParams.set("gslimit", String(Math.min(limit, 500)));
+  url.searchParams.set("gsnamespace", "6");
+
+  const data = await fetchJsonWithRetries(url, {
+    headers: {
+      "User-Agent": userAgent,
+    },
+  }, 25000);
+
+  return (data?.query?.geosearch ?? [])
+    .map((page) => {
+      const imageTitle = page.title;
+      if (!imageTitle?.startsWith("File:") || hasBlockedImageName(imageTitle)) {
+        return null;
+      }
+
+      return {
+        itemId: `commons-${page.pageid}`,
+        countryName: area.country,
+        adminId: `commons-area-${slugify(area.city)}`,
+        itemLabel: cleanFileTitle(imageTitle),
+        adminLabel: area.city,
+        typeId: null,
+        imageTitle,
+        coordinates: {
+          latitude: Number(page.lat),
+          longitude: Number(page.lon),
+        },
+      };
+    })
+    .filter(Boolean);
 }
 
 async function fetchWikidataPreferredCandidates(itemIds) {
@@ -635,6 +832,16 @@ async function fetchEntityLabels(candidates) {
   ];
   const labels = new Map();
 
+  for (const candidate of candidates) {
+    if (candidate.itemId && candidate.itemLabel) {
+      labels.set(candidate.itemId, candidate.itemLabel);
+    }
+
+    if (candidate.adminId && candidate.adminLabel) {
+      labels.set(candidate.adminId, candidate.adminLabel);
+    }
+  }
+
   for (const chunk of chunkArray(ids, 50)) {
     const url = new URL("https://www.wikidata.org/w/api.php");
     url.searchParams.set("action", "wbgetentities");
@@ -669,7 +876,7 @@ function buildLocation(candidate, labelMap, commonsMap, existingIds, existingIma
   }
 
   const { latitude, longitude } = candidate.coordinates;
-  if (latitude < 34 || latitude > 72 || longitude < -25 || longitude > 45) {
+  if (latitude < 32 || latitude > 72 || longitude < -32 || longitude > 45) {
     stats.outOfBounds += 1;
     return null;
   }
@@ -995,6 +1202,14 @@ function cleanLabel(value) {
     .trim();
 }
 
+function cleanFileTitle(value) {
+  return cleanHtml(value)
+    .replace(/^File:/i, "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_-]+/g, " ")
+    .trim();
+}
+
 function cleanHtml(value) {
   return String(value ?? "")
     .replace(/<[^>]*>/g, " ")
@@ -1112,7 +1327,11 @@ async function fetchJsonWithRetries(url, options, timeoutMs, attempts = 3) {
     const response = await fetchWithTimeout(url, options, timeoutMs + attempt * 2500);
 
     if (response?.ok) {
-      return response.json();
+      try {
+        return await response.json();
+      } catch {
+        // retry below
+      }
     }
 
     await delay(500 * attempt);

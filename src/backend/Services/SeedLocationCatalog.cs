@@ -45,12 +45,7 @@ public sealed class SeedLocationCatalog
 
     private static IReadOnlyList<SeedLocation> LoadFromJson(IWebHostEnvironment environment)
     {
-        var seedPath = Path.GetFullPath(Path.Combine(
-            environment.ContentRootPath,
-            "..",
-            "database",
-            "seed",
-            "locations.json"));
+        var seedPath = GetSeedPath(environment);
 
         if (!File.Exists(seedPath))
         {
@@ -78,33 +73,48 @@ public sealed class SeedLocationCatalog
             return LoadFromJson(environment);
         }
 
-        var databaseLocations = TryLoadAllFromPostgres(logger, store);
-
-        if (databaseLocations.Count > 0)
+        if (File.Exists(GetSeedPath(environment)))
         {
-            logger.LogInformation("Loaded {LocationCount} locations from PostgreSQL.", databaseLocations.Count);
-            return databaseLocations;
+            var fileLocations = LoadFromJson(environment);
+
+            try
+            {
+                var importedLocations = store
+                    .ImportAndLoadAsync(fileLocations)
+                    .GetAwaiter()
+                    .GetResult();
+
+                logger.LogInformation("Upserted and loaded {LocationCount} seed locations from PostgreSQL.", importedLocations.Count);
+                return importedLocations;
+            }
+            catch (Exception exception) when (exception is not InvalidOperationException)
+            {
+                logger.LogWarning(
+                    exception,
+                    "Could not upsert locations into PostgreSQL. Falling back to existing PostgreSQL rows or locations.json.");
+                var databaseLocations = TryLoadAllFromPostgres(logger, store);
+                return databaseLocations.Count > 0 ? databaseLocations : fileLocations;
+            }
         }
 
-        var fileLocations = LoadFromJson(environment);
-
-        try
+        var existingLocations = TryLoadAllFromPostgres(logger, store);
+        if (existingLocations.Count > 0)
         {
-            var importedLocations = store
-                .ImportAndLoadAsync(fileLocations)
-                .GetAwaiter()
-                .GetResult();
+            logger.LogInformation("Loaded {LocationCount} locations from PostgreSQL.", existingLocations.Count);
+            return existingLocations;
+        }
 
-            logger.LogInformation("Seeded and loaded {LocationCount} locations from PostgreSQL.", importedLocations.Count);
-            return importedLocations;
-        }
-        catch (Exception exception) when (exception is not InvalidOperationException)
-        {
-            logger.LogWarning(
-                exception,
-                "Could not load locations from PostgreSQL. Falling back to locations.json.");
-            return fileLocations;
-        }
+        return LoadFromJson(environment);
+    }
+
+    private static string GetSeedPath(IWebHostEnvironment environment)
+    {
+        return Path.GetFullPath(Path.Combine(
+            environment.ContentRootPath,
+            "..",
+            "database",
+            "seed",
+            "locations.json"));
     }
 
     private static IReadOnlyList<SeedLocation> TryLoadAllFromPostgres(

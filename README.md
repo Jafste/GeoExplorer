@@ -11,7 +11,7 @@
 
 ## Estado atual
 
-🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 6000 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, com 4000 imagens principais Wikimedia Commons, 2000 panoramas 360 Panoramax como locais jogáveis e 1844 fontes Mapillary opcionais resolvidas pelo backend. Depois avancei para uma primeira versão multiplayer com salas por link, dono da sala, nomes únicos por sala, rondas sincronizadas por SignalR e resultados guardados em PostgreSQL. Fiz ainda uma validação limpa do perfil `full` em Docker, com sessão solo, sala multiplayer curta, migrations do Entity Framework e dados confirmados em PostgreSQL. Durante os testes e o feedback que fui recebendo, corrigi problemas de interface, de fluxo e de desempenho; um dos riscos mais claros foi perceber que carregar o catálogo completo de locais no frontend não era sustentável. Por isso, o modo `api` com PostgreSQL passou a ser o caminho real da aplicação, enquanto o modo `mock` ficou apenas como apoio pequeno de desenvolvimento. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
+🟢 **Verde** — A proposta foi aprovada e já estruturei os documentos principais da Entrega 1. Também implementei um frontend jogável com mapa real e 10975 locais reais, e o backend em ASP.NET Core já suporta o fluxo principal. Quando as opções de PostgreSQL estão ativas, o projeto já guarda catálogo, sessões, rondas, palpites e resultados em base de dados, incluindo a recuperação de sessões guardadas após reinício do serviço. O catálogo vem de `locations.json` e é sincronizado para PostgreSQL por upsert: IDs novos são inseridos, IDs existentes são atualizados se mudaram e linhas antigas não são apagadas automaticamente para preservar histórico de rondas. Também validei o frontend em modo `api` com backend e PostgreSQL em Docker, passando por criação de sessão, rondas, palpites e relatório final. Preparei várias fontes visuais por local, com 5513 imagens principais Wikimedia Commons, 5462 panoramas 360 Panoramax como locais jogáveis e 1844 fontes Mapillary opcionais resolvidas pelo backend. Depois avancei para uma primeira versão multiplayer com salas por link, dono da sala, nomes únicos por sala, rondas sincronizadas por SignalR e resultados guardados em PostgreSQL. Fiz ainda uma validação limpa do perfil `full` em Docker, com sessão solo, sala multiplayer curta, migrations do Entity Framework e dados confirmados em PostgreSQL. Durante os testes e o feedback que fui recebendo, corrigi problemas de interface, de fluxo e de desempenho; um dos riscos mais claros foi perceber que carregar o catálogo completo de locais no frontend não era sustentável. Por isso, o modo `api` com PostgreSQL passou a ser o caminho real da aplicação, enquanto o modo `mock` ficou apenas como apoio pequeno de desenvolvimento. Mantive PostgreSQL em Docker como base principal; Supabase completo fica como hipótese futura e Turso/libSQL só será reavaliado depois de observar dados reais de uso.
 
 ---
 
@@ -26,14 +26,15 @@
 - [x] Camada de dados abstrata com suporte a `mock` e `api`
 - [x] Amostra `mock` pequena com locais reais e contratos de jogo alinhados com a API
 - [x] Mapa real no frontend com OpenStreetMap/Leaflet
-- [x] 6000 locais reais com imagem, fonte, licença e atribuição
+- [x] 10975 locais reais com imagem, fonte, licença e atribuição
 - [x] Resultados de ronda com dados de fonte/licença e respetivas ligações
 - [x] Campo `visualSources` preparado para várias fontes visuais por local
-- [x] 2000 locais Panoramax 360 validados como imagem principal jogável
+- [x] 5462 locais Panoramax 360 validados como imagem principal jogável
 - [x] Ferramenta local para procurar candidatos Mapillary com token fora do repositório
 - [x] Endpoint backend para resolver thumbnails Mapillary com token local
 - [x] 1844 locais com fonte adicional Mapillary através do backend
 - [x] Escolha de uma fonte visual disponível por ronda com atribuição e licença
+- [x] Escolha opcional de países nas sessões solo e multiplayer
 - [x] Seleção de rondas que evita locais demasiado próximos na mesma sessão quando há alternativas
 - [x] Ferramenta local de verificação para detetar duplicados fortes e textos repetidos no conjunto de locais
 - [x] Primeira revisão dos grupos de descrições repetidas no conjunto de locais
@@ -128,14 +129,14 @@ No Dockerfile do frontend usei `npm ci` em vez de `npm install`, porque o Docker
 Versão pública: https://geoexplorer.firmwork.pt/
 Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
-Contador da base de dados: http://localhost:8080/api/diagnostics/database
+Contador da base de dados: http://localhost:8080/api/diagnostics/database (só com GeoExplorer__ExposeDatabaseDiagnostics=true)
 Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
 ```
 
 ### Logs técnicos
 
-Inicialmente ainda não tinha uma solução de logs em ficheiro, porque durante os testes locais conseguia acompanhar erros e warnings diretamente pela consola do backend. Quando passei a validar a aplicação na VPS, esse método deixou de ser suficiente: era mais difícil perceber que erros aconteciam em produção, sobretudo em fluxos multiplayer, SignalR e pedidos feitos por outros utilizadores.
+Inicialmente ainda não tinha uma solução de logs em ficheiro, porque durante os testes locais conseguia acompanhar erros e warnings diretamente pela consola do backend. Quando passei a validar a aplicação na VPS com utilizadores externos, incluindo pessoas próximas como colegas de trabalho e amigos, esse método deixou de ser suficiente: era mais difícil perceber que erros aconteciam em produção, sobretudo em fluxos multiplayer, SignalR e pedidos feitos por outros utilizadores.
 
 Por isso adicionei Serilog para manter logs técnicos do ASP.NET Core, dos serviços internos e do SignalR. Os logs continuam a aparecer na consola, por isso em Docker posso usar:
 
@@ -156,7 +157,7 @@ Os ficheiros rodam por dia, têm limite de 10 MB por ficheiro e ficam retidos at
 
 O projeto não usa cookies próprios, analytics externo ou recolha genérica de cliques/movimentos. Cheguei a considerar uma análise de cliques e comportamento para perceber melhor a utilização, mas antes de implementar essa ideia decidi separar a questão de privacidade. Com apoio do ChatGPT, transformei essa dúvida num documento técnico de privacidade que clarifica o que existe agora e o que teria de ser desenhado antes de recolher métricas futuras. A aplicação usa `localStorage` apenas para funcionalidades do jogo, como tutorial concluído, identificação local do jogador multiplayer e retoma de sala. O detalhe técnico está em [`docs/privacy.md`](docs/privacy.md).
 
-O frontend corre em modo `api` por omissão; para desenvolvimento isolado posso usar `npm run dev:mock`, que usa uma amostra pequena de locais reais. A base de dados PostgreSQL corre em Docker; o backend já consegue importar o catálogo de locais, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. Com o catálogo PostgreSQL ativo, as rondas pedem candidatos aleatórios à tabela `locations`. Validei o perfil `full` com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo e uma sala multiplayer curta. Também validei a versão pública em `https://geoexplorer.firmwork.pt/`, com `/api/health` ativo, diagnóstico da base de dados a responder e criação de sala multiplayer. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
+O frontend corre em modo `api` por omissão; para desenvolvimento isolado posso usar `npm run dev:mock`, que usa uma amostra pequena de locais reais. A base de dados PostgreSQL corre em Docker; o backend já consegue sincronizar o catálogo de locais por upsert a partir de `locations.json`, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. Com o catálogo PostgreSQL ativo, as rondas pedem candidatos aleatórios à tabela `locations`. Validei o perfil `full` com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo, uma sala multiplayer curta e o diagnóstico técnico da base de dados com a flag própria ativa. Também validei a versão pública em `https://geoexplorer.firmwork.pt/`, com `/api/health` ativo, criação de sala multiplayer e testes com utilizadores externos, incluindo pessoas próximas como colegas de trabalho e amigos. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
 
 ---
 
@@ -207,7 +208,7 @@ Para detalhe adicional, ver:
 
 ### Nota sobre aprendizagem e testes
 
-Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à vontade: organização dos testes automatizados em .NET, validação dos contratos entre frontend e backend, verificação do schema SQL e criação de testes que me dão mais segurança quando precisar de alterar classes como `GameSessionService` e `SeedLocationCatalog`.
+Usei apoio do ChatGPT sobretudo nas partes em que ainda não me sentia tão à vontade: organização dos testes automatizados em .NET, validação dos contratos entre frontend e backend, verificação do modelo de dados/migrations EF e criação de testes que me dão mais segurança quando precisar de alterar classes como `GameSessionService` e `SeedLocationCatalog`.
 
 Também usei o ChatGPT para me ajudar a adicionar mais locais às recomendações, depois de perceber nos testes que algumas rondas estavam a repetir locais ou a mostrar escolhas muito parecidas em sessões diferentes.
 

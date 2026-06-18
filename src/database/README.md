@@ -1,12 +1,11 @@
 # Database
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados inicial do catálogo real e serve como seed/fallback do backend. O frontend em `mock` usa apenas uma amostra pequena de locais reais para não empacotar o dataset completo. Nesta fase o seed já inclui 6000 locais reais com dados de fonte/licença validados: 4000 com imagem principal Wikimedia Commons, 2000 com panorama 360 Panoramax como imagem principal jogável e 1844 com Mapillary como fonte visual adicional.
-- `sql/001-init.sql` documenta uma versão legível do esquema base previsto em PostgreSQL.
+- `seed/locations.json` é o conjunto de dados controlado do catálogo real e serve como seed/fallback do backend. O frontend em `mock` usa apenas uma amostra pequena de locais reais para não empacotar o dataset completo. Nesta fase o seed já inclui 10975 locais reais com dados de fonte/licença validados: 5513 com imagem principal Wikimedia Commons, 5462 com panorama 360 Panoramax como imagem principal jogável e 1844 com Mapillary como fonte visual adicional.
 
 Usei o ChatGPT como apoio para pensar nesta parte do trabalho, sobretudo para recomendar a criação de ferramentas locais que me ajudassem a encontrar mais locais/fontes visuais e a perceber erros ou avisos durante as auditorias do dataset. As ferramentas não substituíram a revisão manual: serviram para acelerar a recolha, organizar candidatos e chamar a atenção para problemas como dados em falta, imagens repetidas, locais demasiado próximos ou fontes visuais fracas.
 
-Nesta parte do MVP, já consigo importar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A primeira versão multiplayer também guarda salas, jogadores, rondas e palpites em PostgreSQL. As salas podem ser privadas por link ou públicas na lista de salas abertas; se tiverem password, o backend guarda apenas o hash da password. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
+Nesta parte do MVP, já consigo sincronizar o catálogo de locais para PostgreSQL através de Entity Framework Core. O backend também guarda sessões, rondas, palpites e resultados quando a base de dados está ativa, e consegue recuperar uma sessão guardada quando ela já não está em memória. A primeira versão multiplayer também guarda salas, jogadores, rondas e palpites em PostgreSQL. As salas podem ser privadas por link ou públicas na lista de salas abertas; se tiverem password, o backend guarda apenas o hash da password. A base de dados pode ser iniciada isoladamente com o perfil `database`; o perfil `full` arranca frontend em modo API, backend e PostgreSQL.
 
 ```bash
 docker compose --profile database up
@@ -21,7 +20,7 @@ ConnectionStrings__GeoExplorerDb=Host=localhost;Port=15432;Database=geoexplorer;
 
 Dentro do Docker Compose, o backend usa o host `db` e recebe a connection string por variável de ambiente. A porta externa do PostgreSQL é `15432` por omissão para evitar conflito com uma instalação local na porta `5432`.
 
-No perfil completo, `GeoExplorer__UsePostgresCatalog=true` faz o backend importar o conteúdo do JSON para a tabela `locations` quando precisa de semear a base de dados. Em runtime, as rondas solo e multiplayer passam a pedir candidatos aleatórios ao PostgreSQL, em vez de dependerem do dataset completo no bundle do frontend ou de uma seleção feita sempre sobre o catálogo inteiro em memória. Depois da primeira importação, só volta a escrever locais quando encontra dados novos ou alterados. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas. No multiplayer, a mesma flag ativa a gravação de `multiplayer_rooms`, `multiplayer_players`, `multiplayer_rounds` e `multiplayer_guesses`.
+No perfil completo, `GeoExplorer__UsePostgresCatalog=true` faz o backend sincronizar `seed/locations.json` para a tabela `locations` no arranque do serviço. A sincronização é um upsert idempotente feito pelo Entity Framework: se o `id` já existe, o backend compara os campos e atualiza só quando há alterações; se o `id` ainda não existe, insere uma nova linha. Locais que já estão na base de dados mas saíram do JSON não são apagados automaticamente, para não partir histórico de `session_rounds` ou `multiplayer_rounds`. Em runtime, as rondas solo e multiplayer pedem candidatos aleatórios ao PostgreSQL, em vez de dependerem do dataset completo no bundle do frontend ou de uma seleção feita sempre sobre o catálogo inteiro em memória. Quando `GeoExplorer__UsePostgresPersistence=true`, as sessões criadas e rondas resolvidas são guardadas em `game_sessions` e `session_rounds`; se uma sessão não estiver na cache em memória, o backend tenta recuperá-la a partir dessas tabelas. No multiplayer, a mesma flag ativa a gravação de `multiplayer_rooms`, `multiplayer_players`, `multiplayer_rounds` e `multiplayer_guesses`.
 
 ## Tabelas principais
 
@@ -37,14 +36,14 @@ No perfil completo, `GeoExplorer__UsePostgresCatalog=true` faz o backend importa
 
 O modelo ER atualizado está em `docs/architecture/data-model.md`.
 
-O schema passou a ser criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. O ficheiro SQL fica como apoio de leitura, mas já não é montado automaticamente no arranque do PostgreSQL. Validei o perfil `full` com um volume limpo: as migrations foram aplicadas, o catálogo foi importado e ficaram gravadas uma sessão solo e uma sala multiplayer curta. Se existir um volume antigo criado antes das migrations, o backend pode encontrar tabelas como `game_sessions` sem histórico EF e falhar com `relation already exists`. Nesse caso, como é ambiente de desenvolvimento, o caminho mais simples é recriar o volume antes de voltar a arrancar o perfil `full`:
+O schema é criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. Validei o perfil `full` com um volume limpo: as migrations foram aplicadas, o catálogo foi importado e ficaram gravadas uma sessão solo e uma sala multiplayer curta. Se existir um volume antigo criado antes das migrations, o backend pode encontrar tabelas como `game_sessions` sem histórico EF e falhar com `relation already exists`. Nesse caso, como é ambiente de desenvolvimento, o caminho mais simples é recriar o volume antes de voltar a arrancar o perfil `full`:
 
 ```bash
 docker compose --profile full down -v
 docker compose --profile full up --build
 ```
 
-O endpoint `/api/diagnostics/database` devolve um contador simples de leituras e escritas feitas na base de dados. Usei este contador para observar o padrão real durante testes locais e apoiar uma decisão futura sobre PostgreSQL hosted, Supabase ou Turso/libSQL, sem introduzir queries SQL manuais no código da aplicação.
+O endpoint `/api/diagnostics/database` só fica ativo quando `GeoExplorer__ExposeDatabaseDiagnostics=true`. No `docker-compose`, fica desligado por omissão. Usei este contador para observar o padrão real durante testes locais e apoiar uma decisão futura sobre PostgreSQL hosted, Supabase ou Turso/libSQL, sem introduzir queries SQL manuais no código da aplicação.
 
 Decidi manter PostgreSQL como base principal e não usar Supabase completo em Docker nesta fase. Supabase fica como hipótese futura se forem necessárias funcionalidades geridas como Auth, Storage, Realtime simples ou Row Level Security. Para multiplayer/realtime do jogo, implementei SignalR no backend, porque a sincronização tem lógica própria de salas, jogadores, timers, palpites e pontuação.
 
@@ -72,7 +71,7 @@ Quando um candidato Mapillary for aprovado, não devo guardar o `thumb_1024_url`
 Para acrescentar panoramas 360 reais a partir da API pública Panoramax, posso usar:
 
 ```bash
-node src/database/tools/add-panoramax-locations.mjs --target 2000 --write
+node src/database/tools/add-panoramax-locations.mjs --target <total-panoramax> --write
 ```
 
 A ferramenta procura em grelhas de várias áreas europeias, filtra candidatos com metadados de panorama 360/equiretangular ou proporção aproximada 2:1, evita imagens repetidas e rejeita pontos demasiado próximos dos locais existentes. As entradas Panoramax usam licença `CC BY-SA 4.0`, guardam a imagem estável devolvida pela API e mantêm a ligação STAC original em `imageSourceUrl`.
@@ -126,7 +125,7 @@ Além desta revisão do conjunto de locais, o backend tenta não escolher locais
 Para aumentar o conjunto de locais sem introduzir dados sem licença, posso usar a ferramenta local:
 
 ```bash
-node src/database/tools/expand-wikimedia-locations.mjs --target-count 4000
+node src/database/tools/expand-wikimedia-locations.mjs --target-count <total-wikimedia>
 ```
 
 A ferramenta procura candidatos no Wikidata, recolhe metadados de imagem no Wikimedia Commons, evita imagens principais repetidas, pontos demasiado próximos, labels técnicas visíveis e ficheiros que parecem ser imagens aéreas/panorâmicas por rever. Também limita quantos locais entram por país em cada passe, para evitar que o dataset fique concentrado num conjunto pequeno de países.

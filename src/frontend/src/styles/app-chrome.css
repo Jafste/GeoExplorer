@@ -192,6 +192,134 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
+.country-picker {
+  position: relative;
+}
+
+.country-dropdown {
+  position: relative;
+}
+
+.country-trigger,
+.country-search {
+  appearance: none;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--text-main);
+}
+
+.country-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  font-weight: 800;
+}
+
+.country-trigger:hover,
+.country-trigger.is-open {
+  border-color: rgba(154, 232, 93, 0.32);
+  background: rgba(154, 232, 93, 0.11);
+}
+
+.country-trigger-arrow {
+  color: var(--text-muted);
+  transition: transform 180ms ease;
+}
+
+.country-trigger.is-open .country-trigger-arrow {
+  transform: rotate(180deg);
+  color: #9ae85d;
+}
+
+.country-search:focus-visible,
+.country-trigger:focus-visible,
+.country-option-row:focus-visible {
+  outline: 2px solid rgba(154, 232, 93, 0.72);
+  outline-offset: 2px;
+}
+
+.country-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+  margin-top: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgb(16, 20, 22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.country-option-list {
+  display: grid;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+  background: rgb(16, 20, 22);
+}
+
+.country-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 34px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.country-option-row:hover {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.country-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(224, 227, 230, 0.32);
+  border-radius: 4px;
+  color: transparent;
+  font-size: 0.68rem;
+}
+
+.country-option-row.is-selected {
+  color: var(--text-main);
+  background: rgba(154, 232, 93, 0.12);
+}
+
+.country-option-row.is-selected .country-check {
+  border-color: rgba(154, 232, 93, 0.65);
+  background: #9ae85d;
+  color: #09100b;
+}
+
+.country-option-row:disabled {
+  opacity: 0.46;
+}
+
+.country-empty,
+.field-hint {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
 .eyebrow,
 .muted-eyebrow,
 .field-label {

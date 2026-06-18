@@ -34,6 +34,18 @@ public sealed class MultiplayerRoomServiceTests
     }
 
     [TestMethod]
+    public async Task CreateRoom_PreservesValidatedCountry()
+    {
+        var service = CreateService();
+
+        var created = await service.CreateRoomAsync(
+            new CreateMultiplayerRoomRequest("player-a", "Marcos", DefaultConfig() with { Countries = ["Espanha", "Portugal"] }),
+            "connection-a");
+
+        CollectionAssert.AreEquivalent(new[] { "Espanha", "Portugal" }, created.State.Config.Countries!.ToArray());
+    }
+
+    [TestMethod]
     public async Task CreateRoom_WithPassword_HidesPasswordAndRequiresItOnJoin()
     {
         var service = CreateService();

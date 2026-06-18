@@ -267,8 +267,15 @@ public sealed class MultiplayerRoomService
 
             var selectedLocations = _locationSelector.SelectRandomLocations(
                 room.Config.Region,
+                room.Config.Countries ?? (room.Config.Country is null ? null : [room.Config.Country]),
                 room.Config.RoundCount,
                 _randomIndex);
+
+            if (selectedLocations.Count < room.Config.RoundCount)
+            {
+                throw new GameFlowException("Não há locais suficientes para as rondas pedidas neste âmbito.", StatusCodes.Status400BadRequest);
+            }
+
             room.Rounds = selectedLocations.Select((location, index) => new MultiplayerRoundState
             {
                 Id = Guid.NewGuid(),
@@ -1245,7 +1252,7 @@ public sealed class MultiplayerRoomService
         return round;
     }
 
-    private static CreateSessionRequest ValidateConfig(CreateSessionRequest config)
+    private CreateSessionRequest ValidateConfig(CreateSessionRequest config)
     {
         if (!string.Equals(config.Region, "europe", StringComparison.OrdinalIgnoreCase))
         {
@@ -1259,8 +1266,15 @@ public sealed class MultiplayerRoomService
 
         var timed = config.Timed;
         var roundTimeSeconds = GameRoundRules.ValidateRoundTime(timed, config.RoundTimeSeconds);
+        var countries = _locationSelector.NormalizeCountries(config.Region, config.Country, config.Countries);
 
-        return new CreateSessionRequest("europe", config.RoundCount, timed, roundTimeSeconds);
+        return new CreateSessionRequest(
+            "europe",
+            config.RoundCount,
+            timed,
+            roundTimeSeconds,
+            countries is { Count: 1 } ? countries[0] : null,
+            countries);
     }
 
     private static string ValidatePlayerId(string playerId)

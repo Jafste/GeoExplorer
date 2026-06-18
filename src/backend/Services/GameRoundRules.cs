@@ -10,9 +10,9 @@ internal static class GameRoundRules
     public const int MaxRoundTimeSeconds = 3600;
 
     private const double MinimumRoundLocationDistanceKm = 1.0;
-    private const double MinGuessLatitude = 34;
+    private const double MinGuessLatitude = 27.5;
     private const double MaxGuessLatitude = 72;
-    private const double MinGuessLongitude = -25;
+    private const double MinGuessLongitude = -31.5;
     private const double MaxGuessLongitude = 45;
     private const int MaxGuessLabelLength = 80;
 

@@ -3,6 +3,7 @@ import {
   createQuickSessionConfig,
   QUICK_SESSION_MAX_ROUNDS,
   QUICK_SESSION_MAX_TIME_SECONDS,
+  QUICK_SESSION_MIN_TIME_SECONDS,
 } from "./quickSessionConfig";
 
 function sequenceRandom(values: number[]) {
@@ -16,7 +17,7 @@ describe("createQuickSessionConfig", () => {
       region: "europe",
       roundCount: 4,
       timed: true,
-      roundTimeSeconds: 31,
+      roundTimeSeconds: 35,
     });
   });
 
@@ -25,7 +26,7 @@ describe("createQuickSessionConfig", () => {
       region: "europe",
       roundCount: 1,
       timed: true,
-      roundTimeSeconds: 1,
+      roundTimeSeconds: QUICK_SESSION_MIN_TIME_SECONDS,
     });
 
     expect(createQuickSessionConfig(sequenceRandom([0.999999, 0.999999]))).toEqual({

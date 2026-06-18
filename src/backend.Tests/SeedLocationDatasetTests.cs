@@ -43,8 +43,8 @@ public sealed partial class SeedLocationDatasetTests
 
         foreach (var location in locations)
         {
-            Assert.IsTrue(location.Latitude is >= 34 and <= 72, $"{location.Id} tem latitude fora da Europa suportada.");
-            Assert.IsTrue(location.Longitude is >= -25 and <= 45, $"{location.Id} tem longitude fora da Europa suportada.");
+            Assert.IsTrue(location.Latitude is >= 27.5 and <= 72, $"{location.Id} tem latitude fora da Europa suportada.");
+            Assert.IsTrue(location.Longitude is >= -31.5 and <= 45, $"{location.Id} tem longitude fora da Europa suportada.");
         }
     }
 

@@ -49,7 +49,7 @@ describe("getMultiplayerRoundRemainingSeconds", () => {
 
 describe("formatMultiplayerRoundTimer", () => {
   it("formats timed and untimed round labels", () => {
-    expect(formatMultiplayerRoundTimer(baseRound, 35)).toBe("00:35 restantes");
+    expect(formatMultiplayerRoundTimer(baseRound, 35)).toBe("00:35");
     expect(formatMultiplayerRoundTimer({ ...baseRound, timed: false, timeLimitSeconds: null }, null)).toBe("Livre");
   });
 });

@@ -16,7 +16,7 @@
 |----|-------|--------------|---------|-----------|
 | R01 | Deriva de âmbito para múltiplos modos de jogo, multijogador ou autenticação antes de o MVP estar estável | Média | Alto | Manter o MVP contratualizado em `docs/scope/requirements.md`; qualquer extensão fica classificada como `Should`, `Could` ou `Won't have`. |
 | R02 | Dependência excessiva de APIs externas para imagens, localizações ou mapas durante a demonstração | Média | Alto | Preparar um conjunto de locais revisto para o MVP e usar serviços externos apenas como apoio à recolha/preparação dos dados. |
-| R03 | Dataset europeu insuficiente, inconsistente ou com dúvidas de licenciamento | Baixa | Alto | Manter o conjunto atual de 6000 locais com origem documentada, coordenadas, licença, atribuição e verificação automática de duplicados, proximidade e pistas demasiado diretas. |
+| R03 | Dataset europeu insuficiente, inconsistente ou com dúvidas de licenciamento | Baixa | Alto | Manter o conjunto atual de 10975 locais com origem documentada, coordenadas, licença, atribuição e verificação automática de duplicados, proximidade e pistas demasiado diretas. |
 | R04 | Subestimação da complexidade de ligar frontend com mapa, API .NET e base de dados | Baixa | Médio | Implementei e validei uma parte jogável de ponta a ponta com frontend em `api`, backend e PostgreSQL em Docker. |
 | R05 | Falta de tempo para testes, diagramas, relatório e preparação da defesa | Média | Médio | Reservar semanas específicas para estabilização e documentação e evitar concentrar trabalho apenas perto das entregas formais. |
 | R06 | Divergência entre o comportamento do frontend em `mock` e a API real | Baixa | Médio | Definir contratos comuns para `mock` e `api`, reutilizar o mesmo dataset inicial, alinhar regras de seleção de rondas e manter testes de fluxo para ambos os modos principais. |
@@ -49,4 +49,4 @@
 | 2 de junho de 2026 | R14 | Revisão de segredos, CORS e validações server-side antes da validação final em Docker | Mitigado para o MVP |
 | 2 de junho de 2026 | R04, R07, R12 | Validação limpa do perfil `full` com sessão solo, sala multiplayer curta, migrations EF e dados confirmados em PostgreSQL | Mitigado para o MVP |
 | 10 de junho de 2026 | R03 | Expansão do conjunto para 6000 locais reais, incluindo 4000 Wikimedia Commons e 2000 Panoramax como fontes principais | Mitigado para o MVP |
-| 12 de junho de 2026 | R06, R12, R15 | Feedback de uso, testes na VPS, validação da versão pública e jogos com mais pessoas levaram a ajustes de interface, multiplayer e carregamento de dados | Mitigado para o MVP |
+| 12 de junho de 2026 | R06, R12, R15 | Feedback de uso, testes na VPS, validação da versão pública e jogos com utilizadores externos, incluindo pessoas próximas como colegas de trabalho e amigos, levaram a ajustes de interface, multiplayer e carregamento de dados | Mitigado para o MVP |

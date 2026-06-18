@@ -1,4 +1,5 @@
 import { Card } from "../../components/layout/card/card";
+import { CountryScopeSelect } from "../../components/CountryScopeSelect";
 import { RoundTimeControl } from "../../components/RoundTimeControl";
 import { AppNotice } from "../../components/ui/AppNotice";
 import { SegmentedControl } from "../../components/ui/SegmentedControl";
@@ -115,6 +116,10 @@ export function MultiplayerLobbyView({
 
         <Card as="article" variant="setupPanelStack" className="multiplayer-lobby-card multiplayer-lobby-config-card">
           <span className="muted-eyebrow">Briefing</span>
+          <CountryScopeSelect
+            value={config.countries ?? (config.country ? [config.country] : [])}
+            onChange={(countries) => onUpdateConfig({ ...config, country: null, countries })}
+          />
           <SegmentedControl
             label="Número de rondas"
             options={[

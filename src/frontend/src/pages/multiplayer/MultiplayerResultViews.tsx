@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { AppNotice } from "../../components/ui/AppNotice";
@@ -10,6 +12,8 @@ import type {
 } from "../../types/game";
 import { getMultiplayerRoundResolutionLabel } from "./multiplayerLabels";
 import { DisconnectNotice, formatPlayerName } from "./MultiplayerRoomShared";
+
+const ROUND_RESULT_PAGE_SIZE = 3;
 
 interface MultiplayerRoundResultViewProps {
   busy: boolean;
@@ -38,12 +42,21 @@ export function MultiplayerRoundResultView({
   room,
   roundResult,
 }: MultiplayerRoundResultViewProps) {
+  const [leaderboardPage, setLeaderboardPage] = useState(0);
   const ownResult = roundResult.playerResults.find((result) => result.playerId === playerId) ?? null;
   const actual = {
     latitude: roundResult.correctLatitude,
     longitude: roundResult.correctLongitude,
     label: `${roundResult.city}, ${roundResult.country}`,
   };
+  const leaderboardPageCount = Math.max(1, Math.ceil(roundResult.playerResults.length / ROUND_RESULT_PAGE_SIZE));
+  const visibleLeaderboardPage = Math.min(leaderboardPage, leaderboardPageCount - 1);
+  const leaderboardStart = visibleLeaderboardPage * ROUND_RESULT_PAGE_SIZE;
+  const visiblePlayerResults = roundResult.playerResults.slice(
+    leaderboardStart,
+    leaderboardStart + ROUND_RESULT_PAGE_SIZE,
+  );
+  const hasLeaderboardPages = leaderboardPageCount > 1;
 
   return (
     <section className="screen-shell multiplayer-screen">
@@ -70,7 +83,7 @@ export function MultiplayerRoundResultView({
       </div>
 
       <div className="multiplayer-result-grid">
-        <Card as="article" variant="tactical">
+        <Card as="article" className="multiplayer-result-map-card" variant="tacticalStack">
           <EuropeGuessMap
             actual={actual}
             allowExploration
@@ -81,23 +94,51 @@ export function MultiplayerRoundResultView({
             showComparisonLine={Boolean(ownResult?.guess)}
             showFooter={false}
           />
+          <a className="multiplayer-result-jump" href="#round-ranking">
+            Ver classificação
+          </a>
         </Card>
 
-        <Card as="article" variant="tacticalStack">
-          <span className="muted-eyebrow">Ranking da ronda</span>
-          <h3>{roundResult.city}, {roundResult.country}</h3>
-          <div className="multiplayer-leaderboard">
-            {roundResult.playerResults.map((result, index) => (
-              <div className="multiplayer-leaderboard-row" key={result.playerId}>
-                <div className="multiplayer-leaderboard-copy">
-                  <span>{index + 1}. {formatPlayerName(result.displayName, result.playerId, currentPlayerId)}</span>
-                  <small>{getMultiplayerRoundResolutionLabel(result.resolution)}</small>
+        <div className="multiplayer-result-ranking-anchor" id="round-ranking">
+          <Card as="article" variant="tacticalStack">
+            <span className="muted-eyebrow">Ranking da ronda</span>
+            <h3>{roundResult.city}, {roundResult.country}</h3>
+            <div className="multiplayer-leaderboard">
+              {visiblePlayerResults.map((result, index) => (
+                <div className="multiplayer-leaderboard-row" key={result.playerId}>
+                  <div className="multiplayer-leaderboard-copy">
+                    <span>{leaderboardStart + index + 1}. {formatPlayerName(result.displayName, result.playerId, currentPlayerId)}</span>
+                    <small>{getMultiplayerRoundResolutionLabel(result.resolution)}</small>
+                  </div>
+                  <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
                 </div>
-                <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
+              ))}
+            </div>
+            {hasLeaderboardPages ? (
+              <div className="multiplayer-leaderboard-pager" aria-label="Paginação da classificação">
+                <button
+                  aria-label="Página anterior da classificação"
+                  className="multiplayer-pager-button"
+                  disabled={visibleLeaderboardPage === 0}
+                  onClick={() => setLeaderboardPage((page) => Math.max(0, page - 1))}
+                  type="button"
+                >
+                  <ChevronLeft size={17} strokeWidth={2.4} />
+                </button>
+                <span>{visibleLeaderboardPage + 1}/{leaderboardPageCount}</span>
+                <button
+                  aria-label="Página seguinte da classificação"
+                  className="multiplayer-pager-button"
+                  disabled={visibleLeaderboardPage >= leaderboardPageCount - 1}
+                  onClick={() => setLeaderboardPage((page) => Math.min(leaderboardPageCount - 1, page + 1))}
+                  type="button"
+                >
+                  <ChevronRight size={17} strokeWidth={2.4} />
+                </button>
               </div>
-            ))}
-          </div>
-        </Card>
+            ) : null}
+          </Card>
+        </div>
       </div>
     </section>
   );

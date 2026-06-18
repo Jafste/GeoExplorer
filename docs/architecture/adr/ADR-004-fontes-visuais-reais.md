@@ -22,7 +22,7 @@ Para Mapillary, decidi preparar a recolha através de uma ferramenta local, mas 
 
 Também adicionei um endpoint no backend para resolver thumbnails Mapillary sem expor o token no frontend: `/api/media/mapillary/{imageId}`. Isto permite guardar no dataset um caminho estável do próprio projeto em vez de guardar diretamente URLs temporários devolvidos pela API.
 
-Depois da primeira recolha, adicionei Mapillary a 150 locais do dataset como fonte visual adicional. Estas entradas usam `/api/media/mapillary/<id>` em `imageUrl` e mantêm a página Mapillary original em `imageSourceUrl` e `streetViewUrl`. O dataset continuou a evoluir depois desta decisão e tem agora 6000 locais reais: 4000 com fonte principal Wikimedia Commons, 2000 com fonte principal Panoramax e 1844 fontes Mapillary adicionais opcionais.
+Depois da primeira recolha, adicionei Mapillary a 150 locais do dataset como fonte visual adicional. Estas entradas usam `/api/media/mapillary/<id>` em `imageUrl` e mantêm a página Mapillary original em `imageSourceUrl` e `streetViewUrl`. O dataset continuou a evoluir depois desta decisão; a contagem atual fica registada nas atualizações abaixo e no README, para não misturar a decisão original com cada expansão posterior.
 
 O fluxo passa a ser:
 
@@ -66,4 +66,8 @@ Documentei o fluxo de fontes visuais em `docs/architecture/visual-sources.md`. A
 
 ## Atualização de 12 de junho de 2026
 
-Na revisão final, o dataset ficou com 6000 locais reais e passou a incluir Panoramax também como fonte principal de ronda. A distribuição atual é 4000 locais com fonte principal Wikimedia Commons e 2000 com fonte principal Panoramax. Além disso, a auditoria do dataset confirma 2091 fontes visuais Panoramax e 1844 fontes Mapillary guardadas como fontes adicionais quando são úteis. Mantive Mapillary como fonte opcional, resolvida pelo backend quando há token local, para não expor credenciais nem criar dependência obrigatória durante a demonstração.
+Na revisão de 12 de junho, o dataset ficou com 6000 locais reais e passou a incluir Panoramax também como fonte principal de ronda. Nessa fase, a distribuição era 4000 locais com fonte principal Wikimedia Commons e 2000 com fonte principal Panoramax. Além disso, a auditoria do dataset confirmava 2091 fontes visuais Panoramax e 1844 fontes Mapillary guardadas como fontes adicionais quando eram úteis. Mantive Mapillary como fonte opcional, resolvida pelo backend quando há token local, para não expor credenciais nem criar dependência obrigatória durante a demonstração.
+
+## Atualização de 18 de junho de 2026
+
+Depois de reforçar a cobertura por país, o dataset passou para 10975 locais reais. A distribuição atual é 5513 locais com fonte principal Wikimedia Commons e 5462 com fonte principal Panoramax. Além disso, o catálogo mantém 5553 fontes visuais Panoramax e 1844 fontes Mapillary guardadas como fontes adicionais opcionais.

@@ -259,6 +259,10 @@ function validateConfig(config: SessionConfig) {
     throw new Error("Apenas a região europeia está disponível neste MVP.");
   }
 
+  if ((config.countries?.filter(Boolean).length ?? 0) > 5) {
+    throw new Error("Escolhe no máximo 5 países.");
+  }
+
   if (config.roundCount < 1 || config.roundCount > 10) {
     throw new Error("O número de rondas deve estar entre 1 e 10.");
   }
@@ -285,7 +289,15 @@ export function createMockGameDataSource(options: MockGameDataSourceOptions = {}
 
       sessionCounter += 1;
       const sessionId = `mock-session-${sessionCounter}`;
-      const selectedLocations = selectRandomLocations(config.roundCount, locations, getRandomIndex);
+      const countries = (config.countries?.filter(Boolean) ?? (config.country ? [config.country] : []));
+      const eligibleLocations = countries.length > 0
+        ? locations.filter((location) => countries.includes(location.country))
+        : locations;
+      const selectedLocations = selectRandomLocations(config.roundCount, eligibleLocations, getRandomIndex);
+
+      if (selectedLocations.length < config.roundCount) {
+        throw new Error("Não há locais suficientes para as rondas pedidas neste âmbito.");
+      }
 
       const rounds: StoredRound[] = selectedLocations.map((location, index) => ({
         id: `${sessionId}-round-${index + 1}`,

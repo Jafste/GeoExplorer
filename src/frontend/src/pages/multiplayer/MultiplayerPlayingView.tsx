@@ -155,6 +155,7 @@ export function MultiplayerPlayingView({
 
         <RoundMinimapDock
           busy={busy || hasSubmitted}
+          busyLabel={hasSubmitted ? "À espera dos outros" : undefined}
           guess={guess}
           mapHovered={mapHovered}
           mapPinnedOpen={mapPinnedOpen}

@@ -239,7 +239,6 @@
   opacity: 0.12;
 }
 
-.round-floating-strip,
 .round-scene-callout,
 .round-minimap-dock,
 .round-corner-hud {
@@ -249,6 +248,20 @@
 .round-floating-strip {
   top: 88px;
   left: 32px;
+  width: fit-content;
+  max-width: calc(100vw - 64px);
+}
+
+.round-floating-strip .chip {
+  border-color: rgba(244, 248, 252, 0.18);
+  background: rgba(23, 36, 29, 0.72);
+  color: rgba(244, 248, 252, 0.94);
+  backdrop-filter: blur(14px);
+}
+
+.round-floating-strip .chip-highlight {
+  background: rgba(23, 36, 29, 0.72);
+  color: rgba(244, 248, 252, 0.94);
 }
 
 .round-panorama-chip,

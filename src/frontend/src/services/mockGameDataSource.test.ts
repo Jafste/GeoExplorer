@@ -84,6 +84,31 @@ describe("createMockGameDataSource", () => {
     expect([firstRound.challenge.id, secondRound.challenge.id]).toEqual(["nearby-a", "far-away"]);
   });
 
+  it("filters mock sessions by countries", async () => {
+    const dataSource = createMockGameDataSource({
+      locations: [
+        createLocation({ id: "porto", country: "Portugal" }),
+        createLocation({ id: "madrid", country: "Espanha" }),
+      ],
+      randomIndex: () => 0,
+    });
+
+    const session = await dataSource.createSession({
+      region: "europe",
+      countries: ["Espanha", "Portugal"],
+      roundCount: 2,
+      timed: false,
+      roundTimeSeconds: null,
+    });
+    await dataSource.timeoutRound(session.sessionId, session.currentRound.id, null);
+    const secondRound = await dataSource.getCurrentRound(session.sessionId);
+
+    expect([session.currentRound.challenge.country, secondRound.challenge.country].sort()).toEqual([
+      "Espanha",
+      "Portugal",
+    ]);
+  });
+
   it("completes a multi-round mock session and returns the accumulated results", async () => {
     const dataSource = createMockGameDataSource({ randomIndex: () => 0 });
 

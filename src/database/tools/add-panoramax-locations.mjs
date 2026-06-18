@@ -18,10 +18,16 @@ const defaultOptions = {
   qualityReportPath: defaultQualityReportPath,
   blocklistPath: defaultBlocklistPath,
   target: 2_000,
+  targetActive: true,
+  targetProvided: false,
+  fillCountryCount: null,
   minDistanceMeters: 120,
   cellLimit: 100,
   maxPerArea: 80,
+  areas: null,
+  countries: null,
   excludeAreas: new Set(),
+  includeNon360: false,
   write: false,
 };
 
@@ -194,6 +200,7 @@ function printHelp() {
 Opções:
   --seed <caminho>          Caminho para locations.json.
   --target <número>         Número de novos locais Panoramax 360 a acrescentar. Por omissão: 2000.
+  --fill-country-count <n>  Preenche cada país incluído até este total.
   --quality-report <path>   Relatório de qualidade a usar como blacklist. Por omissão: docs/scope/image-quality-audit.json.
   --no-quality-report       Não usa relatório de qualidade como blacklist.
   --blocklist <path>        Blacklist persistente de imagens rejeitadas. Por omissão: docs/scope/image-quality-blocklist.json.
@@ -201,7 +208,10 @@ Opções:
   --min-distance-meters <n> Distância mínima entre novos pontos e pontos existentes. Por omissão: 120.
   --cell-limit <n>          Limite de resultados por célula Panoramax. Por omissão: 100.
   --max-per-area <n>        Limite de novos locais por área/cidade. Por omissão: 80.
+  --areas <lista>           Áreas "Cidade|País|minLon|minLat|maxLon|maxLat" separadas por ponto e vírgula.
+  --countries <lista>       Países a incluir, separados por vírgula.
   --exclude-areas <lista>   Cidades/áreas a ignorar, separadas por vírgula. Ex.: Breda,Frankfurt.
+  --include-non360          Aceita fotos Panoramax planas quando não há panorama 360.
   --write                   Escreve no seed. Sem esta opção faz dry-run.
   --help                    Mostra esta ajuda.`);
 }
@@ -218,6 +228,11 @@ function parseArgs(args) {
 
     if (arg === "--write") {
       options.write = true;
+      continue;
+    }
+
+    if (arg === "--include-non360") {
+      options.includeNon360 = true;
       continue;
     }
 
@@ -250,6 +265,10 @@ function parseArgs(args) {
         break;
       case "--target":
         options.target = parsePositiveInteger(arg, value);
+        options.targetProvided = true;
+        break;
+      case "--fill-country-count":
+        options.fillCountryCount = parsePositiveInteger(arg, value);
         break;
       case "--min-distance-meters":
         options.minDistanceMeters = parsePositiveNumber(arg, value);
@@ -260,12 +279,22 @@ function parseArgs(args) {
       case "--max-per-area":
         options.maxPerArea = parsePositiveInteger(arg, value);
         break;
+      case "--areas":
+        options.areas = parseAreas(value);
+        break;
+      case "--countries":
+        options.countries = new Set(value.split(",").map(normalizeAreaName).filter(Boolean));
+        break;
       case "--exclude-areas":
         options.excludeAreas = new Set(value.split(",").map((entry) => normalizeAreaName(entry)).filter(Boolean));
         break;
       default:
         throw new Error(`Opção desconhecida: ${arg}`);
     }
+  }
+
+  if (options.fillCountryCount && !options.targetProvided) {
+    options.targetActive = false;
   }
 
   return options;
@@ -367,7 +396,7 @@ function isPanoramax360Feature(feature) {
   return exifText.includes("equirectangular") || exifText.includes("spherical");
 }
 
-function createLocationFromFeature(feature, searchArea, ordinal) {
+function createLocationFromFeature(feature, searchArea, ordinal, is360) {
   const coordinates = feature.geometry?.coordinates;
   if (!Array.isArray(coordinates) || coordinates.length < 2) {
     return null;
@@ -411,17 +440,17 @@ function createLocationFromFeature(feature, searchArea, ordinal) {
 
   return {
     id: buildLocationId(searchArea.city, feature.id),
-    title: buildTitle(seed),
+    title: is360 ? buildTitle(seed) : "Imagem de rua urbana com contexto local",
     city: searchArea.city,
     country: searchArea.country,
     region: "Europe",
-    category: "street-level-panorama",
+    category: is360 ? "street-level-panorama" : "street-level-photo",
     latitude: roundCoordinate(latitude),
     longitude: roundCoordinate(longitude),
-    sceneLabel: pick(sceneLabels, seed + ordinal),
-    sceneNote: pick(sceneNotes, seed + ordinal * 3),
+    sceneLabel: is360 ? pick(sceneLabels, seed + ordinal) : "Foto de rua com pistas laterais",
+    sceneNote: is360 ? pick(sceneNotes, seed + ordinal * 3) : "A imagem permite ler via, fachadas, vegetação e contexto próximo.",
     sceneImage: "/mock-scenes/historic-core-street.svg",
-    prompt: pick(prompts, seed + ordinal * 5),
+    prompt: is360 ? pick(prompts, seed + ordinal * 5) : "Observa materiais, perfil da rua, vegetação e escala urbana antes de marcares o mapa.",
     visualGradient: pick(gradients, seed + ordinal * 7),
     media,
     visualSources: [media],
@@ -492,9 +521,40 @@ function normalizeAreaName(value) {
   return slugify(value.trim());
 }
 
+function parseAreas(value) {
+  return value.split(";").map((entry) => {
+    const [city, country, minLongitude, minLatitude, maxLongitude, maxLatitude] = entry.split("|");
+    if (!city || !country) {
+      throw new Error(`Área inválida: ${entry}`);
+    }
+
+    return area(
+      city,
+      country,
+      parseFiniteNumber("minLongitude", minLongitude),
+      parseFiniteNumber("minLatitude", minLatitude),
+      parseFiniteNumber("maxLongitude", maxLongitude),
+      parseFiniteNumber("maxLatitude", maxLatitude),
+    );
+  });
+}
+
+function parseFiniteNumber(name, value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`${name} deve ser um número.`);
+  }
+
+  return parsed;
+}
+
 function isExcludedArea(searchArea, excludedAreas) {
   return excludedAreas.has(normalizeAreaName(searchArea.city)) ||
     excludedAreas.has(normalizeAreaName(`${searchArea.city}, ${searchArea.country}`));
+}
+
+function isIncludedCountry(searchArea, countries) {
+  return !countries || countries.has(normalizeAreaName(searchArea.country));
 }
 
 function countBy(items, getKey) {
@@ -508,6 +568,16 @@ function countBy(items, getKey) {
   return Object.fromEntries([...counts.entries()].sort((left, right) => right[1] - left[1]));
 }
 
+function countCountries(locations) {
+  const counts = new Map();
+
+  for (const location of locations) {
+    counts.set(location.country, (counts.get(location.country) ?? 0) + 1);
+  }
+
+  return counts;
+}
+
 async function collectPanoramaxLocations(existingLocations, options) {
   const existingIds = new Set(existingLocations.map((location) => location.id));
   const existingImageSources = new Set(
@@ -519,6 +589,7 @@ async function collectPanoramaxLocations(existingLocations, options) {
   const blockedImageUrls = options.qualityBlocklist?.imageUrls ?? new Set();
   const blockedImageSourceUrls = options.qualityBlocklist?.imageSourceUrls ?? new Set();
   const selected = [];
+  const countryCounts = countCountries(existingLocations);
   const acceptedLocations = existingLocations.map((location) => ({
     latitude: location.latitude,
     longitude: location.longitude,
@@ -533,7 +604,12 @@ async function collectPanoramaxLocations(existingLocations, options) {
   };
   const perArea = new Map();
 
-  const areaStates = searchAreas.filter((searchArea) => !isExcludedArea(searchArea, options.excludeAreas)).map((searchArea) => {
+  const configuredAreas = options.areas ?? searchAreas;
+  const areaStates = configuredAreas
+    .filter((searchArea) => isIncludedCountry(searchArea, options.countries))
+    .filter((searchArea) => !hasReachedCountryTarget(countryCounts, searchArea.country, options.fillCountryCount))
+    .filter((searchArea) => !isExcludedArea(searchArea, options.excludeAreas))
+    .map((searchArea) => {
     const areaKey = `${searchArea.city}, ${searchArea.country}`;
     const state = {
       searchArea,
@@ -545,12 +621,16 @@ async function collectPanoramaxLocations(existingLocations, options) {
     return state;
   });
 
-  while (selected.length < options.target) {
+  while (!hasReachedTarget(selected, options)) {
     let progressed = false;
 
     for (const state of areaStates) {
-      if (selected.length >= options.target) {
+      if (hasReachedTarget(selected, options)) {
         break;
+      }
+
+      if (hasReachedCountryTarget(countryCounts, state.searchArea.country, options.fillCountryCount)) {
+        continue;
       }
 
       const areaStats = perArea.get(state.areaKey);
@@ -569,17 +649,25 @@ async function collectPanoramaxLocations(existingLocations, options) {
       areaStats.queried += features.length;
 
       for (const feature of features) {
-        if (selected.length >= options.target || areaStats.accepted >= options.maxPerArea) {
+        if (
+          hasReachedTarget(selected, options) ||
+          areaStats.accepted >= options.maxPerArea ||
+          hasReachedCountryTarget(countryCounts, state.searchArea.country, options.fillCountryCount)
+        ) {
           break;
         }
 
-        if (!isPanoramax360Feature(feature)) {
+        const is360 = isPanoramax360Feature(feature);
+        if (!is360 && !options.includeNon360) {
           rejected.not360 += 1;
           continue;
         }
 
-        areaStats.candidates360 += 1;
-        const location = createLocationFromFeature(feature, state.searchArea, selected.length + 1);
+        if (is360) {
+          areaStats.candidates360 += 1;
+        }
+
+        const location = createLocationFromFeature(feature, state.searchArea, selected.length + 1, is360);
         if (!location) {
           rejected.invalid += 1;
           continue;
@@ -607,6 +695,7 @@ async function collectPanoramaxLocations(existingLocations, options) {
         existingIds.add(location.id);
         existingImageSources.add(location.media.imageSourceUrl);
         selected.push(location);
+        countryCounts.set(location.country, (countryCounts.get(location.country) ?? 0) + 1);
         acceptedLocations.push({
           latitude: location.latitude,
           longitude: location.longitude,
@@ -626,8 +715,23 @@ async function collectPanoramaxLocations(existingLocations, options) {
   return {
     selected,
     rejected,
+    remainingByCountry: options.fillCountryCount
+      ? Object.fromEntries(
+          [...countryCounts.entries()]
+            .filter(([, count]) => count < options.fillCountryCount)
+            .sort((left, right) => left[0].localeCompare(right[0])),
+        )
+      : null,
     perArea: Object.fromEntries(perArea.entries()),
   };
+}
+
+function hasReachedTarget(selected, options) {
+  return options.targetActive && selected.length >= options.target;
+}
+
+function hasReachedCountryTarget(countryCounts, country, target) {
+  return target && (countryCounts.get(country) ?? 0) >= target;
 }
 
 async function loadQualityBlocklist(reportPaths) {
@@ -690,7 +794,7 @@ async function main() {
 
   const existingLocations = JSON.parse(await fs.readFile(options.seedPath, "utf8"));
   options.qualityBlocklist = await loadQualityBlocklist([options.qualityReportPath, options.blocklistPath]);
-  const { selected, rejected, perArea } = await collectPanoramaxLocations(existingLocations, options);
+  const { selected, rejected, remainingByCountry, perArea } = await collectPanoramaxLocations(existingLocations, options);
   const nextLocations = [...existingLocations, ...selected];
   const report = {
     generatedAt: new Date().toISOString(),
@@ -704,13 +808,14 @@ async function main() {
     totalLocations: nextLocations.length,
     selectedByCountry: countBy(selected, (location) => location.country),
     selectedByCity: countBy(selected, (location) => location.city),
+    remainingByCountry,
     rejected,
     perArea,
   };
 
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 
-  if (selected.length < options.target) {
+  if (options.targetActive && selected.length < options.target) {
     throw new Error(`Só foram encontrados ${selected.length} locais Panoramax 360 válidos para ${options.target} pedidos.`);
   }
 

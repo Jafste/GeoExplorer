@@ -58,6 +58,7 @@ export function createEuropeLeafletMap(element: HTMLElement) {
     zoomAnimation: true,
     zoomControl: false,
     zoomDelta: 0.5,
+    wheelPxPerZoomLevel: 7 / 3,
     zoomSnap: 0.1,
   });
 

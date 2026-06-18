@@ -29,5 +29,5 @@ export function formatMultiplayerRoundTimer(
     return "Livre";
   }
 
-  return `${formatSeconds(remainingSeconds ?? 0)} restantes`;
+  return formatSeconds(remainingSeconds ?? 0);
 }

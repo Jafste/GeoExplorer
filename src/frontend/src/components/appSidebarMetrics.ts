@@ -19,6 +19,20 @@ function formatRegionLabel(region: SessionConfig["region"]) {
   return region === "europe" ? "Europa" : region;
 }
 
+function formatScopeLabel(config: Pick<SessionConfig, "region" | "country" | "countries">) {
+  const countries = config.countries?.filter(Boolean) ?? [];
+
+  if (countries.length === 1) {
+    return countries[0];
+  }
+
+  if (countries.length > 1) {
+    return countries.length <= 3 ? countries.join(", ") : `${countries.length} países`;
+  }
+
+  return config.country?.trim() || formatRegionLabel(config.region);
+}
+
 function formatScore(value: number | null | undefined) {
   return typeof value === "number" ? `${value.toLocaleString("pt-PT")} pts` : "Sem dados";
 }
@@ -82,6 +96,7 @@ function getMultiplayerMetrics(
       { label: "Modo", value: "Multiplayer" },
       { label: "Estado", value: "A preparar" },
       { label: "Ritmo", value: getTimerLabel(fallbackConfig) },
+      { label: "Âmbito", value: formatScopeLabel(fallbackConfig) },
     ];
   }
 
@@ -99,6 +114,7 @@ function getMultiplayerMetrics(
       { label: "Code name", value: getDisplayName(context) },
       { label: "Salas abertas", value: formatOpenRooms(context) },
       { label: "Ritmo", value: getTimerLabel(context.config) },
+      { label: "Âmbito", value: formatScopeLabel(context.config) },
     ];
   }
 
@@ -137,6 +153,7 @@ function getMultiplayerMetrics(
     { label: "Cargo", value: context.isOwner ? "Dono" : "Convidado" },
     { label: "Acesso", value: formatRoomAccess(context) },
     { label: "Ritmo", value: getTimerLabel(context.config) },
+    { label: "Âmbito", value: formatScopeLabel(context.config) },
   ];
 }
 
@@ -187,6 +204,6 @@ export function getSidebarMetrics(
     { label: "Modo", value: "Solo" },
     { label: "Rondas", value: `${config.roundCount}` },
     { label: "Ritmo", value: getTimerLabel(config) },
-    { label: "Âmbito", value: formatRegionLabel(config.region) },
+    { label: "Âmbito", value: formatScopeLabel(config) },
   ];
 }

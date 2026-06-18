@@ -51,6 +51,8 @@ export interface ChallengeRound {
 
 export interface SessionConfig {
   region: "europe";
+  country?: string | null;
+  countries?: string[] | null;
   roundCount: number;
   timed: boolean;
   roundTimeSeconds: number | null;

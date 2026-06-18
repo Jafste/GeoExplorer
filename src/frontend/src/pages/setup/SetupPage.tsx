@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CountryScopeSelect } from "../../components/CountryScopeSelect";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { RoundTimeControl } from "../../components/RoundTimeControl";
@@ -37,6 +38,13 @@ export function SetupPage({
 
       <div className="setup-stage">
         <Card as="article" className="setup-config-card" variant="setupPanelStack">
+          <CountryScopeSelect
+            value={config.countries ?? (config.country ? [config.country] : [])}
+            onChange={(countries) =>
+              setConfig((current) => ({ ...current, country: null, countries }))
+            }
+          />
+
           <SegmentedControl
             label="Número de rondas"
             options={[

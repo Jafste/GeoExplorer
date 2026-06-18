@@ -351,6 +351,7 @@ describe("AppSidebar", () => {
         mode: "entry",
         config: {
           region: "europe",
+          country: "Portugal",
           roundCount: 5,
           timed: true,
           roundTimeSeconds: 60,
@@ -376,6 +377,7 @@ describe("AppSidebar", () => {
     expect(text).toContain("Code nameTurbo Meridian 170");
     expect(text).toContain("Salas abertas0");
     expect(text).toContain("Ritmo60s");
+    expect(text).toContain("ÂmbitoPortugal");
     expect(text).not.toContain("Criar ou entrar");
     expect(text).not.toContain("0 abertas");
     expect(text).not.toContain("Turbo Meridian 170 · 60s");

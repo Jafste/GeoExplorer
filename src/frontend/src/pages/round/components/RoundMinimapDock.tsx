@@ -15,6 +15,7 @@ interface RoundMinimapDockProps {
   onMouseLeave: () => void;
   onSubmit: (guess: GuessCoordinates) => Promise<void>;
   onTogglePinnedOpen: () => void;
+  busyLabel?: string;
   timed: boolean;
 }
 
@@ -28,6 +29,7 @@ export function RoundMinimapDock({
   onMouseLeave,
   onSubmit,
   onTogglePinnedOpen,
+  busyLabel = "A resolver...",
   timed,
 }: RoundMinimapDockProps) {
   const mapOpen = mapHovered || mapPinnedOpen;
@@ -105,7 +107,7 @@ export function RoundMinimapDock({
               radius="none"
               type="button"
             >
-              {busy ? "A resolver..." : "Enviar posição"}
+              {busy ? busyLabel : "Enviar posição"}
             </RoundedButton>
           </div>
         </div>

@@ -182,6 +182,33 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void CreateSession_WithCountries_SelectsOnlyMatchingLocations()
+    {
+        var service = CreateService();
+        var session = service.CreateSession(new CreateSessionRequest(
+            "europe",
+            RoundCount: 3,
+            Timed: false,
+            RoundTimeSeconds: null,
+            Countries: ["Espanha", "Portugal"]));
+        var countries = new List<string>();
+        var currentRound = session.CurrentRound;
+
+        for (var index = 0; index < 3; index++)
+        {
+            var response = service.TimeoutRound(session.SessionId, currentRound.Id, null);
+            countries.Add(response.Result.Country);
+
+            if (!response.Progress.Completed)
+            {
+                currentRound = service.GetCurrentRound(session.SessionId);
+            }
+        }
+
+        Assert.IsTrue(countries.All(country => country is "Espanha" or "Portugal"));
+    }
+
+    [TestMethod]
     public void CreateSession_AvoidsVeryCloseLocationsWhenAlternativesExist()
     {
         using var seed = TestSeedDirectory.CreateWithNearbyLocations();
@@ -234,6 +261,33 @@ public sealed class GameSessionServiceTests
     }
 
     [TestMethod]
+    public void SubmitGuess_AcceptsAtlanticIslandsAndCanaryIslandsInsideSupportedMap()
+    {
+        foreach (var (latitude, longitude, label) in new[]
+        {
+            (37.7412, -25.6756, "Açores"),
+            (32.7607, -16.9595, "Madeira"),
+            (28.2916, -16.6291, "Tenerife"),
+        })
+        {
+            var service = CreateService();
+            var session = service.CreateSession(new CreateSessionRequest(
+                "europe",
+                RoundCount: 1,
+                Timed: false,
+                RoundTimeSeconds: null));
+
+            var response = service.SubmitGuess(
+                session.SessionId,
+                session.CurrentRound.Id,
+                new GuessCoordinatesDto(latitude, longitude, label));
+
+            Assert.IsNotNull(response.Result.Guess);
+            Assert.AreEqual(label, response.Result.Guess.Label);
+        }
+    }
+
+    [TestMethod]
     public void SubmitGuess_WithNonFiniteCoordinates_ThrowsBadRequest()
     {
         var service = CreateService();
@@ -271,25 +325,6 @@ public sealed class GameSessionServiceTests
 
         Assert.AreEqual(400, exception.StatusCode);
         Assert.AreEqual("A descrição do palpite não é válida.", exception.Message);
-    }
-
-    [TestMethod]
-    public void DatabaseSchema_IncludesSceneImageColumn()
-    {
-        var sql = File.ReadAllText(Path.Combine(FindRepoRoot(), "src", "database", "sql", "001-init.sql"));
-
-        StringAssert.Contains(sql, "scene_image TEXT NULL");
-        StringAssert.Contains(sql, "media_source_provider TEXT NULL");
-        StringAssert.Contains(sql, "image_attribution TEXT NULL");
-        StringAssert.Contains(sql, "street_view_url TEXT NULL");
-        StringAssert.Contains(sql, "visual_sources JSONB NULL");
-        StringAssert.Contains(sql, "visual_source JSONB NULL");
-        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_rooms");
-        StringAssert.Contains(sql, "is_public BOOLEAN NOT NULL DEFAULT FALSE");
-        StringAssert.Contains(sql, "password_hash TEXT NULL");
-        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_players");
-        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_rounds");
-        StringAssert.Contains(sql, "CREATE TABLE IF NOT EXISTS multiplayer_guesses");
     }
 
     private static GameSessionService CreateService()

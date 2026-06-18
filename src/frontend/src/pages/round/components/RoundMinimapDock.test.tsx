@@ -6,15 +6,28 @@ vi.mock("../../../components/EuropeGuessMap", () => ({
 }));
 
 function renderMinimapDock({
+  busy = false,
+  busyLabel,
+  guess = null,
   mapHovered = false,
   mapPinnedOpen = false,
   onMouseEnter = vi.fn(),
   onMouseLeave = vi.fn(),
   onTogglePinnedOpen = vi.fn(),
+}: {
+  busy?: boolean;
+  busyLabel?: string;
+  guess?: Parameters<typeof RoundMinimapDock>[0]["guess"];
+  mapHovered?: boolean;
+  mapPinnedOpen?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  onTogglePinnedOpen?: () => void;
 } = {}) {
   const element = RoundMinimapDock({
-    busy: false,
-    guess: null,
+    busy,
+    busyLabel,
+    guess,
     mapHovered,
     mapPinnedOpen,
     onGuessChange: vi.fn(),
@@ -63,5 +76,19 @@ describe("RoundMinimapDock", () => {
     toggle.props.onClick();
 
     expect(onTogglePinnedOpen).toHaveBeenCalledOnce();
+  });
+
+  it("shows a custom busy label after a multiplayer guess is submitted", () => {
+    const { element } = renderMinimapDock({
+      busy: true,
+      busyLabel: "À espera dos outros",
+      guess: { latitude: 59.3, longitude: 18.1, label: "Pino marcado" },
+      mapPinnedOpen: true,
+    });
+    const panel = element.props.children[1];
+    const footer = panel.props.children[1];
+    const submitButton = footer.props.children[1];
+
+    expect(submitButton.props.children).toBe("À espera dos outros");
   });
 });

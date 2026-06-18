@@ -21,6 +21,8 @@ A aplicação usa apenas:
 - logs técnicos do backend para diagnóstico;
 - contador técnico agregado de leituras/escritas da base de dados.
 
+O contador de base de dados é um endpoint de diagnóstico técnico e fica desativado por omissão fora de desenvolvimento local, só sendo exposto quando `GeoExplorer__ExposeDatabaseDiagnostics=true`.
+
 ## Dados guardados pelo backend
 
 Quando o PostgreSQL está ativo, o backend guarda dados necessários para o funcionamento do jogo:
@@ -47,7 +49,7 @@ Este armazenamento é funcional para a experiência do jogo. Não é usado para 
 
 ## Logs técnicos
 
-O backend usa Serilog para logs técnicos. No início, durante os testes locais, bastava acompanhar a consola do backend para perceber erros e warnings. Quando a aplicação passou a ser validada na VPS, ficou mais difícil observar problemas reais apenas pela consola, especialmente em pedidos remotos, SignalR e jogos multiplayer. Por isso, adicionei logs persistentes em ficheiro.
+O backend usa Serilog para logs técnicos. No início, durante os testes locais, bastava acompanhar a consola do backend para perceber erros e warnings. Quando a aplicação passou a ser validada na VPS com utilizadores externos, incluindo pessoas próximas como colegas de trabalho e amigos, ficou mais difícil observar problemas reais apenas pela consola, especialmente em pedidos remotos, SignalR e jogos multiplayer. Por isso, adicionei logs persistentes em ficheiro.
 
 Estes logs servem para diagnóstico, erros, warnings, pedidos HTTP e problemas operacionais.
 
@@ -99,7 +101,7 @@ Para o relatório final, a opção mais simples e proporcional é usar métricas
 - distância média dos palpites;
 - número de salas multiplayer criadas;
 - número de salas multiplayer concluídas;
-- contador técnico de leituras/escritas do endpoint `/api/diagnostics/database`.
+- contador técnico de leituras/escritas do endpoint `/api/diagnostics/database`, quando ativado para validação técnica.
 
 Estas métricas ajudam a avaliar o sistema sem criar uma camada de profiling comportamental.
 

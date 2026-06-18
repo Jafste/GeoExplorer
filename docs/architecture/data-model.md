@@ -1,6 +1,6 @@
 # Modelo de Dados PostgreSQL
 
-O schema principal é criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`. O ficheiro SQL antigo fica apenas como apoio documental.
+O schema principal é criado pelas migrations do Entity Framework em `src/backend/Data/Migrations`.
 
 ```mermaid
 erDiagram
