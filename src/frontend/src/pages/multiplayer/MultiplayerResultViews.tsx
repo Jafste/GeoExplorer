@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { formatScore } from "../../app/format";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { AppNotice } from "../../components/ui/AppNotice";
@@ -11,6 +12,7 @@ import type {
   MultiplayerSessionResult,
 } from "../../types/game";
 import { getMultiplayerRoundResolutionLabel } from "./multiplayerLabels";
+import { getRoundResultPlayerHotspots } from "./multiplayerResultMap";
 import { DisconnectNotice, formatPlayerName } from "./MultiplayerRoomShared";
 
 const ROUND_RESULT_PAGE_SIZE = 3;
@@ -27,6 +29,7 @@ interface MultiplayerRoundResultViewProps {
   playerId: string;
   room: MultiplayerRoomState;
   roundResult: MultiplayerRoundResult;
+  showTotalScore: boolean;
 }
 
 export function MultiplayerRoundResultView({
@@ -41,9 +44,12 @@ export function MultiplayerRoundResultView({
   playerId,
   room,
   roundResult,
+  showTotalScore,
 }: MultiplayerRoundResultViewProps) {
   const [leaderboardPage, setLeaderboardPage] = useState(0);
   const ownResult = roundResult.playerResults.find((result) => result.playerId === playerId) ?? null;
+  const totalScoreByPlayerId = new Map(room.players.map((player) => [player.playerId, player.totalScore]));
+  const playerHotspots = getRoundResultPlayerHotspots(roundResult, playerId);
   const actual = {
     latitude: roundResult.correctLatitude,
     longitude: roundResult.correctLongitude,
@@ -86,11 +92,11 @@ export function MultiplayerRoundResultView({
         <Card as="article" className="multiplayer-result-map-card" variant="tacticalStack">
           <EuropeGuessMap
             actual={actual}
-            allowExploration
             comparisonDistanceKm={ownResult?.distanceKm ?? null}
             disabled
             fitToMarkers
             guess={ownResult?.guess ?? null}
+            hotspots={playerHotspots}
             showComparisonLine={Boolean(ownResult?.guess)}
             showFooter={false}
           />
@@ -110,7 +116,10 @@ export function MultiplayerRoundResultView({
                     <span>{leaderboardStart + index + 1}. {formatPlayerName(result.displayName, result.playerId, currentPlayerId)}</span>
                     <small>{getMultiplayerRoundResolutionLabel(result.resolution)}</small>
                   </div>
-                  <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
+                  <div className="multiplayer-leaderboard-score">
+                    <strong>{showTotalScore ? `+${formatScore(result.score)}` : formatScore(result.score)}</strong>
+                    {showTotalScore ? <small>Total {formatScore(totalScoreByPlayerId.get(result.playerId))}</small> : null}
+                  </div>
                 </div>
               ))}
             </div>
@@ -209,7 +218,7 @@ export function MultiplayerCompletedView({
           {result.players.map((player, index) => (
             <div className="multiplayer-leaderboard-row" key={player.playerId}>
               <span>{index + 1}. {formatPlayerName(player.displayName, player.playerId, currentPlayerId)}</span>
-              <strong>{player.totalScore.toLocaleString("pt-PT")} pts</strong>
+              <strong>{formatScore(player.totalScore)}</strong>
             </div>
           ))}
         </div>

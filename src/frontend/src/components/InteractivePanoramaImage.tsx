@@ -12,6 +12,7 @@ import { IconButton } from "./ui/Button";
 type InteractiveImageMode = "360" | "panorama" | "photo";
 
 interface InteractivePanoramaImageProps {
+  fit?: "contain" | "cover";
   imageUrl: string;
   loaded: boolean;
   mode: InteractiveImageMode;
@@ -49,6 +50,7 @@ function getInitialPanoramaView(mode: InteractiveImageMode): PanoramaViewState {
 }
 
 export function InteractivePanoramaImage({
+  fit = "cover",
   imageUrl,
   loaded,
   mode,
@@ -183,7 +185,7 @@ export function InteractivePanoramaImage({
   const backgroundStyle = {
     backgroundImage: `url("${imageUrl}")`,
     backgroundPosition: `${view.x}% ${view.y}%`,
-    backgroundSize: mode === "photo" ? "contain" : "cover",
+    backgroundSize: mode === "photo" ? fit : "cover",
     transform: `scale(${view.zoom})`,
     transformOrigin: `${view.x}% ${view.y}%`,
   } as CSSProperties;

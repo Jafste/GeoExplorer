@@ -1,4 +1,5 @@
 import { ExternalLink, MapPinned, MoveRight, Radar, Waypoints } from "lucide-react";
+import { formatDistanceKm, formatScore } from "../../app/format";
 import { EuropeGuessMap } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { InfoGrid } from "../../components/ui/InfoCard";
@@ -9,6 +10,8 @@ interface RoundResultPageProps {
   busy: boolean;
   progress: RoundProgress;
   result: RoundResult;
+  showTotalScore?: boolean;
+  totalScore?: number;
   onContinue: () => void;
 }
 
@@ -16,6 +19,8 @@ export function RoundResultPage({
   busy,
   progress,
   result,
+  showTotalScore = false,
+  totalScore,
   onContinue,
 }: RoundResultPageProps) {
   const accuracy =
@@ -46,7 +51,7 @@ export function RoundResultPage({
         <div className="debrief-header-actions">
           <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onContinue} type="button">
             {busy
-              ? "A carregar..."
+              ? "A carregar…"
               : progress.completed
                 ? "Ver relatório final"
                 : (
@@ -74,7 +79,6 @@ export function RoundResultPage({
 
           <div className="debrief-map-stage">
             <EuropeGuessMap
-              allowExploration
               actual={actualLocation}
               comparisonDistanceKm={result.distanceKm}
               disabled
@@ -126,7 +130,8 @@ export function RoundResultPage({
 
           <div className="debrief-score-block">
             <span className="muted-eyebrow">Pontuação</span>
-            <strong>{result.score.toLocaleString("pt-PT")} pts</strong>
+            <strong>{showTotalScore ? `+${formatScore(result.score)}` : formatScore(result.score)}</strong>
+            {showTotalScore ? <small>Total {formatScore(totalScore)}</small> : null}
           </div>
 
           <InfoGrid
@@ -135,7 +140,7 @@ export function RoundResultPage({
               { label: "Precisão", value: `${accuracy.toFixed(1)}%` },
               {
                 label: "Desvio",
-                value: result.distanceKm === null ? "Sem dados" : `${result.distanceKm.toFixed(1)} km`,
+                value: formatDistanceKm(result.distanceKm),
               },
             ]}
           />
@@ -156,7 +161,7 @@ export function RoundResultPage({
               <p>
                 {result.distanceKm === null
                   ? "O cronómetro terminou antes da marcação."
-                  : `${result.distanceKm.toFixed(1)} km de diferença entre o teu ponto e o alvo.`}
+                  : `${formatDistanceKm(result.distanceKm)} de diferença entre o teu ponto e o alvo.`}
               </p>
             </div>
           </div>

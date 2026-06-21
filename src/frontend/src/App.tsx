@@ -20,8 +20,14 @@ import {
   TutorialOverlay,
 } from "./app/pageModules";
 import { createQuickSessionConfig } from "./app/quickSessionConfig";
+import { createRoundEndsAt } from "./app/roundTimer";
 import { preloadFirstAvailableRoundImage } from "./app/roundImagePreload";
 import type { MultiplayerSidebarContext } from "./app/sidebarContext";
+import {
+  clearSoloSessionResume,
+  readSoloSessionResume,
+  saveSoloSessionResume,
+} from "./app/soloSessionResume";
 import { AppSidebar } from "./components/AppSidebar";
 import { AppTopbar } from "./components/AppTopbar";
 import { AppNotice } from "./components/ui/AppNotice";
@@ -37,6 +43,7 @@ import type {
 } from "./types/game";
 
 const TUTORIAL_STORAGE_KEY = "geoexplorer.tutorial.completed";
+const SHOW_TOTAL_SCORE_STORAGE_KEY = "geoexplorer.showTotalScoreDuringRound";
 export default function App() {
   const [initialRoute] = useState(() => getInitialRouteState(window.location.search));
   const [dataSource, setDataSource] = useState<GameDataSource | null>(null);
@@ -47,6 +54,11 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [config, setConfig] = useState<SessionConfig>(defaultSessionConfig);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [currentSessionScore, setCurrentSessionScore] = useState(0);
+  const [currentRoundEndsAt, setCurrentRoundEndsAt] = useState<string | null>(null);
+  const [showTotalScoreDuringRound, setShowTotalScoreDuringRound] = useState(
+    () => window.localStorage.getItem(SHOW_TOTAL_SCORE_STORAGE_KEY) === "true"
+  );
   const [currentRound, setCurrentRound] = useState<ChallengeRound | null>(null);
   const [roundResolution, setRoundResolution] = useState<RoundResolutionResponse | null>(null);
   const [sessionResult, setSessionResult] = useState<SessionResult | null>(null);
@@ -59,6 +71,7 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dataSourceRef = useRef<GameDataSource | null>(null);
   const dataSourcePromiseRef = useRef<Promise<GameDataSource> | null>(null);
+  const soloResumeRestoreAttemptedRef = useRef(false);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -119,6 +132,101 @@ export default function App() {
     return dataSourcePromiseRef.current;
   };
 
+  useEffect(() => {
+    if (soloResumeRestoreAttemptedRef.current || initialRoute.phase !== "landing") {
+      return;
+    }
+
+    const resume = readSoloSessionResume(window.localStorage);
+    if (!resume) {
+      return;
+    }
+
+    let cancelled = false;
+    soloResumeRestoreAttemptedRef.current = true;
+    setBusy(true);
+    setError(null);
+
+    void prepareDataSource()
+      .then(async (activeDataSource) => {
+        if (cancelled) {
+          return;
+        }
+
+        setConfig(resume.config);
+        setSessionId(resume.sessionId);
+        setCurrentSessionScore(resume.currentSessionScore);
+        setRoundResolution(resume.roundResolution);
+        setSessionResult(resume.sessionResult);
+
+        if (resume.phase === "session-result" && resume.sessionResult) {
+          startTransition(() => {
+            setPhase("session-result");
+          });
+          return;
+        }
+
+        if (resume.phase === "round-result" && resume.roundResolution) {
+          startTransition(() => {
+            setPhase("round-result");
+          });
+          return;
+        }
+
+        try {
+          const restoredRound = await activeDataSource.getCurrentRound(resume.sessionId);
+          const restoredEndsAt =
+            resume.currentRoundId === restoredRound.id
+              ? resume.roundEndsAt
+              : createRoundEndsAt(restoredRound);
+
+          setCurrentRound(restoredRound);
+          setCurrentRoundEndsAt(restoredEndsAt);
+          saveSoloSessionResume(window.localStorage, {
+            ...resume,
+            currentRoundId: restoredRound.id,
+            phase: "round",
+            roundEndsAt: restoredEndsAt,
+            roundResolution: null,
+            sessionResult: null,
+          });
+          void preloadFirstAvailableRoundImage(restoredRound);
+          startTransition(() => {
+            setPhase("round");
+          });
+        } catch {
+          const results = await activeDataSource.getSessionResults(resume.sessionId);
+          setCurrentSessionScore(results.totalScore);
+          setSessionResult(results);
+          saveSoloSessionResume(window.localStorage, {
+            ...resume,
+            currentRoundId: null,
+            currentSessionScore: results.totalScore,
+            phase: "session-result",
+            roundEndsAt: null,
+            roundResolution: null,
+            sessionResult: results,
+          });
+          startTransition(() => {
+            setPhase("session-result");
+          });
+        }
+      })
+      .catch(() => {
+        clearSoloSessionResume(window.localStorage);
+        setError("Não foi possível recuperar a sessão solo.");
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setBusy(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [initialRoute.phase]);
+
   const writeRestorableView = (
     nextPhase: RestorableSurfacePhase,
     mode: "push" | "replace" = "push"
@@ -166,9 +274,12 @@ export default function App() {
       setMultiplayerSidebarContext(null);
       setMultiplayerRoomCode(route.roomCode);
       setSessionId(null);
+      setCurrentSessionScore(0);
+      setCurrentRoundEndsAt(null);
       setCurrentRound(null);
       setRoundResolution(null);
       setSessionResult(null);
+      clearSoloSessionResume(window.localStorage);
 
       startTransition(() => {
         setPhase(route.phase);
@@ -187,12 +298,15 @@ export default function App() {
     setError(null);
     setBusy(false);
     setSessionId(null);
+    setCurrentSessionScore(0);
+    setCurrentRoundEndsAt(null);
     setMultiplayerRoomCode(null);
     setMultiplayerPlaying(false);
     setMultiplayerSidebarContext(null);
     setCurrentRound(null);
     setRoundResolution(null);
     setSessionResult(null);
+    clearSoloSessionResume(window.localStorage);
     writeRestorableView("landing");
     startTransition(() => {
       setPhase("landing");
@@ -206,12 +320,25 @@ export default function App() {
     try {
       const activeDataSource = await prepareDataSource();
       const created = await activeDataSource.createSession(nextConfig);
+      const roundEndsAt = createRoundEndsAt(created.currentRound);
       void preloadFirstAvailableRoundImage(created.currentRound);
       setConfig(nextConfig);
       setSessionId(created.sessionId);
+      setCurrentSessionScore(0);
+      setCurrentRoundEndsAt(roundEndsAt);
       setCurrentRound(created.currentRound);
       setRoundResolution(null);
       setSessionResult(null);
+      saveSoloSessionResume(window.localStorage, {
+        config: nextConfig,
+        currentRoundId: created.currentRound.id,
+        currentSessionScore: 0,
+        phase: "round",
+        roundEndsAt,
+        roundResolution: null,
+        sessionId: created.sessionId,
+        sessionResult: null,
+      });
       writeRestorableView("landing");
       startTransition(() => {
         setPhase("round");
@@ -231,7 +358,22 @@ export default function App() {
 
     try {
       const resolution = await resolver();
+      const nextSessionScore = currentSessionScore + resolution.result.score;
       setRoundResolution(resolution);
+      setCurrentSessionScore(nextSessionScore);
+      setCurrentRoundEndsAt(null);
+      if (sessionId) {
+        saveSoloSessionResume(window.localStorage, {
+          config,
+          currentRoundId: resolution.result.roundId,
+          currentSessionScore: nextSessionScore,
+          phase: "round-result",
+          roundEndsAt: null,
+          roundResolution: resolution,
+          sessionId,
+          sessionResult: null,
+        });
+      }
       startTransition(() => {
         setPhase("round-result");
       });
@@ -256,13 +398,38 @@ export default function App() {
       if (roundResolution.progress.completed) {
         const results = await activeDataSource.getSessionResults(sessionId);
         setSessionResult(results);
+        setCurrentRound(null);
+        setCurrentRoundEndsAt(null);
+        saveSoloSessionResume(window.localStorage, {
+          config,
+          currentRoundId: null,
+          currentSessionScore: results.totalScore,
+          phase: "session-result",
+          roundEndsAt: null,
+          roundResolution: null,
+          sessionId,
+          sessionResult: results,
+        });
         startTransition(() => {
           setPhase("session-result");
         });
       } else {
         const nextRound = await activeDataSource.getCurrentRound(sessionId);
+        const roundEndsAt = createRoundEndsAt(nextRound);
         void preloadFirstAvailableRoundImage(nextRound);
         setCurrentRound(nextRound);
+        setCurrentRoundEndsAt(roundEndsAt);
+        setRoundResolution(null);
+        saveSoloSessionResume(window.localStorage, {
+          config,
+          currentRoundId: nextRound.id,
+          currentSessionScore,
+          phase: "round",
+          roundEndsAt,
+          roundResolution: null,
+          sessionId,
+          sessionResult: null,
+        });
         startTransition(() => {
           setPhase("round");
         });
@@ -291,6 +458,7 @@ export default function App() {
 
   const goToSetup = () => {
     setSidebarOpen(false);
+    clearSoloSessionResume(window.localStorage);
     setMultiplayerRoomCode(null);
     setMultiplayerPlaying(false);
     setMultiplayerSidebarContext(null);
@@ -302,6 +470,7 @@ export default function App() {
 
   const beginQuickSession = () => {
     setSidebarOpen(false);
+    clearSoloSessionResume(window.localStorage);
     setMultiplayerRoomCode(null);
     setMultiplayerPlaying(false);
     setMultiplayerSidebarContext(null);
@@ -310,6 +479,7 @@ export default function App() {
 
   const openMultiplayer = () => {
     setSidebarOpen(false);
+    clearSoloSessionResume(window.localStorage);
     setMultiplayerRoomCode(null);
     setMultiplayerPlaying(false);
     setMultiplayerSidebarContext(null);
@@ -322,6 +492,7 @@ export default function App() {
 
   const returnToMultiplayerMenu = () => {
     setSidebarOpen(false);
+    clearSoloSessionResume(window.localStorage);
     setMultiplayerRoomCode(null);
     setMultiplayerPlaying(false);
     setMultiplayerSidebarContext(null);
@@ -347,6 +518,11 @@ export default function App() {
         })
       );
     });
+  };
+
+  const updateShowTotalScoreDuringRound = (nextValue: boolean) => {
+    setShowTotalScoreDuringRound(nextValue);
+    window.localStorage.setItem(SHOW_TOTAL_SCORE_STORAGE_KEY, String(nextValue));
   };
 
   const multiplayerImmersive = phase === "multiplayer" && multiplayerPlaying;
@@ -453,7 +629,9 @@ export default function App() {
                 initialRoomCode={multiplayerRoomCode}
                 onExitRoom={returnToMultiplayerMenu}
                 onPlayModeChange={setMultiplayerPlaying}
+                onShowTotalScoreDuringRoundChange={updateShowTotalScoreDuringRound}
                 onSidebarContextChange={setMultiplayerSidebarContext}
+                showTotalScoreDuringRound={showTotalScoreDuringRound}
               />
             ) : null}
 
@@ -461,9 +639,11 @@ export default function App() {
               <SetupPage
                 busy={busy}
                 initialConfig={config}
+                onShowTotalScoreDuringRoundChange={updateShowTotalScoreDuringRound}
                 onSubmit={(nextConfig) => {
                   void beginSession(nextConfig);
                 }}
+                showTotalScoreDuringRound={showTotalScoreDuringRound}
               />
             ) : null}
 
@@ -471,6 +651,9 @@ export default function App() {
               <RoundPage
                 busy={busy}
                 round={currentRound}
+                roundEndsAt={currentRoundEndsAt}
+                showTotalScore={showTotalScoreDuringRound}
+                totalScore={currentSessionScore}
                 onSubmit={async (guess) => {
                   await resolveRound(() => dataSource.submitGuess(sessionId, currentRound.id, guess));
                 }}
@@ -485,6 +668,8 @@ export default function App() {
                 busy={busy}
                 progress={roundResolution.progress}
                 result={roundResolution.result}
+                showTotalScore={showTotalScoreDuringRound}
+                totalScore={currentSessionScore}
                 onContinue={() => {
                   void continueFlow();
                 }}

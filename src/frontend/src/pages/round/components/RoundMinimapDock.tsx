@@ -9,6 +9,7 @@ interface RoundMinimapDockProps {
   busy: boolean;
   guess: GuessCoordinates | null;
   mapHovered: boolean;
+  mapMounted?: boolean;
   mapPinnedOpen: boolean;
   onGuessChange: (guess: GuessCoordinates) => void;
   onMouseEnter: () => void;
@@ -23,16 +24,18 @@ export function RoundMinimapDock({
   busy,
   guess,
   mapHovered,
+  mapMounted = false,
   mapPinnedOpen,
   onGuessChange,
   onMouseEnter,
   onMouseLeave,
   onSubmit,
   onTogglePinnedOpen,
-  busyLabel = "A resolver...",
+  busyLabel = "A resolver…",
   timed,
 }: RoundMinimapDockProps) {
   const mapOpen = mapHovered || mapPinnedOpen;
+  const shouldRenderMap = mapMounted || mapOpen;
   const mapToggleLabel = mapPinnedOpen ? "Fechar mapa" : mapOpen ? "Fixar aberto" : "Abrir mapa";
 
   function handlePointerEnter(event: PointerEvent<HTMLDivElement>) {
@@ -67,8 +70,12 @@ export function RoundMinimapDock({
         <span>{mapToggleLabel}</span>
       </ButtonBase>
 
-      {mapOpen ? (
-        <div className="round-minimap-panel">
+      {shouldRenderMap ? (
+        <div
+          aria-hidden={!mapOpen}
+          className="round-minimap-panel"
+          inert={mapOpen ? undefined : true}
+        >
           <EuropeGuessMap
             compact={false}
             disabled={busy}

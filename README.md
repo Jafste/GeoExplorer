@@ -129,6 +129,7 @@ No Dockerfile do frontend usei `npm ci` em vez de `npm install`, porque o Docker
 Versão pública: https://geoexplorer.firmwork.pt/
 Frontend local: http://localhost:5173
 Backend local: http://localhost:8080/api/health
+Verificação completa da API: http://localhost:8080/api/health/details
 Contador da base de dados: http://localhost:8080/api/diagnostics/database (só com GeoExplorer__ExposeDatabaseDiagnostics=true)
 Thumbnail Mapillary: http://localhost:8080/api/media/mapillary/<id>
 Multiplayer: criar sala no frontend em modo `api` e partilhar o URL com `?room=<código>`
@@ -155,7 +156,7 @@ Os ficheiros rodam por dia, têm limite de 10 MB por ficheiro e ficam retidos at
 
 ### Privacidade e armazenamento local
 
-O projeto não usa cookies próprios, analytics externo ou recolha genérica de cliques/movimentos. Cheguei a considerar uma análise de cliques e comportamento para perceber melhor a utilização, mas antes de implementar essa ideia decidi separar a questão de privacidade. Com apoio do ChatGPT, transformei essa dúvida num documento técnico de privacidade que clarifica o que existe agora e o que teria de ser desenhado antes de recolher métricas futuras. A aplicação usa `localStorage` apenas para funcionalidades do jogo, como tutorial concluído, identificação local do jogador multiplayer e retoma de sala. O detalhe técnico está em [`docs/privacy.md`](docs/privacy.md).
+O projeto não usa cookies próprios, analytics externo ou recolha genérica de cliques/movimentos. Cheguei a considerar uma análise de cliques e comportamento para perceber melhor a utilização, mas antes de implementar essa ideia decidi separar a questão de privacidade. Com apoio do ChatGPT, transformei essa dúvida num documento técnico de privacidade que clarifica o que existe agora e o que teria de ser desenhado antes de recolher métricas futuras. A aplicação usa `localStorage` apenas para dados do próprio jogo: tutorial concluído, opção de mostrar a pontuação total durante a ronda, retoma de sessão solo, identificação local do jogador multiplayer e retoma de sala. O detalhe técnico está em [`docs/privacy.md`](docs/privacy.md).
 
 O frontend corre em modo `api` por omissão; para desenvolvimento isolado posso usar `npm run dev:mock`, que usa uma amostra pequena de locais reais. A base de dados PostgreSQL corre em Docker; o backend já consegue sincronizar o catálogo de locais por upsert a partir de `locations.json`, guardar sessões, rondas, palpites e resultados, e recuperar sessões guardadas quando as flags de PostgreSQL estão ativas. Com o catálogo PostgreSQL ativo, as rondas pedem candidatos aleatórios à tabela `locations`. Validei o perfil `full` com frontend em `api`, backend e PostgreSQL num volume limpo, incluindo uma sessão solo, uma sala multiplayer curta e o diagnóstico técnico da base de dados com a flag própria ativa. Também validei a versão pública em `https://geoexplorer.firmwork.pt/`, com `/api/health` ativo, criação de sala multiplayer e testes com utilizadores externos, incluindo pessoas próximas como colegas de trabalho e amigos. Para Mapillary, o token fica no ambiente local através de `MAPILLARY_ACCESS_TOKEN`; o frontend não recebe essa chave. Também reforcei a validação server-side dos palpites e das salas multiplayer, para não depender apenas da interface.
 

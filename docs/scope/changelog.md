@@ -120,14 +120,14 @@
 
 ## Sem. 15 · 16–20 jun · PREP. DEFESA
 
-**Feito:**  
-**Bloqueou:**  
-**Próxima semana:**
+**Feito:** finalizei a preparação da entrega, revi o relatório final, atualizei imagens e confirmei a coerência entre documentação, frontend, backend, base de dados e multiplayer. Também adicionei um endpoint de verificação no backend para confirmar no servidor se a base de dados e uma imagem Mapillary respondem corretamente, porque durante os testes reparei que por vezes o Mapillary não parecia estar a funcionar.
+**Bloqueou:** nada bloqueado.
+**Próxima semana:** —
 
 ---
 
 ## Sem. 16 · 24 jun · ENTREGA FINAL
 
-**Feito:**  
+**Feito:** deixei o relatório final preparado para entrega até 24 de junho.
 **Bloqueou:** —  
-**Próxima semana:** — Defesa pública.
+**Próxima semana:** —

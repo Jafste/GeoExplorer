@@ -14,7 +14,7 @@
     @apply bg-background text-content antialiased;
     margin: 0;
     min-width: 320px;
-    min-height: 100vh;
+    min-height: 100svh;
     background:
       radial-gradient(circle at 14% 16%, rgba(121, 80, 229, 0.28), transparent 22%),
       radial-gradient(circle at 82% 12%, rgba(154, 232, 93, 0.14), transparent 18%),

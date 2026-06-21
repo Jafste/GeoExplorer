@@ -36,9 +36,9 @@
 }
 
 .multiplayer-immersive-head {
-  top: 28px;
-  left: 28px;
-  right: 28px;
+  top: calc(28px + var(--app-safe-top));
+  left: calc(28px + var(--app-safe-left));
+  right: calc(28px + var(--app-safe-right));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,9 +74,9 @@
 
 .multiplayer-immersive-notice,
 .multiplayer-immersive-disconnect {
-  top: 88px;
-  left: 28px;
-  width: min(520px, calc(100% - 56px));
+  top: calc(88px + var(--app-safe-top));
+  left: calc(28px + var(--app-safe-left));
+  width: min(520px, calc(100% - 56px - var(--app-safe-left) - var(--app-safe-right)));
 }
 
 .multiplayer-immersive-disconnect:empty {
@@ -84,9 +84,9 @@
 }
 
 .multiplayer-players-overlay {
-  top: 88px;
-  right: 28px;
-  width: min(360px, calc(100% - 56px));
+  top: calc(88px + var(--app-safe-top));
+  right: calc(28px + var(--app-safe-right));
+  width: min(360px, calc(100% - 56px - var(--app-safe-left) - var(--app-safe-right)));
   display: grid;
   gap: 12px;
   padding: 16px;
@@ -151,15 +151,17 @@
   border: 1px solid var(--line);
   background: rgba(8, 12, 18, 0.72);
   color: var(--text-main);
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .multiplayer-name-input-shell input {
   padding-right: 56px;
 }
 
-.multiplayer-field input:focus {
+.multiplayer-field input:focus-visible {
   border-color: var(--line-bright);
+  outline-color: rgba(209, 255, 38, 0.68);
   box-shadow: 0 0 0 3px rgba(154, 232, 93, 0.12);
 }
 
@@ -203,7 +205,7 @@
   place-items: center;
   flex: 0 0 auto;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.045);
   color: var(--text-main);
 }
@@ -289,18 +291,26 @@
   display: grid;
   place-items: center;
   padding: 18px;
+}
+
+.modal-dialog-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
   background: rgba(4, 7, 12, 0.72);
   backdrop-filter: blur(10px);
 }
 
 .modal-dialog {
+  position: relative;
+  z-index: 1;
   width: min(500px, 100%);
   max-height: calc(100svh - 36px);
   display: grid;
   gap: 16px;
   padding: 18px;
   overflow: auto;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: rgba(13, 17, 24, 0.96);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
 }
@@ -467,11 +477,13 @@
   border: 1px solid var(--line);
   background: rgba(8, 12, 18, 0.72);
   color: var(--text-main);
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
-.multiplayer-search-shell input:focus {
+.multiplayer-search-shell input:focus-visible {
   border-color: var(--line-bright);
+  outline-color: rgba(209, 255, 38, 0.68);
   box-shadow: 0 0 0 3px rgba(154, 232, 93, 0.12);
 }
 
@@ -610,6 +622,13 @@
   text-transform: uppercase;
 }
 
+.multiplayer-leaderboard-score {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  text-align: right;
+}
+
 .multiplayer-player-status {
   display: grid;
   justify-items: end;
@@ -617,7 +636,8 @@
 }
 
 .multiplayer-player-status small,
-.multiplayer-leaderboard-copy small {
+.multiplayer-leaderboard-copy small,
+.multiplayer-leaderboard-score small {
   color: var(--text-muted);
   font-size: 0.72rem;
   font-weight: 800;
@@ -679,6 +699,7 @@
   justify-content: center;
   width: 34px;
   height: 34px;
+  border-radius: var(--radius-ui);
   border: 1px solid rgba(240, 242, 245, 0.14);
   background: rgba(255, 255, 255, 0.045);
   color: var(--text-main);
@@ -758,6 +779,11 @@
     align-self: flex-start;
   }
 
+  .multiplayer-leaderboard-score {
+    justify-items: start;
+    text-align: left;
+  }
+
   .multiplayer-player-status {
     justify-items: start;
   }
@@ -775,7 +801,7 @@
 
   .modal-dialog-backdrop {
     place-items: start center;
-    padding: 84px 14px 18px;
+    padding: calc(84px + var(--app-safe-top)) calc(14px + var(--app-safe-right)) calc(18px + var(--app-safe-bottom)) calc(14px + var(--app-safe-left));
     overflow-y: auto;
   }
 
@@ -792,9 +818,9 @@
   }
 
   .multiplayer-immersive-head {
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: calc(12px + var(--app-safe-top));
+    left: calc(12px + var(--app-safe-left));
+    right: calc(12px + var(--app-safe-right));
     gap: 10px;
   }
 
@@ -810,17 +836,17 @@
   }
 
   .multiplayer-players-overlay {
-    top: 116px;
-    left: 10px;
-    right: 10px;
+    top: calc(116px + var(--app-safe-top));
+    left: calc(10px + var(--app-safe-left));
+    right: calc(10px + var(--app-safe-right));
     width: auto;
     padding: 12px;
   }
 
   .multiplayer-immersive-notice,
   .multiplayer-immersive-disconnect {
-    top: 116px;
-    left: 10px;
-    width: calc(100% - 20px);
+    top: calc(116px + var(--app-safe-top));
+    left: calc(10px + var(--app-safe-left));
+    width: calc(100% - 20px - var(--app-safe-left) - var(--app-safe-right));
   }
 }

@@ -34,6 +34,25 @@ public sealed class GameApiIntegrationTests
     }
 
     [TestMethod]
+    public async Task HealthDetails_WithDatabaseFlags_ReturnsCatalogAndMapillaryStatus()
+    {
+        var databaseName = $"geoexplorer-health-test-{Guid.NewGuid()}";
+        var databaseRoot = new InMemoryDatabaseRoot();
+
+        using var factory = CreatePostgresModeFactory(databaseName, databaseRoot);
+        using var client = factory.CreateClient();
+
+        var details = await GetJson<HealthDetailsDto>(client, "/api/health/details");
+
+        Assert.AreEqual("degraded", details.Status);
+        Assert.AreEqual("ok", details.Database.Status);
+        Assert.IsGreaterThan(0, details.Database.Locations);
+        Assert.IsGreaterThan(0, details.Database.MapillaryLocations);
+        Assert.AreEqual("error", details.Mapillary.Status);
+        Assert.AreEqual((int)HttpStatusCode.ServiceUnavailable, details.Mapillary.StatusCode);
+    }
+
+    [TestMethod]
     public async Task Cors_WithConfiguredLocalOrigin_AllowsPreflight()
     {
         using var factory = new WebApplicationFactory<Program>();
@@ -346,6 +365,7 @@ public sealed class GameApiIntegrationTests
                 {
                     ["GeoExplorer:UsePostgresCatalog"] = "true",
                     ["GeoExplorer:UsePostgresPersistence"] = "true",
+                    ["Mapillary:AccessToken"] = "",
                 });
             });
 
@@ -390,4 +410,20 @@ public sealed class GameApiIntegrationTests
         int Reads,
         int Writes,
         int Total);
+
+    private sealed record HealthDetailsDto(
+        string Status,
+        HealthDetailsDatabaseDto Database,
+        HealthDetailsMapillaryDto Mapillary);
+
+    private sealed record HealthDetailsDatabaseDto(
+        string Status,
+        int Locations,
+        int MapillaryLocations);
+
+    private sealed record HealthDetailsMapillaryDto(
+        string Status,
+        string? ImageId,
+        int? StatusCode,
+        string Message);
 }

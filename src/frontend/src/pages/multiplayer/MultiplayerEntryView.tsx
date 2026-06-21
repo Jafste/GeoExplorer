@@ -162,9 +162,11 @@ export function MultiplayerEntryView({
           />
 
           <TextField
+            autoComplete="new-password"
             className="multiplayer-field"
             label="Password opcional"
             maxLength={48}
+            name="roomPassword"
             onChange={(event) => onRoomPasswordChange(event.target.value)}
             placeholder="Deixa em branco para acesso direto"
             type="password"
@@ -179,7 +181,7 @@ export function MultiplayerEntryView({
             onClick={onCreateRoom}
             type="button"
           >
-            {busy ? "A criar..." : "Criar sala"}
+            {busy ? "A criar…" : "Criar sala"}
           </RoundedButton>
         </Card>
 
@@ -190,18 +192,23 @@ export function MultiplayerEntryView({
           <h3>Entrar numa sala existente</h3>
           <p>Usa o código recebido por link. O nome tem de ser único dentro da sala.</p>
           <TextField
+            autoComplete="off"
             className="multiplayer-field"
             label="Código da sala"
             maxLength={6}
+            name="roomCode"
             onChange={(event) => onRoomCodeInputChange(event.target.value.toUpperCase())}
             placeholder="ABCD12"
+            spellCheck={false}
             value={roomCodeInput}
           />
           <TextField
             ref={joinPasswordInputRef}
+            autoComplete="current-password"
             className="multiplayer-field"
             label="Password, se existir"
             maxLength={48}
+            name="joinPassword"
             onChange={(event) => onJoinPasswordChange(event.target.value)}
             placeholder="Opcional"
             type="password"
@@ -215,7 +222,7 @@ export function MultiplayerEntryView({
             onClick={onJoinRoom}
             type="button"
           >
-            {busy ? "A entrar..." : "Entrar na sala"}
+            {busy ? "A entrar…" : "Entrar na sala"}
           </RoundedButton>
         </Card>
 
@@ -251,9 +258,11 @@ export function MultiplayerEntryView({
             </span>
           </div>
           <TextField
+            autoComplete="off"
             className="multiplayer-search-shell"
             label="Pesquisar salas abertas"
             leading={<Search size={17} strokeWidth={2.2} />}
+            name="openRoomSearch"
             onChange={(event) => onOpenRoomSearchChange(event.target.value)}
             placeholder="Pesquisar por código, dono ou ritmo"
             srOnlyLabel
@@ -263,7 +272,7 @@ export function MultiplayerEntryView({
             {openRooms.length === 0 ? (
               <span className="multiplayer-empty-state">
                 {loadingOpenRooms
-                  ? "A ligar à lista de salas abertas..."
+                  ? "A ligar à lista de salas abertas…"
                   : openRoomsLoaded
                     ? "Não há equipas abertas neste momento. Cria uma equipa aberta ou entra por link."
                     : "A preparar sincronização das salas abertas."}
@@ -365,7 +374,7 @@ export function MultiplayerEntryView({
                 onClick={onConfirmJoinOpenRoom}
                 type="button"
               >
-                {busy ? "A entrar..." : "Entrar"}
+                {busy ? "A entrar…" : "Entrar"}
               </RoundedButton>
             </>
           }
@@ -401,10 +410,11 @@ export function MultiplayerEntryView({
           </p>
           {selectedOpenRoom.hasPassword ? (
             <TextField
-              autoFocus
+              autoComplete="current-password"
               className="multiplayer-field"
               label="Password da sala"
               maxLength={48}
+              name="selectedOpenRoomPassword"
               onChange={(event) => onSelectedOpenRoomPasswordChange(event.target.value)}
               placeholder="Password definida pelo dono"
               type="password"

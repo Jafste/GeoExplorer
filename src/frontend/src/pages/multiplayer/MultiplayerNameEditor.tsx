@@ -28,10 +28,12 @@ export function MultiplayerDisplayNameField({
 }: MultiplayerDisplayNameFieldProps) {
   return (
     <TextField
+      autoComplete="nickname"
       className="multiplayer-field"
       inputWrapperClassName="multiplayer-name-input-shell"
       label={label}
       maxLength={24}
+      name="displayName"
       onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}
       trailing={

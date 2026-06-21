@@ -1,8 +1,6 @@
 import { Card } from "../../components/layout/card/card";
-import { CountryScopeSelect } from "../../components/CountryScopeSelect";
-import { RoundTimeControl } from "../../components/RoundTimeControl";
+import { SessionConfigControls } from "../../components/SessionConfigControls";
 import { AppNotice } from "../../components/ui/AppNotice";
-import { SegmentedControl } from "../../components/ui/SegmentedControl";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import type {
   MultiplayerPlayer,
@@ -25,10 +23,12 @@ interface MultiplayerLobbyViewProps extends NameEditorProps {
   onCopyShareUrl: () => void;
   onDismissError: () => void;
   onLeaveRoom: () => void;
+  onShowTotalScoreDuringRoundChange: (showTotalScoreDuringRound: boolean) => void;
   onStartGame: () => void;
   onUpdateConfig: (config: SessionConfig) => void;
   playerJoining: boolean;
   room: MultiplayerRoomState;
+  showTotalScoreDuringRound: boolean;
 }
 
 export function MultiplayerLobbyView({
@@ -46,10 +46,12 @@ export function MultiplayerLobbyView({
   onDisplayNameChange,
   onLeaveRoom,
   onRandomizeDisplayName,
+  onShowTotalScoreDuringRoundChange,
   onStartGame,
   onUpdateConfig,
   playerJoining,
   room,
+  showTotalScoreDuringRound,
 }: MultiplayerLobbyViewProps) {
   return (
     <section className="screen-shell multiplayer-screen">
@@ -107,7 +109,7 @@ export function MultiplayerLobbyView({
             ))}
             {playerJoining ? (
               <div className="multiplayer-player-row multiplayer-player-row--pending">
-                <span>Jogador a entrar...</span>
+                <span>Jogador a entrar…</span>
                 <strong>A ligar</strong>
               </div>
             ) : null}
@@ -116,41 +118,12 @@ export function MultiplayerLobbyView({
 
         <Card as="article" variant="setupPanelStack" className="multiplayer-lobby-card multiplayer-lobby-config-card">
           <span className="muted-eyebrow">Briefing</span>
-          <CountryScopeSelect
-            value={config.countries ?? (config.country ? [config.country] : [])}
-            onChange={(countries) => onUpdateConfig({ ...config, country: null, countries })}
+          <SessionConfigControls
+            config={config}
+            onChange={onUpdateConfig}
+            onShowTotalScoreDuringRoundChange={onShowTotalScoreDuringRoundChange}
+            showTotalScoreDuringRound={showTotalScoreDuringRound}
           />
-          <SegmentedControl
-            label="Número de rondas"
-            options={[
-              { label: "3 rondas", value: 3 },
-              { label: "5 rondas", value: 5 },
-              { label: "7 rondas", value: 7 },
-            ]}
-            value={config.roundCount}
-            onChange={(roundCount) => onUpdateConfig({ ...config, roundCount })}
-          />
-          <SegmentedControl
-            label="Modo de tempo"
-            options={[
-              { label: "Livre", value: false },
-              { label: "Cronometrado", value: true },
-            ]}
-            value={config.timed}
-            onChange={(timed) =>
-              onUpdateConfig({
-                ...config,
-                timed,
-                roundTimeSeconds: timed ? config.roundTimeSeconds ?? 60 : null,
-              })
-            }
-          />
-          {config.timed ? (
-            <RoundTimeControl
-              value={config.roundTimeSeconds}
-              onChange={(roundTimeSeconds) => onUpdateConfig({ ...config, roundTimeSeconds })}
-            />
-          ) : null}
           <RoundedButton disabled={!isOwner || busy} intent="primary" radius="none" onClick={onStartGame} type="button">
             {isOwner ? "Lançar missão" : "À espera do dono da sala"}
           </RoundedButton>

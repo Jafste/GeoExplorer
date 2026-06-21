@@ -61,12 +61,14 @@ export function RoundTimeControl({ value, onChange }: RoundTimeControlProps) {
 
       <NumberField
         aria-label="Tempo por ronda personalizado em segundos"
+        autoComplete="off"
         className="round-time-custom"
         inputWrapperClassName="round-time-input-shell"
         label="Personalizado"
         labelClassName="field-label"
         max={MAX_ROUND_TIME_SECONDS}
         min={MIN_ROUND_TIME_SECONDS}
+        name="roundTimeSeconds"
         onBlur={commitDraft}
         onChange={(event) => {
           const nextDraft = event.target.value;

@@ -74,7 +74,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         )}
 
         {error ? (
-          <span id={errorId} className="field-error">
+          <span id={errorId} className="field-error" role="alert">
             {error}
           </span>
         ) : hint ? (

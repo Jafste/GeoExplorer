@@ -4,8 +4,10 @@ import {
   getInteractivePanoramaMode,
   type InteractivePanoramaMode,
 } from "../../components/ChallengeSceneArt";
+import { getRoundRemainingSeconds } from "../../app/roundTimer";
 import { ModalDialog } from "../../components/ui/ModalDialog";
 import type { ChallengeRound, GuessCoordinates } from "../../types/game";
+import { RoundClueList } from "./components/RoundClueList";
 import { RoundCornerHud } from "./components/RoundCornerHud";
 import { RoundMinimapDock } from "./components/RoundMinimapDock";
 import { RoundStatusStrip } from "./components/RoundStatusStrip";
@@ -15,30 +17,38 @@ import { formatCategoryLabel } from "./utils/roundFormat";
 interface RoundPageProps {
   busy: boolean;
   round: ChallengeRound;
+  roundEndsAt: string | null;
+  showTotalScore: boolean;
+  totalScore: number;
   onSubmit: (guess: GuessCoordinates) => Promise<void>;
   onTimeout: (guess: GuessCoordinates | null) => Promise<void>;
 }
 
-export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) {
+export function RoundPage({ busy, round, roundEndsAt, showTotalScore, totalScore, onSubmit, onTimeout }: RoundPageProps) {
   const [guess, setGuess] = useState<GuessCoordinates | null>(null);
-  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(round.timeLimitSeconds);
+  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(() =>
+    getRoundRemainingSeconds({ ...round, endsAt: roundEndsAt })
+  );
   const [cluesOpen, setCluesOpen] = useState(false);
   const [mapHovered, setMapHovered] = useState(false);
+  const [mapMounted, setMapMounted] = useState(false);
   const [mapPinnedOpen, setMapPinnedOpen] = useState(false);
   const [panoramaMode, setPanoramaMode] = useState<InteractivePanoramaMode | null>(() =>
     getInteractivePanoramaMode(round.challenge.media)
   );
   const timeoutTriggeredRef = useRef(false);
+  const mapOpen = mapHovered || mapPinnedOpen;
 
   useEffect(() => {
     setGuess(null);
-    setRemainingSeconds(round.timeLimitSeconds);
+    setRemainingSeconds(getRoundRemainingSeconds({ ...round, endsAt: roundEndsAt }));
     setCluesOpen(false);
     setMapHovered(false);
+    setMapMounted(false);
     setMapPinnedOpen(false);
     setPanoramaMode(getInteractivePanoramaMode(round.challenge.media));
     timeoutTriggeredRef.current = false;
-  }, [round.challenge.media, round.id, round.timeLimitSeconds]);
+  }, [round.challenge.media, round.id, round.timeLimitSeconds, roundEndsAt]);
 
   const handleTimeout = useEffectEvent(async () => {
     if (timeoutTriggeredRef.current || busy) {
@@ -51,6 +61,7 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
 
   const toggleMapPinnedOpen = () => {
     setMapHovered(false);
+    setMapMounted(true);
     setMapPinnedOpen((current) => !current);
   };
 
@@ -59,25 +70,21 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
       return;
     }
 
-    const timerId = window.setInterval(() => {
-      setRemainingSeconds((current) => {
-        if (current === null) {
-          return current;
-        }
+    const updateRemainingSeconds = () => {
+      setRemainingSeconds(getRoundRemainingSeconds({ ...round, endsAt: roundEndsAt }));
+    };
+    updateRemainingSeconds();
 
-        if (current <= 1) {
-          window.clearInterval(timerId);
-          return 0;
-        }
-
-        return current - 1;
-      });
-    }, 1000);
+    const timerId = window.setInterval(updateRemainingSeconds, 1000);
+    window.addEventListener("focus", updateRemainingSeconds);
+    document.addEventListener("visibilitychange", updateRemainingSeconds);
 
     return () => {
       window.clearInterval(timerId);
+      window.removeEventListener("focus", updateRemainingSeconds);
+      document.removeEventListener("visibilitychange", updateRemainingSeconds);
     };
-  }, [busy, handleTimeout, round.id, round.timeLimitSeconds, round.timed]);
+  }, [busy, round, roundEndsAt]);
 
   useEffect(() => {
     if (!round.timed || remainingSeconds !== 0 || busy) {
@@ -90,7 +97,7 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
   return (
     <section className="round-play-shell">
       <div className="round-play-canvas">
-        <div className="round-canvas-scene">
+        <div className={`round-canvas-scene${mapOpen ? " is-map-open" : ""}`}>
           <ChallengeSceneArt challenge={round.challenge} onPanoramaModeChange={setPanoramaMode} />
           <div className="round-canvas-vignette" />
           <div className="round-canvas-grain" />
@@ -101,7 +108,9 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
             panoramaMode={panoramaMode}
             remainingSeconds={remainingSeconds}
             roundNumber={round.roundNumber}
+            showTotalScore={showTotalScore}
             timed={round.timed}
+            totalScore={totalScore}
             totalRounds={round.totalRounds}
           />
 
@@ -114,14 +123,18 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
           <RoundMinimapDock
             busy={busy}
             guess={guess}
+            key={round.id}
             mapHovered={mapHovered}
+            mapMounted={mapMounted}
             mapPinnedOpen={mapPinnedOpen}
             onGuessChange={(nextGuess) => {
               setGuess(nextGuess);
+              setMapMounted(true);
               setMapPinnedOpen(true);
             }}
             onMouseEnter={() => {
               setMapHovered(true);
+              setMapMounted(true);
             }}
             onMouseLeave={() => {
               setMapHovered(false);
@@ -133,13 +146,13 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
 
           <RoundCornerHud
             guess={guess}
-            mapOpen={mapHovered || mapPinnedOpen}
+            mapOpen={mapOpen}
             timed={round.timed}
           />
 
           <RoundTelemetryFooter
             guess={guess}
-            mapOpen={mapHovered || mapPinnedOpen}
+            mapOpen={mapOpen}
             remainingSeconds={remainingSeconds}
             round={round}
           />
@@ -147,24 +160,16 @@ export function RoundPage({ busy, round, onSubmit, onTimeout }: RoundPageProps) 
           {cluesOpen ? (
             <ModalDialog title="Briefing da ronda" onClose={() => setCluesOpen(false)}>
               <div className="round-clue-modal-summary">
-                <span className="muted-eyebrow">Alvo ativo</span>
-                <strong>{round.challenge.title}</strong>
-                <p>{round.challenge.prompt}</p>
+                <span className="muted-eyebrow">Leitura do alvo</span>
+                <strong>{round.challenge.sceneLabel}</strong>
+                <p>{round.challenge.sceneNote}</p>
                 <div>
                   <span>{formatCategoryLabel(round.challenge.category)}</span>
                   <span>{round.timed ? "Cronómetro ativo" : "Sem cronómetro"}</span>
                 </div>
               </div>
               <div className="multiplayer-clue-list">
-                {round.challenge.clues.map((clue) => (
-                  <div className="multiplayer-clue-item" key={clue.label}>
-                    <div>
-                      <span className="muted-eyebrow">{clue.label}</span>
-                      <strong>{clue.value}</strong>
-                    </div>
-                    <span>{clue.confidence}</span>
-                  </div>
-                ))}
+                <RoundClueList clues={round.challenge.clues} />
               </div>
             </ModalDialog>
           ) : null}

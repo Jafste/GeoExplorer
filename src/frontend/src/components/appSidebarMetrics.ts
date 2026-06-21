@@ -1,4 +1,5 @@
 import type { SurfacePhase } from "../app/navigation";
+import { formatDistanceKm, formatScore, formatSeconds } from "../app/format";
 import type { MultiplayerSidebarContext } from "../app/sidebarContext";
 import type { RoundResolutionResponse, SessionConfig, SessionResult } from "../types/game";
 
@@ -33,22 +34,8 @@ function formatScopeLabel(config: Pick<SessionConfig, "region" | "country" | "co
   return config.country?.trim() || formatRegionLabel(config.region);
 }
 
-function formatScore(value: number | null | undefined) {
-  return typeof value === "number" ? `${value.toLocaleString("pt-PT")} pts` : "Sem dados";
-}
-
-function formatDistance(value: number | null | undefined) {
-  return typeof value === "number" ? `${value.toFixed(1)} km` : "Sem dados";
-}
-
 function formatRemainingSeconds(value: number | null | undefined) {
-  if (typeof value !== "number") {
-    return "Livre";
-  }
-
-  const minutes = Math.floor(value / 60).toString().padStart(2, "0");
-  const seconds = (value % 60).toString().padStart(2, "0");
-  return `${minutes}:${seconds}`;
+  return typeof value === "number" ? formatSeconds(value) : "Livre";
 }
 
 function formatRoundLabel(roundNumber?: number, totalRounds?: number) {
@@ -123,7 +110,7 @@ function getMultiplayerMetrics(
       { label: "Sala", value: context.roomCode ?? "Sem código" },
       { label: "Ronda", value: formatRoundLabel(context.roundNumber, context.totalRounds) },
       { label: "A tua ronda", value: formatScore(context.latestRoundScore) },
-      { label: "Distância", value: formatDistance(context.latestRoundDistanceKm) },
+      { label: "Distância", value: formatDistanceKm(context.latestRoundDistanceKm) },
       { label: "Pronto", value: context.hasReady ? "Sim" : "Não" },
     ];
   }
@@ -172,7 +159,7 @@ export function getSidebarMetrics(
     return [
       { label: "Relatório", value: `Ronda ${roundResolution.result.roundNumber}` },
       { label: "Pontuação", value: formatScore(roundResolution.result.score) },
-      { label: "Distância", value: formatDistance(roundResolution.result.distanceKm) },
+      { label: "Distância", value: formatDistanceKm(roundResolution.result.distanceKm) },
       {
         label: "Próximo",
         value: roundResolution.progress.completed

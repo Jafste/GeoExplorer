@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { CountryScopeSelect } from "../../components/CountryScopeSelect";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
-import { RoundTimeControl } from "../../components/RoundTimeControl";
-import { SegmentedControl } from "../../components/ui/SegmentedControl";
+import { SessionConfigControls } from "../../components/SessionConfigControls";
 import { RoundedButton } from "../../components/ui/roundedButton";
 import type { SessionConfig } from "../../types/game";
 
 interface SetupScreenProps {
   busy: boolean;
   initialConfig: SessionConfig;
+  showTotalScoreDuringRound: boolean;
+  onShowTotalScoreDuringRoundChange: (showTotalScoreDuringRound: boolean) => void;
   onSubmit: (config: SessionConfig) => void;
 }
 
 export function SetupPage({
   busy,
   initialConfig,
+  showTotalScoreDuringRound,
+  onShowTotalScoreDuringRoundChange,
   onSubmit,
 }: SetupScreenProps) {
   const [config, setConfig] = useState<SessionConfig>(initialConfig);
@@ -38,48 +40,12 @@ export function SetupPage({
 
       <div className="setup-stage">
         <Card as="article" className="setup-config-card" variant="setupPanelStack">
-          <CountryScopeSelect
-            value={config.countries ?? (config.country ? [config.country] : [])}
-            onChange={(countries) =>
-              setConfig((current) => ({ ...current, country: null, countries }))
-            }
+          <SessionConfigControls
+            config={config}
+            onChange={setConfig}
+            onShowTotalScoreDuringRoundChange={onShowTotalScoreDuringRoundChange}
+            showTotalScoreDuringRound={showTotalScoreDuringRound}
           />
-
-          <SegmentedControl
-            label="Número de rondas"
-            options={[
-              { label: "3 rondas", value: 3 },
-              { label: "5 rondas", value: 5 },
-              { label: "7 rondas", value: 7 },
-            ]}
-            value={config.roundCount}
-            onChange={(roundCount) => setConfig((current) => ({ ...current, roundCount }))}
-          />
-
-          <SegmentedControl
-            label="Modo de tempo"
-            options={[
-              { label: "Livre", value: false },
-              { label: "Cronometrado", value: true },
-            ]}
-            value={config.timed}
-            onChange={(timed) =>
-              setConfig((current) => ({
-                ...current,
-                timed,
-                roundTimeSeconds: timed ? current.roundTimeSeconds ?? 60 : null,
-              }))
-            }
-          />
-
-          {config.timed ? (
-            <RoundTimeControl
-              value={config.roundTimeSeconds}
-              onChange={(roundTimeSeconds) =>
-                setConfig((current) => ({ ...current, roundTimeSeconds }))
-              }
-            />
-          ) : null}
 
           <div className="action-row action-row-end">
             <RoundedButton
@@ -90,7 +56,7 @@ export function SetupPage({
               radius="none"
               type="button"
             >
-              {busy ? "A iniciar..." : "Começar missão"}
+              {busy ? "A iniciar…" : "Começar missão"}
             </RoundedButton>
           </div>
         </Card>

@@ -124,21 +124,33 @@ export function EuropeGuessMap({
       return;
     }
 
-    syncGuessMapMarkers({
-      actual,
-      actualLabelSide,
-      comparisonDistanceKm,
-      guess,
-      guessLabelSide,
-      hotspots,
-      isCloseComparison,
-      layer,
-      showComparisonLine,
-      shouldShowMarkerLabels,
-    });
+    const syncMarkers = () => {
+      syncGuessMapMarkers({
+        actual,
+        actualLabelSide,
+        comparisonDistanceKm,
+        guess,
+        guessLabelSide,
+        hotspots,
+        isCloseComparison,
+        layer,
+        showComparisonLine,
+        shouldShowMarkerLabels,
+      });
+    };
+
+    syncMarkers();
 
     if (fitToMarkers) {
-      const markerPoints = [guess, actual]
+      const markerPoints = [
+        guess,
+        actual,
+        ...hotspots.map((hotspot) => ({
+          latitude: hotspot.latitude,
+          longitude: hotspot.longitude,
+          label: hotspot.label,
+        })),
+      ]
         .filter((point): point is GuessCoordinates => Boolean(point));
 
       return scheduleFitToMarkers({
@@ -146,6 +158,7 @@ export function EuropeGuessMap({
         isCurrentMap: () => mapRef.current === map,
         map,
         markerPoints,
+        onAfterFit: syncMarkers,
       });
     }
   }, [

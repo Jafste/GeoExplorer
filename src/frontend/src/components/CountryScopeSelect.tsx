@@ -84,9 +84,12 @@ export function CountryScopeSelect({ value, onChange }: CountryScopeSelectProps)
         {open ? (
           <div className="country-popover">
             <input
+              aria-label="Pesquisar país"
+              autoComplete="off"
               className="country-search"
+              name="country-search"
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Pesquisar país..."
+              placeholder="Pesquisar país…"
               ref={searchRef}
               type="search"
               value={search}

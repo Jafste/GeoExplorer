@@ -44,7 +44,7 @@ export function AppTopbar({
         className={`brand brand-button${isRound ? " brand-button--play" : ""}`}
         onClick={onHome}
       >
-        <img alt="" aria-hidden="true" className="brand-mark" src="/favicon.png" />
+        <img alt="" aria-hidden="true" className="brand-mark" height={34} src="/favicon.png" width={34} />
         <span className="brand-copy">
           <span className="brand-title">GeoExplorer</span>
         </span>

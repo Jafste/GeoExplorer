@@ -37,15 +37,17 @@ Estes dados existem para permitir criar sessões, recuperar estado, calcular res
 
 ## Armazenamento local no browser
 
-O frontend usa `localStorage` para funcionalidades de conveniência:
+A aplicação guarda no `localStorage` alguns dados pequenos do próprio jogo, para não perder estado quando a página é recarregada ou reaberta:
 
 | Chave | Finalidade | Tipo de dado |
 | --- | --- | --- |
-| `geoexplorer.tutorial.completed` | Saber se o tutorial inicial já foi fechado. | Valor booleano textual. |
-| `geoexplorer.multiplayer.playerId` | Identificar o mesmo jogador quando entra numa sala multiplayer no mesmo browser. | Identificador aleatório local. |
-| `geoexplorer.multiplayer.roomResume` | Permitir retomar/associar uma sala multiplayer recente. | Código da sala e nome de apresentação. |
+| `geoexplorer.tutorial.completed` | Guarda se o tutorial inicial já foi fechado. | `true` ou `false`. |
+| `geoexplorer.showTotalScoreDuringRound` | Guarda a opção de mostrar a pontuação total durante a ronda. | `true` ou `false`. |
+| `geoexplorer.soloSession.resume` | Permite continuar uma sessão solo depois de recarregar ou reabrir a página. | ID da sessão, configuração, ronda atual, pontuação e resultado guardado. |
+| `geoexplorer.multiplayer.playerId` | Mantém o mesmo jogador quando entra numa sala multiplayer no mesmo browser. | Identificador aleatório criado pelo frontend. |
+| `geoexplorer.multiplayer.roomResume` | Permite voltar a uma sala multiplayer recente. | Código da sala e nome mostrado no jogo. |
 
-Este armazenamento é funcional para a experiência do jogo. Não é usado para publicidade, analytics externo ou criação de perfis comerciais.
+Estes dados ficam no browser do utilizador. Não são usados para publicidade, analytics externo ou criação de perfis comerciais.
 
 ## Logs técnicos
 

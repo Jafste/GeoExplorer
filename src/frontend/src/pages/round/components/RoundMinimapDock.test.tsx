@@ -10,6 +10,7 @@ function renderMinimapDock({
   busyLabel,
   guess = null,
   mapHovered = false,
+  mapMounted = false,
   mapPinnedOpen = false,
   onMouseEnter = vi.fn(),
   onMouseLeave = vi.fn(),
@@ -19,6 +20,7 @@ function renderMinimapDock({
   busyLabel?: string;
   guess?: Parameters<typeof RoundMinimapDock>[0]["guess"];
   mapHovered?: boolean;
+  mapMounted?: boolean;
   mapPinnedOpen?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -29,6 +31,7 @@ function renderMinimapDock({
     busyLabel,
     guess,
     mapHovered,
+    mapMounted,
     mapPinnedOpen,
     onGuessChange: vi.fn(),
     onMouseEnter,
@@ -90,5 +93,13 @@ describe("RoundMinimapDock", () => {
     const submitButton = footer.props.children[1];
 
     expect(submitButton.props.children).toBe("À espera dos outros");
+  });
+
+  it("keeps the map panel mounted while closed", () => {
+    const { element } = renderMinimapDock({ mapMounted: true });
+    const panel = element.props.children[1];
+
+    expect(panel.props["aria-hidden"]).toBe(true);
+    expect(panel.props.children[0]).toBeTruthy();
   });
 });

@@ -1,4 +1,5 @@
 import type { SessionConfig } from "../../types/game";
+import { formatScore } from "../../app/format";
 
 const MAX_SCORE_PER_ROUND = 5000;
 
@@ -58,7 +59,7 @@ export function getSessionMissionOutcome({
       success,
       title: "Alvos encontrados.",
       status: "Sucesso",
-      summary: `Objetivo cumprido: ${totalScore.toLocaleString("pt-PT")} de ${targetScore.toLocaleString("pt-PT")} pts.`,
+      summary: `Objetivo cumprido: ${formatScore(totalScore)} de ${formatScore(targetScore)}.`,
       targetScore,
       remainingScore,
     };
@@ -68,7 +69,7 @@ export function getSessionMissionOutcome({
     success,
     title: "Não foi desta vez.",
     status: "Por localizar",
-    summary: `Faltaram ${remainingScore.toLocaleString("pt-PT")} pts para encontrar os alvos. Para a próxima.`,
+    summary: `Faltaram ${formatScore(remainingScore)} para encontrar os alvos. Para a próxima.`,
     targetScore,
     remainingScore,
   };

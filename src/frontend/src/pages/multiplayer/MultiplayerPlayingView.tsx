@@ -1,5 +1,7 @@
 import { CircleHelp, Clock3, DoorOpen, UsersRound, X } from "lucide-react";
 import { ChallengeSceneArt } from "../../components/ChallengeSceneArt";
+import { formatScore } from "../../app/format";
+import { RoundClueList } from "../round/components/RoundClueList";
 import { RoundMinimapDock } from "../round/components/RoundMinimapDock";
 import { AppNotice } from "../../components/ui/AppNotice";
 import { IconButton } from "../../components/ui/Button";
@@ -13,22 +15,6 @@ import type {
 import { formatMultiplayerRoundTimer } from "./multiplayerRoundTimer";
 import { DisconnectNotice, formatPlayerName, PlayerStatus } from "./MultiplayerRoomShared";
 
-function ClueList({ currentRound }: { currentRound: ChallengeRound }) {
-  if (!currentRound.challenge.clues.length) {
-    return <span className="multiplayer-empty-state">Sem dicas disponíveis nesta ronda.</span>;
-  }
-
-  return currentRound.challenge.clues.map((clue) => (
-    <div className="multiplayer-clue-item" key={clue.label}>
-      <div>
-        <span className="muted-eyebrow">{clue.label}</span>
-        <strong>{clue.value}</strong>
-      </div>
-      <span>{clue.confidence}</span>
-    </div>
-  ));
-}
-
 interface MultiplayerPlayingViewProps {
   busy: boolean;
   cluesOpen: boolean;
@@ -40,6 +26,7 @@ interface MultiplayerPlayingViewProps {
   guess: GuessCoordinates | null;
   hasSubmitted: boolean;
   mapHovered: boolean;
+  mapMounted: boolean;
   mapPinnedOpen: boolean;
   onCloseClues: () => void;
   onClosePlayers: () => void;
@@ -56,6 +43,8 @@ interface MultiplayerPlayingViewProps {
   playersOpen: boolean;
   remainingSeconds: number | null;
   room: MultiplayerRoomState;
+  showTotalScore: boolean;
+  totalScore: number;
 }
 
 export function MultiplayerPlayingView({
@@ -69,6 +58,7 @@ export function MultiplayerPlayingView({
   guess,
   hasSubmitted,
   mapHovered,
+  mapMounted,
   mapPinnedOpen,
   onCloseClues,
   onClosePlayers,
@@ -85,6 +75,8 @@ export function MultiplayerPlayingView({
   playersOpen,
   remainingSeconds,
   room,
+  showTotalScore,
+  totalScore,
 }: MultiplayerPlayingViewProps) {
   return (
     <section className="multiplayer-immersive-shell">
@@ -104,6 +96,11 @@ export function MultiplayerPlayingView({
               <Clock3 size={14} strokeWidth={2.1} />
               {formatMultiplayerRoundTimer(currentRound, remainingSeconds)}
             </span>
+            {showTotalScore ? (
+              <span className="chip chip-highlight round-total-score-chip">
+                Total {formatScore(totalScore)}
+              </span>
+            ) : null}
           </div>
 
           <div className="multiplayer-immersive-actions">
@@ -157,7 +154,9 @@ export function MultiplayerPlayingView({
           busy={busy || hasSubmitted}
           busyLabel={hasSubmitted ? "À espera dos outros" : undefined}
           guess={guess}
+          key={currentRound.id}
           mapHovered={mapHovered}
+          mapMounted={mapMounted}
           mapPinnedOpen={mapPinnedOpen}
           onGuessChange={onGuessChange}
           onMouseEnter={onMouseEnterMap}
@@ -193,7 +192,7 @@ export function MultiplayerPlayingView({
               ))}
               {playerJoining ? (
                 <div className="multiplayer-player-row multiplayer-player-row--pending">
-                  <span>Jogador a entrar...</span>
+                  <span>Jogador a entrar…</span>
                   <strong>A ligar</strong>
                 </div>
               ) : null}
@@ -203,8 +202,13 @@ export function MultiplayerPlayingView({
 
         {cluesOpen ? (
           <ModalDialog title="Briefing da ronda" onClose={onCloseClues}>
+            <div className="round-clue-modal-summary">
+              <span className="muted-eyebrow">Leitura do alvo</span>
+              <strong>{currentRound.challenge.sceneLabel}</strong>
+              <p>{currentRound.challenge.sceneNote}</p>
+            </div>
             <div className="multiplayer-clue-list">
-              <ClueList currentRound={currentRound} />
+              <RoundClueList clues={currentRound.challenge.clues} />
             </div>
           </ModalDialog>
         ) : null}

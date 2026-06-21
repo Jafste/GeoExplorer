@@ -38,12 +38,17 @@ export function ModalDialog({
   }
 
   return createPortal(
-    <div className="modal-dialog-backdrop" role="presentation" onClick={onClose}>
+    <div className="modal-dialog-backdrop">
+      <button
+        aria-label="Fechar popup"
+        className="modal-dialog-scrim"
+        onClick={onClose}
+        type="button"
+      />
       <div
         aria-labelledby={titleId}
         aria-modal="true"
         className={["modal-dialog", className].filter(Boolean).join(" ")}
-        onClick={(event) => event.stopPropagation()}
         role="dialog"
       >
         <div className="modal-dialog-head">

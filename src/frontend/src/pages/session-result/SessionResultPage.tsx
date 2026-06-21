@@ -1,5 +1,6 @@
 import { MoveRight } from "lucide-react";
 import { useDeferredValue } from "react";
+import { formatDistanceKm, formatScore } from "../../app/format";
 import { EuropeGuessMap, type MapHotspot } from "../../components/EuropeGuessMap";
 import { Card } from "../../components/layout/card/card";
 import { InfoGrid } from "../../components/ui/InfoCard";
@@ -51,7 +52,7 @@ export function SessionResultPage({
     latitude: round.correctLatitude,
     longitude: round.correctLongitude,
     tone: round.distanceKm === null ? "danger" : round.score >= 4500 ? "primary" : "neutral",
-    value: `${round.score.toLocaleString("pt-PT")} pts`,
+    value: formatScore(round.score),
   }));
 
   return (
@@ -75,11 +76,11 @@ export function SessionResultPage({
         <div className="summary-hero session-report-summary">
           <div className="metric-card">
             <span>Pontuação total</span>
-            <strong>{result.totalScore.toLocaleString("pt-PT")} pts</strong>
+            <strong>{formatScore(result.totalScore)}</strong>
           </div>
           <div className="metric-card">
             <span>Média por ronda</span>
-            <strong>{averageScore.toLocaleString("pt-PT")} pts</strong>
+            <strong>{formatScore(averageScore)}</strong>
           </div>
           <div className="metric-card">
             <span>Modo</span>
@@ -95,7 +96,7 @@ export function SessionResultPage({
       <InfoGrid
         items={[
           { label: "Diagnóstico", value: sessionVerdict },
-          { label: "Objetivo", value: `${missionOutcome.targetScore.toLocaleString("pt-PT")} pts` },
+          { label: "Objetivo", value: formatScore(missionOutcome.targetScore) },
           { label: "Tempos esgotados", value: `${timeoutRounds} ocorrência(s)` },
         ]}
       />
@@ -143,7 +144,7 @@ export function SessionResultPage({
             items={[
               {
                 label: "Distância média",
-                value: averageDistance === null ? "Sem dados" : `${averageDistance.toFixed(1)} km`,
+                value: formatDistanceKm(averageDistance),
               },
               { label: "Quase perfeitas", value: `${perfectStrikes} / ${result.totalRounds}` },
               {
@@ -155,7 +156,7 @@ export function SessionResultPage({
 
           <div className="session-report-actions">
             <RoundedButton intent="primary" radius="none" disabled={busy} onClick={onReplay} type="button">
-              {busy ? "A reiniciar..." : (
+              {busy ? "A reiniciar…" : (
                 <>
                   Nova missão
                   <MoveRight size={16} strokeWidth={2.2} />
@@ -183,7 +184,7 @@ export function SessionResultPage({
                 </strong>
                 <p>
                   {round.guess ? round.guess.label : "Sem posição"} ·{" "}
-                  {round.distanceKm === null ? "Tempo esgotado" : `${round.distanceKm.toFixed(1)} km`}
+                  {round.distanceKm === null ? "Tempo esgotado" : formatDistanceKm(round.distanceKm)}
                 </p>
                 {round.media ? (
                   <span className="summary-row-source">
@@ -202,7 +203,7 @@ export function SessionResultPage({
 
               <div className="summary-row-metric">
                 <span className="muted-eyebrow">Pontuação</span>
-                <strong>{round.score.toLocaleString("pt-PT")} pts</strong>
+                <strong>{formatScore(round.score)}</strong>
               </div>
             </div>
           ))}

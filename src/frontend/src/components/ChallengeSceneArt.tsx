@@ -160,6 +160,23 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
     onPanoramaModeChange?.(interactivePanoramaMode);
   }, [interactivePanoramaMode, onPanoramaModeChange]);
 
+  function clearRetryTimer() {
+    if (retryTimeoutRef.current !== null) {
+      window.clearTimeout(retryTimeoutRef.current);
+      retryTimeoutRef.current = null;
+    }
+  }
+
+  function retryPhotoLoad() {
+    clearRetryTimer();
+    setActivePhotoIndex(0);
+    setRetryCycle((currentCycle) => currentCycle + 1);
+    setRetryExhausted(false);
+    setWaitingToRetry(false);
+    setPhotoLoaded(false);
+    setActivePhotoDimensions(undefined);
+  }
+
   function handlePhotoError() {
     setPhotoLoaded(false);
     setActivePhotoDimensions(undefined);
@@ -168,9 +185,7 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
         return currentIndex + 1;
       }
 
-      if (retryTimeoutRef.current !== null) {
-        window.clearTimeout(retryTimeoutRef.current);
-      }
+      clearRetryTimer();
 
       if (retryCycle >= PHOTO_RETRY_MAX_CYCLES) {
         setRetryExhausted(true);
@@ -217,9 +232,16 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
         style={style}
       >
         {!photoLoaded ? (
-          <span className="scene-photo-loading" role="status">
-            {retryExhausted ? "Imagem indisponível" : waitingToRetry ? "A preparar imagem" : "A carregar imagem"}
-          </span>
+          <div className="scene-photo-loading">
+            <span role="status">
+              {retryExhausted ? "Imagem indisponível" : waitingToRetry ? "A preparar imagem" : "A carregar imagem"}
+            </span>
+            {retryExhausted ? (
+              <button className="scene-photo-retry-button" type="button" onClick={retryPhotoLoad}>
+                Tentar novamente
+              </button>
+            ) : null}
+          </div>
         ) : null}
 
         {waitingToRetry || retryExhausted ? null : (
@@ -231,10 +253,12 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
               className="scene-panorama-preload"
               decoding="async"
               draggable={false}
+              height={1}
               loading="eager"
               onError={handlePhotoError}
               onLoad={(event) => markPhotoLoaded(event.currentTarget)}
               src={activeImageUrl}
+              width={1}
             />
             {!isInteractivePanorama && shouldContainPhoto ? (
               <span
@@ -244,6 +268,7 @@ export function ChallengeSceneArt({ challenge, onPanoramaModeChange }: Challenge
               />
             ) : null}
             <InteractivePanoramaImage
+              fit={shouldContainPhoto ? "contain" : "cover"}
               imageUrl={activeImageUrl}
               loaded={photoLoaded}
               mode={interactivePanoramaMode ?? "photo"}

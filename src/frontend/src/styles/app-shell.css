@@ -26,6 +26,10 @@ body::after {
 }
 
 :root {
+  --app-safe-top: env(safe-area-inset-top, 0px);
+  --app-safe-right: env(safe-area-inset-right, 0px);
+  --app-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --app-safe-left: env(safe-area-inset-left, 0px);
   --surface: rgba(16, 20, 22, 0.8);
   --surface-soft: rgba(16, 20, 22, 0.66);
   --surface-raised: rgba(16, 20, 22, 0.92);
@@ -39,18 +43,22 @@ body::after {
   --line: rgba(240, 242, 245, 0.12);
   --line-strong: rgba(209, 255, 38, 0.44);
   --line-bright: rgba(209, 255, 38, 0.28);
-  --radius-ui: 8px;
+  --radius-ui: 20px;
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.35);
   --shadow-xl: 0 32px 96px rgba(0, 0, 0, 0.48);
 }
 
 #root {
+  min-height: 100svh;
   isolation: isolate;
 }
 
 .app-shell {
+  position: relative;
+  z-index: 0;
   width: 100%;
   max-width: none;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -64,16 +72,21 @@ body::after {
 }
 
 .app-main-stage--hud {
-  padding: 92px 28px 40px 268px;
+  padding: calc(92px + var(--app-safe-top)) 28px calc(40px + var(--app-safe-bottom)) 268px;
 }
 
 .app-main-stage--play {
+  --play-topbar-height: calc(4rem + var(--app-safe-top));
+  --play-hud-gap: 1.5rem;
+  --round-hud-stack-offset: 3.875rem;
+  --round-hud-top: calc(var(--play-topbar-height) + var(--play-hud-gap));
+  --round-callout-top: calc(var(--round-hud-top) + var(--round-hud-stack-offset));
   min-height: 100svh;
 }
 
 .app-sidebar {
   position: fixed;
-  top: 64px;
+  top: calc(64px + var(--app-safe-top));
   left: 0;
   bottom: 0;
   z-index: 35;
@@ -82,7 +95,7 @@ body::after {
   width: 228px;
   padding: 8px;
   border: 0;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--radius-ui) var(--radius-ui) 0;
   background:
     linear-gradient(180deg, rgba(22, 32, 26, 0.96), rgba(10, 15, 16, 0.96)),
     rgba(12, 18, 18, 0.96);
@@ -110,7 +123,7 @@ body::after {
   min-height: 62px;
   padding: 10px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: rgba(154, 232, 93, 0.1);
   color: #f3f5f7;
   text-align: left;
@@ -138,7 +151,7 @@ body::after {
   width: 40px;
   height: 40px;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: linear-gradient(135deg, #9ae85d, #d1ff26);
   color: #101416;
 }
@@ -181,7 +194,7 @@ body::after {
   min-height: 40px;
   padding: 7px 9px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: transparent;
   color: rgba(224, 227, 230, 0.62);
   font-size: 0.74rem;
@@ -209,12 +222,14 @@ body::after {
   color: #f3f5f7;
 }
 
-.app-sidebar-link:disabled {
+.app-sidebar-link:disabled,
+.app-sidebar-link[aria-disabled="true"] {
   cursor: not-allowed;
   opacity: 0.42;
 }
 
-.app-sidebar-link:disabled:hover {
+.app-sidebar-link:disabled:hover,
+.app-sidebar-link[aria-disabled="true"]:hover {
   background: transparent;
   color: rgba(224, 227, 230, 0.62);
 }
@@ -233,11 +248,11 @@ body::after {
   display: block;
 }
 
-.app-sidebar-tooltip .app-sidebar-link:disabled {
+.app-sidebar-tooltip .app-sidebar-link[aria-disabled="true"] {
   pointer-events: none;
 }
 
-.app-sidebar-tooltip:focus-visible {
+.app-sidebar-tooltip:focus-within {
   outline: 1px solid rgba(209, 255, 38, 0.72);
   outline-offset: 2px;
 }
@@ -251,7 +266,7 @@ body::after {
   width: calc(100% - 24px);
   padding: 9px 10px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: rgba(13, 17, 19, 0.98);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.36);
   color: rgba(241, 243, 245, 0.88);
@@ -303,7 +318,7 @@ body::after {
   display: grid;
   gap: 4px;
   padding: 9px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-ui);
   background: rgba(255, 255, 255, 0.045);
 }
 
@@ -325,9 +340,9 @@ body::after {
   align-items: center;
   justify-content: flex-start;
   gap: 18px;
-  height: 64px;
+  height: calc(var(--app-topbar-height, 4rem) + var(--app-safe-top));
   margin: 0;
-  padding: 0 24px;
+  padding: var(--app-safe-top) calc(24px + var(--app-safe-right)) 0 calc(24px + var(--app-safe-left));
   border: 0;
   border-bottom: 0;
   border-radius: 0;
@@ -337,16 +352,23 @@ body::after {
 }
 
 .topbar--play {
-  padding-left: 24px;
-  padding-right: 24px;
+  min-height: var(--play-topbar-height);
+  padding-left: calc(24px + var(--app-safe-left));
+  padding-right: calc(24px + var(--app-safe-right));
   background: rgba(11, 15, 17, 0.62);
 }
 
 .brand {
+  display: flex;
+  align-items: center;
   gap: 14px;
+  min-width: 0;
 }
 
 .brand-button {
+  padding: 0;
+  border: 0;
+  background: none;
   color: inherit;
 }
 
@@ -366,7 +388,9 @@ body::after {
 }
 
 .brand-copy {
+  display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .brand-title {
@@ -381,10 +405,21 @@ body::after {
 }
 
 .topbar-actions {
+  display: flex;
+  align-items: center;
   gap: 10px;
   flex: 0 0 auto;
   flex-wrap: nowrap;
   margin-left: auto;
+}
+
+.action-row,
+.toggle-row,
+.result-chip-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .topbar-menu-button {
@@ -394,7 +429,7 @@ body::after {
   width: 42px;
   height: 42px;
   border: 1px solid rgba(240, 242, 245, 0.14);
-  border-radius: 8px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.045);
   color: #f3f5f7;
 }
@@ -408,7 +443,7 @@ body::after {
 
 .app-sidebar-backdrop {
   position: fixed;
-  inset: 64px 0 0;
+  inset: calc(64px + var(--app-safe-top)) 0 0;
   z-index: 34;
   display: none;
   border: 0;
@@ -422,17 +457,28 @@ body::after {
 .round-minimap-toggle,
 .tutorial-progress-dot,
 .tutorial-close {
-  border-radius: 8px;
+  border-radius: 999px;
 }
 
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 42px;
   padding: 0 16px;
+  border: 1px solid transparent;
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   box-shadow: none;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
 }
 
 .button-primary {
@@ -456,6 +502,9 @@ body::after {
 }
 
 .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid rgba(240, 242, 245, 0.12);
@@ -464,6 +513,7 @@ body::after {
   font-size: 0.65rem;
   font-weight: 900;
   letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .chip-highlight {
@@ -569,8 +619,8 @@ body::after {
 
 .loading-state--compact {
   position: fixed;
-  top: 76px;
-  right: 24px;
+  top: calc(76px + var(--app-safe-top));
+  right: calc(24px + var(--app-safe-right));
   width: min(360px, calc(100vw - 32px));
   min-height: 0;
   margin-bottom: 0;

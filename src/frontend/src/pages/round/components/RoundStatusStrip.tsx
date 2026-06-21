@@ -1,14 +1,16 @@
 import { CircleHelp, Clock3, MoveHorizontal } from "lucide-react";
+import { formatScore, formatSeconds } from "../../../app/format";
 import type { InteractivePanoramaMode } from "../../../components/ChallengeSceneArt";
 import { IconButton } from "../../../components/ui/Button";
-import { formatSeconds } from "../utils/roundFormat";
 
 interface RoundStatusStripProps {
   onOpenClues: () => void;
   panoramaMode: InteractivePanoramaMode | null;
   remainingSeconds: number | null;
   roundNumber: number;
+  showTotalScore: boolean;
   timed: boolean;
+  totalScore: number;
   totalRounds: number;
 }
 
@@ -17,7 +19,9 @@ export function RoundStatusStrip({
   panoramaMode,
   remainingSeconds,
   roundNumber,
+  showTotalScore,
   timed,
+  totalScore,
   totalRounds,
 }: RoundStatusStripProps) {
   const panoramaTitle = panoramaMode === "360" ? "Vista 360 navegável" : "Panorama navegável";
@@ -29,6 +33,11 @@ export function RoundStatusStrip({
         <Clock3 size={14} strokeWidth={2.1} className="mr-1"/>
         {timed ? formatSeconds(remainingSeconds ?? 0) : "Livre"}
       </span>
+      {showTotalScore ? (
+        <span className="chip chip-highlight round-total-score-chip">
+          Total {formatScore(totalScore)}
+        </span>
+      ) : null}
       {panoramaMode ? (
         <span aria-label={panoramaTitle} className="chip chip-highlight round-panorama-chip" title={panoramaTitle}>
           <MoveHorizontal aria-hidden="true" size={14} strokeWidth={2.3} />

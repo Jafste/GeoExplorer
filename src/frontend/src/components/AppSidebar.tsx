@@ -43,8 +43,8 @@ function SidebarAction({
   const button = (
     <ButtonBase
       aria-describedby={disabled ? tooltipId : undefined}
+      aria-disabled={disabled || undefined}
       className={`app-sidebar-link${active ? " is-active" : ""}`}
-      disabled={disabled}
       onClick={disabled ? undefined : onClick}
       title={disabledReason ?? undefined}
     >
@@ -58,7 +58,7 @@ function SidebarAction({
   }
 
   return (
-    <span className="app-sidebar-tooltip" tabIndex={0}>
+    <span className="app-sidebar-tooltip">
       {button}
       <span className="app-sidebar-tooltip-bubble" id={tooltipId} role="tooltip">
         {disabledReason}

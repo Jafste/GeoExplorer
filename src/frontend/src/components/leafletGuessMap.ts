@@ -1,10 +1,11 @@
 import L from "leaflet";
+import { formatDistanceKm } from "../app/format";
+import { EUROPE_PLAYABLE_BOUNDS, EUROPE_VIEW_BOUNDS } from "../app/guessMapBounds";
 import type { GuessCoordinates } from "../types/game";
 import {
   getComparisonFitPadding,
   getComparisonMaxZoom,
 } from "./europeGuessMapFit";
-import { EUROPE_PLAYABLE_BOUNDS, EUROPE_VIEW_BOUNDS } from "../app/guessMapBounds";
 import { escapeLeafletHtml } from "./leafletHtml";
 
 export interface MapHotspot {
@@ -149,7 +150,7 @@ export function syncGuessMapMarkers({
       );
 
       comparisonLine
-        .bindTooltip(`${comparisonDistanceKm.toFixed(1)} km`, {
+        .bindTooltip(formatDistanceKm(comparisonDistanceKm), {
           className: `map-distance-tooltip${isCloseComparison ? " map-distance-tooltip--close" : ""}`,
           direction: isCloseComparison ? "top" : "center",
           offset: isCloseComparison ? [0, -18] : [0, 0],
@@ -201,6 +202,7 @@ interface ScheduleFitToMarkersOptions {
   isCurrentMap: () => boolean;
   map: L.Map;
   markerPoints: GuessCoordinates[];
+  onAfterFit?: () => void;
 }
 
 export function scheduleFitToMarkers({
@@ -208,6 +210,7 @@ export function scheduleFitToMarkers({
   isCurrentMap,
   map,
   markerPoints,
+  onAfterFit,
 }: ScheduleFitToMarkersOptions) {
   const points = markerPoints.map((point) => L.latLng(point.latitude, point.longitude));
   let cancelled = false;
@@ -224,11 +227,13 @@ export function scheduleFitToMarkers({
         maxZoom: getComparisonMaxZoom(comparisonDistanceKm),
         padding: getComparisonFitPadding(comparisonDistanceKm),
       });
+      onAfterFit?.();
       return;
     }
 
     if (points.length === 1) {
       map.setView(points[0], 10, { animate: false });
+      onAfterFit?.();
     }
   };
 

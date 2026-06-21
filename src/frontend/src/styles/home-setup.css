@@ -4,8 +4,7 @@
 
 .card-home-hero,
 .card-setup-panel,
-.guess-map-card,
-.tutorial-shell {
+.guess-map-card {
   box-shadow: var(--shadow-xl);
 }
 
@@ -72,7 +71,7 @@
 
 .home-title {
   margin: 0;
-  font-size: clamp(3.4rem, 8vw, 7rem);
+  font-size: 6rem;
   line-height: 0.9;
 }
 
@@ -104,7 +103,7 @@
 .summary-row,
 .metric-card {
   padding: 16px 18px;
-  border-radius: 24px;
+  border-radius: var(--radius-ui);
   background: rgba(255, 255, 255, 0.045);
 }
 
@@ -117,11 +116,8 @@
 
 .home-step-card p,
 .scene-floating-card p,
-.card-preview-overlay p,
 .card-inset,
-.summary-row p,
-.tutorial-copy p,
-.tutorial-visual-card p {
+.summary-row p {
   color: var(--text-muted);
 }
 
@@ -180,8 +176,6 @@
 }
 
 .scene-floating-card strong,
-.card-preview-overlay strong,
-.tutorial-visual-card strong,
 .metric-card strong {
   display: block;
   margin-top: 6px;
@@ -218,21 +212,18 @@
 
 .section-title {
   margin: 6px 0 0;
-  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-size: 2.45rem;
   line-height: 0.98;
 }
 
-.setup-header-actions,
-.tutorial-actions,
-.tutorial-actions-right {
+.setup-header-actions {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.setup-stage,
-.tutorial-body {
+.setup-stage {
   display: grid;
   gap: 22px;
 }
@@ -280,11 +271,13 @@
   color: var(--text-main);
   font: inherit;
   font-weight: 800;
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
-.round-time-input-shell input:focus {
+.round-time-input-shell input:focus-visible {
   border-color: var(--line-bright);
+  outline-color: rgba(209, 255, 38, 0.68);
   box-shadow: 0 0 0 3px rgba(154, 232, 93, 0.12);
 }
 
@@ -350,6 +343,63 @@
   width: 100%;
 }
 
+.setup-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: var(--radius-ui);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.setup-switch-row span {
+  display: grid;
+  gap: 4px;
+}
+
+.setup-switch-row strong {
+  font-size: 0.98rem;
+}
+
+.setup-switch-row small {
+  color: var(--text-muted);
+}
+
+.setup-switch-row input {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 28px;
+  margin: 0;
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.setup-switch-row input::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 3px;
+  border-radius: 50%;
+  background: rgba(244, 248, 252, 0.92);
+  transition: transform 160ms ease;
+}
+
+.setup-switch-row input:checked {
+  border-color: rgba(209, 255, 38, 0.72);
+  background: rgba(209, 255, 38, 0.32);
+}
+
+.setup-switch-row input:checked::before {
+  transform: translateX(20px);
+  background: var(--color-primary);
+}
+
 .scene-art {
   position: absolute;
   inset: 0;
@@ -371,31 +421,6 @@
   filter: blur(22px) saturate(1.04) brightness(0.7);
   opacity: 0.58;
   transform: scale(1.04);
-}
-
-.scene-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.025);
-  filter: saturate(1.05) contrast(1.03);
-  opacity: 1;
-  transition: opacity 180ms ease;
-}
-
-.scene-photo--contain {
-  object-fit: contain;
-  transform: none;
-}
-
-.scene-photo.is-loading {
-  opacity: 0;
-}
-
-.scene-photo.is-loaded {
-  opacity: 1;
 }
 
 .scene-art--panorama {
@@ -439,8 +464,8 @@
 
 .scene-panorama-controls {
   position: absolute;
-  left: 1rem;
-  bottom: 4.75rem;
+  left: calc(1rem + var(--app-safe-left));
+  bottom: calc(4.75rem + var(--app-safe-bottom));
   z-index: 3;
   display: inline-flex;
   gap: 0.4rem;
@@ -482,6 +507,8 @@
   z-index: 1;
   display: grid;
   place-items: center;
+  align-content: center;
+  gap: 0.9rem;
   background:
     linear-gradient(90deg, transparent, rgba(209, 255, 38, 0.08), transparent),
     radial-gradient(circle at 20% 20%, rgba(209, 255, 38, 0.1), transparent 24%),
@@ -495,10 +522,32 @@
   animation: photo-loading-sweep 1.4s ease-in-out infinite;
 }
 
+.scene-photo-retry-button {
+  border: 1px solid rgba(209, 255, 38, 0.28);
+  border-radius: 999px;
+  background: rgba(209, 255, 38, 0.14);
+  color: rgba(244, 248, 252, 0.94);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 0.62rem 0.9rem;
+  text-transform: uppercase;
+}
+
+.scene-photo-retry-button:hover {
+  background: rgba(209, 255, 38, 0.22);
+}
+
+.scene-photo-retry-button:focus-visible {
+  outline: 3px solid rgba(209, 255, 38, 0.44);
+  outline-offset: 2px;
+}
+
 .scene-source-pill {
   position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+  right: calc(1rem + var(--app-safe-right));
+  bottom: calc(1rem + var(--app-safe-bottom));
   z-index: 2;
   max-width: min(70%, 28rem);
   overflow: hidden;

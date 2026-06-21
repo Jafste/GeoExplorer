@@ -1,6 +1,7 @@
 import { Crosshair, MapPinned, Radar, TimerReset } from "lucide-react";
+import { formatSeconds } from "../../../app/format";
 import type { ChallengeRound, GuessCoordinates } from "../../../types/game";
-import { formatCategoryLabel, formatSeconds } from "../utils/roundFormat";
+import { formatCategoryLabel } from "../utils/roundFormat";
 
 interface RoundTelemetryFooterProps {
   guess: GuessCoordinates | null;

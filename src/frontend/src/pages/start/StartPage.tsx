@@ -19,7 +19,7 @@ export function StartPage({ onMultiplayer, onStart }: StartPageProps) {
       <Card as="article" variant="homeHero">
         <div className="home-copy-column">
           <div className="home-brand-lockup" aria-label="GeoExplorer">
-            <img alt="" aria-hidden="true" src="/favicon.png" />
+            <img alt="" aria-hidden="true" height={42} src="/favicon.png" width={42} />
             <span>GeoExplorer</span>
           </div>
 
@@ -82,7 +82,7 @@ export function StartPage({ onMultiplayer, onStart }: StartPageProps) {
               <div className="scene-floating-card scene-floating-card-main">
                 <span className="muted-eyebrow">Fontes visuais</span>
                 <strong>Wikimedia · Panoramax · Mapillary</strong>
-                <p>O jogo usa 6000 locais reais; a fonte exata aparece no resultado da ronda.</p>
+                <p>O jogo usa 10975 locais reais; a fonte exata aparece no resultado da ronda.</p>
               </div>
 
               <div className="scene-floating-card scene-floating-card-map">

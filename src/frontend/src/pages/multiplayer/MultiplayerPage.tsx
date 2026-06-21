@@ -37,14 +37,18 @@ interface MultiplayerPageProps {
   initialRoomCode?: string | null;
   onExitRoom: () => void;
   onPlayModeChange?: (playing: boolean) => void;
+  onShowTotalScoreDuringRoundChange: (showTotalScoreDuringRound: boolean) => void;
   onSidebarContextChange?: (context: MultiplayerSidebarContext | null) => void;
+  showTotalScoreDuringRound: boolean;
 }
 
 export function MultiplayerPage({
   initialRoomCode,
   onExitRoom,
   onPlayModeChange,
+  onShowTotalScoreDuringRoundChange,
   onSidebarContextChange,
+  showTotalScoreDuringRound,
 }: MultiplayerPageProps) {
   const playerId = useMemo(() => getOrCreateMultiplayerPlayerId(), []);
   const [displayName, setDisplayName] = useState(() => {
@@ -77,6 +81,7 @@ export function MultiplayerPage({
   const [finalResult, setFinalResult] = useState<MultiplayerSessionResult | null>(null);
   const [guess, setGuess] = useState<GuessCoordinates | null>(null);
   const [mapHovered, setMapHovered] = useState(false);
+  const [mapMounted, setMapMounted] = useState(false);
   const [mapPinnedOpen, setMapPinnedOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,6 +109,7 @@ export function MultiplayerPage({
           setFinalResult(null);
           setGuess(null);
           setMapHovered(false);
+          setMapMounted(false);
           setMapPinnedOpen(false);
           setCluesOpen(false);
           setPlayersOpen(false);
@@ -253,6 +259,7 @@ export function MultiplayerPage({
 
   const toggleMapPinnedOpen = () => {
     setMapHovered(false);
+    setMapMounted(true);
     setMapPinnedOpen((current) => !current);
   };
 
@@ -684,6 +691,7 @@ export function MultiplayerPage({
     setFinalResult(null);
     setGuess(null);
     setMapHovered(false);
+    setMapMounted(false);
     setMapPinnedOpen(false);
     setCluesOpen(false);
     setPlayersOpen(false);
@@ -797,18 +805,23 @@ export function MultiplayerPage({
         guess={guess}
         hasSubmitted={hasSubmitted}
         mapHovered={mapHovered}
+        mapMounted={mapMounted}
         mapPinnedOpen={mapPinnedOpen}
         onCloseClues={() => setCluesOpen(false)}
         onClosePlayers={() => setPlayersOpen(false)}
         onDismissError={() => setError(null)}
         onGuessChange={(nextGuess) => {
           setGuess(nextGuess);
+          setMapMounted(true);
           setMapPinnedOpen(true);
         }}
         onLeaveRoom={() => {
           void leaveRoom();
         }}
-        onMouseEnterMap={() => setMapHovered(true)}
+        onMouseEnterMap={() => {
+          setMapHovered(true);
+          setMapMounted(true);
+        }}
         onMouseLeaveMap={() => setMapHovered(false)}
         onOpenClues={() => setCluesOpen(true)}
         onSubmitGuess={submitGuess}
@@ -818,6 +831,8 @@ export function MultiplayerPage({
         playersOpen={playersOpen}
         remainingSeconds={remainingSeconds}
         room={room}
+        showTotalScore={showTotalScoreDuringRound}
+        totalScore={currentPlayer?.totalScore ?? 0}
       />
     );
   }
@@ -838,6 +853,7 @@ export function MultiplayerPage({
         playerId={playerId}
         room={room}
         roundResult={roundResult}
+        showTotalScore={showTotalScoreDuringRound}
       />
     );
   }
@@ -885,6 +901,7 @@ export function MultiplayerPage({
         void leaveRoom();
       }}
       onRandomizeDisplayName={randomizeDisplayName}
+      onShowTotalScoreDuringRoundChange={onShowTotalScoreDuringRoundChange}
       onStartGame={() => {
         void startGame();
       }}
@@ -893,6 +910,7 @@ export function MultiplayerPage({
       }}
       playerJoining={playerJoining}
       room={room}
+      showTotalScoreDuringRound={showTotalScoreDuringRound}
     />
   );
 

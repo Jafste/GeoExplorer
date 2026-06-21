@@ -8,6 +8,17 @@
     grid-template-columns: 1fr;
   }
 
+  .card-home-hero,
+  .setup-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .home-step-strip,
+  .info-grid--three,
+  .summary-hero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .card-grid-column {
     grid-column: auto !important;
   }
@@ -19,11 +30,6 @@
 
   .scene-window-map {
     min-height: 360px;
-  }
-
-  .card-home-cta {
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .topbar,
@@ -66,7 +72,7 @@
   .round-telemetry-footer {
     left: 236px;
     right: 364px;
-    bottom: 20px;
+    bottom: calc(20px + var(--app-safe-bottom));
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -129,22 +135,32 @@
 }
 
 @media (max-width: 820px) {
+  .app-main-stage--play {
+    --play-topbar-height: calc(4.25rem + var(--app-safe-top));
+    --play-hud-gap: 1rem;
+    --round-hud-stack-offset: 3.625rem;
+  }
+
   .topbar,
   .topbar--play {
     height: auto;
-    min-height: 64px;
-    padding: 10px 14px;
-    align-items: flex-start;
+    min-height: calc(64px + var(--app-safe-top));
+    padding: calc(10px + var(--app-safe-top)) calc(14px + var(--app-safe-right)) 10px calc(14px + var(--app-safe-left));
+    align-items: center;
+  }
+
+  .topbar--play {
+    min-height: var(--play-topbar-height);
   }
 
   .app-main-stage--hud {
-    padding: 88px 14px 28px;
+    padding: calc(88px + var(--app-safe-top)) calc(14px + var(--app-safe-right)) calc(28px + var(--app-safe-bottom)) calc(14px + var(--app-safe-left));
   }
 
   .loading-state--compact {
-    top: 74px;
-    right: 10px;
-    left: 10px;
+    top: calc(74px + var(--app-safe-top));
+    right: calc(10px + var(--app-safe-right));
+    left: calc(10px + var(--app-safe-left));
     width: auto;
   }
 
@@ -174,7 +190,7 @@
   }
 
   .multiplayer-lobby-header .section-title {
-    font-size: clamp(2.25rem, 9vw, 3.25rem);
+    font-size: 2.65rem;
     line-height: 0.96;
   }
 
@@ -191,12 +207,14 @@
   }
 
   .round-floating-strip {
+    top: var(--round-hud-top);
     left: 16px;
     right: auto;
     max-width: calc(100vw - 32px);
   }
 
   .round-scene-callout {
+    top: var(--round-callout-top);
     left: 16px;
   }
 
@@ -206,7 +224,7 @@
 
   .round-minimap-dock {
     left: 16px;
-    bottom: 16px;
+    bottom: calc(16px + var(--app-safe-bottom));
   }
 
   .round-minimap-dock.is-expanded {
@@ -219,11 +237,34 @@
 
   .round-corner-hud {
     right: 16px;
-    bottom: 16px;
+    bottom: calc(16px + var(--app-safe-bottom));
+  }
+
+  .scene-floating-card-map {
+    right: 18px;
+    width: 150px;
+  }
+
+  .guess-map-footer,
+  .tutorial-actions,
+  .tutorial-actions-right,
+  .section-header,
+  .section-header-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .guess-map-status {
+    text-align: left;
   }
 
   .debrief-map-ticker {
     grid-template-columns: 1fr;
+  }
+
+  .debrief-map-stage .guess-map-surface,
+  .multiplayer-result-map-card .guess-map-surface {
+    min-height: min(360px, 46svh);
   }
 
   .debrief-map-head,
@@ -250,6 +291,10 @@
 @media (max-width: 560px) {
   .session-report-summary.summary-hero {
     grid-template-columns: 1fr;
+  }
+
+  .round-scene-callout {
+    display: none;
   }
 
   .app-main-stage--hud {
@@ -319,6 +364,11 @@
     flex: 0 0 auto;
   }
 
+  .action-row,
+  .tutorial-actions-right {
+    width: 100%;
+  }
+
   .card-home-hero {
     min-height: auto;
     padding: 18px;
@@ -329,9 +379,9 @@
   }
 
   .home-title {
-    font-size: clamp(2.1rem, 10.5vw, 2.7rem);
+    font-size: 2.45rem;
     line-height: 1.03;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     text-transform: none;
   }
 
@@ -366,11 +416,10 @@
   }
 
   .section-title,
-  .card-home-cta h2,
   .screen-shell-session-report .section-title {
-    font-size: clamp(1.55rem, 7vw, 2rem);
+    font-size: 1.75rem;
     line-height: 1.04;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     text-transform: none;
   }
 
@@ -380,9 +429,9 @@
   }
 
   .round-minimap-dock {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    left: calc(10px + var(--app-safe-left));
+    right: calc(10px + var(--app-safe-right));
+    bottom: calc(10px + var(--app-safe-bottom));
     width: auto;
   }
 
@@ -390,20 +439,36 @@
     width: auto;
   }
 
+  .round-minimap-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
   .round-canvas-scene .scene-panorama-controls,
   .multiplayer-immersive-canvas .scene-panorama-controls {
-    left: 10px;
-    bottom: 5.9rem;
+    left: calc(10px + var(--app-safe-left));
+    bottom: calc(5.9rem + var(--app-safe-bottom));
   }
 
   .round-canvas-scene .scene-source-pill,
   .multiplayer-immersive-canvas .scene-source-pill {
-    right: 10px;
-    bottom: 5.9rem;
+    right: calc(10px + var(--app-safe-right));
+    bottom: calc(5.9rem + var(--app-safe-bottom));
     max-width: min(13rem, 48vw);
   }
 
   .round-corner-hud {
+    display: none;
+  }
+
+  .scene-floating-card-main,
+  .scene-floating-card-map {
+    width: calc(100% - 36px);
+    left: 18px;
+    right: 18px;
+  }
+
+  .scene-floating-card-map {
     display: none;
   }
 
@@ -444,7 +509,7 @@
 
   .tutorial-title {
     max-width: 100%;
-    font-size: clamp(1.3rem, 6.4vw, 1.65rem);
+    font-size: 1.5rem;
     line-height: 1.04;
     letter-spacing: 0;
   }
@@ -480,11 +545,9 @@
 .card-home-hero,
 .card-setup-panel,
 .card-tactical,
-.card-home-cta,
 .tutorial-shell,
 .home-step-card,
 .card-inset,
-.card-preview-overlay,
 .comparison-table > div,
 .summary-row,
 .summary-row-report,
@@ -521,7 +584,6 @@
 .card-home-hero::after,
 .card-setup-panel::after,
 .card-tactical::after,
-.card-home-cta::after,
 .guess-map-card::after,
 .tutorial-shell::after,
 .round-minimap-dock::after {
@@ -571,6 +633,16 @@
 .guess-map-leaflet .leaflet-tooltip,
 .guess-map-leaflet .map-distance-tooltip {
   border-radius: var(--radius-ui);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @media (max-width: 1180px) {

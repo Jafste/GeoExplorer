@@ -5,6 +5,7 @@ using GeoExplorer.Backend.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +78,57 @@ app.UseCors();
 var api = app.MapGroup("/api");
 
 api.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+api.MapGet("/health/details", async (
+    IDbContextFactory<GeoExplorerDbContext> dbFactory,
+    SeedLocationCatalog catalog,
+    MapillaryImageService mapillaryImages,
+    ILogger<Program> logger,
+    CancellationToken cancellationToken) =>
+{
+    try
+    {
+        await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
+        var locationCount = await db.Locations.CountAsync(cancellationToken);
+        var locations = catalog.GetAll();
+        var mapillaryLocationCount = locations.Count(location =>
+            location.GetVisualSources().Any(MapillaryImageService.IsMapillaryMedia));
+        var mapillaryImageId = locations
+            .SelectMany(location => location.GetVisualSources())
+            .Where(MapillaryImageService.IsMapillaryMedia)
+            .Select(media => FindMapillaryImageId(media.ImageUrl))
+            .FirstOrDefault(imageId => imageId is not null);
+        var mapillary = mapillaryImageId is null
+            ? new HealthDetailsMapillary(
+                "missing",
+                null,
+                null,
+                "Não há imagens Mapillary no catálogo.")
+            : await CheckMapillaryAsync(mapillaryImages, mapillaryImageId, cancellationToken);
+
+        return Results.Ok(new
+        {
+            status = mapillary.Status == "ok" ? "ok" : "degraded",
+            database = new
+            {
+                status = "ok",
+                locations = locationCount,
+                mapillaryLocations = mapillaryLocationCount,
+            },
+            mapillary,
+        });
+    }
+    catch (Exception exception)
+    {
+        logger.LogWarning(exception, "Health details failed.");
+        return Results.Ok(new
+        {
+            status = "degraded",
+            database = new { status = "error" },
+            mapillary = new { status = "skipped" },
+        });
+    }
+});
 
 if (builder.Configuration.GetValue<bool>("GeoExplorer:ExposeDatabaseDiagnostics"))
 {
@@ -213,6 +265,45 @@ static string[] GetAllowedOrigins(IConfiguration configuration)
         .ToArray();
 }
 
+static async Task<HealthDetailsMapillary> CheckMapillaryAsync(
+    MapillaryImageService mapillaryImages,
+    string imageId,
+    CancellationToken cancellationToken)
+{
+    var result = await mapillaryImages.GetThumbnailAsync(imageId, cancellationToken);
+
+    return new HealthDetailsMapillary(
+        result.ThumbnailUrl is null ? "error" : "ok",
+        imageId,
+        (int)result.StatusCode,
+        result.Message);
+}
+
+static string? FindMapillaryImageId(params string?[] values)
+{
+    foreach (var value in values)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            continue;
+        }
+
+        var match = Regex.Match(value, @"/api/media/mapillary/(?<id>\d+)", RegexOptions.IgnoreCase);
+        if (match.Success)
+        {
+            return match.Groups["id"].Value;
+        }
+    }
+
+    return null;
+}
+
 public partial class Program
 {
 }
+
+public sealed record HealthDetailsMapillary(
+    string Status,
+    string? ImageId,
+    int? StatusCode,
+    string Message);

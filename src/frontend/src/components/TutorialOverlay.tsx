@@ -97,15 +97,18 @@ export function TutorialOverlay({ onDismiss }: TutorialOverlayProps) {
   }, [onDismiss]);
 
   return (
-    <div className="tutorial-backdrop" onClick={onDismiss} role="presentation">
+    <div className="tutorial-backdrop">
+      <button
+        aria-label="Fechar tutorial"
+        className="tutorial-scrim"
+        onClick={onDismiss}
+        type="button"
+      />
       <section
         aria-describedby="tutorial-description"
         aria-labelledby="tutorial-title"
         aria-modal="true"
         className="tutorial-shell"
-        onClick={(event) => {
-          event.stopPropagation();
-        }}
         role="dialog"
       >
         <div className="tutorial-header">
