@@ -60,7 +60,7 @@ export function SessionConfigControls({
       {onShowTotalScoreDuringRoundChange ? (
         <label className="setup-switch-row">
           <span>
-            <strong>Mostrar total todas rondas</strong>
+            <strong>Mostrar pontuação total</strong>
             <small>Durante e depois da ronda</small>
           </span>
           <input

@@ -1,7 +1,7 @@
 # Database
 Esta pasta contém os ficheiros da camada de dados do projeto.
 
-- `seed/locations.json` é o conjunto de dados controlado do catálogo real e serve como seed/fallback do backend. O frontend em `mock` usa apenas uma amostra pequena de locais reais para não empacotar o dataset completo. Nesta fase o seed já inclui 10975 locais reais com dados de fonte/licença validados: 5513 com imagem principal Wikimedia Commons, 5462 com panorama 360 Panoramax como imagem principal jogável e 1844 com Mapillary como fonte visual adicional.
+- `seed/locations.json` é o conjunto de dados controlado do catálogo real e serve como seed/fallback do backend. O frontend em `mock` usa apenas uma amostra pequena de locais reais para não carregar o dataset completo no frontend. Nesta fase o seed já inclui 10975 locais reais com dados de fonte/licença validados: 5513 com imagem principal Wikimedia Commons, 5462 com panorama 360 Panoramax como imagem principal jogável e 1844 com Mapillary como fonte visual adicional.
 
 Usei o ChatGPT como apoio para pensar nesta parte do trabalho, sobretudo para recomendar a criação de ferramentas locais que me ajudassem a encontrar mais locais/fontes visuais e a perceber erros ou avisos durante as auditorias do dataset. As ferramentas não substituíram a revisão manual: serviram para acelerar a recolha, organizar candidatos e chamar a atenção para problemas como dados em falta, imagens repetidas, locais demasiado próximos ou fontes visuais fracas.
 

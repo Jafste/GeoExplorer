@@ -19,3 +19,8 @@ src/frontend/dist/
 src/backend/bin/
 src/backend/obj/
 docs/.DS_Store
+/logs
+/src/backend/logs
+/docs/report/assets
+docs/report/Relatório final LEI.docx
+docs/report/Relatório intercalar LEI.docx
